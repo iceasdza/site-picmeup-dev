@@ -2443,4 +2443,5 @@ In the future, we might start automatically compiling incompatible third-party m
 
 If you have ideas for more “How To” recipes that should be on this page, [let us know](https://github.com/facebookincubator/create-react-app/issues) or [contribute some!](https://github.com/facebookincubator/create-react-app/edit/master/packages/react-scripts/template/README.md)
 #   s i t e - p i c m e u p - d e v  
+ #   s i t e - p i c m e u p - d e v  
  
