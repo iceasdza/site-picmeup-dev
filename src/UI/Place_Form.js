@@ -24,9 +24,9 @@ const Place_Form = () => (
             <Form>
             <Form.Field width={8} required>
                 <label>ชื่อสถานที่</label>
-                <input placeholder='ชื่อสถานที่..' />
+                <input name="place_name" placeholder='ชื่อสถานที่..' />
             </Form.Field>
-            <Form.TextArea label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} required/>
+            <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} required/>
             <Form.Field>
                 <label>อัพโหลดรูปภาพสถานที่</label>
                 <label class="custom-file-upload">
@@ -35,9 +35,9 @@ const Place_Form = () => (
                 </label>
             </Form.Field>
             <Form.Group>
-                <Form.Input label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required/>
-                <Form.Input label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required/>
-                <Form.Input label='ถึง' placeholder='เวลาปิด' width={3} required/>
+                <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required/>
+                <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required/>
+                <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3} required/>
             </Form.Group>
             <Form.Group>
                 <div className="Radio">
@@ -69,17 +69,20 @@ const Place_Form = () => (
                     </div>
                 </Form.Field>
             </Form.Group>
-            <label>แท็กประเภทสถานที่</label>
-            <div className="Body">
-                <Dropdown
-                    multiple
-                    selection
-                    options={options}
-                    placeholder='แท็กของสถานที่'
-                    renderLabel={renderLabel}
-                    require
-                />
-            </div>
+            <Form.Field required>
+                <label>แท็กประเภทสถานที่</label>
+                <div className="Body">
+                    <Dropdown
+                        multiple
+                        selection
+                        options={options}
+                        placeholder='แท็กของสถานที่'
+                        renderLabel={renderLabel}
+                        require
+                        name="place_tag"
+                    />
+                </div>
+            </Form.Field>
                 <p>แผนที่</p>
 
             <div>
