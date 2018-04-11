@@ -40,38 +40,34 @@ const Place_Form = () => (
                 <div className="Radio">
                     <Form.Group grouped>
                         <label>ค่าใช้จ่าย</label>
-                        <Form.Field label='มี' control='input' type='radio' name='fee' value='y'/>
-                        <Form.Field label='ไม่มี' control='input' type='radio' name='fee' value='n' checked/>
+                        <Form.Input label='มี' control='input' type='radio' name='fee' value='y'/>
+                        <Form.Input label='ไม่มี' control='input' type='radio' name='fee' value='n' checked/>
                     </Form.Group>
                 </div>
                 <div className="Radio">
                     <Form.Group grouped>
                         <label>ที่จอดรถ</label>
-                        <Form.Field label='มี' control='input' type='radio' name='parking' value='y' checked/>
-                        <Form.Field label='ไม่มี' control='input' type='radio' name='parking' value='n' />
+                        <Form.Input label='มี' control='input' type='radio' name='parking' value='y' checked/>
+                        <Form.Input label='ไม่มี' control='input' type='radio' name='parking' value='n' />
                     </Form.Group>
                 </div>
-                <Form.Field required>
                     <div className="Radio">
                             <Form.Group grouped>
                                 <label>วันที่เปิดทำการ</label>
-                                <Form.Field label='วันจันทร์' control='input' type='checkbox' name='day' value='mon' checked/>
-                                <Form.Field label='วันอังคาร' control='input' type='checkbox' name='day' value='tue' checked/>
-                                <Form.Field label='วันพุธ' control='input' type='checkbox' name='day' value='wed' checked/>
-                                <Form.Field label='วันพฤหัสบดี' control='input' type='checkbox' name='day' value='thu' checked/>
-                                <Form.Field label='วันศุกร์' control='input' type='checkbox' name='day' value='fri' checked/>
-                                <Form.Field label='วันเสาร์' control='input' type='checkbox' name='day' value='sat' checked/>
-                                <Form.Field label='วันอาทิตย์' control='input' type='checkbox' name='day' value='sun' checked/>
+                                <Form.Input label='วันจันทร์' control='input' type='checkbox' name='day' value='mon' checked/>
+                                <Form.Input label='วันอังคาร' control='input' type='checkbox' name='day' value='tue' checked/>
+                                <Form.Input label='วันพุธ' control='input' type='checkbox' name='day' value='wed' checked/>
+                                <Form.Input label='วันพฤหัสบดี' control='input' type='checkbox' name='day' value='thu' checked/>
+                                <Form.Input label='วันศุกร์' control='input' type='checkbox' name='day' value='fri' checked/>
+                                <Form.Input label='วันเสาร์' control='input' type='checkbox' name='day' value='sat' checked/>
+                                <Form.Input label='วันอาทิตย์' control='input' type='checkbox' name='day' value='sun' checked/>
                             </Form.Group>
                     </div>
-                </Form.Field>
             </Form.Group>
-            <Form.Field required>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
                     <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require name="place_tag"/>
                 </div>
-            </Form.Field>
                 <p>แผนที่</p>
             <div>
                 <Form.Button floated='right' size='big'>สร้างสถานที่</Form.Button>
