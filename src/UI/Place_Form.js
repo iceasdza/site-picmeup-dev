@@ -22,7 +22,7 @@ const Place_Form = () => (
         </div>
         <div className = "Form">
             <Form>
-            <Form.Input label='ชื่อสถานที่' inputname="place_name" placeholder='ชื่อสถานที่..' width={8} required/>
+            <Form.Input label='ชื่อสถานที่' inputname="place_name" placeholder='ชื่อสถานที่..' width={8}  required/>
             <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} required/>
             <Form.Field>
                 <label>อัพโหลดรูปภาพสถานที่</label>
