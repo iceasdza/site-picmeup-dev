@@ -1,11 +1,11 @@
-import React, { Component } from 'react'
-import { Button, Checkbox, Form, Dropdown, Confirm } from 'semantic-ui-react'
+import React from 'react'
+import { Form, Dropdown} from 'semantic-ui-react'
 import '../../static/Form.css'
 
 const options = [
-    { key: 1, text: 'สวน', value: 1 },
-    { key: 2, text: 'ป่า', value: 2 },
-    { key: 3, text: 'เมือง', value: 3 },
+    { key: 1, text: 'สวน', value: 'สวน' },
+    { key: 2, text: 'ป่า', value: 'ป่า' },
+    { key: 3, text: 'เมือง', value: 'เมือง' },
 ]
 
 const renderLabel = label => ({
@@ -13,10 +13,6 @@ const renderLabel = label => ({
     content: `แท็ก - ${label.text}`,
     icon: 'check',
 })
-
-state: {
-
-}
 
 
 
@@ -72,7 +68,7 @@ const Place_Form = (props) => {
                 </Form.Group>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require name="place_tag" />
+                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)}/>
                 </div>
                 <p>แผนที่</p>
                 <div>

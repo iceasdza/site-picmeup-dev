@@ -38,7 +38,6 @@ class AddPlace extends Component {
         wed: true,
         thu: true,
         fri: true,
-        fri: true,
         sat: true,
         sun: true,
 
@@ -59,66 +58,84 @@ class AddPlace extends Component {
         console.log("car parking : " + value)
     }
 
+    TagSelected = (field, value) => {
+        this.setState({ [field]: value })
+        console.log(this.state.tags)
+    }
+
     DaysSelected = (field, value) => {
         //monday
-        if(value==='mon' && this.state.mon === true){
-            this.setState({mon:false})
-        }else if(value==='mon' && this.state.mon === false){
-            this.setState({mon:true})
+        if (value === 'mon' && this.state.mon === true) {
+            this.setState({ mon: false })
+        } else if (value === 'mon' && this.state.mon === false) {
+            this.setState({ mon: true })
         }
 
-        if(value==='tue' && this.state.tue === true){
-            this.setState({tue:false})
-        }else if(value==='tue' && this.state.tue === false){
-            this.setState({tue:true})
+        if (value === 'tue' && this.state.tue === true) {
+            this.setState({ tue: false })
+        } else if (value === 'tue' && this.state.tue === false) {
+            this.setState({ tue: true })
         }
 
-        if(value==='wed' && this.state.wed === true){
-            this.setState({wed:false})
-        }else if(value==='wed' && this.state.wed === false){
-            this.setState({wed:true})
+        if (value === 'wed' && this.state.wed === true) {
+            this.setState({ wed: false })
+        } else if (value === 'wed' && this.state.wed === false) {
+            this.setState({ wed: true })
         }
 
-        if(value==='thu' && this.state.thu === true){
-            this.setState({thu:false})
-        }else if(value==='thu' && this.state.thu === false){
-            this.setState({thu:true})
+        if (value === 'thu' && this.state.thu === true) {
+            this.setState({ thu: false })
+        } else if (value === 'thu' && this.state.thu === false) {
+            this.setState({ thu: true })
         }
 
-        if(value==='fri' && this.state.fri === true){
-            this.setState({fri:false})
-        }else if(value==='fri' && this.state.fri === false){
-            this.setState({fri:true})
+        if (value === 'fri' && this.state.fri === true) {
+            this.setState({ fri: false })
+        } else if (value === 'fri' && this.state.fri === false) {
+            this.setState({ fri: true })
         }
 
-        if(value==='sat' && this.state.sat === true){
-            this.setState({sat:false})
-        }else if(value==='sat' && this.state.sat === false){
-            this.setState({sat:true})
+        if (value === 'sat' && this.state.sat === true) {
+            this.setState({ sat: false })
+        } else if (value === 'sat' && this.state.sat === false) {
+            this.setState({ sat: true })
         }
 
-        if(value==='sun' && this.state.sun === true){
-            this.setState({sun:false})
-        }else if(value==='sun' && this.state.sun === false){
-            this.setState({sun:true})
+        if (value === 'sun' && this.state.sun === true) {
+            this.setState({ sun: false })
+        } else if (value === 'sun' && this.state.sun === false) {
+            this.setState({ sun: true })
         }
     }
 
 
-    // CreatePlace = async (event) => {
-    //     event.preventDefault()
+    CreatePlace = async (event) => {
+        event.preventDefault()
 
-    //     await axios.post('http://localhost:3030/api/todo',{
-    //         data : this.state.data,
-    //         test : this.state.test
-    //       })
+        // alert('test')
+        await axios.post('http://localhost:3030/api/todo', {
+            placeName: this.state.placeName,
+            placeDes: this.state.placeDes,
+            tel: this.state.tel,
+            openTime: this.state.openTime,
+            closeTime: this.state.closeTime,
+            fee: this.state.fee,
+            carParking: this.state.carParking,
+            tags:this.state.tags,
+            mon: this.state.mon,
+            tue: this.state.tue,
+            wed: this.state.wed,
+            thu: this.state.thu,
+            fri: this.state.fri,
+            sat: this.state.sat,
+            sun: this.state.sun,
+        })
 
-    //       this.setState({
-    //           data : "",
-    //           test : ""
-    //       })
+        this.setState({
+            placeName: ""
+        })
 
-    //     }
+    }
 
     setField = (field, value) => {
         this.setState({ [field]: value })
@@ -133,7 +150,7 @@ class AddPlace extends Component {
     render() {
         return (
             <div>
-                <Form>
+                <Form onSubmit={this.CreatePlace}>
                     <Place_Form
                         // passing value
                         placeName={this.state.placeName}
@@ -143,7 +160,7 @@ class AddPlace extends Component {
                         closeTime={this.state.closeTime}
                         fee={this.state.fee}
                         carParking={this.state.carParking}
-                        days = {this.state.days}
+                        days={this.state.days}
                         mon={this.state.mon}
                         tue={this.state.tue}
                         wed={this.state.wed}
@@ -151,7 +168,9 @@ class AddPlace extends Component {
                         fri={this.state.fri}
                         sat={this.state.sat}
                         sun={this.state.sun}
+                        tags={this.state.tags}
                         // pass method
+                        TagSelected={this.TagSelected}
                         FeeOption={this.FeeOption}
                         setField={this.setField}
                         CarParkingOption={this.CarParkingOption}
