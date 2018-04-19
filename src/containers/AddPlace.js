@@ -37,7 +37,8 @@ class AddPlace extends Component {
             latitude: 0,
             longtitude: 0
         },
-        FileList: {}
+        FileList: {},
+        FileQuantity : 0
     }
 
 
@@ -47,11 +48,10 @@ class AddPlace extends Component {
     }
 
     GetFileUploaded = (field, value) => {
-        // console.log(value)
+        console.log(value)
         // this.state.FileList.push(value)
         // console.log(value)
-        this.setState({ FileList: value })
-
+        this.setState({ [field]: value ,FileQuantity:value.length})
     }
 
     CarParkingOption = (field, value) => {
@@ -148,16 +148,19 @@ class AddPlace extends Component {
     }
 
     showData = () => {
-        return this.state.FileList.map((value) => {
-                    <h1>tedst</h1>
-        })
+        alert(this.state.FileQuantity)
     }
 
     render() {
         return (
             <div>
+                {
+                    this.state.FileList.length
+                    // this.state.FileList.map((data)=>{
+                    //     data.length
+                    // })
+                }
                 <Header />
-                {this.showData()}
                 <Form onSubmit={this.CreatePlace}>
                     <PlaceForm
                         // passing value
