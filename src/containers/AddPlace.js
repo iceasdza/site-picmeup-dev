@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Place_Form from '../components/place/Place_Form'
 import { Form } from 'semantic-ui-react'
+import Header from '../components/place/Header_Picmeup'
 import axios from 'axios';
 
 class AddPlace extends Component {
@@ -24,15 +25,6 @@ class AddPlace extends Component {
         //     { day: "sat", status: true },
         //     { day: "sun", status: true }
         // ],
-        // days: {
-        //     mon:{day:'mon',status:"yes"},
-        //     tue:{tue:"tue"},
-        //     wed:{wed:"wed"},
-        //     thu:{thu:"thu"},
-        //     fri:{fri:"fri"},
-        //     sat:{sat:"yes"},
-        //     sun:{sun:"sun"}
-        // },
         mon: true,
         tue: true,
         wed: true,
@@ -40,17 +32,22 @@ class AddPlace extends Component {
         fri: true,
         sat: true,
         sun: true,
-
         tags: [],
         map: {
             latitude: 0,
             longtitude: 0
-        }
+        },
+        file: []
     }
+    
 
     FeeOption = (field, value) => {
         this.setState({ [field]: value })
-        console.log("fee : " + value)
+        console.log("fee : " , value)
+    }
+
+    GetFileUploaded = ( field , value ) => {
+        console.log("file : ",value)
     }
 
     CarParkingOption = (field, value) => {
@@ -121,7 +118,7 @@ class AddPlace extends Component {
             closeTime: this.state.closeTime,
             fee: this.state.fee,
             carParking: this.state.carParking,
-            tags:this.state.tags,
+            tags: this.state.tags,
             mon: this.state.mon,
             tue: this.state.tue,
             wed: this.state.wed,
@@ -150,6 +147,7 @@ class AddPlace extends Component {
     render() {
         return (
             <div>
+                 <Header/>
                 <Form onSubmit={this.CreatePlace}>
                     <Place_Form
                         // passing value
@@ -175,6 +173,7 @@ class AddPlace extends Component {
                         setField={this.setField}
                         CarParkingOption={this.CarParkingOption}
                         DaysSelected={this.DaysSelected}
+                        GetFileUploaded = {this.GetFileUploaded}
                     />
                 </Form>
             </div>

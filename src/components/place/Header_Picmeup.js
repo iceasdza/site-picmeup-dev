@@ -1,7 +1,7 @@
 import React from 'react'
 import {Dropdown, Menu, Button, Input, Segment, Image} from 'semantic-ui-react'
-import './Header.css'
-import logo from './logo-white-test1.png'
+import '../../static/Header.css'
+import logo from '../../static/logo-white-test1.png'
 
 const Header_picmeup = () => (
     <div className = "Header-background">
