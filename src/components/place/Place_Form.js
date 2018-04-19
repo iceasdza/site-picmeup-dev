@@ -30,9 +30,7 @@ const Place_Form = (props) => {
                     <label>อัพโหลดรูปภาพสถานที่</label>
                     <label className="custom-file-upload">
                         <p className="Color">อัพโหลดรูปภาพ</p>
-                        <input type="file" name="img" multiple  onChange={(event) =>
-                            // console.log(event.target.files) 
-                            props.GetFileUploaded('files',event.target.files)
+                        <input type="file" name="img" multiple  onChange={(event) => props.GetFileUploaded('files',event.target.files)
                             }/>
                     </label>
                 </Form.Field>

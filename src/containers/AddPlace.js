@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Place_Form from '../components/place/Place_Form'
+import PlaceForm from '../components/place/Place_Form'
 import { Form } from 'semantic-ui-react'
 import Header from '../components/place/Header_Picmeup'
 import axios from 'axios';
@@ -37,17 +37,21 @@ class AddPlace extends Component {
             latitude: 0,
             longtitude: 0
         },
-        file: []
+        FileList: {}
     }
-    
+
 
     FeeOption = (field, value) => {
         this.setState({ [field]: value })
-        console.log("fee : " , value)
+        console.log("fee : ", value)
     }
 
-    GetFileUploaded = ( field , value ) => {
-        console.log("file : ",value)
+    GetFileUploaded = (field, value) => {
+        // console.log(value)
+        // this.state.FileList.push(value)
+        // console.log(value)
+        this.setState({ FileList: value })
+
     }
 
     CarParkingOption = (field, value) => {
@@ -143,13 +147,19 @@ class AddPlace extends Component {
     componentDidMount() {
     }
 
+    showData = () => {
+        return this.state.FileList.map((value) => {
+                    <h1>tedst</h1>
+        })
+    }
 
     render() {
         return (
             <div>
-                 <Header/>
+                <Header />
+                {this.showData()}
                 <Form onSubmit={this.CreatePlace}>
-                    <Place_Form
+                    <PlaceForm
                         // passing value
                         placeName={this.state.placeName}
                         placeDes={this.state.placeDes}
@@ -173,7 +183,7 @@ class AddPlace extends Component {
                         setField={this.setField}
                         CarParkingOption={this.CarParkingOption}
                         DaysSelected={this.DaysSelected}
-                        GetFileUploaded = {this.GetFileUploaded}
+                        GetFileUploaded={this.GetFileUploaded}
                     />
                 </Form>
             </div>

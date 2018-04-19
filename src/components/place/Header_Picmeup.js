@@ -1,5 +1,5 @@
 import React from 'react'
-import {Dropdown, Menu, Button, Input, Segment, Image} from 'semantic-ui-react'
+import {Dropdown, Menu, Button, Input, Image} from 'semantic-ui-react'
 import '../../static/Header.css'
 import logo from '../../static/logo-white-test1.png'
 
