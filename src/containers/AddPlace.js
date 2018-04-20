@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import PlaceForm from '../components/place/Place_Form'
-import { Form } from 'semantic-ui-react'
+import { Form } from 'formsy-semantic-ui-react'
 import Header from '../components/place/Header_Picmeup'
 import axios from 'axios';
 
