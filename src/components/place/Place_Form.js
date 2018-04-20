@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Dropdown} from 'semantic-ui-react'
+import { Form, Dropdown} from 'formsy-semantic-ui-react'
 import '../../static/Form.css'
 
 const options = [
@@ -24,7 +24,7 @@ const Place_Form = (props) => {
                 <hr className="Hr" />
             </div>
             <div className="Form">
-                <Form.Input label='ชื่อสถานที่' inputname="place_name" placeholder='ชื่อสถานที่..' width={8} value={props.placeName} onChange={(e, { value }) => props.setField("placeName", value)} required />
+                <Form.Input label='ชื่อสถานที่' name="place_name" placeholder='ชื่อสถานที่..' width={8} value={props.placeName} onChange={(e, { value }) => props.setField("placeName", value)} required />
                 <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} value={props.placeDes} onChange={(e, { value }) => props.setField("placeDes", value)} required />
                 <Form.Field>
                     <label>อัพโหลดรูปภาพสถานที่</label>
