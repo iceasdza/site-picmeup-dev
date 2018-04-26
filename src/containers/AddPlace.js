@@ -111,7 +111,7 @@ class AddPlace extends Component {
 
 
     CreatePlace = async (event) => {
-        event.preventDefault()
+        // event.preventDefault()
 
         // alert('test')
         await axios.post('http://localhost:3030/api/todo', {
@@ -130,6 +130,7 @@ class AddPlace extends Component {
             fri: this.state.fri,
             sat: this.state.sat,
             sun: this.state.sun,
+            FileList:this.state.FileList
         })
 
         this.setState({

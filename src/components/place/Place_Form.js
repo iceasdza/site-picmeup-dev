@@ -37,7 +37,7 @@ const Place_Form = (props) => {
                 <Form.Group>
                     <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} />
                     <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} />
-                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3} required required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
+                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3}  required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
                 </Form.Group>
                 <Form.Group>
                     <div className="Radio">
@@ -57,7 +57,7 @@ const Place_Form = (props) => {
                     <div className="Radio">
                         <Form.Group grouped>
                             <label>วันที่เปิดทำการ</label>
-                            <Form.Checkbox label='วันจันทร์' name='day' value="mon" checked={props.mon} onChange={(e, { value }) => props.DaysSelected('days', value)} />
+                            <Form.Checkbox label='วันจันทร์' name='day' value="mon" checked="{props.mon}" onChange={(e, { value }) => props.DaysSelected('days', value)} />
                             <Form.Checkbox label='วันอังคาร' name='day' value='tue' checked={props.tue} onChange={(e, { value }) => props.DaysSelected('days', value)} />
                             <Form.Checkbox label='วันพุธ' name='day' value='wed' checked={props.wed} onChange={(e, { value }) => props.DaysSelected('days', value)} />
                             <Form.Checkbox label='วันพฤหัสบดี' name='day' value='thu' checked={props.thu}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
@@ -69,7 +69,7 @@ const Place_Form = (props) => {
                 </Form.Group>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)}/>
+                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)}/>
                 </div>
                 <p>แผนที่</p>
                 <div>
