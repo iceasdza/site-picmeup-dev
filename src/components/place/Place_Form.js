@@ -1,5 +1,6 @@
 import React from 'react'
 import { Form, Dropdown} from 'formsy-semantic-ui-react'
+import {Label} from 'semantic-ui-react'
 import '../../static/Form.css'
 
 const options = [
@@ -24,8 +25,8 @@ const Place_Form = (props) => {
                 <hr className="Hr" />
             </div>
             <div className="Form">
-                <Form.Input label='ชื่อสถานที่' name="place_name" placeholder='ชื่อสถานที่..' width={8} value={props.placeName} onChange={(e, { value }) => props.setField("placeName", value)} required />
-                <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} value={props.placeDes} onChange={(e, { value }) => props.setField("placeDes", value)} required />
+                <Form.Input label='ชื่อสถานที่' name="place_name" placeholder='ชื่อสถานที่..' width={8} value={props.placeName} onChange={(e, { value }) => props.setField("placeName", value)} required errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่ชื่อสถานที่',}}/>
+                <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} value={props.placeDes} onChange={(e, { value }) => props.setField("placeDes", value)} required errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่คำอธิบาย',}}/>
                 <Form.Field>
                     <label>อัพโหลดรูปภาพสถานที่</label>
                     <label className="custom-file-upload">
@@ -35,9 +36,9 @@ const Place_Form = (props) => {
                     </label>
                 </Form.Field>
                 <Form.Group>
-                    <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} />
-                    <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} />
-                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3}  required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
+                    <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องเบอร์ติดต่อ',}}/>
+                    <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาเปิด',}}/>
+                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3}  required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาปิด',}}/>
                 </Form.Group>
                 <Form.Group>
                     <div className="Radio">
@@ -69,7 +70,7 @@ const Place_Form = (props) => {
                 </Form.Group>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)}/>
+                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)} errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก',}}/>
                 </div>
                 <p>แผนที่</p>
                 <div>
