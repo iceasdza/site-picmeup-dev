@@ -46,7 +46,7 @@ const Place_Form = (props) => {
                     </label>
                 </Form.Field>
                 <Form.Group>
-                    <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องเบอร์ติดต่อ',}}/>
+                    <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} errorLabel={ <Label color="red" pointing/> } validations={{customValidation: (values, value) => !(!value || value.length > 10 || value.length <= 8),}} validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เบอร์ติดต่อ',customValidation: 'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง'}}/>
                     <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาเปิด',}}/>
                     <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3}  required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} errorLabel={ <Label color="red" pointing/> } validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาปิด',}}/>
                 </Form.Group>
