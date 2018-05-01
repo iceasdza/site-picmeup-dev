@@ -3,15 +3,25 @@ import { Form, Dropdown} from 'formsy-semantic-ui-react'
 import {Label} from 'semantic-ui-react'
 import '../../static/Form.css'
 
-const options = [
+const optionsTag = [
     { key: 1, text: 'สวน', value: 'สวน' },
     { key: 2, text: 'ป่า', value: 'ป่า' },
     { key: 3, text: 'เมือง', value: 'เมือง' },
 ]
 
+const optionsDay = [
+    { key: 1, text: 'วันจันทร์', value: 'mon' },
+    { key: 2, text: 'วันอังคาร', value: 'tue' },
+    { key: 3, text: 'วันพุธ', value: 'wed' },
+    { key: 4, text: 'วันพฤหัสบดี', value: 'thu' },
+    { key: 5, text: 'วันศุกร์', value: 'fri' },
+    { key: 6, text: 'วันเสาร์', value: 'sat' },
+    { key: 7, text: 'วันอาทิตย์', value: 'sun' },
+]
+
 const renderLabel = label => ({
     color: 'blue',
-    content: `แท็ก - ${label.text}`,
+    content: `${label.text}`,
     icon: 'check',
 })
 
@@ -55,7 +65,7 @@ const Place_Form = (props) => {
                             <Form.Radio label='ไม่มี' name='parking' value='no' checked={props.carParking === 'no'} onChange={(e, { value }) => props.CarParkingOption('carParking', value)} />
                         </Form.Group>
                     </div>
-                    <div className="Radio">
+                    {/* <div className="Radio">
                         <Form.Group grouped>
                             <label>วันที่เปิดทำการ</label>
                             <Form.Checkbox label='วันจันทร์' name='day' value="mon" checked="{props.mon}" onChange={(e, { value }) => props.DaysSelected('days', value)} />
@@ -66,11 +76,15 @@ const Place_Form = (props) => {
                             <Form.Checkbox label='วันเสาร์' name='day' value='sat' checked={props.sat}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
                             <Form.Checkbox label='วันอาทิตย์' name='day' value='sun' checked={props.sun}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
                         </Form.Group>
-                    </div>
+                    </div> */}
                 </Form.Group>
+                <label>วันที่เปิดทำการ</label>
+                    <div className="Body">
+                        <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="place_tag" errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกวันที่เปิดทำการ',}}/>
+                    </div>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)} errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก',}}/>
+                    <Dropdown multiple selection options={optionsTag} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)} errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก',}}/>
                 </div>
                 <p>แผนที่</p>
                 <div>
