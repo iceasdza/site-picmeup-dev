@@ -41,8 +41,7 @@ const Place_Form = (props) => {
                     <label>อัพโหลดรูปภาพสถานที่</label>
                     <label className="custom-file-upload">
                         <p className="Color">อัพโหลดรูปภาพ</p>
-                        <input type="file" name="img" multiple  onChange={(event) => props.GetFileUploaded('FileList',event.target.files)
-                            }/>
+                        <input type="file" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList',event.target.files)}/>
                     </label>
                 </Form.Field>
                 <Form.Group>
@@ -80,7 +79,7 @@ const Place_Form = (props) => {
                 </Form.Group>
                 <label>วันที่เปิดทำการ</label>
                     <div className="Body">
-                        <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="place_tag" errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกวันที่เปิดทำการ',}}/>
+                        <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="place_tag" errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกวันที่เปิดทำการ',}} onChange={(e,{value})=> props.DaysSelected('days',value)}/>
                     </div>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">

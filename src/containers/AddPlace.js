@@ -4,41 +4,24 @@ import { Form } from 'formsy-semantic-ui-react'
 import Header from '../components/place/Header_Picmeup'
 import axios from 'axios';
 
-class AddPlace extends Component {
+class AddPlace extends React.Component {
 
     state = {
         placeName: "",
         placeDes: "",
-        picPath: "",
         tel: "",
         openTime: "",
         closeTime: "",
         fee: "no",
         carParking: "yes",
-
-        // days: [
-        //     { day: 'mon', status: true },
-        //     { day: "tue", status: true },
-        //     { day: "wed", status: true },
-        //     { day: "thu", status: true },
-        //     { day: "fri", status: true },
-        //     { day: "sat", status: true },
-        //     { day: "sun", status: true }
-        // ],
-        mon: true,
-        tue: true,
-        wed: true,
-        thu: true,
-        fri: true,
-        sat: true,
-        sun: true,
+        days: [],
         tags: [],
         map: {
             latitude: 0,
             longtitude: 0
         },
-        FileList: {},
-        FileQuantity : 0
+        FileList: [0],
+        FileQuantity: 0,
     }
 
 
@@ -47,11 +30,38 @@ class AddPlace extends Component {
         console.log("fee : ", value)
     }
 
-    GetFileUploaded = (field, value) => {
-        console.log(value)
-        // this.state.FileList.push(value)
-        // console.log(value)
-        this.setState({ [field]: value ,FileQuantity:value.length})
+    GetFileUploaded = async (field, value) => {
+        this.setState({FileList:[]})
+        this.setState({ [field]: value, FileQuantity: value })
+        const length = this.state.FileQuantity.length
+        console.log(length)
+        var arr = []
+        for (var x = 0; x < length; x++) {
+            // this.state.FileList.push("localhost:3030/images/places/"+this.state.FileQuantity[x].name)
+            // this.state.FileList.push("localhost:3030/images/places/"+this.state.FileQuantity[x].name)
+            arr.push("localhost:3030/images/places/"+this.state.FileQuantity[x].name)
+        }
+        // console.log("ARRAY : ",arr)
+        // this.state.FileList.push(arr)
+        var data = new FormData();
+        const lengthOfFile = document.getElementById('img').files.length
+        if (lengthOfFile === 1) {
+            const dataFile = document.getElementById('img').files[0]
+            data.append('img', dataFile)
+            const resp = await axios.post('http://localhost:3030/api/uploadSingleFile', data)
+            console.log('upload single file : ', resp)
+        } else {
+            const dataFile = document.getElementById('img')
+            for (var y = 0; y < dataFile.files.length; y++) {
+                data.append('img', dataFile.files[y])
+            }
+            const resp = await axios.post('http://localhost:3030/api/uploadMultipleFile', data)
+            console.log('upload Multiple file : ',resp)
+        }
+
+        this.setState({FileList:arr})
+        console.log("FileList : ",this.state.FileList)
+
     }
 
     CarParkingOption = (field, value) => {
@@ -65,77 +75,25 @@ class AddPlace extends Component {
     }
 
     DaysSelected = (field, value) => {
-        //monday
-        if (value === 'mon' && this.state.mon === true) {
-            this.setState({ mon: false })
-        } else if (value === 'mon' && this.state.mon === false) {
-            this.setState({ mon: true })
-        }
-
-        if (value === 'tue' && this.state.tue === true) {
-            this.setState({ tue: false })
-        } else if (value === 'tue' && this.state.tue === false) {
-            this.setState({ tue: true })
-        }
-
-        if (value === 'wed' && this.state.wed === true) {
-            this.setState({ wed: false })
-        } else if (value === 'wed' && this.state.wed === false) {
-            this.setState({ wed: true })
-        }
-
-        if (value === 'thu' && this.state.thu === true) {
-            this.setState({ thu: false })
-        } else if (value === 'thu' && this.state.thu === false) {
-            this.setState({ thu: true })
-        }
-
-        if (value === 'fri' && this.state.fri === true) {
-            this.setState({ fri: false })
-        } else if (value === 'fri' && this.state.fri === false) {
-            this.setState({ fri: true })
-        }
-
-        if (value === 'sat' && this.state.sat === true) {
-            this.setState({ sat: false })
-        } else if (value === 'sat' && this.state.sat === false) {
-            this.setState({ sat: true })
-        }
-
-        if (value === 'sun' && this.state.sun === true) {
-            this.setState({ sun: false })
-        } else if (value === 'sun' && this.state.sun === false) {
-            this.setState({ sun: true })
-        }
+        this.setState({ [field]: value })
+        console.log(this.state.days)
     }
 
 
     CreatePlace = async (event) => {
-        // event.preventDefault()
 
-        // alert('test')
-        await axios.post('http://localhost:3030/api/todo', {
-            placeName: this.state.placeName,
-            placeDes: this.state.placeDes,
-            tel: this.state.tel,
-            openTime: this.state.openTime,
-            closeTime: this.state.closeTime,
-            fee: this.state.fee,
-            carParking: this.state.carParking,
-            tags: this.state.tags,
-            mon: this.state.mon,
-            tue: this.state.tue,
-            wed: this.state.wed,
-            thu: this.state.thu,
-            fri: this.state.fri,
-            sat: this.state.sat,
-            sun: this.state.sun,
-            FileList:this.state.FileList
-        })
-
-        this.setState({
-            placeName: ""
-        })
+            const resp = await axios.post('http://localhost:3030/api/testData',{
+                placeName: this.state.placeName,
+                placeDes: this.state.placeDes,
+                tel: this.state.tel,
+                openTime: this.state.openTime,
+                closeTime: this.state.closeTime,
+                fee: this.state.fee,
+                carParking: this.state.carParking,
+                tags: this.state.tags,
+                days: this.state.days,
+                FileList: this.state.FileList
+            })
 
     }
 
@@ -146,6 +104,7 @@ class AddPlace extends Component {
 
 
     componentDidMount() {
+        console.log(this.state.FileList)
     }
 
     showData = () => {
@@ -156,10 +115,7 @@ class AddPlace extends Component {
         return (
             <div>
                 {
-                    this.state.FileList.length
-                    // this.state.FileList.map((data)=>{
-                    //     data.length
-                    // })
+                    
                 }
                 <Header />
                 <Form onSubmit={this.CreatePlace}>

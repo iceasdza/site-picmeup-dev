@@ -12,13 +12,6 @@ class Home extends Component {
         Nahee: 'pingpong na heee'
     }
 
-    // GetFileUploaded = (field, value) => {
-    //     console.log(value)
-    //     // this.state.FileList.push(value)
-    //     // console.log(value)
-    //     this.setState({ [field] : value })
-    // }
-
     CreatePlace = async (event) => {
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
@@ -28,7 +21,6 @@ class Home extends Component {
             const resp = await axios.post('http://localhost:3030/api/uploadSingleFile', data)
             console.log('upload single file : ', resp)
         } else {
-            var arr = []
             const dataFile = document.getElementById('img')
             for (var x = 0; x < dataFile.files.length; x++) {
                 data.append('img', dataFile.files[x])
