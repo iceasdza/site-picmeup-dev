@@ -30,14 +30,14 @@ const Place_Form = (props) => {
                     <label>อัพโหลดรูปภาพสถานที่</label>
                     <label className="custom-file-upload">
                         <p className="Color">อัพโหลดรูปภาพ</p>
-                        <input type="file" name="img" multiple  onChange={(event) => props.GetFileUploaded('files',event.target.files)
+                        <input type="file" name="img" multiple  onChange={(event) => props.GetFileUploaded('FileList',event.target.files)
                             }/>
                     </label>
                 </Form.Field>
                 <Form.Group>
                     <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} />
                     <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} />
-                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3} required required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
+                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3}  required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
                 </Form.Group>
                 <Form.Group>
                     <div className="Radio">
@@ -69,7 +69,7 @@ const Place_Form = (props) => {
                 </Form.Group>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)}/>
+                    <Dropdown multiple selection options={options} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e,{value})=> props.TagSelected('tags',value)}/>
                 </div>
                 <p>แผนที่</p>
                 <div>
