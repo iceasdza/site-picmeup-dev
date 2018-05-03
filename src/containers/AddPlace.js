@@ -29,12 +29,23 @@ class AddPlace extends React.Component {
         console.log("fee : ", value)
     }
 
+    DeletePhotoUploaded = async (field,value,index)=>{
+        const src = value
+        await  axios.get('http://localhost:3030/api/deleteImage/'+src)
+        const arr = this.state.FileList
+        console.log("BEFORE : ",arr)
+        arr.splice(index,1)
+        console.log("AFTER : ",arr)
+        this.setState({FileList:arr})
+        // await  axios.post('http://localhost:3030/api/deleteImage')
+    }
+
     GetFileUploaded = async (field, value) => {
         var arr = []
         for (var x = 0; x < value.length; x++) {
             arr.push("http://localhost:3030/images/places/"+value[x].name)
         }
-        this.setState({FileList:arr})
+        // this.setState({FileList:arr})
         console.log("FileList : ",this.state.FileList)
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
@@ -43,6 +54,7 @@ class AddPlace extends React.Component {
             data.append('img', dataFile)
             const resp = await axios.post('http://localhost:3030/api/uploadSingleFile', data)
             console.log('upload single file : ', resp)
+            this.setState({FileList:arr})
         } else {
             const dataFile = document.getElementById('img')
             for (var y = 0; y < dataFile.files.length; y++) {
@@ -50,9 +62,9 @@ class AddPlace extends React.Component {
             }
             const resp = await axios.post('http://localhost:3030/api/uploadMultipleFile', data)
             console.log('upload Multiple file : ',resp)
+            this.setState({FileList:arr})
         }
 
-        console.log("FileList : ",arr)
 
     }
 
@@ -96,12 +108,8 @@ class AddPlace extends React.Component {
 
 
     componentDidMount() {
-        console.log(this.state.FileList)
     }
 
-    showData = () => {
-        alert(this.state.FileQuantity)
-    }
 
     render() {
         console.log(this.state)
@@ -138,6 +146,7 @@ class AddPlace extends React.Component {
                         CarParkingOption={this.CarParkingOption}
                         DaysSelected={this.DaysSelected}
                         GetFileUploaded={this.GetFileUploaded}
+                        DeletePhotoUploaded={this.DeletePhotoUploaded}
                     />
                 </Form>
             </div>
