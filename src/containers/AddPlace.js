@@ -31,18 +31,12 @@ class AddPlace extends React.Component {
     }
 
     GetFileUploaded = async (field, value) => {
-        this.setState({FileList:[]})
-        this.setState({ [field]: value, FileQuantity: value })
-        const length = this.state.FileQuantity.length
-        console.log(length)
         var arr = []
-        for (var x = 0; x < length; x++) {
-            // this.state.FileList.push("localhost:3030/images/places/"+this.state.FileQuantity[x].name)
-            // this.state.FileList.push("localhost:3030/images/places/"+this.state.FileQuantity[x].name)
-            arr.push("localhost:3030/images/places/"+this.state.FileQuantity[x].name)
+        for (var x = 0; x < value.length; x++) {
+            arr.push("localhost:3030/images/places/"+value[x].name)
         }
-        // console.log("ARRAY : ",arr)
-        // this.state.FileList.push(arr)
+        this.setState({FileList:arr})
+        console.log("FileList : ",this.state.FileList)
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
         if (lengthOfFile === 1) {
@@ -59,8 +53,7 @@ class AddPlace extends React.Component {
             console.log('upload Multiple file : ',resp)
         }
 
-        this.setState({FileList:arr})
-        console.log("FileList : ",this.state.FileList)
+        console.log("FileList : ",arr)
 
     }
 
@@ -112,6 +105,7 @@ class AddPlace extends React.Component {
     }
 
     render() {
+        console.log(this.state)
         return (
             <div>
                 {
