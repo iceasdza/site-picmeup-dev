@@ -20,8 +20,7 @@ class AddPlace extends React.Component {
             latitude: 0,
             longtitude: 0
         },
-        FileList: [0],
-        FileQuantity: 0,
+        FileList: [],
     }
 
 
@@ -33,7 +32,7 @@ class AddPlace extends React.Component {
     GetFileUploaded = async (field, value) => {
         var arr = []
         for (var x = 0; x < value.length; x++) {
-            arr.push("localhost:3030/images/places/"+value[x].name)
+            arr.push("http://localhost:3030/images/places/"+value[x].name)
         }
         this.setState({FileList:arr})
         console.log("FileList : ",this.state.FileList)
@@ -131,6 +130,7 @@ class AddPlace extends React.Component {
                         sat={this.state.sat}
                         sun={this.state.sun}
                         tags={this.state.tags}
+                        FileList= {this.state.FileList}
                         // pass method
                         TagSelected={this.TagSelected}
                         FeeOption={this.FeeOption}

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Dropdown} from 'formsy-semantic-ui-react'
-import {Label} from 'semantic-ui-react'
+import {Label,Image, Dimmer, Loader,Segment} from 'semantic-ui-react'
 import '../../static/Form.css'
 
 const optionsTag = [
@@ -28,6 +28,7 @@ const renderLabel = label => ({
 
 
 const Place_Form = (props) => {
+
     return (
         <div className="Body">
             <div className="Head">
@@ -43,6 +44,20 @@ const Place_Form = (props) => {
                         <p className="Color">อัพโหลดรูปภาพ</p>
                         <input type="file" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList',event.target.files)}/>
                     </label>
+                    {
+                        props.FileList.map(data=>(
+                            <Image src={data.toString()} />
+                        //     <Segment>
+                        //     <Dimmer active inline>
+                        //       <Loader>Loading</Loader>
+                        //     </Dimmer>
+                        //     <Image src={data} />
+                        //   </Segment>
+                        ))
+
+                    }
+              
+                    
                 </Form.Field>
                 <Form.Group>
                     <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} />
