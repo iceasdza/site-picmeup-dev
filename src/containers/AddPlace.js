@@ -46,7 +46,7 @@ class AddPlace extends React.Component {
             arr.push("http://localhost:3030/images/places/"+value[x].name)
         }
         // this.setState({FileList:arr})
-        console.log("FileList : ",this.state.FileList)
+        // console.log("FileList : ",this.state.FileList)
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
         if (lengthOfFile === 1) {
@@ -99,6 +99,8 @@ class AddPlace extends React.Component {
                 FileList: this.state.FileList
             })
 
+            //reload for test
+            window.location.reload()
     }
 
     setField = (field, value) => {
