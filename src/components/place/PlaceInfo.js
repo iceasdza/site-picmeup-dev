@@ -4,7 +4,9 @@ import { Form } from 'formsy-semantic-ui-react'
 
 const PlaceInfo = (props) => (
     <div className = "PlaceInfo">
-            
+            TEST
+            {props.placeName}
+            {props.placeDes}
     </div>
 )
 export default PlaceInfo

@@ -44,23 +44,18 @@ class PlaceInfo extends Component {
         return (
             <div>
                 <Header />
-                <PlaceDetail/>
-                {/* <h1>{this.state.placeName}</h1>
-                <h1>{this.state.placeDes}</h1>
-                <h1>{this.state.tel}</h1>
-                <h1>{this.state.openTime}</h1>
-                <h1>{this.state.closeTime}</h1>
-                <h1>{this.state.fee}</h1>
-                <h1>{this.state.carParking}</h1>
-                {this.state.days.map(data => (
-                    <h1>{data}</h1>
-                ))}
-                {this.state.tags.map(data => (
-                    <h1>{data}</h1>
-                ))}
-                {this.state.FileList.map(data => (
-                    <img src={data}/>
-                ))} */}
+                <PlaceDetail
+                placeName={this.state.placeName}
+                placeDes={this.state.placeDes}
+                tel={this.state.tel}
+                openTime={this.state.openTime}
+                closeTime={this.state.closeTime}
+                fee={this.state.fee}
+                carParking={this.state.carParking}
+                days={this.state.days}
+                tags={this.state.tags}
+                FileList={this.state.FileList}
+                />
 
             </div>
         )
