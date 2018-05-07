@@ -5,7 +5,7 @@ import Header from '../components/place/Header_Picmeup'
 import axios from 'axios';
 
 class AddPlace extends React.Component {
-
+    
     state = {
         placeName: "",
         placeDes: "",
@@ -117,9 +117,6 @@ class AddPlace extends React.Component {
         console.log(this.state)
         return (
             <div>
-                {
-                    
-                }
                 <Header />
                 <Form onSubmit={this.CreatePlace}>
                     <PlaceForm
