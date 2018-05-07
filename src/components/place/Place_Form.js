@@ -57,11 +57,13 @@ const Place_Form = (props) => {
 
 
                 </Form.Field>
-                <Form.Group>
-                    <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} />
-                    <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} />
-                    <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3} required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
-                </Form.Group>
+                <div className ="Gap">
+                    <Form.Group>
+                        <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='เบอร์โทร' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} />
+                        <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='เวลาเปิด' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} />
+                        <Form.Input name="place_close" label='ถึง' placeholder='เวลาปิด' width={3} required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} />
+                    </Form.Group>
+                </div>
                 <Form.Group>
                     <div className="Radio">
                         <Form.Group grouped>
