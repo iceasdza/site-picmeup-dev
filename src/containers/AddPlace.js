@@ -115,9 +115,6 @@ class AddPlace extends React.Component {
         console.log(this.state)
         return (
             <div>
-                {
-                    
-                }
                 <Header />
                 <Form onSubmit={this.CreatePlace}>
                     <PlaceForm
