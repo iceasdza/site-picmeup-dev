@@ -24,7 +24,7 @@ class PlaceInfo extends Component {
     }
 
     componentDidMount = async () => {
-        const resp = await axios.get("http://localhost:3030/api/getPlaceInfoFromId/5af02108cd34222decf00b7d")
+        const resp = await axios.get("http://localhost:3030/api/getPlaceInfoFromId/5af0774eda86f61fddbe9670")
         const data = resp.data[0]
         this.setState({
             placeName: data.placeName,
