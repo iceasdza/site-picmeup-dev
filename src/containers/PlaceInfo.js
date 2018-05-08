@@ -21,10 +21,14 @@ class PlaceInfo extends Component {
             longtitude: 0
         },
         FileList: [],
+        id:""
     }
 
     componentDidMount = async () => {
-        const resp = await axios.get("http://localhost:3030/api/getPlaceInfoFromId/5af0774eda86f61fddbe9670")
+        let _id = this.props.location.state.id
+
+        const resp = await axios.get("http://localhost:3030/api/getPlaceInfoFromId/"+_id)
+        console.log(_id)
         const data = resp.data[0]
         this.setState({
             placeName: data.placeName,
@@ -40,7 +44,11 @@ class PlaceInfo extends Component {
         })
     }
 
-    render() {
+    render = () => {
+            // console.log(this.props.location.state.id)
+            // let _id = this.props.location.state.id
+            // this.setState({id:_id})
+            // console.log(this.state.id)
         return (
             <div>
                 <Header />
