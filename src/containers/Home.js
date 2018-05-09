@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Card, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
+import Header from '../components/place/Header_Picmeup'
 import axios from 'axios';
 class Home extends Component {
 
@@ -10,7 +11,7 @@ class Home extends Component {
         placesData: []
     }
 
-    getData = async () =>{
+    getData = async () => {
         const resp = await axios.get("http://localhost:3030/api/getPlaceInfo")
         this.setState({ placesData: resp.data })
     }
@@ -19,11 +20,11 @@ class Home extends Component {
         this.getData()
         // console.log(this.state.placesData)
     }
-    deletePlace = async (event) =>{
-            const id = event.target.value
-            const resp = await axios.delete("http://localhost:3030/api/deletePlaceDataFromId/"+id)
-            alert("delete!")
-            this.getData()
+    deletePlace = async (event) => {
+        const id = event.target.value
+        const resp = await axios.delete("http://localhost:3030/api/deletePlaceDataFromId/" + id)
+        alert("delete!")
+        this.getData()
     }
 
 
@@ -31,20 +32,25 @@ class Home extends Component {
     render() {
         return (
             <div>
-                <Card.Group itemsPerRow={4}>
+                <Header/>
+                <Card.Group itemsPerRow={4} >
                     {this.state.placesData.map(data => (
                         <Card>
                             <Image src={data.FileList[0]} />
-                            {data._id}
+                            {data.placeName}
                             <Card.Content>
                                 {/* <Link to={"/placeInfo/" + data._id}>{data.placeName}</Link> */}
 
                                 <Link to={{
                                     pathname: '/placeInfo',
-                                    state: {id: data._id},
-                                }} >TEST</Link>
-
+                                    state: { id: data._id },
+                                }} >View</Link>
                                 <button value={data._id} onClick={this.deletePlace}>DELETE</button>
+                                <Link to={{
+                                    pathname: '/updatePlace',
+                                    state: { id: data._id },
+                                }} >Edit</Link>
+
 
                             </Card.Content>
                         </Card>

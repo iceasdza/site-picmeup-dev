@@ -24,7 +24,7 @@ class PlaceInfo extends Component {
         id:""
     }
 
-    componentDidMount = async () => {
+    getData  = async () => {
         let _id = this.props.location.state.id
 
         const resp = await axios.get("http://localhost:3030/api/getPlaceInfoFromId/"+_id)
@@ -42,6 +42,10 @@ class PlaceInfo extends Component {
             tags: data.tags,
             FileList: data.FileList
         })
+    }
+
+    componentDidMount =  () => {
+            this.getData()
     }
 
     render = () => {
