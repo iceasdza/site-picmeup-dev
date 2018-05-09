@@ -100,7 +100,7 @@ class AddPlace extends React.Component {
             })
 
             //reload for test
-            window.location.reload()
+            window.location.replace("/")
     }
 
     setField = (field, value) => {

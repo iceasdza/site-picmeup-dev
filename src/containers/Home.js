@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Card, Image } from 'semantic-ui-react'
+import { Card, Image, Button } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import axios from 'axios';
 class Home extends Component {
@@ -10,11 +10,20 @@ class Home extends Component {
         placesData: []
     }
 
-    componentDidMount = async () => {
+    getData = async () =>{
         const resp = await axios.get("http://localhost:3030/api/getPlaceInfo")
-
         this.setState({ placesData: resp.data })
+    }
+
+    componentDidMount = async () => {
+        this.getData()
         // console.log(this.state.placesData)
+    }
+    deletePlace = async (event) =>{
+            const id = event.target.value
+            const resp = await axios.delete("http://localhost:3030/api/deletePlaceDataFromId/"+id)
+            alert("delete!")
+            this.getData()
     }
 
 
@@ -34,6 +43,8 @@ class Home extends Component {
                                     pathname: '/placeInfo',
                                     state: {id: data._id},
                                 }} >TEST</Link>
+
+                                <button value={data._id} onClick={this.deletePlace}>DELETE</button>
 
                             </Card.Content>
                         </Card>
