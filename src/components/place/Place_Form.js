@@ -1,5 +1,5 @@
 import React from 'react'
-import MaskedInput from 'react-text-mask'
+
 import { Form, Dropdown } from 'formsy-semantic-ui-react'
 import { Label, Image, Card, Icon } from 'semantic-ui-react'
 import '../../static/Form.css'
@@ -60,9 +60,9 @@ const Place_Form = (props) => {
                 </Form.Field>
                 <div className ="Gap">
                     <Form.Group>
-                        <Form.Input name="place_tel" label='เบอร์โทรติดต่อ (ต.ย. 0812345678 , 038123456)' placeholder='ใส่ตัวเลข 9 หรือ 10 ตัว' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} errorLabel={ <Label color="red" pointing/> } validations="isNumeric,minLength:9,maxLength:10" validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เบอร์ติดต่อ',isNumeric: 'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง',minLength:'โปรดใส่เบอร์โทรศัพท์ให้ครบถ้วน',maxLength:'โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง'}}/>
-                        <Form.Input name="place_open" label='เวลาเปิดทำการ (ต.ย. 1200)' placeholder='ใส่ตัวเลข 4 ตัว' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} errorLabel={ <Label color="red" pointing/> } validations="isNumeric,isLength:4" validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาเปิด',isNumeric: 'รูปแบบของเวลาไม่ถูกต้อง',isLength:'โปรดใส่เวลาให้ถูกต้อง'}}/>
-                        <Form.Input name="place_close" label='ถึง (ต.ย. 2100)' placeholder='ใส่ตัวเลข 4 ตัว' width={3} required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} errorLabel={ <Label color="red" pointing/> } validations="isNumeric,isLength:4" validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาปิด',isNumeric: 'รูปแบบของเวลาไม่ถูกต้อง',isLength:'โปรดใส่เวลาให้ถูกต้อง'}}/>
+                        <Form.Input name="place_tel" label='เบอร์โทรติดต่อ' placeholder='ใส่เลขเบอร์ 9 หรือ 10 ตัว' width={5} required value={props.tel} onChange={(e, { value }) => props.setField("tel", value)} errorLabel={ <Label color="red" pointing/> } validations="isNumeric,minLength:9,maxLength:10" validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เบอร์ติดต่อ',isNumeric: 'รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง',minLength:'โปรดใส่เบอร์โทรศัพท์ให้ครบถ้วน',maxLength:'โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง'}}/>
+                        <Form.Input name="place_open" label='เวลาเปิดทำการ' placeholder='ใส่ตัวเลข 4 ตัว' width={3} required value={props.openTime} onChange={(e, { value }) => props.setField("openTime", value)} errorLabel={ <Label color="red" pointing/> } validations="isNumeric,isLength:4" validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาเปิด',isNumeric: 'รูปแบบของเวลาไม่ถูกต้อง',isLength:'โปรดใส่เวลาให้ถูกต้อง'}}/>
+                        <Form.Input name="place_close" label='ถึง' placeholder='ใส่ตัวเลข 4 ตัว' width={3} required value={props.closeTime} onChange={(e, { value }) => props.setField("closeTime", value)} errorLabel={ <Label color="red" pointing/> } validations="isNumeric,isLength:4" validationErrors={{isDefaultRequiredValue: 'จำเป็นต้องใส่เวลาปิด',isNumeric: 'รูปแบบของเวลาไม่ถูกต้อง',isLength:'โปรดใส่เวลาให้ถูกต้อง'}}/>
                     </Form.Group>
                 </div>
                 <Form.Group>
