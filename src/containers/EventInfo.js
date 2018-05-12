@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import Header from '../components/place/Header_Picmeup'
-import PlaceDetail from '../components/place/PlaceInfo'
+import EventDetail from '../components/event/EventInfo'
 import axios from '../lib/axios';
 
-class PlaceInfo extends Component {
+class EventInfo extends Component {
 
     state = {
-        placeName: "",
-        placeDes: "",
+        eventName: "",
+        eventDes: "",
         tel: "",
         openTime: "",
         closeTime: "",
@@ -21,17 +21,20 @@ class PlaceInfo extends Component {
             longtitude: 0
         },
         FileList: [],
-        id:""
+        id:"",
+        placeId:"",
+        placeFileList:"",
+        placeName:""
     }
 
     getData  = async () => {
         let _id = this.props.location.state.id
-        const resp = await axios.get("/api/getPlaceInfoFromId/"+_id)
+        const resp = await axios.get("/api/getEventInfoFromId/"+_id)
         // console.log(axios)
         const data = resp.data[0]
         this.setState({
-            placeName: data.placeName,
-            placeDes: data.placeDes,
+            eventName: data.eventName,
+            eventDes: data.eventDes,
             tel: data.tel,
             openTime: data.openTime,
             closeTime: data.closeTime,
@@ -39,12 +42,26 @@ class PlaceInfo extends Component {
             carParking: data.carParking,
             days: data.days,
             tags: data.tags,
-            FileList: data.FileList
+            FileList: data.FileList,
+            placeId:data.PlaceId
         })
+        const place = await axios.get("/api/getPlaceInfoFromId/"+this.state.placeId)
+        const placeData = place.data[0]
+        this.setState({
+            placeName:placeData.placeName,
+            placeFileList:placeData.FileList[0]
+        })
+
+        console.log(this.state)
     }
+
+
+
 
     componentDidMount =  () => {
             this.getData()
+
+            console.log(this.state.placeFileList)
     }
 
     render = () => {
@@ -55,9 +72,9 @@ class PlaceInfo extends Component {
         return (
             <div>
                 <Header />
-                <PlaceDetail
-                placeName={this.state.placeName}
-                placeDes={this.state.placeDes}
+                <EventDetail
+                eventName={this.state.eventName}
+                eventDes={this.state.eventDes}
                 tel={this.state.tel}
                 openTime={this.state.openTime}
                 closeTime={this.state.closeTime}
@@ -66,6 +83,9 @@ class PlaceInfo extends Component {
                 days={this.state.days}
                 tags={this.state.tags}
                 FileList={this.state.FileList}
+                placeId={this.state.placeId}
+                placeFileList={this.state.placeFileList}
+                placeName={this.state.placeName}
                 />
 
             </div>
@@ -73,4 +93,4 @@ class PlaceInfo extends Component {
     }
 }
 
-export default PlaceInfo
+export default EventInfo

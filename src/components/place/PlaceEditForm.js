@@ -32,7 +32,7 @@ const PlaceEditForm = (props) => {
     return (
         <div className="Body">
         <div className="Head">
-            <h1>สร้างสถานที่</h1>
+            <h1>แก้ไขสถานที่</h1>
             <hr className="Hr" />
         </div>
         <div className="Form">

@@ -1,14 +1,13 @@
-import React, { Component } from 'react';
-import PlaceForm from '../components/place/Place_Form'
-import { Form } from 'formsy-semantic-ui-react'
+import React, { Component } from 'react'
+import 'semantic-ui-css/semantic.min.css';
 import Header from '../components/place/Header_Picmeup'
+import { Form } from 'formsy-semantic-ui-react'
+import EventForm from '../components/event/EventForm'
 import axios from '../lib/axios';
-
-class AddPlace extends React.Component {
-    
+class AddEvent extends Component {
     state = {
-        placeName: "",
-        placeDes: "",
+        eventName: "",
+        eventDes: "",
         tel: "",
         openTime: "",
         closeTime: "",
@@ -21,17 +20,18 @@ class AddPlace extends React.Component {
             longtitude: 0
         },
         FileList: [],
+        placesData: [],
+        PlaceId:''
     }
 
-
-    FeeOption = (field, value) => {
+    setField = (field, value) => {
         this.setState({ [field]: value })
-        console.log("fee : ", value)
+        console.log(field + " : " + value)
     }
 
     DeletePhotoUploaded = async (field,value,index)=>{
         const src = value
-        await  axios.get('/api/deleteImage/'+src)
+        await  axios.get('/api/deleteEventImage/'+src)
         const arr = this.state.FileList
         console.log("BEFORE : ",arr)
         arr.splice(index,1)
@@ -39,10 +39,15 @@ class AddPlace extends React.Component {
         this.setState({FileList:arr})
     }
 
+    getPlaceDetail = async()=>{
+        const resp = await axios.get("/api/getPlaceInfo")
+        this.setState({ placesData: resp.data })
+    }
+
     GetFileUploaded = async (field, value) => {
         var arr = []
         for (var x = 0; x < value.length; x++) {
-            arr.push("http://localhost:3030/images/places/"+value[x].name)
+            arr.push("http://localhost:3030/images/events/"+value[x].name)
         }
         // this.setState({FileList:arr})
         // console.log("FileList : ",this.state.FileList)
@@ -51,7 +56,7 @@ class AddPlace extends React.Component {
         if (lengthOfFile === 1) {
             const dataFile = document.getElementById('img').files[0]
             data.append('img', dataFile)
-            const resp = await axios.post('/api/uploadSingleFile', data)
+            const resp = await axios.post('/api/uploadEventSingleFile', data)
             console.log('upload single file : ', resp)
             this.setState({FileList:arr})
         } else {
@@ -59,12 +64,18 @@ class AddPlace extends React.Component {
             for (var y = 0; y < dataFile.files.length; y++) {
                 data.append('img', dataFile.files[y])
             }
-            const resp = await axios.post('/api/uploadMultipleFile', data)
+            const resp = await axios.post('/api/uploadEventMultipleFile', data)
             console.log('upload Multiple file : ',resp)
             this.setState({FileList:arr})
         }
 
+        console.log()
 
+
+    }
+    FeeOption = (field, value) => {
+        this.setState({ [field]: value })
+        console.log("fee : ", value)
     }
 
     CarParkingOption = (field, value) => {
@@ -77,51 +88,50 @@ class AddPlace extends React.Component {
         console.log(this.state.tags)
     }
 
+    PlaceSelected = (field, value) => {
+        this.setState({ [field]: value })
+        console.log(this.state.PlaceId)
+    }
+
     DaysSelected = (field, value) => {
         this.setState({ [field]: value })
         console.log(this.state.days)
     }
 
-
-    CreatePlace = async (event) => {
-
-            const resp = await axios.post('/api/addplace',{
-                placeName: this.state.placeName,
-                placeDes: this.state.placeDes,
-                tel: this.state.tel,
-                openTime: this.state.openTime,
-                closeTime: this.state.closeTime,
-                fee: this.state.fee,
-                carParking: this.state.carParking,
-                tags: this.state.tags,
-                days: this.state.days,
-                FileList: this.state.FileList
-            })
-
-            //reload for test
-            window.location.replace("/")
+    componentDidMount = async () => {
+        this.getPlaceDetail()
+        // console.log(this.state.placesData)
     }
 
-    setField = (field, value) => {
-        this.setState({ [field]: value })
-        console.log(field + " : " + value)
-    }
+    CreateEvent = async (event) => {
 
+        const resp = await axios.post('/api/addevent',{
+            eventName: this.state.eventName,
+            eventDes: this.state.eventDes,
+            tel: this.state.tel,
+            openTime: this.state.openTime,
+            closeTime: this.state.closeTime,
+            fee: this.state.fee,
+            carParking: this.state.carParking,
+            tags: this.state.tags,
+            days: this.state.days,
+            FileList: this.state.FileList,
+            PlaceId: this.state.PlaceId
 
-    componentDidMount() {
-    }
+        })
 
+        //reload for test
+        window.location.replace("/")
+}
 
     render() {
-        console.log(this.state)
         return (
             <div>
                 <Header />
-                <Form onSubmit={this.CreatePlace}>
-                    <PlaceForm
-                        // passing value
-                        placeName={this.state.placeName}
-                        placeDes={this.state.placeDes}
+                <Form onSubmit={this.CreateEvent}>
+                    <EventForm
+                        eventName={this.state.eventName}
+                        eventDes={this.state.eventDes}
                         tel={this.state.tel}
                         openTime={this.state.openTime}
                         closeTime={this.state.closeTime}
@@ -129,15 +139,17 @@ class AddPlace extends React.Component {
                         carParking={this.state.carParking}
                         days={this.state.days}
                         tags={this.state.tags}
-                        FileList= {this.state.FileList}
-                        // pass method
-                        TagSelected={this.TagSelected}
-                        FeeOption={this.FeeOption}
+                        FileList={this.state.FileList}
+                        placesData={this.state.placesData}
+
                         setField={this.setField}
-                        CarParkingOption={this.CarParkingOption}
-                        DaysSelected={this.DaysSelected}
                         GetFileUploaded={this.GetFileUploaded}
                         DeletePhotoUploaded={this.DeletePhotoUploaded}
+                        TagSelected={this.TagSelected}
+                        FeeOption={this.FeeOption}
+                        CarParkingOption={this.CarParkingOption}
+                        DaysSelected={this.DaysSelected}
+                        PlaceSelected={this.PlaceSelected}
                     />
                 </Form>
             </div>
@@ -145,4 +157,4 @@ class AddPlace extends React.Component {
     }
 }
 
-export default AddPlace
+export default AddEvent

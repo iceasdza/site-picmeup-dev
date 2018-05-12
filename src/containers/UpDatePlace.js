@@ -4,7 +4,7 @@ import Header from '../components/place/Header_Picmeup'
 import PlaceEdit from '../components/place/PlaceEditForm'
 import { Form } from 'formsy-semantic-ui-react'
 import { Label, Image, Card, Icon } from 'semantic-ui-react'
-import axios from 'axios';
+import axios from '../lib/axios';
 
 class Home extends Component {
 
@@ -49,7 +49,7 @@ class Home extends Component {
     getData = async () => {
         let _id = this.props.location.state.id
 
-        const resp = await axios.get("http://localhost:3030/api/getPlaceInfoFromId/" + _id)
+        const resp = await axios.get("/api/getEventInfoFromId/" + _id)
         console.log(_id)
         const data = resp.data[0]
         this.setState({
@@ -74,7 +74,7 @@ class Home extends Component {
 
     DeletePhotoUploaded = async (field,value,index)=>{
         const src = value
-        await  axios.get('http://localhost:3030/api/deleteImage/'+src)
+        await  axios.get('/api/deleteImage/'+src)
         const arr = this.state.FileList
         console.log("BEFORE : ",arr)
         arr.splice(index,1)
@@ -92,7 +92,7 @@ class Home extends Component {
         if (lengthOfFile === 1) {
             const dataFile = document.getElementById('img').files[0]
             data.append('img', dataFile)
-            const resp = await axios.post('http://localhost:3030/api/uploadSingleFile', data)
+            const resp = await axios.post('/api/uploadSingleFile', data)
             console.log('upload single file : ', resp)
             this.setState({FileList:arr})
         } else {
@@ -100,7 +100,7 @@ class Home extends Component {
             for (var y = 0; y < dataFile.files.length; y++) {
                 data.append('img', dataFile.files[y])
             }
-            const resp = await axios.post('http://localhost:3030/api/uploadMultipleFile', data)
+            const resp = await axios.post('/api/uploadMultipleFile', data)
             console.log('upload Multiple file : ',resp)
             this.setState({FileList:arr})
         }
@@ -115,7 +115,7 @@ class Home extends Component {
 
     UpdatePlace = async (event) => {
         const date = new Date();
-        const resp = await axios.put('http://localhost:3030/api/UpdatePlaceFromId/'+this.state.id,{
+        const resp = await axios.put('/api/UpdatePlaceFromId/'+this.state.id,{
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
             tel: this.state.tel,

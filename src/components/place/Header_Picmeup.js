@@ -1,5 +1,6 @@
 import React, {Component} from 'react'
 import { Dropdown, Menu, Button, Input, Image, Responsive, Sidebar, Icon} from 'semantic-ui-react'
+import { Link } from 'react-router-dom'
 import '../../static/Header.css'
 import logo from '../../static/logo-white-test1.png'
 
@@ -15,9 +16,7 @@ class Header_picmeup extends Component{
                 <Responsive {...Responsive.onlyComputer}>
                     <Menu secondary inverted>
                         <Menu.Menu>
-                            <a href = 'http://localhost:3000/'>
-                                <Image className="Img" src = {logo} height="50" width="150"/>
-                            </a>
+                            <Link to={{pathname: "/"}}><Image className="Img" src = {logo} height="50" width="150"/></Link>
                         </Menu.Menu>
                             <Menu.Item link name = 'สถานที่ที่น่าสนใจ'/>
                             <Menu.Item link name = 'อีเว้นท์ที่กำลังมาแรง'/>
