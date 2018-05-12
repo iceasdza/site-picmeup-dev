@@ -48,10 +48,13 @@ class Home extends Component {
 
     getData = async () => {
         let _id = this.props.location.state.id
-
-        const resp = await axios.get("/api/getEventInfoFromId/" + _id)
+        const resp = await axios.get("/api/getPlaceInfoFromId/" + _id)
         console.log(_id)
         const data = resp.data[0]
+        console.log(resp)
+        // this.setState({
+        //     placeName: data.placeName
+        // })
         this.setState({
             placeName: data.placeName,
             placeDes: data.placeDes,
@@ -85,7 +88,7 @@ class Home extends Component {
     GetFileUploaded = async (field, value) => {
         var arr = []
         for (var x = 0; x < value.length; x++) {
-            arr.push("http://localhost:3030/images/places/"+value[x].name)
+            arr.push("http://128.199.107.81:3030/images/places/"+value[x].name)
         }
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length

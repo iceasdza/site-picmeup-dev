@@ -48,7 +48,7 @@ const PlaceEditForm = (props) => {
                     {props.FileList.map((src,index) => (
                         <Card>
                             <div>
-                                <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36),index)}/>
+                                <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(49),index)}/>
                             </div>
                             <Image src={src} />
                         </Card>
@@ -79,18 +79,6 @@ const PlaceEditForm = (props) => {
                         <Form.Radio label='ไม่มี' name='parking' value='no' checked={props.carParking === 'no'} onChange={(e, { value }) => props.CarParkingOption('carParking', value)} />
                     </Form.Group>
                 </div>
-                {/* <div className="Radio">
-                    <Form.Group grouped>
-                        <label>วันที่เปิดทำการ</label>
-                        <Form.Checkbox label='วันจันทร์' name='day' value="mon" checked="{props.mon}" onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                        <Form.Checkbox label='วันอังคาร' name='day' value='tue' checked={props.tue} onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                        <Form.Checkbox label='วันพุธ' name='day' value='wed' checked={props.wed} onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                        <Form.Checkbox label='วันพฤหัสบดี' name='day' value='thu' checked={props.thu}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                        <Form.Checkbox label='วันศุกร์' name='day' value='fri' checked={props.fri}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                        <Form.Checkbox label='วันเสาร์' name='day' value='sat' checked={props.sat}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                        <Form.Checkbox label='วันอาทิตย์' name='day' value='sun' checked={props.sun}  onChange={(e, { value }) => props.DaysSelected('days', value)} />
-                    </Form.Group>
-                </div> */}
             </Form.Group>
             <label>วันที่เปิดทำการ</label>
             <div className="Body">

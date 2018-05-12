@@ -42,7 +42,7 @@ class AddPlace extends React.Component {
     GetFileUploaded = async (field, value) => {
         var arr = []
         for (var x = 0; x < value.length; x++) {
-            arr.push("http://localhost:3030/images/places/"+value[x].name)
+            arr.push("http://128.199.107.81:3030/images/places/"+value[x].name)
         }
         // this.setState({FileList:arr})
         // console.log("FileList : ",this.state.FileList)

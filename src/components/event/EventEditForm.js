@@ -59,7 +59,7 @@ const EventForm = (props) => {
                         {props.FileList.map((src, index) => (
                             <Card>
                                 <div>
-                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36), index)} />
+                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(41), index)} />
                                 </div>
                                 <Image src={src} />
                             </Card>

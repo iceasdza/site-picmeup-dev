@@ -3,7 +3,7 @@ import 'semantic-ui-css/semantic.min.css';
 import { Card, Image, Button ,Divider} from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import Header from '../components/place/Header_Picmeup'
-import axios from 'axios';
+import axios from '../lib/axios';
 class Home extends Component {
 
 
@@ -13,8 +13,8 @@ class Home extends Component {
     }
 
     getData = async () => {
-        const places = await axios.get("http://localhost:3030/api/getPlaceInfo")
-        const events = await axios.get("http://localhost:3030/api/GetEventInfo")
+        const places = await axios.get("/api/getPlaceInfo")
+        const events = await axios.get("/api/GetEventInfo")
         this.setState({ placesData: places.data ,eventData:events.data})
     }
 
@@ -25,14 +25,14 @@ class Home extends Component {
 
     deletePlace = async (event) => {
         const id = event.target.value
-        const resp = await axios.delete("http://localhost:3030/api/deletePlaceDataFromId/" + id)
+        const resp = await axios.delete("/api/deletePlaceDataFromId/" + id)
         alert("delete!")
         this.getData()
     }
 
     deleteEvent = async (event) => {
         const id = event.target.value
-        const resp = await axios.delete("http://localhost:3030/api/deleteEventDataFromId/" + id)
+        const resp = await axios.delete("/api/deleteEventDataFromId/" + id)
         alert('DELETED!')
         this.getData()
     }
