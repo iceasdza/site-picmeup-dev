@@ -49,7 +49,7 @@ const Place_Form = (props) => {
                         {props.FileList.map((src,index) => (
                             <Card>
                                 <div>
-                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36),index)}/>
+                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(49),index)}/>
                                 </div>
                                 <Image src={src} />
                             </Card>
