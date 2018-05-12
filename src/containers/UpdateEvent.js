@@ -22,7 +22,8 @@ class UpdateEvent extends Component {
         },
         FileList: [],
         placesData: [],
-        PlaceId:''
+        PlaceId:'',
+        FileName: []
     }
 
     setField = (field, value) => {
@@ -47,7 +48,8 @@ class UpdateEvent extends Component {
             tags: data.tags,
             FileList: data.FileList,
             id:_id,
-            PlaceId:data.PlaceId
+            PlaceId:data.PlaceId,
+            FileName:data.FileName
         })
     }
 
@@ -55,10 +57,12 @@ class UpdateEvent extends Component {
         const src = value
         await  axios.get('/api/deleteEventImage/'+src)
         const arr = this.state.FileList
+        const filesName = this.state.FileName
         console.log("BEFORE : ",arr)
         arr.splice(index,1)
-        console.log("AFTER : ",arr)
-        this.setState({FileList:arr})
+        filesName.splice(index, 1)
+        console.log("AFTER : ",arr)  
+        this.setState({ FileList: arr, FileName: filesName })
     }
 
     getPlaceDetail = async()=>{
@@ -67,9 +71,18 @@ class UpdateEvent extends Component {
     }
 
     GetFileUploaded = async (field, value) => {
+        if(value.length >11){
+            alert('Please upload less than 12 photos')
+            return;
+        }
         var arr = []
+        var names = []
+        var today = new Date()
+        var date = today.getDay() + today.getMonth() + today.getFullYear() + today.getHours().toString();
         for (var x = 0; x < value.length; x++) {
-            arr.push("http://localhost:3030/images/events/"+value[x].name)
+            arr.push("http://128.199.107.81:3030/images/events/"+ date + "-" + value[x].name)
+            // arr.push("http://localhost:3030/images/events/" + date + "-" + value[x].name)
+            names.push(date + "-" + value[x].name)
         }
         // this.setState({FileList:arr})
         // console.log("FileList : ",this.state.FileList)
@@ -80,7 +93,7 @@ class UpdateEvent extends Component {
             data.append('img', dataFile)
             const resp = await axios.post('/api/uploadEventSingleFile', data)
             console.log('upload single file : ', resp)
-            this.setState({FileList:arr})
+            this.setState({ FileList: arr, FileName: names })
         } else {
             const dataFile = document.getElementById('img')
             for (var y = 0; y < dataFile.files.length; y++) {
@@ -88,7 +101,7 @@ class UpdateEvent extends Component {
             }
             const resp = await axios.post('/api/uploadEventMultipleFile', data)
             console.log('upload Multiple file : ',resp)
-            this.setState({FileList:arr})
+            this.setState({ FileList: arr, FileName: names })
         }
 
         console.log()
@@ -139,7 +152,8 @@ class UpdateEvent extends Component {
             tags: this.state.tags,
             days: this.state.days,
             FileList: this.state.FileList,
-            PlaceId: this.state.PlaceId
+            PlaceId: this.state.PlaceId,
+            FileName: this.state.FileName
 
         })
 

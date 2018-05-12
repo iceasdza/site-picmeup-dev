@@ -23,7 +23,8 @@ class Home extends Component {
             longtitude: 0
         },
         FileList: [],
-        id: ""
+        id: "",
+        FileName: []
     }
 
     FeeOption = (field, value) => {
@@ -66,7 +67,8 @@ class Home extends Component {
             days: data.days,
             tags: data.tags,
             FileList: data.FileList,
-            id:_id
+            id: _id,
+            FileName: []
         })
     }
 
@@ -75,20 +77,31 @@ class Home extends Component {
         console.log(field + " : " + value)
     }
 
-    DeletePhotoUploaded = async (field,value,index)=>{
+    DeletePhotoUploaded = async (field, value, index) => {
         const src = value
-        await  axios.get('/api/deleteImage/'+src)
+        await axios.get('/api/deleteImage/' + src)
         const arr = this.state.FileList
-        console.log("BEFORE : ",arr)
-        arr.splice(index,1)
-        console.log("AFTER : ",arr)
-        this.setState({FileList:arr})
+        const filesName = this.state.FileName
+        console.log("BEFORE : ", arr)
+        arr.splice(index, 1)
+        filesName.splice(index, 1)
+        console.log("AFTER : ", arr)
+        this.setState({ FileList: arr, FileName: filesName })
     }
 
     GetFileUploaded = async (field, value) => {
+        if(value.length >11){
+            alert('Please upload less than 12 photos')
+            return;
+        }
         var arr = []
+        var names = []
+        var today = new Date()
+        var date = today.getDay() + today.getMonth() + today.getFullYear() + today.getHours().toString();
         for (var x = 0; x < value.length; x++) {
-            arr.push("http://128.199.107.81:3030/images/places/"+value[x].name)
+            arr.push("http://128.199.107.81:3030/images/places/"+ date + "-" + value[x].name)
+            // arr.push("http://localhost:3030/images/places/" + date + "-" + value[x].name)
+            names.push(date + "-" + value[x].name)
         }
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
@@ -97,15 +110,15 @@ class Home extends Component {
             data.append('img', dataFile)
             const resp = await axios.post('/api/uploadSingleFile', data)
             console.log('upload single file : ', resp)
-            this.setState({FileList:arr})
+            this.setState({ FileList: arr, FileName: names })
         } else {
             const dataFile = document.getElementById('img')
             for (var y = 0; y < dataFile.files.length; y++) {
                 data.append('img', dataFile.files[y])
             }
             const resp = await axios.post('/api/uploadMultipleFile', data)
-            console.log('upload Multiple file : ',resp)
-            this.setState({FileList:arr})
+            console.log('upload Multiple file : ', resp)
+            this.setState({ FileList: arr, FileName: names })
         }
 
 
@@ -118,7 +131,7 @@ class Home extends Component {
 
     UpdatePlace = async (event) => {
         const date = new Date();
-        const resp = await axios.put('/api/UpdatePlaceFromId/'+this.state.id,{
+        const resp = await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
             tel: this.state.tel,
@@ -129,13 +142,14 @@ class Home extends Component {
             tags: this.state.tags,
             days: this.state.days,
             FileList: this.state.FileList,
-            editor : "Patis editor",
-            edit_date :date
+            editor: "Patis editor",
+            edit_date: date,
+            FileName:this.state.FileName
         })
 
         //reload for test
         window.location.replace("/")
-}
+    }
 
 
 
@@ -145,33 +159,33 @@ class Home extends Component {
                 <Header />
                 {/* <h1>{this.state.id}</h1> */}
                 <Form onSubmit={this.UpdatePlace}>
-                <PlaceEdit
-                    placeName={this.state.placeName}
-                    placeDes={this.state.placeDes}
-                    tel={this.state.tel}
-                    openTime={this.state.openTime}
-                    closeTime={this.state.closeTime}
-                    fee={this.state.fee}
-                    carParking={this.state.carParking}
-                    days={this.state.days}
-                    mon={this.state.mon}
-                    tue={this.state.tue}
-                    wed={this.state.wed}
-                    thu={this.state.thu}
-                    fri={this.state.fri}
-                    sat={this.state.sat}
-                    sun={this.state.sun}
-                    tags={this.state.tags}
-                    FileList={this.state.FileList}
+                    <PlaceEdit
+                        placeName={this.state.placeName}
+                        placeDes={this.state.placeDes}
+                        tel={this.state.tel}
+                        openTime={this.state.openTime}
+                        closeTime={this.state.closeTime}
+                        fee={this.state.fee}
+                        carParking={this.state.carParking}
+                        days={this.state.days}
+                        mon={this.state.mon}
+                        tue={this.state.tue}
+                        wed={this.state.wed}
+                        thu={this.state.thu}
+                        fri={this.state.fri}
+                        sat={this.state.sat}
+                        sun={this.state.sun}
+                        tags={this.state.tags}
+                        FileList={this.state.FileList}
 
-                    TagSelected={this.TagSelected}
-                    FeeOption={this.FeeOption}
-                    setField={this.setField}
-                    CarParkingOption={this.CarParkingOption}
-                    DaysSelected={this.DaysSelected}
-                    GetFileUploaded={this.GetFileUploaded}
-                    DeletePhotoUploaded={this.DeletePhotoUploaded}
-                />
+                        TagSelected={this.TagSelected}
+                        FeeOption={this.FeeOption}
+                        setField={this.setField}
+                        CarParkingOption={this.CarParkingOption}
+                        DaysSelected={this.DaysSelected}
+                        GetFileUploaded={this.GetFileUploaded}
+                        DeletePhotoUploaded={this.DeletePhotoUploaded}
+                    />
                 </Form>
             </div>
         )

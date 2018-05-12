@@ -5,7 +5,7 @@ import Header from '../components/place/Header_Picmeup'
 import axios from '../lib/axios';
 
 class AddPlace extends React.Component {
-    
+
     state = {
         placeName: "",
         placeDes: "",
@@ -21,6 +21,7 @@ class AddPlace extends React.Component {
             longtitude: 0
         },
         FileList: [],
+        FileName: []
     }
 
 
@@ -29,23 +30,34 @@ class AddPlace extends React.Component {
         console.log("fee : ", value)
     }
 
-    DeletePhotoUploaded = async (field,value,index)=>{
+    DeletePhotoUploaded = async (field, value, index) => {
         const src = value
-        await  axios.get('/api/deleteImage/'+src)
+        console.log(value)
+        await axios.get('/api/deleteImage/' + src)
         const arr = this.state.FileList
-        console.log("BEFORE : ",arr)
-        arr.splice(index,1)
-        console.log("AFTER : ",arr)
-        this.setState({FileList:arr})
+        const filesName = this.state.FileName
+        console.log("BEFORE : ", arr)
+        arr.splice(index, 1)
+        filesName.splice(index, 1)
+        console.log("AFTER : ", arr)
+        this.setState({ FileList: arr, FileName: filesName })
     }
 
     GetFileUploaded = async (field, value) => {
-        var arr = []
-        for (var x = 0; x < value.length; x++) {
-            arr.push("http://128.199.107.81:3030/images/places/"+value[x].name)
+        if(value.length >11){
+            alert('Please upload less than 12 photos')
+            return;
         }
-        // this.setState({FileList:arr})
-        // console.log("FileList : ",this.state.FileList)
+        var arr = []
+        var names = []
+        var today = new Date()
+        var date = today.getDay() + today.getMonth() + today.getFullYear() + today.getHours().toString();
+
+        for (var x = 0; x < value.length; x++) {
+            arr.push("http://128.199.107.81:3030/images/places/"+ date + "-" + value[x].name)
+            // arr.push("http://localhost:3030/images/places/" + date + "-" + value[x].name)
+            names.push(date + "-" + value[x].name)
+        }
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
         if (lengthOfFile === 1) {
@@ -53,15 +65,17 @@ class AddPlace extends React.Component {
             data.append('img', dataFile)
             const resp = await axios.post('/api/uploadSingleFile', data)
             console.log('upload single file : ', resp)
-            this.setState({FileList:arr})
+            this.setState({ FileList: arr, FileName: names })
+
+
         } else {
             const dataFile = document.getElementById('img')
             for (var y = 0; y < dataFile.files.length; y++) {
                 data.append('img', dataFile.files[y])
             }
             const resp = await axios.post('/api/uploadMultipleFile', data)
-            console.log('upload Multiple file : ',resp)
-            this.setState({FileList:arr})
+            console.log('upload Multiple file : ', resp)
+            this.setState({ FileList: arr, FileName: names })
         }
 
 
@@ -85,21 +99,23 @@ class AddPlace extends React.Component {
 
     CreatePlace = async (event) => {
 
-            const resp = await axios.post('/api/addplace',{
-                placeName: this.state.placeName,
-                placeDes: this.state.placeDes,
-                tel: this.state.tel,
-                openTime: this.state.openTime,
-                closeTime: this.state.closeTime,
-                fee: this.state.fee,
-                carParking: this.state.carParking,
-                tags: this.state.tags,
-                days: this.state.days,
-                FileList: this.state.FileList
-            })
+        const resp = await axios.post('/api/addplace', {
+            placeName: this.state.placeName,
+            placeDes: this.state.placeDes,
+            tel: this.state.tel,
+            openTime: this.state.openTime,
+            closeTime: this.state.closeTime,
+            fee: this.state.fee,
+            carParking: this.state.carParking,
+            tags: this.state.tags,
+            days: this.state.days,
+            FileList: this.state.FileList,
+            FileName: this.state.FileName
 
-            //reload for test
-            window.location.replace("/")
+        })
+
+        //reload for test
+        window.location.replace("/")
     }
 
     setField = (field, value) => {
@@ -129,7 +145,7 @@ class AddPlace extends React.Component {
                         carParking={this.state.carParking}
                         days={this.state.days}
                         tags={this.state.tags}
-                        FileList= {this.state.FileList}
+                        FileList={this.state.FileList}
                         // pass method
                         TagSelected={this.TagSelected}
                         FeeOption={this.FeeOption}

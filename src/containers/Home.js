@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import { Card, Image, Button ,Divider} from 'semantic-ui-react'
+import { Card, Image, Button, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import Header from '../components/place/Header_Picmeup'
 import axios from '../lib/axios';
@@ -9,13 +9,16 @@ class Home extends Component {
 
     state = {
         placesData: [],
-        eventData:[]
+        eventData: [],
+        open: false,
+        targetId: "",
+        FileName:[]
     }
 
     getData = async () => {
         const places = await axios.get("/api/getPlaceInfo")
         const events = await axios.get("/api/GetEventInfo")
-        this.setState({ placesData: places.data ,eventData:events.data})
+        this.setState({ placesData: places.data, eventData: events.data })
     }
 
     componentDidMount = async () => {
@@ -24,31 +27,39 @@ class Home extends Component {
     }
 
     deletePlace = async (event) => {
-        const id = event.target.value
-        const resp = await axios.delete("/api/deletePlaceDataFromId/" + id)
-        alert("delete!")
+        const index = event.target.value
+        const data = this.state.placesData[index]
+        const id = data._id
+        const resp = await axios.post("/api/deletePlaceDataFromId/"+id,{
+           FileName : data.FileName
+        })
+        
         this.getData()
     }
 
     deleteEvent = async (event) => {
-        const id = event.target.value
-        const resp = await axios.delete("/api/deleteEventDataFromId/" + id)
-        alert('DELETED!')
-        this.getData()
+        const index = event.target.value
+        const data = this.state.eventData[index]
+        const id = data._id
+        console.log(this.state.FileName)
+        const resp = await axios.post("/api/deleteEventDataFromId/"+id,{
+            FileName : data.FileName
+         })
+         this.getData()
     }
-
-
 
     render() {
         return (
             <div>
-                <Header/>
+
+                <Header />
                 <Divider horizontal>SHORT CUT</Divider>
-                <Link to={{pathname : '/addplace'}}><Button primary content="Add place"/></Link>
-                <Link to={{pathname : '/addevent' }}><Button primary content="Add event"/></Link>
+                <Link to={{ pathname: '/addplace' }}><Button primary content="Add place" /></Link>
+                <Link to={{ pathname: '/addevent' }}><Button primary content="Add event" /></Link>
                 <Divider horizontal>PLACE</Divider>
+
                 <Card.Group itemsPerRow={4} >
-                    {this.state.placesData.map(data => (
+                    {this.state.placesData.map((data,index) => (
                         <Card>
                             <Image src={data.FileList[0]} />
                             {data.placeName}
@@ -58,24 +69,22 @@ class Home extends Component {
                                 <Link to={{
                                     pathname: '/placeInfo',
                                     state: { id: data._id },
-                                }} ><Button primary content="View"/></Link>
+                                }} ><Button primary content="View" /></Link>
                                 <Link to={{
                                     pathname: '/updatePlace',
                                     state: { id: data._id },
-                                }} ><Button primary content="Edit"/></Link>
-                                <Button color='red' content="DELETE" value={data._id} onClick={this.deletePlace}/>
-
-
+                                }} ><Button primary content="Edit" /></Link>
+                                <Button color='red' content="DELETE" value={index} onClick={this.deletePlace} />
                             </Card.Content>
                         </Card>
+
 
                     )
                     )}
                 </Card.Group>
-
-                 <Divider horizontal>EVENT</Divider>
-                 <Card.Group itemsPerRow={4} >
-                    {this.state.eventData.map(data => (
+                <Divider horizontal>EVENT</Divider>
+                <Card.Group itemsPerRow={4} >
+                    {this.state.eventData.map((data,index) => (
                         <Card>
                             <Image src={data.FileList[0]} />
                             {data.eventName}
@@ -85,12 +94,12 @@ class Home extends Component {
                                 <Link to={{
                                     pathname: '/eventInfo',
                                     state: { id: data._id },
-                                }} ><Button primary content="View"/></Link>
+                                }} ><Button primary content="View" /></Link>
                                 <Link to={{
                                     pathname: '/updateEvent',
                                     state: { id: data._id },
-                                }} ><Button primary content="Edit"/></Link>
-                                <Button color='red' content="DELETE" value={data._id} onClick={this.deleteEvent}/>
+                                }} ><Button primary content="Edit" /></Link>
+                                <Button color='red' content="DELETE" value={index} onClick={this.deleteEvent} />
 
 
                             </Card.Content>
@@ -99,7 +108,6 @@ class Home extends Component {
                     )
                     )}
                 </Card.Group>
-
             </div>
         )
     }

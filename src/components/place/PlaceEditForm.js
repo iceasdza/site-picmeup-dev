@@ -42,13 +42,13 @@ const PlaceEditForm = (props) => {
                 <label>อัพโหลดรูปภาพสถานที่</label>
                 <label className="custom-file-upload">
                     <p className="Color">อัพโหลดรูปภาพ</p>
-                    <input type="file" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} />
+                    <input type="file" accept="image/*" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} />
                 </label>
                 <Card.Group itemsPerRow={6}>
                     {props.FileList.map((src,index) => (
                         <Card>
                             <div>
-                                <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(49),index)}/>
+                                <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36+5),index)}/>
                             </div>
                             <Image src={src} />
                         </Card>

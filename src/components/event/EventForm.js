@@ -53,13 +53,13 @@ const EventForm = (props) => {
                     <label>อัพโหลดรูปภาพอีเวนท์</label>
                     <label className="custom-file-upload">
                         <p className="Color">อัพโหลดรูปภาพ</p>
-                        <input type="file" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} require="true"/>
+                        <input type="file" accept="image/*" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} require="true"/>
                     </label>
                     <Card.Group itemsPerRow={6}>
                         {props.FileList.map((src, index) => (
                             <Card>
                                 <div>
-                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(41), index)} />
+                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36+5), index)} />
                                 </div>
                                 <Image src={src} />
                             </Card>
