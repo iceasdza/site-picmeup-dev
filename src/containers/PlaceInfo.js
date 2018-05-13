@@ -21,13 +21,13 @@ class PlaceInfo extends Component {
             longtitude: 0
         },
         FileList: [],
-        id:""
+        id:"",
+        open: false,
     }
 
     getData  = async () => {
         let _id = this.props.location.state.id
         const resp = await axios.get("/api/getPlaceInfoFromId/"+_id)
-        // console.log(axios)
         const data = resp.data[0]
         this.setState({
             placeName: data.placeName,
@@ -47,11 +47,18 @@ class PlaceInfo extends Component {
             this.getData()
     }
 
+    onOpenModal = (field,value) => {
+        console.log(value)
+        this.setState({ open: true ,index:value});
+      };
+     
+      onCloseModal = () => {
+        this.setState({ open: false });
+      };
+
+
     render = () => {
-            // console.log(this.props.location.state.id)
-            // let _id = this.props.location.state.id
-            // this.setState({id:_id})
-            // console.log(this.state.id)
+        const { open } = this.state;
         return (
             <div>
                 <Header />
@@ -66,6 +73,11 @@ class PlaceInfo extends Component {
                 days={this.state.days}
                 tags={this.state.tags}
                 FileList={this.state.FileList}
+                index = {this.state.index}
+
+                onCloseModal={this.onCloseModal}
+                onOpenModal={this.onOpenModal}
+                open = {this.state.open}
                 />
 
             </div>

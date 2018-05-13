@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Message, Card, Container, Header, Image ,Button} from 'semantic-ui-react'
+import Modal from 'react-responsive-modal';
 import { Link } from 'react-router-dom'
 
 const EventInfo = (props) => (
@@ -9,9 +10,12 @@ const EventInfo = (props) => (
             <Header as='h2'>{props.eventName}</Header>
             <p>{props.eventDes}</p>
             <Card.Group itemsPerRow={6}>
-                {props.FileList.map(src => (
+                {props.FileList.map((src,index) => (
                     <Card>
-                        <Card raised image={src} />
+                        <Card raised image={src} onClick={() => props.onOpenModal("index", index)} />
+                        <Modal open={props.open} onClose={props.onCloseModal} center animationDuration={500} >
+                            <Image src={props.FileList[props.index]} size='massive'/>
+                        </Modal>
                     </Card>
                 ))}
             </Card.Group>

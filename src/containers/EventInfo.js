@@ -24,7 +24,8 @@ class EventInfo extends Component {
         id:"",
         placeId:"",
         placeFileList:"",
-        placeName:""
+        placeName:"",
+        open: false,
     }
 
     getData  = async () => {
@@ -64,11 +65,17 @@ class EventInfo extends Component {
             console.log(this.state.placeFileList)
     }
 
+    onOpenModal = (field,value) => {
+        console.log(value)
+        this.setState({ open: true ,index:value});
+      };
+     
+      onCloseModal = () => {
+        this.setState({ open: false });
+      };
+
     render = () => {
-            // console.log(this.props.location.state.id)
-            // let _id = this.props.location.state.id
-            // this.setState({id:_id})
-            // console.log(this.state.id)
+        const { open } = this.state;
         return (
             <div>
                 <Header />
@@ -86,6 +93,11 @@ class EventInfo extends Component {
                 placeId={this.state.placeId}
                 placeFileList={this.state.placeFileList}
                 placeName={this.state.placeName}
+                index = {this.state.index}
+
+                onCloseModal={this.onCloseModal}
+                onOpenModal={this.onOpenModal}
+                open = {this.state.open}
                 />
 
             </div>
