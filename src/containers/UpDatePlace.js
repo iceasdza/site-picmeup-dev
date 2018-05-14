@@ -24,7 +24,8 @@ class Home extends Component {
         },
         FileList: [],
         id: "",
-        FileName: []
+        FileName: [],
+        message:""
     }
 
     FeeOption = (field, value) => {
@@ -53,9 +54,6 @@ class Home extends Component {
         console.log(_id)
         const data = resp.data[0]
         console.log(resp)
-        // this.setState({
-        //     placeName: data.placeName
-        // })
         this.setState({
             placeName: data.placeName,
             placeDes: data.placeDes,
@@ -87,11 +85,18 @@ class Home extends Component {
         filesName.splice(index, 1)
         console.log("AFTER : ", arr)
         this.setState({ FileList: arr, FileName: filesName })
+
+        if(arr.length===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+        }
     }
 
     GetFileUploaded = async (field, value) => {
+        if(value.length > 0  ){
+            this.setState({message:""})
+        }
         if(value.length >11){
-            alert('Please upload less than 12 photos')
+            this.setState({message:"สามารถอัพโหลดรูปภาพได้มากสุด 12 รูป"})
             return;
         }
         var arr = []
@@ -128,8 +133,24 @@ class Home extends Component {
         this.getData()
     }
 
+    onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
-    UpdatePlace = async (event) => {
+    UpdatePlace = async (formData) => {
+
+        this.onValidSubmit
+        
+        const lengthOfFile = this.state.FileList.length
+
+        if(lengthOfFile===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+            return 
+        }
+        if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
+        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag == undefined 
+        || formData.place_tag == undefined){
+            return
+        }
+
         const date = new Date();
         const resp = await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
             placeName: this.state.placeName,
@@ -177,6 +198,7 @@ class Home extends Component {
                         sun={this.state.sun}
                         tags={this.state.tags}
                         FileList={this.state.FileList}
+                        message={this.state.message}
 
                         TagSelected={this.TagSelected}
                         FeeOption={this.FeeOption}

@@ -105,7 +105,6 @@ const EventForm = (props) => {
                 <div className="Body">
                     <Dropdown selection options={optionPlace} placeholder='สถานที่จัดงาน' renderLabel={renderLabel} require="true" name="place_select" onChange={(e, { value }) => props.PlaceSelected('PlaceId', value)} errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'กรุณาเลือกสถานที่', }} />
                 </div>
-
                 <p>แผนที่</p>
 
                 <div>

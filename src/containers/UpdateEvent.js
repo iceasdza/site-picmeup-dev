@@ -23,14 +23,17 @@ class UpdateEvent extends Component {
         FileList: [],
         placesData: [],
         PlaceId:'',
-        FileName: []
+        FileName: [],
+        message:""
     }
+    onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
     setField = (field, value) => {
         this.setState({ [field]: value })
         console.log(field + " : " + value)
     }
     getData = async () => {
+
         let _id = this.props.location.state.id
         console.log(_id)
         const resp = await axios.get("/api/getEventInfoFromId/" + _id)
@@ -139,7 +142,20 @@ class UpdateEvent extends Component {
         // console.log(this.state.placesData)
     }
 
-    UpdateEvent = async (event) => {
+    UpdateEvent = async (formData) => {
+
+        this.onValidSubmit
+        const lengthOfFile = this.state.FileList.length
+        console.log(formData)
+        if(lengthOfFile===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+            return 
+        }
+        if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
+        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag == undefined 
+        || formData.place_tag == undefined || formData.place_select === undefined){
+            return
+        }
 
         const resp = await axios.put('/api/UpdateEventFromId/'+this.state.id,{
             eventName: this.state.eventName,
@@ -178,6 +194,7 @@ class UpdateEvent extends Component {
                         tags={this.state.tags}
                         FileList={this.state.FileList}
                         placesData={this.state.placesData}
+                        message={this.state.message}
 
                         setField={this.setField}
                         GetFileUploaded={this.GetFileUploaded}
