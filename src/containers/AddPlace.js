@@ -23,6 +23,7 @@ class AddPlace extends React.Component {
         FileList: [],
         FileName: []
     }
+    onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
 
     FeeOption = (field, value) => {
@@ -97,8 +98,15 @@ class AddPlace extends React.Component {
     }
 
 
-    CreatePlace = async (event) => {
-
+    CreatePlace = async (formData) => {
+        this.onValidSubmit
+        console.log(formData)
+        if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
+        || formData.place_open === "" || formData.place_close === "" || formData.place_tag === ""
+        || formData.place_day == undefined || formData.place_tag == undefined || formData.img == undefined){
+            return
+        }
+        
         const resp = await axios.post('/api/addplace', {
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
@@ -153,7 +161,7 @@ class AddPlace extends React.Component {
                         CarParkingOption={this.CarParkingOption}
                         DaysSelected={this.DaysSelected}
                         GetFileUploaded={this.GetFileUploaded}
-                        DeletePhotoUploaded={this.DeletePhotoUploaded}
+                        DeletePhotoUploaded={this.DeletePhotoUploaded} 
                     />
                 </Form>
             </div>
