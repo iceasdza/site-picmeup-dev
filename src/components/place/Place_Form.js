@@ -83,7 +83,7 @@ const Place_Form = (props) => {
                 </Form.Group>
                 <label>วันที่เปิดทำการ</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="place_tag" errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'ต้องเลือกวันที่เปิดทำการ', }} onChange={(e, { value }) => props.DaysSelected('days', value)} />
+                    <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="place_day" errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'ต้องเลือกวันที่เปิดทำการ', }} onChange={(e, { value }) => props.DaysSelected('days', value)} />
                 </div>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
