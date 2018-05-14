@@ -1,7 +1,6 @@
 import React from 'react'
-
 import { Form, Dropdown } from 'formsy-semantic-ui-react'
-import { Label, Image, Card, Icon ,Confirm} from 'semantic-ui-react'
+import { Label, Image, Card, Icon } from 'semantic-ui-react'
 import '../../static/Form.css'
 
 const optionsTag = [
@@ -27,7 +26,6 @@ const renderLabel = label => ({
 })
 
 
-
 const Place_Form = (props) => {
 
     return (
@@ -40,7 +38,7 @@ const Place_Form = (props) => {
                 <Form.Input label='ชื่อสถานที่' name="place_name" placeholder='ชื่อสถานที่..' width={8} value={props.placeName} onChange={(e, { value }) => props.setField("placeName", value)} required errorLabel={<Label color="red" pointing />} validationErrors={{ isDefaultRequiredValue: 'จำเป็นต้องใส่ชื่อสถานที่', }} />
                 <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} value={props.placeDes} onChange={(e, { value }) => props.setField("placeDes", value)} required errorLabel={<Label color="red" pointing />} validationErrors={{ isDefaultRequiredValue: 'จำเป็นต้องใส่คำอธิบาย', }} />
                 <Form.Field>
-                    <label>อัพโหลดรูปภาพสถานที่</label>
+                    <label>อัพโหลดรูปภาพสถานที่ <h3 style={{color:"red"}}>{props.message}</h3></label>
                     <label className="custom-file-upload">
                         <p className="Color">อัพโหลดรูปภาพ</p>
                         <input type="file" accept="image/*" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} />
@@ -87,7 +85,7 @@ const Place_Form = (props) => {
                 </div>
                 <label>แท็กประเภทสถานที่</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={optionsTag} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e, { value }) => props.TagSelected('tags', value)} errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก',}}/>
+                    <Dropdown multiple selection options={optionsTag} placeholder='แท็กของสถานที่' renderLabel={renderLabel} require="true" name="place_tag" errorLabel = {<Label color="red" pointing/>} validations={{customValidation: (values, value) => !(!value || value.length < 1),}} validationErrors={{customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก',}} onChange={(e, { value }) => props.TagSelected('tags', value)}/>
                 </div>
                 <p>แผนที่</p>
                 <div>

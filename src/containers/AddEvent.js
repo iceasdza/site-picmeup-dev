@@ -22,7 +22,8 @@ class AddEvent extends Component {
         FileList: [],
         placesData: [],
         PlaceId:'',
-        FileName: []
+        FileName: [],
+        message:""
     }
 
     setField = (field, value) => {
@@ -41,6 +42,10 @@ class AddEvent extends Component {
         filesName.splice(index, 1)
         console.log("AFTER : ",arr)
         this.setState({ FileList: arr, FileName: filesName })
+
+        if(arr.length===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+        }
     }
 
     getPlaceDetail = async()=>{
@@ -49,8 +54,11 @@ class AddEvent extends Component {
     }
 
     GetFileUploaded = async (field, value) => {
+        if(value.length > 0  ){
+            this.setState({message:""})
+        }
         if(value.length >11){
-            alert('Please upload less than 12 photos')
+            this.setState({message:"สามารถอัพโหลดรูปภาพได้มากสุด 12 รูป"})
             return;
         }
         var arr = []
@@ -62,8 +70,6 @@ class AddEvent extends Component {
             // arr.push("http://localhost:3030/images/events/" + date + "-" + value[x].name)
             names.push(date + "-" + value[x].name)
         }
-        // this.setState({FileList:arr})
-        // console.log("FileList : ",this.state.FileList)
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
         if (lengthOfFile === 1) {
@@ -116,7 +122,21 @@ class AddEvent extends Component {
         // console.log(this.state.placesData)
     }
 
-    CreateEvent = async (event) => {
+    onValidSubmit = (formData) => alert(JSON.stringify(formData));
+
+    CreateEvent = async (formData) => {
+        this.onValidSubmit
+        const lengthOfFile = document.getElementById('img').files.length
+        console.log(formData)
+        if(lengthOfFile===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+            return 
+        }
+        if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
+        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag == undefined 
+        || formData.place_tag == undefined || formData.place_select === undefined){
+            return
+        }
 
         const resp = await axios.post('/api/addevent',{
             eventName: this.state.eventName,
@@ -131,10 +151,9 @@ class AddEvent extends Component {
             FileList: this.state.FileList,
             PlaceId: this.state.PlaceId,
             FileName: this.state.FileName
-
         })
 
-        //reload for test
+        // reload for test
         window.location.replace("/")
 }
 
@@ -155,6 +174,7 @@ class AddEvent extends Component {
                         tags={this.state.tags}
                         FileList={this.state.FileList}
                         placesData={this.state.placesData}
+                        message={this.state.message}
 
                         setField={this.setField}
                         GetFileUploaded={this.GetFileUploaded}

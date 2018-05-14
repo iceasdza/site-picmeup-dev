@@ -21,7 +21,9 @@ class AddPlace extends React.Component {
             longtitude: 0
         },
         FileList: [],
-        FileName: []
+        FileName: [],
+        message:""
+        
     }
     onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
@@ -42,11 +44,18 @@ class AddPlace extends React.Component {
         filesName.splice(index, 1)
         console.log("AFTER : ", arr)
         this.setState({ FileList: arr, FileName: filesName })
+
+        if(arr.length===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+        }
     }
 
     GetFileUploaded = async (field, value) => {
+        if(value.length > 0  ){
+            this.setState({message:""})
+        }
         if(value.length >11){
-            alert('Please upload less than 12 photos')
+            this.setState({message:"สามารถอัพโหลดรูปภาพได้มากสุด 12 รูป"})
             return;
         }
         var arr = []
@@ -100,10 +109,15 @@ class AddPlace extends React.Component {
 
     CreatePlace = async (formData) => {
         this.onValidSubmit
-        console.log(formData)
+        const lengthOfFile = document.getElementById('img').files.length
+        console.log(lengthOfFile)
+        if(lengthOfFile===0){
+            this.setState({message:"กรุณาเลือกรูปภาพ"})
+            return 
+        }
         if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
         || formData.place_open === "" || formData.place_close === "" || formData.place_tag === ""
-        || formData.place_day == undefined || formData.place_tag == undefined || formData.img == undefined){
+        || formData.place_day == undefined || formData.place_tag == undefined){
             return
         }
         
@@ -119,7 +133,6 @@ class AddPlace extends React.Component {
             days: this.state.days,
             FileList: this.state.FileList,
             FileName: this.state.FileName
-
         })
 
         //reload for test
@@ -154,6 +167,7 @@ class AddPlace extends React.Component {
                         days={this.state.days}
                         tags={this.state.tags}
                         FileList={this.state.FileList}
+                        message={this.state.message}
                         // pass method
                         TagSelected={this.TagSelected}
                         FeeOption={this.FeeOption}

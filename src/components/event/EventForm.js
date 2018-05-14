@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Dropdown } from 'formsy-semantic-ui-react'
-import { Label, Image, Card, Icon,Select } from 'semantic-ui-react'
+import { Label, Image, Card, Icon, Select } from 'semantic-ui-react'
 import '../../static/Form.css'
 
 const optionsTag = [
@@ -33,8 +33,8 @@ const renderLabel = label => ({
 const EventForm = (props) => {
     const optionPlace = []
     props.placesData.map((data, index) => (
-        optionPlace.push({key:index+1, text:data.placeName, value : data._id}
-    )))
+        optionPlace.push({ key: index + 1, text: data.placeName, value: data._id }
+        )))
     return (
         <div className="Body">
             <div className="Head">
@@ -50,16 +50,16 @@ const EventForm = (props) => {
                     onChange={(e, { value }) => props.setField("eventDes", value)} required errorLabel={<Label color="red" pointing />}
                     validationErrors={{ isDefaultRequiredValue: 'จำเป็นต้องใส่คำอธิบาย', }} />
                 <Form.Field>
-                    <label>อัพโหลดรูปภาพอีเวนท์</label>
+                    <label>อัพโหลดรูปภาพอีเวนท์<h3 style={{color:"red"}}>{props.message}</h3></label>
                     <label className="custom-file-upload">
                         <p className="Color">อัพโหลดรูปภาพ</p>
-                        <input type="file" accept="image/*" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} require="true"/>
+                        <input type="file" accept="image/*" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} require="true" />
                     </label>
                     <Card.Group itemsPerRow={6}>
                         {props.FileList.map((src, index) => (
                             <Card>
                                 <div>
-                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36+5), index)} />
+                                    <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36 + 5), index)} />
                                 </div>
                                 <Image src={src} />
                             </Card>
@@ -93,17 +93,17 @@ const EventForm = (props) => {
                 </Form.Group>
                 <label>วันที่เปิดทำการ</label>
                 <div className="Body">
-                    <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="place_tag" errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'ต้องเลือกวันที่เปิดทำการ', }} onChange={(e, { value }) => props.DaysSelected('days', value)} />
+                    <Dropdown multiple selection options={optionsDay} placeholder='วันที่เปิดทำการ' renderLabel={renderLabel} require="true" name="day_tag" errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'ต้องเลือกวันที่เปิดทำการ', }} onChange={(e, { value }) => props.DaysSelected('days', value)} />
                 </div>
+
                 <label>แท็กประเภทอีเวนท์</label>
                 <div className="Body">
                     <Dropdown multiple selection options={optionsTag} placeholder='แท็กของอีเวนท์' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e, { value }) => props.TagSelected('tags', value)} errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก', }} />
                 </div>
 
-                <label>เลือกสถานที่</label>
+                <label>สถานที่จัดงาน</label>
                 <div className="Body">
-                <Select placeholder='Select place' options={optionPlace} onChange={(e, { value }) => props.PlaceSelected('PlaceId', value)} require="true"    />
-                    {/* <Dropdown multiple selection options={optionPlace} placeholder='แท็กของอีเวนท์' renderLabel={renderLabel} require="true" name="place_tag" onChange={(e, { value }) => props.TagSelected('tags', value)} errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'ต้องเลือกแท็กอย่างน้อย 1 แท็ก', }} /> */}
+                    <Dropdown selection options={optionPlace} placeholder='สถานที่จัดงาน' renderLabel={renderLabel} require="true" name="place_select" onChange={(e, { value }) => props.PlaceSelected('PlaceId', value)} errorLabel={<Label color="red" pointing />} validations={{ customValidation: (values, value) => !(!value || value.length < 1), }} validationErrors={{ customValidation: 'กรุณาเลือกสถานที่', }} />
                 </div>
 
                 <p>แผนที่</p>
