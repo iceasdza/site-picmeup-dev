@@ -9,11 +9,12 @@ const PlaceInfo = (props) => (
             <Header as='h2'>{props.placeName}</Header>
             <p>{props.placeDes}</p>
             <Card.Group itemsPerRow={6}>
-                {props.FileList.map((src, index) => (
+                {props.FileName.map((src, index) => (
                     <Card>
-                        <Card raised image={src} onClick={() => props.onOpenModal("index", index)} />
+                        <Card raised image={'http://localhost:3030/images/places/'+src} onClick={() => props.onOpenModal("index", index)} />
+                        
                         <Modal open={props.open} onClose={props.onCloseModal} center animationDuration={500} >
-                            <Image src={props.FileList[props.index]}/>
+                            <Image src={'http://localhost:3030/images/places/'+src}/>
                         </Modal>
 
                     </Card>

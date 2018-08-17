@@ -20,7 +20,7 @@ class PlaceInfo extends Component {
             latitude: 0,
             longtitude: 0
         },
-        FileList: [],
+        FileName: [],
         id:"",
         open: false,
     }
@@ -39,7 +39,7 @@ class PlaceInfo extends Component {
             carParking: data.carParking,
             days: data.days,
             tags: data.tags,
-            FileList: data.FileList
+            FileName: data.FileName
         })
     }
 
@@ -72,7 +72,7 @@ class PlaceInfo extends Component {
                 carParking={this.state.carParking}
                 days={this.state.days}
                 tags={this.state.tags}
-                FileList={this.state.FileList}
+                FileName={this.state.FileName}
                 index = {this.state.index}
 
                 onCloseModal={this.onCloseModal}

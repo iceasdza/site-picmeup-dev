@@ -61,7 +61,7 @@ class Home extends Component {
                 <Card.Group itemsPerRow={4} >
                     {this.state.placesData.map((data,index) => (
                         <Card>
-                            <Image src={data.FileList[0]} />
+                            <Image src={"http://localhost:3030/images/places/"+data.FileName[0]} />
                             {data.placeName}
                             <Card.Content>
                                 {/* <Link to={"/placeInfo/" + data._id}>{data.placeName}</Link> */}
