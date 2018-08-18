@@ -4,7 +4,7 @@ import { Form } from 'formsy-semantic-ui-react'
 import Header from '../components/place/Header_Picmeup'
 import axios from '../lib/axios';
 
-class AddPlace extends React.Component {
+class AddPlace extends Component {
 
     state = {
         placeName: "",
@@ -26,7 +26,8 @@ class AddPlace extends React.Component {
         files:[]
         
     }
-    onValidSubmit = (formData) => alert(JSON.stringify(formData));
+
+    // onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
 
     FeeOption = (field, value) => {
@@ -71,30 +72,30 @@ class AddPlace extends React.Component {
 
 
     CreatePlace = async (formData) => {
-        this.onValidSubmit
+        // this.onValidSubmit()
         const lengthOfFile = document.getElementById('img').files.length
         var arr = []
         var names = []
-        var today = new Date()
-        var date = today.getDay() + today.getMonth() + today.getFullYear() + today.getHours().toString();
 
         var data = new FormData();
 
         if (lengthOfFile === 1) {
             const dataFile = document.getElementById('img').files[0]
             data.append('img', dataFile)
-            const resp = await axios.post('/api/uploadSingleFile', data)
+            await axios.post('/api/uploadSingleFile', data)
             console.log(dataFile)
             this.setState({ FileList: arr, FileName: dataFile.name })
 
 
-        } else {
-            const dataFile = document.getElementById('img')
-            for (var y = 0; y < dataFile.files.length; y++) {
-                data.append('img', dataFile.files[y])
+        }else{
+            const dataFile = document.getElementById('img').files
+            console.log(dataFile)
+            for (var y = 0; y < dataFile.length; y++) {
+                data.append('img', dataFile[y])
+                names.push(dataFile[y].name)
+                
             }
-            const resp = await axios.post('/api/uploadMultipleFile', data)
-            console.log('upload Multiple file : ', resp)
+            await axios.post('/api/uploadMultipleFile', data)
             this.setState({ FileList: arr, FileName: names })
         }
 
@@ -104,11 +105,11 @@ class AddPlace extends React.Component {
         }
         if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
         || formData.place_open === "" || formData.place_close === "" || formData.place_tag === ""
-        || formData.place_day == undefined || formData.place_tag == undefined){
+        || formData.place_day === undefined || formData.place_tag === undefined){
             return
         }
         
-        const resp = await axios.post('/api/addplace', {
+        await axios.post('/api/addplace', {
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
             tel: this.state.tel,
@@ -121,11 +122,6 @@ class AddPlace extends React.Component {
             FileList: this.state.FileList,
             FileName: this.state.FileName
         })
-
-        console.log('test')
-
-        
-
         //reload for test
         window.location.replace("/")
     }

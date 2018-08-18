@@ -144,7 +144,7 @@ class UpdateEvent extends Component {
 
     UpdateEvent = async (formData) => {
 
-        this.onValidSubmit
+        this.onValidSubmit()
         const lengthOfFile = this.state.FileList.length
         console.log(formData)
         if(lengthOfFile===0){
@@ -152,12 +152,12 @@ class UpdateEvent extends Component {
             return 
         }
         if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
-        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag == undefined 
-        || formData.place_tag == undefined || formData.place_select === undefined){
+        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag === undefined 
+        || formData.place_tag === undefined || formData.place_select === undefined){
             return
         }
 
-        const resp = await axios.put('/api/UpdateEventFromId/'+this.state.id,{
+        await axios.put('/api/UpdateEventFromId/'+this.state.id,{
             eventName: this.state.eventName,
             eventDes: this.state.eventDes,
             tel: this.state.tel,

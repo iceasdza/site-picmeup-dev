@@ -30,7 +30,7 @@ class Home extends Component {
         const index = event.target.value
         const data = this.state.placesData[index]
         const id = data._id
-        const resp = await axios.post("/api/deletePlaceDataFromId/"+id,{
+        await axios.post("/api/deletePlaceDataFromId/"+id,{
            FileName : data.FileName
         })
         
@@ -41,8 +41,7 @@ class Home extends Component {
         const index = event.target.value
         const data = this.state.eventData[index]
         const id = data._id
-        console.log(this.state.FileName)
-        const resp = await axios.post("/api/deleteEventDataFromId/"+id,{
+        await axios.post("/api/deleteEventDataFromId/"+id,{
             FileName : data.FileName
          })
          this.getData()
@@ -56,11 +55,12 @@ class Home extends Component {
                 <Divider horizontal>SHORT CUT</Divider>
                 <Link to={{ pathname: '/addplace' }}><Button primary content="Add place" /></Link>
                 <Link to={{ pathname: '/addevent' }}><Button primary content="Add event" /></Link>
+                <Link to={{ pathname: '/register' }}><Button primary content="Register" /></Link>
                 <Divider horizontal>PLACE</Divider>
 
                 <Card.Group itemsPerRow={4} >
                     {this.state.placesData.map((data,index) => (
-                        <Card>
+                        <Card key={index}>
                             <Image src={"http://localhost:3030/images/places/"+data.FileName[0]} />
                             {data.placeName}
                             <Card.Content>

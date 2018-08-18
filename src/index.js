@@ -5,6 +5,7 @@ import PlaceForm from './containers/AddPlace';
 import Home from './containers/Home'
 import placeInfo from './containers/PlaceInfo'
 import UpdatePlace from './containers/UpDatePlace'
+import Register from './containers/register'
 
 import AddEvent from './containers/AddEvent'
 import eventInfo from './containers/EventInfo'
@@ -21,6 +22,7 @@ ReactDOM.render(
         <Route path="/addevent" component={AddEvent}/>
         <Route path="/eventInfo" component={eventInfo}/>
         <Route path="/updateEvent" component={UpdateEvent}/>
+        <Route path="/register" component={Register}/>
         </div>
 </Router>
     , document.getElementById('root'));

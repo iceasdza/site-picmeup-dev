@@ -3,7 +3,6 @@ import 'semantic-ui-css/semantic.min.css';
 import Header from '../components/place/Header_Picmeup'
 import PlaceEdit from '../components/place/PlaceEditForm'
 import { Form } from 'formsy-semantic-ui-react'
-import { Label, Image, Card, Icon } from 'semantic-ui-react'
 import axios from '../lib/axios';
 
 class Home extends Component {
@@ -137,7 +136,7 @@ class Home extends Component {
 
     UpdatePlace = async (formData) => {
 
-        this.onValidSubmit
+        this.onValidSubmit()
         
         const lengthOfFile = this.state.FileList.length
 
@@ -146,13 +145,13 @@ class Home extends Component {
             return 
         }
         if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
-        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag == undefined 
-        || formData.place_tag == undefined){
+        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag === undefined 
+        || formData.place_tag === undefined){
             return
         }
 
         const date = new Date();
-        const resp = await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
+        await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
             tel: this.state.tel,

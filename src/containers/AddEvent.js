@@ -94,38 +94,32 @@ class AddEvent extends Component {
     }
     FeeOption = (field, value) => {
         this.setState({ [field]: value })
-        console.log("fee : ", value)
     }
 
     CarParkingOption = (field, value) => {
         this.setState({ [field]: value })
-        console.log("car parking : " + value)
     }
 
     TagSelected = (field, value) => {
         this.setState({ [field]: value })
-        console.log(this.state.tags)
     }
 
     PlaceSelected = (field, value) => {
         this.setState({ [field]: value })
-        console.log(this.state.PlaceId)
     }
 
     DaysSelected = (field, value) => {
         this.setState({ [field]: value })
-        console.log(this.state.days)
     }
 
     componentDidMount = async () => {
         this.getPlaceDetail()
-        // console.log(this.state.placesData)
     }
 
     onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
     CreateEvent = async (formData) => {
-        this.onValidSubmit
+        this.onValidSubmit()
         const lengthOfFile = document.getElementById('img').files.length
         console.log(formData)
         if(lengthOfFile===0){
@@ -133,12 +127,12 @@ class AddEvent extends Component {
             return 
         }
         if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
-        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag == undefined 
-        || formData.place_tag == undefined || formData.place_select === undefined){
+        || formData.place_open === "" || formData.place_close === ""|| formData.day_tag === undefined 
+        || formData.place_tag === undefined || formData.place_select === undefined){
             return
         }
 
-        const resp = await axios.post('/api/addevent',{
+        await axios.post('/api/addevent',{
             eventName: this.state.eventName,
             eventDes: this.state.eventDes,
             tel: this.state.tel,

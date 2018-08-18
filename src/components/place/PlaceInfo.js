@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import Modal from 'react-responsive-modal';
 import { Message, Card, Container, Header, Image } from 'semantic-ui-react'

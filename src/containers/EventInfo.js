@@ -75,7 +75,6 @@ class EventInfo extends Component {
       };
 
     render = () => {
-        const { open } = this.state;
         return (
             <div>
                 <Header />
