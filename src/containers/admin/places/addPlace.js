@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import PlaceForm from '../components/place/Place_Form'
+import PlaceForm from '../../../components/admin/places/addPlaceForm'
 import { Form } from 'formsy-semantic-ui-react'
-import Header from '../components/place/Header_Picmeup'
-import axios from '../lib/axios';
+import Header from '../../../components/header/header'
+import axios from '../../../lib/axios';
 
 class AddPlace extends Component {
 

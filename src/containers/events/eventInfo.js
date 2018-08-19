@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import Header from '../components/place/Header_Picmeup'
-import EventDetail from '../components/event/EventInfo'
-import axios from '../lib/axios';
+import Header from '../../components/header/header'
+import EventDetail from '../../components/events/eventInfo'
+import axios from '../../lib/axios';
 
 class EventInfo extends Component {
 

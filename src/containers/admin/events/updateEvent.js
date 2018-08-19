@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css';
-import Header from '../components/place/Header_Picmeup'
+import Header from '../../../components/header/header'
 import { Form } from 'formsy-semantic-ui-react'
-import EventForm from '../components/event/EventForm'
-import axios from '../lib/axios';
-class AddEvent extends Component {
+import EventEditForm from '../../../components/admin/events/eventEditForm'
+import axios from '../../../lib/axios';
+
+class UpdateEvent extends Component {
     state = {
         eventName: "",
         eventDes: "",
@@ -25,27 +26,46 @@ class AddEvent extends Component {
         FileName: [],
         message:""
     }
+    onValidSubmit = (formData) => alert(JSON.stringify(formData));
 
     setField = (field, value) => {
         this.setState({ [field]: value })
         console.log(field + " : " + value)
     }
+    getData = async () => {
+
+        let _id = this.props.location.state.id
+        console.log(_id)
+        const resp = await axios.get("/api/getEventInfoFromId/" + _id)
+        
+        const data = resp.data[0]
+        this.setState({
+            eventName: data.eventName,
+            eventDes: data.eventDes,
+            tel: data.tel,
+            openTime: data.openTime,
+            closeTime: data.closeTime,
+            fee: data.fee,
+            carParking: data.carParking,
+            days: data.days,
+            tags: data.tags,
+            FileList: data.FileList,
+            id:_id,
+            PlaceId:data.PlaceId,
+            FileName:data.FileName
+        })
+    }
 
     DeletePhotoUploaded = async (field,value,index)=>{
         const src = value
-        console.log("value : ",value)
         await  axios.get('/api/deleteEventImage/'+src)
         const arr = this.state.FileList
         const filesName = this.state.FileName
         console.log("BEFORE : ",arr)
         arr.splice(index,1)
         filesName.splice(index, 1)
-        console.log("AFTER : ",arr)
+        console.log("AFTER : ",arr)  
         this.setState({ FileList: arr, FileName: filesName })
-
-        if(arr.length===0){
-            this.setState({message:"กรุณาเลือกรูปภาพ"})
-        }
     }
 
     getPlaceDetail = async()=>{
@@ -54,11 +74,8 @@ class AddEvent extends Component {
     }
 
     GetFileUploaded = async (field, value) => {
-        if(value.length > 0  ){
-            this.setState({message:""})
-        }
         if(value.length >11){
-            this.setState({message:"สามารถอัพโหลดรูปภาพได้มากสุด 12 รูป"})
+            alert('Please upload less than 12 photos')
             return;
         }
         var arr = []
@@ -70,6 +87,8 @@ class AddEvent extends Component {
             // arr.push("http://localhost:3030/images/events/" + date + "-" + value[x].name)
             names.push(date + "-" + value[x].name)
         }
+        // this.setState({FileList:arr})
+        // console.log("FileList : ",this.state.FileList)
         var data = new FormData();
         const lengthOfFile = document.getElementById('img').files.length
         if (lengthOfFile === 1) {
@@ -88,39 +107,45 @@ class AddEvent extends Component {
             this.setState({ FileList: arr, FileName: names })
         }
 
-        console.log(this.state.FileName)
+        console.log()
 
 
     }
     FeeOption = (field, value) => {
         this.setState({ [field]: value })
+        console.log("fee : ", value)
     }
 
     CarParkingOption = (field, value) => {
         this.setState({ [field]: value })
+        console.log("car parking : " + value)
     }
 
     TagSelected = (field, value) => {
         this.setState({ [field]: value })
+        console.log(this.state.tags)
     }
 
     PlaceSelected = (field, value) => {
         this.setState({ [field]: value })
+        console.log(this.state.PlaceId)
     }
 
     DaysSelected = (field, value) => {
         this.setState({ [field]: value })
+        console.log(this.state.days)
     }
 
     componentDidMount = async () => {
+        this.getData()
         this.getPlaceDetail()
+        // console.log(this.state.placesData)
     }
 
-    onValidSubmit = (formData) => alert(JSON.stringify(formData));
+    UpdateEvent = async (formData) => {
 
-    CreateEvent = async (formData) => {
         this.onValidSubmit()
-        const lengthOfFile = document.getElementById('img').files.length
+        const lengthOfFile = this.state.FileList.length
         console.log(formData)
         if(lengthOfFile===0){
             this.setState({message:"กรุณาเลือกรูปภาพ"})
@@ -132,7 +157,7 @@ class AddEvent extends Component {
             return
         }
 
-        await axios.post('/api/addevent',{
+        await axios.put('/api/UpdateEventFromId/'+this.state.id,{
             eventName: this.state.eventName,
             eventDes: this.state.eventDes,
             tel: this.state.tel,
@@ -145,9 +170,10 @@ class AddEvent extends Component {
             FileList: this.state.FileList,
             PlaceId: this.state.PlaceId,
             FileName: this.state.FileName
+
         })
 
-        // reload for test
+        //reload for test
         window.location.replace("/")
 }
 
@@ -155,8 +181,8 @@ class AddEvent extends Component {
         return (
             <div>
                 <Header />
-                <Form onSubmit={this.CreateEvent}>
-                    <EventForm
+                <Form onSubmit={this.UpdateEvent}>
+                    <EventEditForm
                         eventName={this.state.eventName}
                         eventDes={this.state.eventDes}
                         tel={this.state.tel}
@@ -185,4 +211,4 @@ class AddEvent extends Component {
     }
 }
 
-export default AddEvent
+export default UpdateEvent

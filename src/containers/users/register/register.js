@@ -1,6 +1,6 @@
 import React,{Component} from 'react'
-import RegisterForm from '../components/register/registerForm'
-import Header from '../components/header/header'
+import RegisterForm from '../../../components/users/register/registerForm'
+import Header from '../../../components/header/header'
 class Register extends Component{
 
     constructor(props){

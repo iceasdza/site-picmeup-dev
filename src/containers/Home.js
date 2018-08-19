@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import { Card, Image, Button, Divider } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
-import Header from '../components/place/Header_Picmeup'
+import Header from '../components/header/header'
 import axios from '../lib/axios';
 class Home extends Component {
 

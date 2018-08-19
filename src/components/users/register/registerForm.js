@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form,Card,Icon,Image } from 'semantic-ui-react'
-import "../../static/Form.css";
+import "../../../static/Form.css";
 
 const options = [
     { key: 'm', text: 'Male', value: 'male' },
