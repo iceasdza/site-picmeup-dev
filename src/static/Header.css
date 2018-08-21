@@ -11,3 +11,10 @@
     width: auto;
     height: auto;
 }
+i.icon.sidebar{
+    padding-top: 10px;
+    padding-left: 13px;
+}
+i.icon.sidebar::before{
+    width: 500px
+}
