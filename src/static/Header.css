@@ -1,20 +1,28 @@
 .Login {
     padding: 7px;
 }
-.Header-background{
-    background-color: #89DA58;
-    height: auto;
-    width: 100%;
-}
-
 .Img{
     width: auto;
     height: auto;
 }
-i.icon.sidebar{
-    padding-top: 10px;
-    padding-left: 13px;
+.ui.secondary.inverted.menu{
+    background-color: #89DA58;
+    margin-bottom: 0px
 }
-i.icon.sidebar::before{
-    width: 500px
+
+.hidden{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s linear 0.33s, opacity 0.33s ;
+    height: 0px;
+}
+
+.show{
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0.2s, opacity 1s ;
+}
+.ui.list:last-child, ol.ui.list:last-child, ul.ui.list:last-child{
+    margin-top: 0px;
+    background-color: #89DA58
 }
