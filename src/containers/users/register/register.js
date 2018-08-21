@@ -3,6 +3,7 @@ import RegisterForm from "../../../components/users/register/registerForm";
 import Header from "../../../components/header/header";
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import axios from '../../../lib/axios';
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -15,11 +16,16 @@ class Register extends Component {
       email:"",
       imageAvatar:"",
       startDate: moment(),
+      userName:"",
+      password:"",
+      tel:"",
+      status:[]
+
     };
   }
 
   handleOnChange=(field,e)=>{
-    console.log(field,e)
+    this.setState({[field]:e})
   }
   
 
@@ -49,12 +55,28 @@ class Register extends Component {
     this.setState({ files: arr });
   };
 
-  //   { key: "m", text: "Male", value: "male" }
+  handleSubmit= async (e) =>{
+    e.preventDefault()
+    var data = new FormData();
+    const dataFile = document.getElementById('img').files[0]
+    data.append('img', dataFile)
+    await axios.post('/api/upLoadAvatar', data)
+    await axios.post('/api/addRegisterInfo',{
+        firstName:this.state.firstName,
+        lastName:this.state.lastName,
+        gender:this.state.gender,
+        email:this.state.email,
+        password:this.state.password,
+        files:this.state.files,
+        tel:this.state.tel
+    })
+    
+  }
   render() {
     return (
       <div>
         <Header />
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <RegisterForm
             handleOver={this.handleOver}
             handleOut={this.handleOut}

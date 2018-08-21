@@ -1,13 +1,11 @@
 import React from "react";
-import { Form, Image, Button } from "semantic-ui-react";
-import DatePicker from 'react-datepicker';
+import { Form, Image, Button} from "semantic-ui-react";
 import "../../../static/Form.css";
 
 const options = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" }
 ];
-
 
 const RegisterForm = props => {
   return (
@@ -20,9 +18,9 @@ const RegisterForm = props => {
           label="Gender"
           options={options}
           placeholder="Gender"
-          onChange={({ value }) => props.handleOnChange('gender', value)}
+          onChange={(e,{ value }) => props.handleOnChange('gender', {value}.value)}
         />
-        <Form.Input fluid label="email" placeholder="email" />
+        <Form.Input fluid label="email" placeholder="email" onChange={e=>props.handleOnChange('email',e.target.value)}/>
       </Form.Group>
       <br />
       <label
@@ -40,10 +38,15 @@ const RegisterForm = props => {
         />
       </label>
       <Image src={props.files} circular className="avatar-uploaded" />
-      <DatePicker
-        selected={props.startDate}
-        onChange={e=>props.handleOnChange("dateOfBirth",e._d)}
-    />
+      <Form.Group widths="equal">
+        <Form.Input fluid label="Username" placeholder="username" onChange={e=>props.handleOnChange('username',e.target.value)}/>
+        <Form.Input fluid label="Password" placeholder="Password" type='password' onChange={e=>props.handleOnChange('password',e.target.value)}/>
+        <Form.Input fluid label="Re-Password" placeholder="Re-Password" type='password' onChange={e=>props.handleOnChange('rePassword',e.target.value)}/>
+        <Form.Input fluid label="tel" placeholder="tel" onChange={e=>props.handleOnChange('tel',e.target.value)} />
+      </Form.Group>
+      <br/>
+      <br/>
+      <br/>
       <Button>Submit</Button>
     </div>
   );

@@ -10,7 +10,7 @@ const PlaceInfo = (props) => (
             <p>{props.placeDes}</p>
             <Card.Group itemsPerRow={6}>
                 {props.FileName.map((src, index) => (
-                    <Card>
+                    <Card key={index}>
                         <Card raised image={'http://localhost:3030/images/places/'+src} onClick={() => props.onOpenModal("index", index)} />
                         
                         <Modal open={props.open} onClose={props.onCloseModal} center animationDuration={500} >
