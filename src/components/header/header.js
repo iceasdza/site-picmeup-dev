@@ -40,7 +40,7 @@ class Header_picmeup extends Component{
                     </Responsive>
                 </div>
                 <Responsive {...Responsive.onlyMobile}>
-                    <Sidebar.Pushable >
+                    {/* <Sidebar.Pushable >
                     <Sidebar as={Menu} animation='push' visible={visible} vertical>
                         <Menu.Item name='home'>
                             สถานที่ที่น่าสนใจ
@@ -70,7 +70,21 @@ class Header_picmeup extends Component{
                             </Menu>
                         </div>
                     </Sidebar.Pusher>
-                    </Sidebar.Pushable>
+                    </Sidebar.Pushable> */}
+                    <div className="Header-background">
+                    <Menu secondary inverted>
+                        <Dropdown text='เมนู' floating labeled button className='icon'>
+                                <Dropdown.Menu>
+                                    <Dropdown.Item icon='attention' text='Important' />
+                                    <Dropdown.Item icon='comment' text='Announcement' />
+                                    <Dropdown.Item icon='conversation' text='Discussion' />
+                                </Dropdown.Menu>
+                        </Dropdown>
+                            <Menu.Item position='right'>
+                                    <Input size='mini' icon = 'search' placeholder='ค้นหา...' />
+                            </Menu.Item>
+                    </Menu>
+                    </div>
                 </Responsive>
         </div>
         )
