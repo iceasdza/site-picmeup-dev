@@ -73,7 +73,7 @@ class Header_picmeup extends Component{
                     </Sidebar.Pushable> */}
                     <div className="Header-background">
                     <Menu secondary inverted>
-                        <Dropdown text='เมนู' floating labeled button className='icon'>
+                        <Dropdown icon='sidebar'>
                                 <Dropdown.Menu>
                                     <Dropdown.Item icon='attention' text='Important' />
                                     <Dropdown.Item icon='comment' text='Announcement' />
