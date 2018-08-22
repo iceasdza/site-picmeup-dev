@@ -7,34 +7,30 @@ import {
   Image,
   Responsive,
   Icon,
-  List
+  List,
+  Divider
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../static/Header.css";
 import logo from "../../static/logo-white-test1.png";
 
 class Header_picmeup extends Component {
+  state = {
+    sidebar: "hidden",
+    visible: true
+  };
 
-    state={
-        sidebar:"hidden",
-        visible:true
+  handleSideBar = () => {
+    this.setState({ visible: !this.state.visible });
+    if (this.state.visible === true) {
+      this.setState({ sidebar: "show" });
+    } else if (this.state.visible === false) {
+      this.setState({ sidebar: "hidden" });
     }
-
-    handleSideBar = () => {
-        this.setState({ visible: !this.state.visible })
-        console.log(this.state.visible)
-        if(this.state.visible===true){
-            this.setState({sidebar:"show"})
-        }else if(this.state.visible===false){
-            this.setState({sidebar:"hidden"})
-        }
-}
-
+  };
 
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
-  render() 
-  {
-
+  render() {
     return (
       <div>
         <div className="Header-background">
@@ -58,10 +54,14 @@ class Header_picmeup extends Component {
                 <Menu.Item>
                   <Input icon="search" placeholder="ค้นหา..." />
                 </Menu.Item>
-                <div className="Login">
-                  <Button primary>สมัครสมาชิก</Button>
-                  <Button secondary>เข้าสู่ระบบ</Button>
-                </div>
+                <Menu.Item>
+                 <Button inverted >ลงชื่อเข้าใช้</Button>
+                </Menu.Item>
+                <Menu.Item>
+                <Link to={{ pathname: "/register" }}>
+                 <Button inverted >สมัครสมาชิก</Button>
+                 </Link>
+                </Menu.Item>
               </Menu.Menu>
             </Menu>
           </Responsive>
@@ -76,31 +76,16 @@ class Header_picmeup extends Component {
               <Input size="mini" icon="search" placeholder="ค้นหา..." />
             </Menu.Item>
           </Menu>
-
-  <List divided relaxed className={this.state.sidebar+" sideBar"}>
-    <List.Item>
-      <List.Icon name='github' size='large' verticalAlign='middle' />
-      <List.Content>
-        <List.Header as='a'>Semantic-Org/Semantic-UI</List.Header>
-        <List.Description as='a'>Updated 10 mins ago</List.Description>
-      </List.Content>
-    </List.Item>
-    <List.Item>
-      <List.Icon name='github' size='large' verticalAlign='middle' />
-      <List.Content>
-        <List.Header as='a'>Semantic-Org/Semantic-UI-Docs</List.Header>
-        <List.Description as='a'>Updated 22 mins ago</List.Description>
-      </List.Content>
-    </List.Item>
-    <List.Item>
-      <List.Icon name='github' size='large' verticalAlign='middle' />
-      <List.Content>
-        <List.Header as='a'>Semantic-Org/Semantic-UI-Meteor</List.Header>
-        <List.Description as='a'>Updated 34 mins ago</List.Description>
-      </List.Content>
-    </List.Item>
-  </List>
-
+          <List relaxed className={this.state.sidebar + " sideBar"}>
+            <List.Item>สถานที่น่าสนใจ</List.Item>
+            <List.Item>อีเว้นท์ที่กำลังมาแรง</List.Item>
+            <List.Item>สนทนา</List.Item>
+            <Divider inverted />
+            <List.Item>ลงชื่อเข้าใช้</List.Item>
+            <Link to={{ pathname: "/register" }}>
+            <List.Item>สมัครสมาชิก</List.Item>
+            </Link>
+          </List>
         </Responsive>
       </div>
     );

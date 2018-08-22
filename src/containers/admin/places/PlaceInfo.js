@@ -47,7 +47,7 @@ class PlaceInfo extends Component {
             this.getData()
     }
 
-    onOpenModal = (field,value) => {
+    onOpenModal = (value) => {
         console.log(value)
         this.setState({ open: true ,index:value});
       };

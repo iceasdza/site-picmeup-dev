@@ -4,6 +4,7 @@ import Header from "../../../components/header/header";
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from '../../../lib/axios';
+import { Form } from 'formsy-semantic-ui-react'
 class Register extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +20,15 @@ class Register extends Component {
       userName:"",
       password:"",
       tel:"",
-      status:[]
+      status:[],
+
+      usernameMsg:'',
+      userNameLabel:'hidden',
+      userNameLabelColor:'red',
+
+      emailMsg:'',
+      emailLabel:'hidden',
+      emailLabelColor:'red'
 
     };
   }
@@ -48,15 +57,48 @@ class Register extends Component {
     });
   };
 
-  DeletePhotoUploaded = (field, index) => {
+  DeletePhotoUploaded = (index) => {
     let arr = [];
     arr = this.state.files;
     arr.splice(index, 1);
     this.setState({ files: arr });
   };
 
-  handleSubmit= async (e) =>{
+  checkUsername= async (e)=>{
     e.preventDefault()
+    if(this.state.userName===""){
+      this.setState({usernameMsg:'กรุณาใส่ชื่อผู้ใช้',userNameLabel:''})
+      return 
+    }else{
+      this.setState({usernameMsg:'',userNameLabel:'hidden'})
+      const resp = await axios.get('/api/findUserName/'+this.state.userName)
+      const data = resp.data
+      if(data!==null){
+        this.setState({usernameMsg:'มีชื่อผู้ใช้นี้อยู่แล้ว',userNameLabel:'',userNameLabelColor:'red'})
+      }else{
+        this.setState({usernameMsg:'สามารถใช้ชื่อผู้ใช้นี้ได้',userNameLabel:'',userNameLabelColor:'green'})
+      }
+    }
+  }
+
+  checkEmail= async (e)=>{
+    e.preventDefault()
+    if(this.state.email===""){
+      this.setState({emailMsg:'กรุณาใส่อีเมล',emailLabel:''})
+      return 
+    }else{
+      this.setState({emailMsg:'',emailLabel:'hidden'})
+      const resp = await axios.get('/api/findEmail/'+this.state.email)
+      const data = resp.data
+      if(data!==null){
+        this.setState({emailMsg:'มีอีเมลนี้อยู่แล้ว',emailLabel:'',emailLabelColor:'red'})
+      }else{
+        this.setState({emailMsg:'สามารถใช้อีเมลนี้ได้',emailLabel:'',emailLabelColor:'green'})
+      }
+    }
+  }
+
+  handleSubmit= async () =>{
     var data = new FormData();
     const dataFile = document.getElementById('img').files[0]
     data.append('img', dataFile)
@@ -67,8 +109,9 @@ class Register extends Component {
         gender:this.state.gender,
         email:this.state.email,
         password:this.state.password,
-        files:this.state.files,
-        tel:this.state.tel
+        avatar:dataFile.name,
+        tel:this.state.tel,
+        userName:this.state.userName
     })
     
   }
@@ -76,18 +119,27 @@ class Register extends Component {
     return (
       <div>
         <Header />
-        <form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit}>
           <RegisterForm
+          userNameLabelColor={this.state.userNameLabelColor}
+          userNameLabel={this.state.userNameLabel}
             handleOver={this.handleOver}
             handleOut={this.handleOut}
             handleSelectImage={this.handleSelectImage}
             DeletePhotoUploaded={this.DeletePhotoUploaded}
             isActive={this.state.active}
+            usernameMsg={this.state.usernameMsg}
             files={this.state.files}
             handleOnChange={this.handleOnChange}
             startDate={this.state.startDate}
+            checkUsername={this.checkUsername}
+
+            checkEmail={this.checkEmail}
+            emailLabel={this.state.emailLabel}
+            emailMsg={this.state.emailMsg}
+            emailLabelColor={this.state.emailLabelColor}
           />
-        </form>
+        </Form>
       </div>
     );
   }

@@ -1,7 +1,6 @@
 import React from "react";
-import { Form, Image, Button} from "semantic-ui-react";
-import "../../../static/Form.css";
-
+import { Image, Button ,Label} from "semantic-ui-react";
+import { Form } from "formsy-semantic-ui-react";
 const options = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" }
@@ -10,18 +9,61 @@ const options = [
 const RegisterForm = props => {
   return (
     <div className="container fluid">
-      <Form.Group widths="equal">
-        <Form.Input fluid label="First name" placeholder="First name" onChange={e=>props.handleOnChange('firstName',e.target.value)}/>
-        <Form.Input fluid label="Last name" placeholder="Last name" onChange={e=>props.handleOnChange('lastName',e.target.value)}/>
+    <Form.Group widths="equal">
+      <Form.Input
+        fluid
+        name="fistName"
+        label="ชื่อ"
+        placeholder="First name"
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{
+          isDefaultRequiredValue: "ต้องใส่ชื่อ"
+        }}
+        onChange={e => props.handleOnChange("firstName", e.target.value)}
+      />
+      <Form.Input
+          fluid
+          name="lastName"
+          label="นามสกุล"
+          placeholder="Last name"
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "ต้องใส่นามสกุล"
+          }}
+          onChange={e => props.handleOnChange("lastName", e.target.value)}
+        />
+        </Form.Group>
         <Form.Select
           fluid
-          label="Gender"
+          name="fistGender"
+          label="เพศ"
           options={options}
           placeholder="Gender"
-          onChange={(e,{ value }) => props.handleOnChange('gender', {value}.value)}
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "โปรดระบุเพศ"
+          }}
+          onChange={(e, { value }) =>
+            props.handleOnChange("gender", { value }.value)
+          }
         />
-        <Form.Input fluid label="email" placeholder="email" onChange={e=>props.handleOnChange('email',e.target.value)}/>
-      </Form.Group>
+         <Label pointing="below" color={props.emailLabelColor} className={props.emailLabel}>{props.emailMsg}</Label>
+        <Form.Input
+          fluid
+          name="email"
+          label="อีเมล"
+          placeholder="email"
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "โปรดระบุอีเมล"
+          }}
+          onChange={e => props.handleOnChange("email", e.target.value)}
+        />
+        <Button onClick={props.checkEmail}>ตรวจสอบอีเมล</Button>
       <br />
       <label
         className={props.isActive}
@@ -38,15 +80,66 @@ const RegisterForm = props => {
         />
       </label>
       <Image src={props.files} circular className="avatar-uploaded" />
-      <Form.Group widths="equal">
-        <Form.Input fluid label="Username" placeholder="username" onChange={e=>props.handleOnChange('username',e.target.value)}/>
-        <Form.Input fluid label="Password" placeholder="Password" type='password' onChange={e=>props.handleOnChange('password',e.target.value)}/>
-        <Form.Input fluid label="Re-Password" placeholder="Re-Password" type='password' onChange={e=>props.handleOnChange('rePassword',e.target.value)}/>
-        <Form.Input fluid label="tel" placeholder="tel" onChange={e=>props.handleOnChange('tel',e.target.value)} />
-      </Form.Group>
-      <br/>
-      <br/>
-      <br/>
+
+      <Label pointing="below" color={props.userNameLabelColor} className={props.userNameLabel}>{props.usernameMsg}</Label>
+        <Form.Input
+          fluid
+          name="userName"
+          label={"ชื่อผู้ใช้"}
+          placeholder="username"
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "โปรดระบุชื่อผู้ใช้"
+          }}
+          onChange={e => props.handleOnChange("userName", e.target.value)}
+        />
+        <Button onClick={props.checkUsername}>ตรวจสอบชื่อผู้ใช้</Button>
+
+        <Form.Group widths="equal">
+        <Form.Input
+          fluid
+          name="password"
+          label="พาสเวิร์ด"
+          placeholder="Password"
+          type="password"
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "กรุณาตั้งพาสเวิร์ด"
+          }}
+          onChange={e => props.handleOnChange("password", e.target.value)}
+        />
+        <Form.Input
+          fluid
+          name="rePassword"
+          label="ยืนยันพาสเวิร์ด(ใส่พาสเวิร์ดเหมือนกับครั้งแรก)"
+          placeholder="Re-Password"
+          type="password"
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "กรุณายินยันพาสเวิร์ด"
+          }}
+          onChange={e => props.handleOnChange("rePassword", e.target.value)}
+        />
+        </Form.Group>
+        <Form.Input
+          fluid
+          name="tel"
+          label="เออร์โทร"
+          placeholder="tel"
+          required
+          errorLabel={<Label color="red" pointing />}
+          validationErrors={{
+            isDefaultRequiredValue: "กรุณาใส่เบอร์โทร"
+          }}
+          onChange={e => props.handleOnChange("tel", e.target.value)}
+        />
+      
+      <br />
+      <br />
+      <br />
       <Button>Submit</Button>
     </div>
   );

@@ -6,7 +6,7 @@
     height: auto;
 }
 .ui.secondary.inverted.menu{
-    background-color: #89DA58;
+    background-color: #333;
     margin-bottom: 0px
 }
 
@@ -24,5 +24,16 @@
 }
 .ui.list:last-child, ol.ui.list:last-child, ul.ui.list:last-child{
     margin-top: 0px;
-    background-color: #89DA58
+    padding-top: 1em;
+    background-color: #333;
+    color: white;
+    padding-bottom: 5px
+}
+.ui.list .list>.item, .ui.list>.item, ol.ui.list li, ul.ui.list li{
+    padding: 1em;
+    margin-bottom: 10px
+    
+}
+.ui.divider:not(.vertical):not(.horizontal){
+margin: 1em
 }
