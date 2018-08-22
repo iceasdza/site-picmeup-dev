@@ -65,6 +65,7 @@ const RegisterForm = props => {
         />
         <Button onClick={props.checkEmail}>ตรวจสอบอีเมล</Button>
       <br />
+      <br />
       <label
         className={props.isActive}
         onMouseEnter={props.handleOver}
@@ -80,6 +81,7 @@ const RegisterForm = props => {
         />
       </label>
       <Image src={props.files} circular className="avatar-uploaded" />
+      <Label pointing color="red" className={props.avatarLabel} >กรุณาเลือกรูปภาพ</Label>
 
       <Label pointing="below" color={props.userNameLabelColor} className={props.userNameLabel}>{props.usernameMsg}</Label>
         <Form.Input
@@ -96,7 +98,6 @@ const RegisterForm = props => {
         />
         <Button onClick={props.checkUsername}>ตรวจสอบชื่อผู้ใช้</Button>
 
-        <Form.Group widths="equal">
         <Form.Input
           fluid
           name="password"
@@ -110,6 +111,7 @@ const RegisterForm = props => {
           }}
           onChange={e => props.handleOnChange("password", e.target.value)}
         />
+        <Label pointing="below" color="red" className={props.rePasswordLabel} >กรุณาตั้งพาสเวิร์ดให้ตรงกัน</Label>
         <Form.Input
           fluid
           name="rePassword"
@@ -123,11 +125,10 @@ const RegisterForm = props => {
           }}
           onChange={e => props.handleOnChange("rePassword", e.target.value)}
         />
-        </Form.Group>
         <Form.Input
           fluid
           name="tel"
-          label="เออร์โทร"
+          label="เบอร์โทร"
           placeholder="tel"
           required
           errorLabel={<Label color="red" pointing />}

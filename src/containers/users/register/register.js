@@ -19,6 +19,7 @@ class Register extends Component {
       startDate: moment(),
       userName:"",
       password:"",
+      rePassword:"",
       tel:"",
       status:[],
 
@@ -28,7 +29,11 @@ class Register extends Component {
 
       emailMsg:'',
       emailLabel:'hidden',
-      emailLabelColor:'red'
+      emailLabelColor:'red',
+
+      rePasswordLabel:'hidden',
+      
+      avatarLabel:'hidden'
 
     };
   }
@@ -47,6 +52,7 @@ class Register extends Component {
   };
 
   handleSelectImage = event => {
+    this.setState({avatarLabel:'hidden'})
     const files = event.target.files;
     const arr = [];
     for (var x = 0; x < files.length; x++) {
@@ -55,7 +61,7 @@ class Register extends Component {
     this.setState({
       files: arr
     });
-  };
+  }
 
   DeletePhotoUploaded = (index) => {
     let arr = [];
@@ -99,9 +105,20 @@ class Register extends Component {
   }
 
   handleSubmit= async () =>{
+    if(this.state.password!==this.state.rePassword){
+      this.setState({rePasswordLabel:''})
+      console.log(this.state.files)
+        return
+    }
+    if(this.state.files.length===0){
+      this.setState({avatarLabel:''})
+      return
+    }
+    this.setState({rePasswordLabel:'hidden'})
     var data = new FormData();
     const dataFile = document.getElementById('img').files[0]
     data.append('img', dataFile)
+    const avatar = dataFile.name
     await axios.post('/api/upLoadAvatar', data)
     await axios.post('/api/addRegisterInfo',{
         firstName:this.state.firstName,
@@ -109,7 +126,7 @@ class Register extends Component {
         gender:this.state.gender,
         email:this.state.email,
         password:this.state.password,
-        avatar:dataFile.name,
+        avatar:avatar,
         tel:this.state.tel,
         userName:this.state.userName
     })
@@ -133,11 +150,13 @@ class Register extends Component {
             handleOnChange={this.handleOnChange}
             startDate={this.state.startDate}
             checkUsername={this.checkUsername}
+            rePasswordLabel={this.state.rePasswordLabel}
 
             checkEmail={this.checkEmail}
             emailLabel={this.state.emailLabel}
             emailMsg={this.state.emailMsg}
             emailLabelColor={this.state.emailLabelColor}
+            avatarLabel={this.state.avatarLabel}
           />
         </Form>
       </div>
