@@ -55,12 +55,14 @@ class Header_picmeup extends Component {
                   <Input icon="search" placeholder="ค้นหา..." />
                 </Menu.Item>
                 <Menu.Item>
-                 <Button inverted >ลงชื่อเข้าใช้</Button>
+                  <Link to={{ pathname: "/login" }}>
+                    <Button inverted>ลงชื่อเข้าใช้</Button>
+                  </Link>
                 </Menu.Item>
                 <Menu.Item>
-                <Link to={{ pathname: "/register" }}>
-                 <Button inverted >สมัครสมาชิก</Button>
-                 </Link>
+                  <Link to={{ pathname: "/register" }}>
+                    <Button inverted>สมัครสมาชิก</Button>
+                  </Link>
                 </Menu.Item>
               </Menu.Menu>
             </Menu>
@@ -81,10 +83,12 @@ class Header_picmeup extends Component {
             <List.Item>อีเว้นท์ที่กำลังมาแรง</List.Item>
             <List.Item>สนทนา</List.Item>
             <Divider inverted />
-            <List.Item>ลงชื่อเข้าใช้</List.Item>
-            <Link to={{ pathname: "/register" }}>
-            <List.Item>สมัครสมาชิก</List.Item>
-            </Link>
+            <List.Item>
+              <Link to={{ pathname: "/login" }}>ลงชื่อเข้าใช้</Link>
+            </List.Item>
+            <List.Item>
+              <Link to={{ pathname: "/register" }}>สมัครสมาชิก</Link>
+            </List.Item>
           </List>
         </Responsive>
       </div>

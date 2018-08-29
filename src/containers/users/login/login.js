@@ -3,12 +3,14 @@ import Header from "../../../components/header/header";
 import LoginForm from "../../../components/users/login/loginForm";
 import axios from '../../../lib/axios';
 import { Form } from "formsy-semantic-ui-react";
+import {Grid, Segment, Portal } from 'semantic-ui-react'
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
-      password: ""
+      password: "",
+      open: false
     };
   }
   handleOnChange = (field, e) => {
@@ -24,14 +26,29 @@ class Login extends Component {
     if(isAuthen){
       alert('true')
     }else{
-      alert('false')
+      this.setState({ open: !this.state.open })
     }
 
   }
+
+  handleClick = () => this.setState({ open: !this.state.open })
+
+  handleClose = () => this.setState({ open: false })
+
   render() {
+    const { open } = this.state
     return (
       <div>
         <Header />
+        <Grid columns={2}>
+        <Grid.Column>
+          <Portal onClose={this.handleClose} open={open}>
+            <Segment style={{ left: '40%', position: 'fixed', top: '50%', zIndex: 1000 }}>
+              <p>ผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
+            </Segment>
+          </Portal>
+        </Grid.Column>
+      </Grid>
         <Form onSubmit={this.handleSubmit}>
           <LoginForm 
           handleOnChange = {this.handleOnChange}

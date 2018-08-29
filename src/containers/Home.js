@@ -59,6 +59,9 @@ class Home extends Component {
         <Link to={{ pathname: "/register" }}>
           <Button primary content="Register" />
         </Link>
+        <Link to={{ pathname: "/login" }}>
+          <Button primary content="Login" />
+        </Link>
         <Divider horizontal>PLACE</Divider>
         <Card.Group itemsPerRow={4}>
           {this.state.placesData.map((data, index) => (
