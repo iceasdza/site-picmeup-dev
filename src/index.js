@@ -16,6 +16,7 @@ import UpdateEvent from './containers/admin/events/updateEvent'
 import placeInfo from './containers/places/placeInfo'
 import Register from './containers/users/register/register'
 import eventInfo from './containers/events/eventInfo'
+import Login from './containers/users/login/login'
 
 
 import 'semantic-ui-css/semantic.min.css';
@@ -31,6 +32,7 @@ ReactDOM.render(
         <Route path="/eventInfo" component={eventInfo}/>
         <Route path="/updateEvent" component={UpdateEvent}/>
         <Route path="/register" component={Register}/>
+        <Route path="/login" component={Login}/>
         </div>
 </Router>
     , document.getElementById('root'));

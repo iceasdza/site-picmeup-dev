@@ -70,6 +70,7 @@ class Register extends Component {
     this.setState({ files: arr });
   };
 
+
   checkUsername= async (e)=>{
     e.preventDefault()
     if(this.state.userName===""){
@@ -104,7 +105,27 @@ class Register extends Component {
     }
   }
 
+  checkDuplicate=async()=>{
+
+    const respMail = await axios.get('/api/findEmail/'+this.state.email)
+    const respEmail = respMail.data
+    if(respEmail!==null){
+      this.setState({emailMsg:'มีอีเมลนี้อยู่แล้ว',emailLabel:'',emailLabelColor:'red'})
+      return false
+    }
+
+    const resp = await axios.get('/api/findUserName/'+this.state.userName)
+    const respUsername = resp.data
+    if(respUsername!==null){
+      this.setState({usernameMsg:'มีชื่อผู้ใช้นี้อยู่แล้ว',userNameLabel:'',userNameLabelColor:'red'})
+      return false
+    }
+  }
+
   handleSubmit= async () =>{
+
+    if(await this.checkDuplicate()===false) return
+
     if(this.state.password!==this.state.rePassword){
       this.setState({rePasswordLabel:''})
       console.log(this.state.files)
