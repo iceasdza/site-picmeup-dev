@@ -4,15 +4,23 @@ import LoginForm from "../../../components/users/login/loginForm";
 import axios from '../../../lib/axios';
 import { Form } from "formsy-semantic-ui-react";
 import {Grid, Segment, Portal } from 'semantic-ui-react'
+import{getNameUser}from '../../../dataflow/actions/getdatauser'
+import { connect } from 'react-redux'
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
       userName: "",
       password: "",
-      open: false
+      open: false,
+      testName:'Patipat'
     };
   }
+
+  componentDidMount(){
+    console.log('aaaaa')
+  }
+
   handleOnChange = (field, e) => {
     this.setState({ [field]: e });
   };
@@ -34,7 +42,6 @@ class Login extends Component {
   handleClick = () => this.setState({ open: !this.state.open })
 
   handleClose = () => this.setState({ open: false })
-
   render() {
     const { open } = this.state
     return (
@@ -59,4 +66,12 @@ class Login extends Component {
   }
 }
 
-export default Login;
+const mapDispatchToProps = dispatch => {    
+  return {    
+    setNameUser: name => {
+      dispatch(getNameUser(name))
+    }
+  }
+}
+
+export default connect(mapDispatchToProps)(Login);
