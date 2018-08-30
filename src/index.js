@@ -18,10 +18,16 @@ import Register from './containers/users/register/register'
 import eventInfo from './containers/events/eventInfo'
 import Login from './containers/users/login/login'
 
+//Redux
+import{createStore} from 'redux'
+import{Provider}from 'react-redux'
+import{rootReducer}from './dataflow/reducers/index'
+
+
 
 import 'semantic-ui-css/semantic.min.css';
-
-ReactDOM.render(
+const App = () => (
+<Provider store={createStore(rootReducer)}>
 <Router>
     <div>
         <Route path="/" exact component={Home} />
@@ -35,4 +41,9 @@ ReactDOM.render(
         <Route path="/login" component={Login}/>
         </div>
 </Router>
+</Provider>
+)
+
+ReactDOM.render(
+<App />
     , document.getElementById('root'));
