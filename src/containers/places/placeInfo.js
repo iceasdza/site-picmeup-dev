@@ -20,9 +20,10 @@ class PlaceInfo extends Component {
             latitude: 0,
             longtitude: 0
         },
-        FileName: [],
+        images: [],
         id:"",
         open: false,
+        index:null
     }
 
     getData  = async () => {
@@ -39,7 +40,7 @@ class PlaceInfo extends Component {
             carParking: data.carParking,
             days: data.days,
             tags: data.tags,
-            FileName: data.FileName
+            images: data.images
         })
     }
 
@@ -47,9 +48,8 @@ class PlaceInfo extends Component {
             this.getData()
     }
 
-    onOpenModal = (field,value) => {
-        console.log(value)
-        this.setState({ open: true ,index:value});
+    onOpenModal = (value) => {
+        this.setState({ open: true ,index:value})
       };
      
       onCloseModal = () => {
@@ -71,7 +71,7 @@ class PlaceInfo extends Component {
                 carParking={this.state.carParking}
                 days={this.state.days}
                 tags={this.state.tags}
-                FileName={this.state.FileName}
+                images={this.state.images}
                 index = {this.state.index}
 
                 onCloseModal={this.onCloseModal}

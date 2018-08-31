@@ -45,10 +45,10 @@ const PlaceEditForm = (props) => {
                     <input type="file" accept="image/*" name="img" id="img" multiple onChange={(event) => props.GetFileUploaded('FileList', event.target.files)} />
                 </label>
                 <Card.Group itemsPerRow={6}>
-                    {props.FileList.map((src,index) => (
-                        <Card>
+                    {props.images.map((src,index) => (
+                        <Card key={index}>
                             <div>
-                                <Icon circular inverted name='remove' color="red" onClick={() => props.DeletePhotoUploaded("photo", src.slice(36+5),index)}/>
+                                <Icon circular inverted name='remove' color="red" onClick={() => props.DeleteImage(index)}/>
                             </div>
                             <Image src={src} />
                         </Card>

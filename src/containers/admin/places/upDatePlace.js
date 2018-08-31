@@ -21,7 +21,7 @@ class Home extends Component {
             latitude: 0,
             longtitude: 0
         },
-        FileList: [],
+        images: [],
         id: "",
         FileName: [],
         message:""
@@ -50,9 +50,7 @@ class Home extends Component {
     getData = async () => {
         let _id = this.props.location.state.id
         const resp = await axios.get("/api/getPlaceInfoFromId/" + _id)
-        console.log(_id)
         const data = resp.data[0]
-        console.log(resp)
         this.setState({
             placeName: data.placeName,
             placeDes: data.placeDes,
@@ -63,9 +61,8 @@ class Home extends Component {
             carParking: data.carParking,
             days: data.days,
             tags: data.tags,
-            FileList: data.FileList,
             id: _id,
-            FileName: []
+            images: data.images
         })
     }
 
@@ -74,20 +71,11 @@ class Home extends Component {
         console.log(field + " : " + value)
     }
 
-    DeletePhotoUploaded = async (field, value, index) => {
-        const src = value
-        await axios.get('/api/deleteImage/' + src)
-        const arr = this.state.FileList
-        const filesName = this.state.FileName
-        console.log("BEFORE : ", arr)
-        arr.splice(index, 1)
-        filesName.splice(index, 1)
-        console.log("AFTER : ", arr)
-        this.setState({ FileList: arr, FileName: filesName })
+    DeleteImage = async (index) => {
+        const images = this.state.images
+        images.splice(index, 1)
+        this.setState({images:images})
 
-        if(arr.length===0){
-            this.setState({message:"กรุณาเลือกรูปภาพ"})
-        }
     }
 
     GetFileUploaded = async (field, value) => {
@@ -164,7 +152,7 @@ class Home extends Component {
             FileList: this.state.FileList,
             editor: "Patis editor",
             edit_date: date,
-            FileName:this.state.FileName
+            images:this.state.images
         })
 
         //reload for test
@@ -177,7 +165,6 @@ class Home extends Component {
         return (
             <div>
                 <Header />
-                {/* <h1>{this.state.id}</h1> */}
                 <Form onSubmit={this.UpdatePlace}>
                     <PlaceEdit
                         placeName={this.state.placeName}
@@ -188,15 +175,8 @@ class Home extends Component {
                         fee={this.state.fee}
                         carParking={this.state.carParking}
                         days={this.state.days}
-                        mon={this.state.mon}
-                        tue={this.state.tue}
-                        wed={this.state.wed}
-                        thu={this.state.thu}
-                        fri={this.state.fri}
-                        sat={this.state.sat}
-                        sun={this.state.sun}
                         tags={this.state.tags}
-                        FileList={this.state.FileList}
+                        images={this.state.images}
                         message={this.state.message}
 
                         TagSelected={this.TagSelected}
@@ -205,7 +185,7 @@ class Home extends Component {
                         CarParkingOption={this.CarParkingOption}
                         DaysSelected={this.DaysSelected}
                         GetFileUploaded={this.GetFileUploaded}
-                        DeletePhotoUploaded={this.DeletePhotoUploaded}
+                        DeleteImage={this.DeleteImage}
                     />
                 </Form>
             </div>
