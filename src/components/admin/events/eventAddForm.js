@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Dropdown } from 'formsy-semantic-ui-react'
-import { Label, Image, Card, Icon } from 'semantic-ui-react'
+import { Label, Image, Card, Icon ,Divider} from 'semantic-ui-react'
 import '../../../static/Form.css'
 
 const optionsTag = [
@@ -36,12 +36,8 @@ const EventForm = (props) => {
         optionPlace.push({ key: index + 1, text: data.placeName, value: data._id }
         )))
     return (
-        <div className="Body">
-            <div className="Head">
-                <h1>สร้างอีเวนท์</h1>
-                <hr className="Hr" />
-            </div>
-            <div className="Form">
+            <div className="container fluid">
+            <Divider horizontal>สร้างอีเวนท์</Divider>
                 <Form.Input label='ชื่ออีเวนท์' name="place_name" placeholder='ชื่ออีเวนท์..' width={8} value={props.eventName}
                     onChange={(e, { value }) => props.setField("eventName", value)} required errorLabel={<Label color="red" pointing />}
                     validationErrors={{ isDefaultRequiredValue: 'จำเป็นต้องใส่ชื่ออีเวนท์', }}
@@ -110,7 +106,6 @@ const EventForm = (props) => {
                 <div>
                     <Form.Button floated='right' size='big'>สร้างอีเวนท์</Form.Button>
                 </div>
-            </div>
         </div>
     )
 }

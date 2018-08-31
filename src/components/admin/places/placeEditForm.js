@@ -1,6 +1,6 @@
 import React from 'react'
 import { Form, Dropdown } from 'formsy-semantic-ui-react'
-import { Label, Image, Card, Icon } from 'semantic-ui-react'
+import { Label, Image, Card, Icon ,Divider} from 'semantic-ui-react'
 import '../../../static/Form.css'
 
 const optionsTag = [
@@ -30,12 +30,8 @@ const renderLabel = label => ({
 const PlaceEditForm = (props) => {
 
     return (
-        <div className="Body">
-        <div className="Head">
-            <h1>แก้ไขสถานที่</h1>
-            <hr className="Hr" />
-        </div>
-        <div className="Form">
+        <div className="container fluid">
+        <Divider horizontal>แก้ไขสถานที่</Divider>
             <Form.Input label='ชื่อสถานที่' name="place_name" placeholder='ชื่อสถานที่..' width={8} value={props.placeName} onChange={(e, { value }) => props.setField("placeName", value)} required errorLabel={<Label color="red" pointing />} validationErrors={{ isDefaultRequiredValue: 'จำเป็นต้องใส่ชื่อสถานที่', }} />
             <Form.TextArea name="place_desc" label='คำอธิบายสถานที่' placeholder='เกี่ยวกับสถานที่..' width={14} value={props.placeDes} onChange={(e, { value }) => props.setField("placeDes", value)} required errorLabel={<Label color="red" pointing />} validationErrors={{ isDefaultRequiredValue: 'จำเป็นต้องใส่คำอธิบาย', }} />
             <Form.Field>
@@ -93,7 +89,6 @@ const PlaceEditForm = (props) => {
                 <Form.Button floated='right' size='big'>แก้ไขสถานที่</Form.Button>
             </div>
         </div>
-    </div>
     )
 }
 export default PlaceEditForm

@@ -49,6 +49,7 @@ class Home extends Component {
     return (
       <div>
         <Header />
+        <div>
         <Divider horizontal>SHORT CUT</Divider>
         <Link to={{ pathname: "/addplace" }}>
           <Button primary content="Add place" />
@@ -131,6 +132,7 @@ class Home extends Component {
             </Card>
           ))}
         </Card.Group>
+        </div>
       </div>
     );
   }
