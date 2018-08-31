@@ -67,11 +67,10 @@ class Home extends Component {
           {this.state.placesData.map((data, index) => (
             <Card key={index}>
               <Image
-                src={"http://localhost:3030/images/places/" + data.FileName[0]}
+               src={data.images[0]}
               />
               {data.placeName}
               <Card.Content>
-                {/* <Link to={"/placeInfo/" + data._id}>{data.placeName}</Link> */}
 
                 <Link
                   to={{
@@ -106,8 +105,6 @@ class Home extends Component {
               <Image src={data.FileList[0]} />
               {data.eventName}
               <Card.Content>
-                {/* <Link to={"/placeInfo/" + data._id}>{data.placeName}</Link> */}
-
                 <Link
                   to={{
                     pathname: "/eventInfo",

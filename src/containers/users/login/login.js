@@ -17,9 +17,6 @@ class Login extends Component {
     };
   }
 
-  componentDidMount(){
-    console.log('aaaaa')
-  }
 
   handleOnChange = (field, e) => {
     this.setState({ [field]: e });

@@ -139,18 +139,17 @@ class Register extends Component {
     var data = new FormData();
     const dataFile = document.getElementById('img').files[0]
     data.append('img', dataFile)
-    const avatar = dataFile.name
-    await axios.post('/api/upLoadAvatar', data)
+    const resp = await axios.post('/api/upLoadAvatar',data)
     await axios.post('/api/addRegisterInfo',{
-        firstName:this.state.firstName,
-        lastName:this.state.lastName,
-        gender:this.state.gender,
-        email:this.state.email,
-        password:this.state.password,
-        avatar:avatar,
-        tel:this.state.tel,
-        userName:this.state.userName
-    })
+      firstName:this.state.firstName,
+      lastName:this.state.lastName,
+      gender:this.state.gender,
+      email:this.state.email,
+      password:this.state.password,
+      avatar:resp.data,
+      tel:this.state.tel,
+      userName:this.state.userName
+  })
     
   }
   render() {

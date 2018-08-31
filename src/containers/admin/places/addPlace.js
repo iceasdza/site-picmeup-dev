@@ -20,15 +20,11 @@ class AddPlace extends Component {
             latitude: 0,
             longtitude: 0
         },
-        FileList: [],
-        FileName: [],
+        images: [],
         message:"",
         files:[]
         
     }
-
-    // onValidSubmit = (formData) => alert(JSON.stringify(formData));
-
 
     FeeOption = (field, value) => {
         this.setState({ [field]: value })
@@ -72,31 +68,27 @@ class AddPlace extends Component {
 
 
     CreatePlace = async (formData) => {
-        // this.onValidSubmit()
         const lengthOfFile = document.getElementById('img').files.length
-        var arr = []
-        var names = []
-
-        var data = new FormData();
-
+        let data = new FormData();
         if (lengthOfFile === 1) {
             const dataFile = document.getElementById('img').files[0]
             data.append('img', dataFile)
-            await axios.post('/api/uploadSingleFile', data)
-            console.log(dataFile)
-            this.setState({ FileList: arr, FileName: dataFile.name })
+            const resp = await axios.post('/api/uploadSinglePlace', data)
+            this.setState({ images: resp.data})
 
 
         }else{
             const dataFile = document.getElementById('img').files
-            console.log(dataFile)
             for (var y = 0; y < dataFile.length; y++) {
                 data.append('img', dataFile[y])
-                names.push(dataFile[y].name)
                 
             }
-            await axios.post('/api/uploadMultipleFile', data)
-            this.setState({ FileList: arr, FileName: names })
+            const resp = await axios.post('/api/uploadMultiplePlaces', data)
+            data = []
+            for(let x = 0;x<resp.data.length;x++){
+                data.push(resp.data[x].location)
+            }
+            this.setState({images:data})
         }
 
         if(lengthOfFile===0){
@@ -119,11 +111,10 @@ class AddPlace extends Component {
             carParking: this.state.carParking,
             tags: this.state.tags,
             days: this.state.days,
-            FileList: this.state.FileList,
-            FileName: this.state.FileName
+            images: this.state.images,
         })
         //reload for test
-        window.location.replace("/")
+        // window.location.replace("/")
     }
 
     setField = (field, value) => {

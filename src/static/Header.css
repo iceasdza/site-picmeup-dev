@@ -37,3 +37,7 @@
 .ui.divider:not(.vertical):not(.horizontal){
 margin: 1em
 }
+a{
+    color: white;
+    text-decoration: "none"
+}
