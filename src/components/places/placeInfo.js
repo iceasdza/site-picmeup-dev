@@ -1,5 +1,6 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
+import '../../static/home.css'
 import Modal from "react-responsive-modal";
 import { Message, Card, Container, Header, Image } from "semantic-ui-react";
 
@@ -8,13 +9,13 @@ const PlaceInfo = props => (
     <Container textAlign="center">
       <Header as="h2">{props.placeName}</Header>
       <p>{props.placeDes}</p>
-      <Card.Group itemsPerRow={6}>
+      <Card.Group itemsPerRow={3}>
         {props.images.map((src, index) => (
           <Card key={index}>
-            <Card
-              raised
-              image={src}
+            <Image
+              src={src}
               onClick={() => props.onOpenModal(index)}
+              className="showImage"
             />
           </Card>
         ))}
@@ -24,7 +25,7 @@ const PlaceInfo = props => (
           center
           animationDuration={500}
         >
-          <Image src={props.images[props.index]} />
+          <Image src={props.images[props.index]}/>
         </Modal>
       </Card.Group>
       <Message>

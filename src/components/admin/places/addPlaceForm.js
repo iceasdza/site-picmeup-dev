@@ -81,7 +81,7 @@ const Place_Form = props => {
                     onClick={() => props.DeletePhotoUploaded("files", index)}
                   />
                 </div>
-                <Image src={data} />
+                <Image src={data} className="imageUploadSize"/>
               </Card>
             ))}
           </Card.Group>

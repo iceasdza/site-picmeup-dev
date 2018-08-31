@@ -4,6 +4,7 @@ import { Card, Image, Button, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import Header from "../components/header/header";
 import axios from "../lib/axios";
+import "../static/home.css";
 class Home extends Component {
   state = {
     placesData: [],
@@ -68,11 +69,12 @@ class Home extends Component {
           {this.state.placesData.map((data, index) => (
             <Card key={index}>
               <Image
-               src={data.images[0]}
+               src={data.images[0]} 
+               className="imageHomeSize"
               />
-              {data.placeName}
               <Card.Content>
 
+              <h3>{data.placeName}</h3>
                 <Link
                   to={{
                     pathname: "/placeInfo",

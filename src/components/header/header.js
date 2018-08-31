@@ -79,6 +79,9 @@ class Header_picmeup extends Component {
             </Menu.Item>
           </Menu>
           <List relaxed className={this.state.sidebar + " sideBar"}>
+          <List.Item>
+              <Link to={{ pathname: "/" }}>หน้าแรก</Link>
+            </List.Item>
             <List.Item>สถานที่น่าสนใจ</List.Item>
             <List.Item>อีเว้นท์ที่กำลังมาแรง</List.Item>
             <List.Item>สนทนา</List.Item>

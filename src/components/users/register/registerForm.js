@@ -80,7 +80,7 @@ const RegisterForm = props => {
           onChange={e => props.handleSelectImage(e)}
         />
       </label>
-      <Image src={props.files} circular className="avatar-uploaded" />
+      <Image src={props.files} circular className="avatar-uploaded imageSize" />
       <Label pointing color="red" className={props.avatarLabel} >กรุณาเลือกรูปภาพ</Label>
 
       <Label pointing="below" color={props.userNameLabelColor} className={props.userNameLabel}>{props.usernameMsg}</Label>

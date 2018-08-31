@@ -75,3 +75,15 @@ input[type="file"] {
     width: 10em;
     height: 10em;
 }
+
+.imageSize{
+    object-fit: cover;
+    width: 200px;
+    height: 200px;
+ }
+
+ .imageUploadSize{
+    object-fit: cover;
+    width: 200px;
+    height: 100px;
+ }
