@@ -104,10 +104,11 @@ class Home extends Component {
         <Divider horizontal>EVENT</Divider>
         <Card.Group itemsPerRow={4}>
           {this.state.eventData.map((data, index) => (
-            <Card>
-              <Image src={data.FileList[0]} />
-              {data.eventName}
+            <Card key={index}>
+              <Image src={data.images[0]} 
+              className="imageHomeSize"/>
               <Card.Content>
+              <h3>{data.eventName}</h3>
                 <Link
                   to={{
                     pathname: "/eventInfo",

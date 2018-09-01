@@ -23,19 +23,17 @@ class UpdateEvent extends Component {
         FileList: [],
         placesData: [],
         PlaceId:'',
-        FileName: [],
-        message:""
+        message:"",
+        images: [],
+        id: "",
+        files: []
     }
-    onValidSubmit = (formData) => alert(JSON.stringify(formData));
-
     setField = (field, value) => {
         this.setState({ [field]: value })
-        console.log(field + " : " + value)
     }
     getData = async () => {
 
         let _id = this.props.location.state.id
-        console.log(_id)
         const resp = await axios.get("/api/getEventInfoFromId/" + _id)
         
         const data = resp.data[0]
@@ -52,65 +50,37 @@ class UpdateEvent extends Component {
             FileList: data.FileList,
             id:_id,
             PlaceId:data.PlaceId,
-            FileName:data.FileName
+            images: data.images
         })
     }
 
-    DeletePhotoUploaded = async (field,value,index)=>{
-        const src = value
-        await  axios.get('/api/deleteEventImage/'+src)
-        const arr = this.state.FileList
-        const filesName = this.state.FileName
-        console.log("BEFORE : ",arr)
-        arr.splice(index,1)
-        filesName.splice(index, 1)
-        console.log("AFTER : ",arr)  
-        this.setState({ FileList: arr, FileName: filesName })
-    }
+    DeleteImage = async index => {
+        const images = this.state.images;
+        images.splice(index, 1);
+        this.setState({ images: images });
+      };
+      DeletePhotoUploaded = (index) => {
+        let arr = [];
+        arr = this.state.files;
+        arr.splice(index, 1);
+        this.setState({ files: arr });
+      };
+      handleSelectImage = event => {
+        const files = event.target.files;
+        const arr = [];
+        for (var x = 0; x < files.length; x++) {
+          arr.push(URL.createObjectURL(files[x]));
+        }
+        this.setState({
+          files: arr
+        });
+      };
 
     getPlaceDetail = async()=>{
         const resp = await axios.get("/api/getPlaceInfo")
         this.setState({ placesData: resp.data })
     }
 
-    GetFileUploaded = async (field, value) => {
-        if(value.length >11){
-            alert('Please upload less than 12 photos')
-            return;
-        }
-        var arr = []
-        var names = []
-        var today = new Date()
-        var date = today.getDay() + today.getMonth() + today.getFullYear() + today.getHours().toString();
-        for (var x = 0; x < value.length; x++) {
-            arr.push("http://128.199.107.81:3030/images/events/"+ date + "-" + value[x].name)
-            // arr.push("http://localhost:3030/images/events/" + date + "-" + value[x].name)
-            names.push(date + "-" + value[x].name)
-        }
-        // this.setState({FileList:arr})
-        // console.log("FileList : ",this.state.FileList)
-        var data = new FormData();
-        const lengthOfFile = document.getElementById('img').files.length
-        if (lengthOfFile === 1) {
-            const dataFile = document.getElementById('img').files[0]
-            data.append('img', dataFile)
-            const resp = await axios.post('/api/uploadEventSingleFile', data)
-            console.log('upload single file : ', resp)
-            this.setState({ FileList: arr, FileName: names })
-        } else {
-            const dataFile = document.getElementById('img')
-            for (var y = 0; y < dataFile.files.length; y++) {
-                data.append('img', dataFile.files[y])
-            }
-            const resp = await axios.post('/api/uploadEventMultipleFile', data)
-            console.log('upload Multiple file : ',resp)
-            this.setState({ FileList: arr, FileName: names })
-        }
-
-        console.log()
-
-
-    }
     FeeOption = (field, value) => {
         this.setState({ [field]: value })
         console.log("fee : ", value)
@@ -144,19 +114,59 @@ class UpdateEvent extends Component {
 
     UpdateEvent = async (formData) => {
 
-        this.onValidSubmit()
-        const lengthOfFile = this.state.FileList.length
-        console.log(formData)
-        if(lengthOfFile===0){
-            this.setState({message:"กรุณาเลือกรูปภาพ"})
-            return 
-        }
         if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === "" 
         || formData.place_open === "" || formData.place_close === ""|| formData.day_tag === undefined 
         || formData.place_tag === undefined || formData.place_select === undefined){
             return
         }
 
+        const lengthOfFile = document.getElementById("img").files.length;
+        //--------no image updated-----------//
+        if(lengthOfFile===0){
+                await axios.put('/api/UpdateEventFromId/'+this.state.id,{
+                eventName: this.state.eventName,
+                eventDes: this.state.eventDes,
+                tel: this.state.tel,
+                openTime: this.state.openTime,
+                closeTime: this.state.closeTime,
+                fee: this.state.fee,
+                carParking: this.state.carParking,
+                tags: this.state.tags,
+                days: this.state.days,
+                images: this.state.images,
+                PlaceId: this.state.PlaceId,
+    
+            })
+
+            window.location.replace("/")
+        }
+
+        //---------add 1 image---------------//
+        let data = new FormData();
+        if (lengthOfFile === 1 ) {
+            console.log(lengthOfFile)
+            const temp = this.state.images
+            const dataFile = document.getElementById('img').files[0]
+            data.append('img', dataFile)
+            const resp = await axios.post('/api/uploadSingleEvent', data)
+            temp.push(resp.data)
+            this.setState({ images: temp})
+    
+        }     
+        //---------add > 1 image---------------//
+        else if(lengthOfFile > 1){
+            const dataFile = document.getElementById('img').files
+            for (var y = 0; y < dataFile.length; y++) {
+                data.append('img', dataFile[y])
+    
+            }
+            const resp = await axios.post('/api/uploadMultiplePlaces', data)
+            const temp = this.state.images
+            for(let x = 0;x<resp.data.length;x++){
+              temp.push(resp.data[x].location)
+            }
+            this.setState({ images: temp})
+        }
         await axios.put('/api/UpdateEventFromId/'+this.state.id,{
             eventName: this.state.eventName,
             eventDes: this.state.eventDes,
@@ -169,12 +179,13 @@ class UpdateEvent extends Component {
             days: this.state.days,
             FileList: this.state.FileList,
             PlaceId: this.state.PlaceId,
-            FileName: this.state.FileName
+            FileName: this.state.FileName,
+            images:this.state.images
 
         })
 
-        //reload for test
         window.location.replace("/")
+
 }
 
     render() {
@@ -192,9 +203,10 @@ class UpdateEvent extends Component {
                         carParking={this.state.carParking}
                         days={this.state.days}
                         tags={this.state.tags}
-                        FileList={this.state.FileList}
+                        images={this.state.images}
                         placesData={this.state.placesData}
                         message={this.state.message}
+                        files={this.state.files}
 
                         setField={this.setField}
                         GetFileUploaded={this.GetFileUploaded}
@@ -204,6 +216,8 @@ class UpdateEvent extends Component {
                         CarParkingOption={this.CarParkingOption}
                         DaysSelected={this.DaysSelected}
                         PlaceSelected={this.PlaceSelected}
+                        handleSelectImage={this.handleSelectImage}
+                        DeleteImage={this.DeleteImage}
                     />
                 </Form>
             </div>

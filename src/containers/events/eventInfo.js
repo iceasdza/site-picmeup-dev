@@ -20,12 +20,13 @@ class EventInfo extends Component {
             latitude: 0,
             longtitude: 0
         },
-        FileList: [],
+        images:[],
         id:"",
         placeId:"",
-        placeFileList:"",
+        placeImage:"",
         placeName:"",
         open: false,
+        index:null
     }
 
     getData  = async () => {
@@ -44,13 +45,14 @@ class EventInfo extends Component {
             days: data.days,
             tags: data.tags,
             FileList: data.FileList,
-            placeId:data.PlaceId
+            placeId:data.PlaceId,
+            images: data.images
         })
         const place = await axios.get("/api/getPlaceInfoFromId/"+this.state.placeId)
         const placeData = place.data[0]
         this.setState({
             placeName:placeData.placeName,
-            placeFileList:placeData.FileList[0]
+            placeImage:placeData.images[0]
         })
 
         console.log(this.state)
@@ -62,12 +64,10 @@ class EventInfo extends Component {
     componentDidMount =  () => {
             this.getData()
 
-            console.log(this.state.placeFileList)
     }
 
-    onOpenModal = (field,value) => {
-        console.log(value)
-        this.setState({ open: true ,index:value});
+    onOpenModal = (value) => {
+        this.setState({ open: true ,index:value})
       };
      
       onCloseModal = () => {
@@ -88,9 +88,9 @@ class EventInfo extends Component {
                 carParking={this.state.carParking}
                 days={this.state.days}
                 tags={this.state.tags}
-                FileList={this.state.FileList}
+                images={this.state.images}
                 placeId={this.state.placeId}
-                placeFileList={this.state.placeFileList}
+                placeImage={this.state.placeImage}
                 placeName={this.state.placeName}
                 index = {this.state.index}
 

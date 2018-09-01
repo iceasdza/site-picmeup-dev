@@ -143,7 +143,6 @@ class AddPlace extends Component {
                         carParking={this.state.carParking}
                         days={this.state.days}
                         tags={this.state.tags}
-                        FileList={this.state.FileList}
                         message={this.state.message}
                         files={this.state.files}
                         // pass method

@@ -1,6 +1,6 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import '../../static/home.css'
+import "../../static/home.css";
 import Modal from "react-responsive-modal";
 import { Message, Card, Container, Header, Image } from "semantic-ui-react";
 
@@ -25,7 +25,7 @@ const PlaceInfo = props => (
           center
           animationDuration={500}
         >
-          <Image src={props.images[props.index]}/>
+          <Image src={props.images[props.index]} />
         </Modal>
       </Card.Group>
       <Message>
