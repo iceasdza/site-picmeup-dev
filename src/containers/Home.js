@@ -22,7 +22,6 @@ class Home extends Component {
 
   componentDidMount = async () => {
     this.getData();
-    // console.log(this.state.placesData)
   };
 
   deletePlace = async event => {
