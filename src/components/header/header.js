@@ -8,16 +8,28 @@ import {
   Responsive,
   Icon,
   List,
-  Divider
+  Divider,
+  Form,
+  Label
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../static/Header.css";
 import logo from "../../static/logo-white-test1.png";
+import ReactAutocomplete from "react-autocomplete";
+import axios from "../../lib/axios";
+import { Redirect } from "react-router-dom";
 
 class Header_picmeup extends Component {
   state = {
     sidebar: "hidden",
-    visible: true
+    visible: true,
+    value: "",
+    placesData: [],
+    eventData: [],
+    redirect: false,
+    id: null,
+    searchOptions: "place",
+    searchData : []
   };
 
   handleSideBar = () => {
@@ -29,11 +41,73 @@ class Header_picmeup extends Component {
     }
   };
 
+  getPlaceDetail = async () => {
+    const arr = [];
+    const resp = await axios.get("/api/getPlaceInfo");
+    for (let x = 0; x < resp.data.length; x++) {
+      arr.push({ id: resp.data[x]._id, label: resp.data[x].placeName });
+    }
+    this.setState({ placesData: arr,searchData:arr });
+  };
+
+  getEventDetail = async () => {
+    const arr = [];
+    const resp = await axios.get("/api/GetEventInfo");
+    for (let x = 0; x < resp.data.length; x++) {
+      arr.push({ id: resp.data[x]._id, label: resp.data[x].eventName });
+    }
+    this.setState({ eventData: arr });
+  };
+
+  componentDidMount = () => {
+    this.getPlaceDetail();
+    this.getEventDetail();
+  };
+
+  search = async e => {
+    e.preventDefault();
+    const searchOptions = this.state.searchOptions;
+    if (searchOptions === "place") {
+      this.setState({ redirect: true });
+      const value = this.state.value;
+      const resp = await axios.get("/api/getPlaceInfoFromName/" + value);
+      this.setState({ id: resp.data });
+    }
+    if (searchOptions === "event") {
+      this.setState({ redirect: true });
+      const value = this.state.value;
+      const resp = await axios.get("/api/getEventInfoFromName/" + value);
+      this.setState({ id: resp.data });
+    }
+  };
+
   toggleVisibility = () => this.setState({ visible: !this.state.visible });
+
+  handleChange = (e, { value }) => {
+    this.setState({ searchOptions: value });
+    const placesData = this.state.placesData
+    const eventData  =this.state.eventData
+    if(value==='place'){
+        this.setState({searchData:placesData})
+    }else{
+      this.setState({searchData:eventData})
+    }
+  };
+
   render() {
+    const { redirect, id,searchOptions } = this.state;
+    if (redirect && id !== null) {
+      if(searchOptions === 'place'){
+        return <Redirect to={{ pathname: "/placeInfo/", search: id }} />;
+      }else{
+        return <Redirect to={{ pathname: "/eventInfo/", search: id }} />;
+      }
+      
+    }
     return (
       <div>
         <div className="Header-background">
+        {console.log(this.state.eventData)}
           <Responsive {...Responsive.onlyComputer}>
             <Menu secondary inverted>
               <Menu.Menu>
@@ -52,7 +126,37 @@ class Header_picmeup extends Component {
               </Dropdown>
               <Menu.Menu position="right">
                 <Menu.Item>
-                  <Input icon="search" placeholder="ค้นหา..." />
+                <Label>กิจกรรม</Label>
+                  <Form.Radio
+                    className="searchOption"
+                    value="event"
+                    checked={this.state.searchOptions === "event"}
+                    onChange={this.handleChange}
+                  />
+                  <Label>สถานที่</Label>
+                  <Form.Radio
+                  className="searchOption"
+                    value="place"
+                    checked={this.state.searchOptions === "place"}
+                    onChange={this.handleChange}
+                  />
+                </Menu.Item>
+                <Menu.Item>
+                  <form onSubmit={this.search}>
+                    <ReactAutocomplete
+                      items={this.state.searchData}
+                      shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
+                      getItemValue={item => item.label}
+                      renderItem={item => (
+                        <div key={item.id} className="itemSearch">
+                          {item.label}
+                        </div>
+                      )}
+                      value={this.state.value}
+                      onChange={e => this.setState({ value: e.target.value })}
+                      onSelect={value => this.setState({ value })}
+                    />
+                  </form>
                 </Menu.Item>
                 <Menu.Item>
                   <Link to={{ pathname: "/login" }}>
@@ -79,7 +183,7 @@ class Header_picmeup extends Component {
             </Menu.Item>
           </Menu>
           <List relaxed className={this.state.sidebar + " sideBar"}>
-          <List.Item>
+            <List.Item>
               <Link to={{ pathname: "/" }}>หน้าแรก</Link>
             </List.Item>
             <List.Item>สถานที่น่าสนใจ</List.Item>

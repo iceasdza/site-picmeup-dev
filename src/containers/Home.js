@@ -77,8 +77,8 @@ class Home extends Component {
               <h3>{data.placeName}</h3>
                 <Link
                   to={{
-                    pathname: "/placeInfo",
-                    state: { id: data._id }
+                    pathname: "/placeInfo/",
+                    search:data._id
                   }}
                 >
                   <Button primary content="View" />
@@ -111,8 +111,8 @@ class Home extends Component {
               <h3>{data.eventName}</h3>
                 <Link
                   to={{
-                    pathname: "/eventInfo",
-                    state: { id: data._id }
+                    pathname: "/eventInfo/",
+                    search:data._id
                   }}
                 >
                   <Button primary content="View" />

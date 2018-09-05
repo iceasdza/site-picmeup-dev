@@ -6,28 +6,32 @@ import axios from '../../lib/axios';
 
 class PlaceInfo extends Component {
 
-    state = {
-        placeName: "",
-        placeDes: "",
-        tel: "",
-        openTime: "",
-        closeTime: "",
-        fee: "no",
-        carParking: "yes",
-        days: [],
-        tags: [],
-        map: {
-            latitude: 0,
-            longtitude: 0
-        },
-        images: [],
-        id:"",
-        open: false,
-        index:null
-    }
+    constructor(props) {
+        super(props);
+        this.state = {
+            placeName: "",
+            placeDes: "",
+            tel: "",
+            openTime: "",
+            closeTime: "",
+            fee: "no",
+            carParking: "yes",
+            days: [],
+            tags: [],
+            map: {
+                latitude: 0,
+                longtitude: 0
+            },
+            images: [],
+            id:"",
+            open: false,
+            index:null
+        };
+      }
 
     getData  = async () => {
-        let _id = this.props.location.state.id
+        
+        let _id = this.props.location.search.slice(1)
         const resp = await axios.get("/api/getPlaceInfoFromId/"+_id)
         const data = resp.data[0]
         this.setState({

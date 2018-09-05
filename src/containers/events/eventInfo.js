@@ -30,7 +30,7 @@ class EventInfo extends Component {
     }
 
     getData  = async () => {
-        let _id = this.props.location.state.id
+        let _id = this.props.location.search.slice(1)
         const resp = await axios.get("/api/getEventInfoFromId/"+_id)
         // console.log(axios)
         const data = resp.data[0]
