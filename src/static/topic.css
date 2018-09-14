@@ -1,0 +1,9 @@
+.ql-toolbar.ql-snow {
+  position: sticky !important;
+  top: 0px !important;
+  background-color: white !important;
+}
+.ql-toolbar{
+    background-color: white !important;
+    z-index: 1;
+}
