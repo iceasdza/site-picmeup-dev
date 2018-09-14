@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import {
   Dropdown,
   Menu,
-  Button,
   Image,
   Responsive,
   Icon,
@@ -17,11 +16,10 @@ import logo from "../../static/logo-white-test1.png";
 import ReactAutocomplete from "react-autocomplete";
 import axios from "../../lib/axios";
 import { Redirect } from "react-router-dom";
-
 class Header_picmeup extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       sidebar: "hidden",
       visible: true,
       value: "",
@@ -31,7 +29,8 @@ class Header_picmeup extends Component {
       id: null,
       searchOptions: "place",
       searchData: [],
-      url:''
+      url: "",
+      loginTab: null
     };
   }
 
@@ -63,7 +62,6 @@ class Header_picmeup extends Component {
   };
 
   componentDidMount = () => {
-    this.setState({id:null})
     this.getPlaceDetail();
     this.getEventDetail();
   };
@@ -71,7 +69,7 @@ class Header_picmeup extends Component {
   search = async e => {
     e.preventDefault();
     const searchOptions = this.state.searchOptions;
-    const value = this.state.value
+    const value = this.state.value;
     if (searchOptions === "place") {
       this.setState({ redirect: true });
       const resp = await axios.get("/api/getPlaceInfoFromName/" + value);
@@ -102,9 +100,19 @@ class Header_picmeup extends Component {
     if (redirect && id !== null) {
       if (searchOptions === "place") {
         // return <Redirect from={window.location.href} to={{ pathname: "/placeInfo/", search: id }} />;
-        return <Redirect from={window.location.href} to={{ pathname: "/placeInfo/", search: id }} />;
+        return (
+          <Redirect
+            from={window.location.href}
+            to={{ pathname: "/placeInfo/", search: id }}
+          />
+        );
       } else {
-        return <Redirect from={window.location.href} to={{ pathname: "/eventInfo/", search: id }} />;
+        return (
+          <Redirect
+            from={window.location.href}
+            to={{ pathname: "/eventInfo/", search: id }}
+          />
+        );
       }
     }
     return (
@@ -163,6 +171,9 @@ class Header_picmeup extends Component {
                     />
                   </form>
                 </Menu.Item>
+              </Menu.Menu>
+              {this.state.loginTab}
+              {/* <Menu.Menu position="right">
                 <Menu.Item>
                   <Link to={{ pathname: "/login" }}>
                     <Button inverted>ลงชื่อเข้าใช้</Button>
@@ -173,7 +184,7 @@ class Header_picmeup extends Component {
                     <Button inverted>สมัครสมาชิก</Button>
                   </Link>
                 </Menu.Item>
-              </Menu.Menu>
+              </Menu.Menu> */}
             </Menu>
           </Responsive>
         </div>

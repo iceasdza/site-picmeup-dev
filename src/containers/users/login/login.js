@@ -6,6 +6,7 @@ import { Form } from "formsy-semantic-ui-react";
 import {Grid, Segment, Portal } from 'semantic-ui-react'
 import{getNameUser}from '../../../dataflow/actions/getdatauser'
 import { connect } from 'react-redux'
+import Cookies from 'js-cookie'
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -29,7 +30,7 @@ class Login extends Component {
     })
     const isAuthen = resp.data.isAuthen
     if(isAuthen){
-      alert('true')
+      Cookies.set('user',this.state.userName)
     }else{
       this.setState({ open: !this.state.open })
     }
@@ -44,6 +45,7 @@ class Login extends Component {
     return (
       <div>
         <Header />
+        {console.log(Cookies.get('user'))}
         <Grid columns={2}>
         <Grid.Column>
           <Portal onClose={this.handleClose} open={open}>

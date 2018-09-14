@@ -17,7 +17,9 @@ import placeInfo from './containers/places/placeInfo'
 import Register from './containers/users/register/register'
 import eventInfo from './containers/events/eventInfo'
 import Login from './containers/users/login/login'
-
+import Chat from './containers/chat/chatList'
+//Topic
+import CreateTopic from './containers/topic/createTopic'
 //Redux
 import{createStore} from 'redux'
 import{Provider}from 'react-redux'
@@ -39,6 +41,8 @@ const App = () => (
         <Route path="/updateEvent" component={UpdateEvent}/>
         <Route path="/register" component={Register}/>
         <Route path="/login" component={Login}/>
+        <Route path="/chat" component={Chat}/>
+        <Route path="/createtopic" component={CreateTopic}/>
         </div>
 </Router>
 </Provider>
