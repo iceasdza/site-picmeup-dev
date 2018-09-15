@@ -1,6 +1,7 @@
 import React,{Component} from 'react'
 import Navbar from '../../components/header/header'
 import CreateTopicComponent from '../../components/topic/createTopicComponent'
+import axios from '../../lib/axios'
 class CreateTopic extends Component{
     constructor(props) {
         super(props)
@@ -9,7 +10,13 @@ class CreateTopic extends Component{
     
       handleChange = (value) =>{
         this.setState({ text: value })
-        console.log(value)
+      }
+      handleSubmit = async () =>{
+          const resp = await axios.post("/api/creatplace",{
+            topicName:'test',
+            content:this.state.text
+          })
+          console.log(resp)
       }
     render(){
         return(
@@ -18,6 +25,7 @@ class CreateTopic extends Component{
             <CreateTopicComponent
             text={this.state.text}
             handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
             />
             </div>
         )

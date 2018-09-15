@@ -2,15 +2,21 @@ import React from "react";
 import ReactQuill from "react-quill";
 import 'react-quill/dist/quill.snow.css'; 
 import '../../static/topic.css'
+import {Button, Divider} from 'semantic-ui-react'
 const createTopicComponent = props => {
   return (
     <div className="container fluid">
+    <div>
       <ReactQuill
         value={props.text}
         modules={createTopicComponent.modules}
         formats={createTopicComponent.formats}
         onChange={props.handleChange}
       />
+    <Divider horizontal >
+    <Button positive onClick={props.handleSubmit}>บันทึก</Button>
+    </Divider>
+      </div>
       </div>
   );
 };

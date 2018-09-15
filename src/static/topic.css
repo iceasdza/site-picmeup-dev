@@ -7,3 +7,17 @@
     background-color: white !important;
     z-index: 1;
 }
+.ql-container.ql-snow{
+  border-style: hidden !important; 
+}
+p{
+  font-size: 1.5em !important;
+}
+img{
+  object-fit: cover !important;
+  width: 25em ;
+  height: 15em;
+}
+.block{
+  display: inline;
+}
