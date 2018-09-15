@@ -21,3 +21,8 @@ img{
 .block{
   display: inline;
 }
+.header{
+  color:black;
+  font-size: 1.5em;
+  padding: 0.7em
+}

@@ -127,7 +127,7 @@ class Header_picmeup extends Component {
               </Menu.Menu>
               <Menu.Item link name="สถานที่ที่น่าสนใจ" />
               <Menu.Item link name="อีเว้นท์ที่กำลังมาแรง" />
-              <Menu.Item link name="สนทนา" />
+              <Menu.Item link name="สนทนา" href="/topiclist" />
               <Dropdown item text="จัดการ">
                 <Dropdown.Menu>
                   <Dropdown.Item>สร้างสถานที่</Dropdown.Item>

@@ -20,6 +20,8 @@ import Login from './containers/users/login/login'
 import Chat from './containers/chat/chatList'
 //Topic
 import CreateTopic from './containers/topic/createTopic'
+import TopicList from './containers/topic/topicList'
+import Topic from './containers/topic/topicInfo'
 //Redux
 import{createStore} from 'redux'
 import{Provider}from 'react-redux'
@@ -43,6 +45,8 @@ const App = () => (
         <Route path="/login" component={Login}/>
         <Route path="/chat" component={Chat}/>
         <Route path="/createtopic" component={CreateTopic}/>
+        <Route path="/topiclist" component={TopicList}/>
+        <Route path="/topic" component={Topic}/>
         </div>
 </Router>
 </Provider>
