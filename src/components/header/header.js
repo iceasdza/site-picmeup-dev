@@ -8,7 +8,8 @@ import {
   List,
   Divider,
   Form,
-  Label
+  Label,
+  Button
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../static/Header.css";
@@ -16,6 +17,7 @@ import logo from "../../static/logo-white-test1.png";
 import ReactAutocomplete from "react-autocomplete";
 import axios from "../../lib/axios";
 import { Redirect } from "react-router-dom";
+import Cookies from "js-cookie";
 class Header_picmeup extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +32,7 @@ class Header_picmeup extends Component {
       searchOptions: "place",
       searchData: [],
       url: "",
-      loginTab: null
+      user: ""
     };
   }
 
@@ -59,6 +61,43 @@ class Header_picmeup extends Component {
       arr.push({ id: resp.data[x]._id, label: resp.data[x].eventName });
     }
     this.setState({ eventData: arr });
+  };
+
+  logout = () =>{
+    Cookies.remove('user');
+    this.setState({redirect:true})
+  }
+
+  loginTab = () => {
+    let tmp = "";
+
+    if (Cookies.get("user") !== undefined) {
+      tmp = (
+        <Menu.Menu position="right">
+          <Menu.Item>ยินดีต้อนรับคุณ {Cookies.get("user")}</Menu.Item>
+          <Menu.Item>
+                    <Button inverted onClick={this.logout}>ลงชื่อออก</Button>
+                </Menu.Item>
+        </Menu.Menu>
+      );
+    } else {
+      tmp = (
+        <Menu.Menu position="right">
+          <Menu.Item>
+            <Link to={{ pathname: "/login" }}>
+              <Button inverted>ลงชื่อเข้าใช้</Button>
+            </Link>
+          </Menu.Item>
+          <Menu.Item>
+            <Link to={{ pathname: "/register" }}>
+              <Button inverted>สมัครสมาชิก</Button>
+            </Link>
+          </Menu.Item>
+        </Menu.Menu>
+      );
+    }
+
+    return tmp;
   };
 
   componentDidMount = () => {
@@ -114,6 +153,15 @@ class Header_picmeup extends Component {
           />
         );
       }
+    }
+    
+    if(redirect && Cookies.get("user") !== undefined){
+      return (
+        <Redirect
+          from={window.location.href}
+          to={{ pathname: "/login"}}
+        />
+      )
     }
     return (
       <div>
@@ -172,19 +220,7 @@ class Header_picmeup extends Component {
                   </form>
                 </Menu.Item>
               </Menu.Menu>
-              {this.state.loginTab}
-              {/* <Menu.Menu position="right">
-                <Menu.Item>
-                  <Link to={{ pathname: "/login" }}>
-                    <Button inverted>ลงชื่อเข้าใช้</Button>
-                  </Link>
-                </Menu.Item>
-                <Menu.Item>
-                  <Link to={{ pathname: "/register" }}>
-                    <Button inverted>สมัครสมาชิก</Button>
-                  </Link>
-                </Menu.Item>
-              </Menu.Menu> */}
+              {this.loginTab()}
             </Menu>
           </Responsive>
         </div>

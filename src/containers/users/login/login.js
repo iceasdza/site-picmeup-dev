@@ -7,6 +7,7 @@ import {Grid, Segment, Portal } from 'semantic-ui-react'
 import{getNameUser}from '../../../dataflow/actions/getdatauser'
 import { connect } from 'react-redux'
 import Cookies from 'js-cookie'
+import { Redirect } from "react-router-dom";
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -14,6 +15,7 @@ class Login extends Component {
       userName: "",
       password: "",
       open: false,
+      redirect: false,
       testName:'Patipat'
     };
   }
@@ -31,6 +33,7 @@ class Login extends Component {
     const isAuthen = resp.data.isAuthen
     if(isAuthen){
       Cookies.set('user',this.state.userName)
+      this.setState({redirect:true})
     }else{
       this.setState({ open: !this.state.open })
     }
@@ -41,11 +44,16 @@ class Login extends Component {
 
   handleClose = () => this.setState({ open: false })
   render() {
-    const { open } = this.state
+    const { open,redirect } = this.state
+    if(redirect && Cookies.get('user') !== undefined){
+    return  <Redirect
+      from={window.location.href}
+      to={{ pathname: "/" }}
+    />
+    }
     return (
       <div>
         <Header />
-        {console.log(Cookies.get('user'))}
         <Grid columns={2}>
         <Grid.Column>
           <Portal onClose={this.handleClose} open={open}>
