@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "../../components/header/header";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
+import Cookies from 'js-cookie'
 class TopicInfo extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +35,7 @@ class TopicInfo extends Component {
   handleSubmitComment = async () => {
     const id = this.props.location.search.replace("?", "");
     const comments = this.state.comments
-    comments.push(this.state.text)
+    comments.push({comment:this.state.text,commentator:Cookies.get("user")})
     this.setState({comments:comments,text:''})
     await axios.put("/api/addTopicComment/" + id, {
       comments: this.state.comments

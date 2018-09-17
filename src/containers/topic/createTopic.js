@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Navbar from "../../components/header/header";
 import CreateTopicComponent from "../../components/topic/createTopicComponent";
 import axios from "../../lib/axios";
+import Cookies from "js-cookie";
 class CreateTopic extends Component {
   constructor(props) {
     super(props);
@@ -23,7 +24,7 @@ class CreateTopic extends Component {
     await axios.post("/api/creatplace", {
       topicName: this.state.topicName,
       content: this.state.text,
-      creator:'Patis Dummy'
+      creator:Cookies.get("user")
     });
   };
   render() {
