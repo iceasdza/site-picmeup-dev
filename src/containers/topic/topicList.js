@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Navbar from "../../components/header/header";
+import Navbar from "../header/headercontrol";
 import TopicsListComponent from "../../components/topic/topicsListComponent";
 import axios from "../../lib/axios";
 class TopicList extends Component {

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Navbar from "../../components/header/header";
+import Navbar from "../header/headercontrol";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
 import Cookies from 'js-cookie'
