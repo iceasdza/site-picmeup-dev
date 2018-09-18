@@ -63,42 +63,9 @@ class Header_picmeup extends Component {
     this.setState({ eventData: arr });
   };
 
-  logout = () =>{
-    Cookies.remove('user');
-    this.setState({redirect:true})
-  }
+  
 
-  loginTab = () => {
-    let tmp = "";
-
-    if (Cookies.get("user") !== undefined) {
-      tmp = (
-        <Menu.Menu position="right">
-          <Menu.Item>ยินดีต้อนรับคุณ {Cookies.get("user")}</Menu.Item>
-          <Menu.Item>
-                    <Button inverted onClick={this.logout}>ลงชื่อออก</Button>
-                </Menu.Item>
-        </Menu.Menu>
-      );
-    } else {
-      tmp = (
-        <Menu.Menu position="right">
-          <Menu.Item>
-            <Link to={{ pathname: "/login" }}>
-              <Button inverted>ลงชื่อเข้าใช้</Button>
-            </Link>
-          </Menu.Item>
-          <Menu.Item>
-            <Link to={{ pathname: "/register" }}>
-              <Button inverted>สมัครสมาชิก</Button>
-            </Link>
-          </Menu.Item>
-        </Menu.Menu>
-      );
-    }
-
-    return tmp;
-  };
+  
 
   componentDidMount = () => {
     this.getPlaceDetail();
@@ -220,7 +187,7 @@ class Header_picmeup extends Component {
                   </form>
                 </Menu.Item>
               </Menu.Menu>
-              {this.loginTab()}
+              {this.props.loginTab()}
             </Menu>
           </Responsive>
         </div>
