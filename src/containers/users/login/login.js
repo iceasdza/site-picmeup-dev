@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import Header from "../../../components/header/header";
+import HeaderControl from "../../header/headercontrol";
 import LoginForm from "../../../components/users/login/loginForm";
 import axios from '../../../lib/axios';
 import { Form } from "formsy-semantic-ui-react";
@@ -53,7 +53,7 @@ class Login extends Component {
     }
     return (
       <div>
-        <Header />
+        <HeaderControl />
         <Grid columns={2}>
         <Grid.Column>
           <Portal onClose={this.handleClose} open={open}>
