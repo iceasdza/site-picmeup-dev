@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import Header from '../../components/header/header'
+import HeaderControl from '../header/headercontrol'
 import PlaceDetail from '../../components/places/placeInfo'
 import axios from '../../lib/axios';
 
@@ -64,7 +64,7 @@ class PlaceInfo extends Component {
     render = () => {
         return (
             <div>
-                <Header />
+                <HeaderControl />
                 <PlaceDetail
                 placeName={this.state.placeName}
                 placeDes={this.state.placeDes}
