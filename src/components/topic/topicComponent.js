@@ -4,6 +4,9 @@ const TopicComponent = props => {
   return (
     <div className="container fluid">
       <Header as="h1">{props.topicName}</Header>
+      โดยคุณ {props.creator}
+      <br/>
+      {props.editTopic()}
       <Divider />
       <div dangerouslySetInnerHTML={{ __html: props.content }} />
       <Divider horizontal>Comments</Divider>
@@ -27,9 +30,6 @@ const TopicComponent = props => {
                 />
                 <Comment.Content>
                   <Comment.Author>แสดงความคิดเห็นโดยคุณ {data.commentator}</Comment.Author>
-                  <Comment.Metadata>
-                    <div>2 days ago</div>
-                  </Comment.Metadata>
                   <Comment.Text >
                     {data.comment}
                   </Comment.Text>

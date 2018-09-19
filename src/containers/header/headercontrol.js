@@ -6,15 +6,22 @@ import {
 } from "semantic-ui-react";
 import Cookies from "js-cookie";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { Image } from 'semantic-ui-react'
 class HeaderControl extends Component {
+
+    state={
+        redirect:false
+    }
 
     loginTab = () => {
         let tmp = "";
 
         if (Cookies.get("user") !== undefined) {
+            console.log(Cookies.get('userAvatar'))
             tmp = (
                 <Menu.Menu position="right">
-                    <Menu.Item>ยินดีต้อนรับคุณ {Cookies.get("user")}</Menu.Item>
+                    <Menu.Item>ยินดีต้อนรับคุณ {Cookies.get("user")} <Image src={Cookies.get('userAvatar')} avatar /></Menu.Item>
                     <Menu.Item>
                         <Button inverted onClick={this.logout}>ลงชื่อออก</Button>
                     </Menu.Item>
@@ -42,13 +49,23 @@ class HeaderControl extends Component {
     logout = () => {
         Cookies.remove('user');
         this.setState({ redirect: true })
+        console.log(Cookies.get('user'))
     }
 
     render() {
+        let {redirect } = this.state
+        if(redirect && Cookies.get("user") === undefined){
+            console.log('logout')
+            return (
+                <Redirect
+                  to="/login"
+                />
+              )
+        }
         return (
-            <dir>
+            <div>
                 <Header loginTab={this.loginTab} />
-            </dir>
+            </div>
         )
     }
 }

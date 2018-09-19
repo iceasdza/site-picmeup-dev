@@ -32,6 +32,8 @@ class Login extends Component {
     })
     const isAuthen = resp.data.isAuthen
     if(isAuthen){
+      const data = await axios.get('api/findUserName/'+this.state.userName)
+      Cookies.set('userAvatar',data.data.avatar)
       Cookies.set('user',this.state.userName)
       this.setState({redirect:true})
     }else{

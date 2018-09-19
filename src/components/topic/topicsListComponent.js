@@ -1,14 +1,15 @@
 import React from "react";
-import { Divider, Card ,Button} from "semantic-ui-react";
+import { Divider, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../static/topic.css";
 const TopicsListComponent = props => {
   return (
     <div className="container fluid">
       <Divider horizontal>กระทู้</Divider>
-      <Button href="/createtopic">
+      {props.CreateTopicButton()}
+      {/* <Button href="/createtopic">
       สร้างกระทู้
-      </Button>
+      </Button> */}
       {props.topics.map((data, index) => (
         <Card fluid key={index}>
           <Link
