@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Navbar from "../header/headercontrol";
 import {Button} from "semantic-ui-react";
 import TopicsListComponent from "../../components/topic/topicsListComponent";
 import axios from "../../lib/axios";
@@ -39,7 +38,6 @@ class TopicList extends Component {
   render() {
     return (
       <div>
-        <Navbar />
         <TopicsListComponent 
         topics = {this.state.topicsData}
         CreateTopicButton= {this.CreateTopicButton}

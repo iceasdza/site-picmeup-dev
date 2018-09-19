@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import HeaderControl from "../../header/headercontrol";
 import LoginForm from "../../../components/users/login/loginForm";
 import axios from '../../../lib/axios';
 import { Form } from "formsy-semantic-ui-react";
@@ -35,7 +34,7 @@ class Login extends Component {
       const data = await axios.get('api/findUserName/'+this.state.userName)
       Cookies.set('userAvatar',data.data.avatar)
       Cookies.set('user',this.state.userName)
-      this.setState({redirect:true})
+      this.props.getComponent('home')
     }else{
       this.setState({ open: !this.state.open })
     }
@@ -47,15 +46,14 @@ class Login extends Component {
   handleClose = () => this.setState({ open: false })
   render() {
     const { open,redirect } = this.state
-    // if(redirect && Cookies.get('user') !== undefined){
-    // return  <Redirect
-    //   from={window.location.href}
-    //   to={{ pathname: "/" }}
-    // />
-    // }
+    if(redirect && Cookies.get('user') !== undefined){
+    return  <Redirect
+      from={window.location.href}
+      to={{ pathname: "/main" }}
+    />
+    }
     return (
       <div>
-        <HeaderControl />
         <Grid columns={2}>
         <Grid.Column>
           <Portal onClose={()=>this.handleClose()} open={open}>

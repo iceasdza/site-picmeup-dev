@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { Card, Image, Button, Divider } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import HeaderControl from "../containers/header/headercontrol";
 import axios from "../lib/axios";
 import "../static/home.css";
 class Home extends Component {
@@ -48,7 +47,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <HeaderControl />
         <div>
         <Divider horizontal>SHORT CUT</Divider>
         <Link to={{ pathname: "/addplace" }}>

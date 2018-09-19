@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import RegisterForm from "../../../components/users/register/registerForm";
-import HeaderControl from "../../header/headercontrol";
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import axios from '../../../lib/axios';
@@ -150,12 +149,11 @@ class Register extends Component {
       tel:this.state.tel,
       userName:this.state.userName
   })
-    
+  this.props.getComponent('login')
   }
   render() {
     return (
       <div>
-        <HeaderControl />
         <Form onSubmit={this.handleSubmit}>
           <RegisterForm
           userNameLabelColor={this.state.userNameLabelColor}

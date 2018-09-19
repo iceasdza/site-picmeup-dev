@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter as Router , Route} from 'react-router-dom'
 // Home
 import WelcomePage from './containers/welcome'
-import Home from './containers/header/headercontrol'
+import Main from './containers/main'
 
 //Admin place manage
 import PlaceForm from './containers/admin/places/addPlace';
@@ -36,7 +36,7 @@ const App = () => (
 <Router>
     <div>
         <Route path="/" exact component={WelcomePage}/>
-        <Route path="/home"  component={Home} />
+        <Route path="/main"  component={Main} />
         <Route path="/addplace" component={PlaceForm} />
         <Route path="/placeInfo" component={placeInfo}/>
         <Route path="/updatePlace" component={UpdatePlace}/>

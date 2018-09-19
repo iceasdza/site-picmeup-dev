@@ -32,7 +32,7 @@ const welcomeComponent = () => {
           <div>
             <p className="buttonSignUp">เข้าร่วมกับเรา</p>
           </div>
-          <Link to={{ pathname: "/home" }}>
+          <Link to={{ pathname: "/main" }}>
             <p className="enterSite">เข้าสู่เว็ปไซต์</p>
           </Link>
         </div>
