@@ -17,7 +17,6 @@ class TopicInfo extends Component {
       creator: "",
       comments: [],
       text: "",
-      creator: ""
     };
   }
 
@@ -82,7 +81,6 @@ class TopicInfo extends Component {
           topicName={this.state.topicName}
           content={this.state.content}
           comments={this.state.comments}
-          creator={this.state.creator}
           creator={this.state.creator}
           handleOnchage={this.handleOnchage}
           editTopic={this.editTopic}

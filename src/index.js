@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter as Router , Route} from 'react-router-dom'
 // Home
-import Home from './containers/Home'
+import WelcomePage from './containers/welcome'
+import Home from './containers/header/headercontrol'
 
 //Admin place manage
 import PlaceForm from './containers/admin/places/addPlace';
@@ -34,7 +35,8 @@ const App = () => (
 <Provider store={createStore(rootReducer)}>
 <Router>
     <div>
-        <Route path="/" exact component={Home} />
+        <Route path="/" exact component={WelcomePage}/>
+        <Route path="/home"  component={Home} />
         <Route path="/addplace" component={PlaceForm} />
         <Route path="/placeInfo" component={placeInfo}/>
         <Route path="/updatePlace" component={UpdatePlace}/>

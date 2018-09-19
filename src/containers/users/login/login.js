@@ -47,18 +47,18 @@ class Login extends Component {
   handleClose = () => this.setState({ open: false })
   render() {
     const { open,redirect } = this.state
-    if(redirect && Cookies.get('user') !== undefined){
-    return  <Redirect
-      from={window.location.href}
-      to={{ pathname: "/" }}
-    />
-    }
+    // if(redirect && Cookies.get('user') !== undefined){
+    // return  <Redirect
+    //   from={window.location.href}
+    //   to={{ pathname: "/" }}
+    // />
+    // }
     return (
       <div>
         <HeaderControl />
         <Grid columns={2}>
         <Grid.Column>
-          <Portal onClose={this.handleClose} open={open}>
+          <Portal onClose={()=>this.handleClose()} open={open}>
             <Segment style={{ left: '40%', position: 'fixed', top: '50%', zIndex: 1000 }}>
               <p>ผู้ใช้หรือรหัสผ่านไม่ถูกต้อง</p>
             </Segment>

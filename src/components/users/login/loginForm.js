@@ -4,6 +4,7 @@ import { Form } from "formsy-semantic-ui-react";
 const RegisterForm = props => {
   return (
     <div className="container fluid">
+    <Form>
       <Form.Input
         fluid
         name="userName"
@@ -30,6 +31,7 @@ const RegisterForm = props => {
         onChange={e => props.handleOnChange("password", e.target.value)}
       />
       <Button>Submit</Button>
+      </Form>
     </div>
   );
 };

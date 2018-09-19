@@ -1,62 +1,39 @@
-.Login {
-    padding: 7px;
-}
-.Img{
-    width: auto;
-    height: auto;
-}
+
 .ui.secondary.inverted.menu{
     background-color: #333;
-    margin-bottom: 0px
+    margin-bottom: 0px;
+    font-family: 'Kanit'!important;
 }
-
-.hidden{
-    visibility: hidden;
-    opacity: 0;
-    transition: visibility 0s linear 0.33s, opacity 0.33s ;
-    height: 0px;
+.navBarMenu{
+    color: white!important;
+    font-family: 'Kanit'!important;
+    cursor: pointer;
+    padding-left: 2em!important;
+    font-size: 14px
 }
-
-.show{
-    visibility: visible;
-    opacity: 1;
-    transition: visibility 0s linear 0.2s, opacity 1s ;
+.searchBar{
+    width: 45%!important;
 }
-.ui.list:last-child, ol.ui.list:last-child, ul.ui.list:last-child{
-    margin-top: 0px;
-    padding-top: 1em;
+.rightMenuBar{
+    color: white!important;
+    font-family: 'Kanit'!important;
+    font-size: 14px!important;
+}
+.MenuMobile{
     background-color: #333;
-    color: white;
-    padding-bottom: 5px
+    margin-bottom: 0px;
+    height:2em!important; 
 }
-.ui.list .list>.item, .ui.list>.item, ol.ui.list li, ul.ui.list li{
-    padding: 1em;
-    margin-bottom: 10px
-    
+.searchBarMobile{
+    width: 75%!important;
 }
-.ui.divider:not(.vertical):not(.horizontal){
-margin: 1em
+.ui.secondary.menu{
+    margin-bottom: 0px;
 }
-a{
-    color: white;
-    text-decoration: "none"
+.ui.segment, .ui.segments .segment{
+    margin-top: 0px!important;
 }
-.searchBox{
-    border-radius: 5px
-}
-input{
-    padding: 0.5em;
-    border-radius: 0.2em;
-    border-color: white !important;
-    font-size: 16px;
-}
-.itemSearch{
-    color:black;
-    padding: 0.3em;
-    font-size: 15px;
-    box-shadow: '0 2px 12px rgba(0, 0, 0, 0.1)';
-    overflow: 'auto'
-}
-label{
-    color: white;
+.sideMenuMobile{
+    font-family: 'Kanit'!important;
+    font-size: 14px!important;
 }

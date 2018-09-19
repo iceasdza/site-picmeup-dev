@@ -1,0 +1,61 @@
+.ui.secondary.menu{
+    background-color: black!important;
+    padding: 10px!important;
+}
+.logoText{
+    color: aliceblue!important;
+    font-size: 18px;
+    font-weight: bold!important;
+}
+.searchBar{
+    width: 70%!important;
+}
+.menuRight{
+    color: aliceblue!important;
+    cursor: pointer;
+    font-family: 'Kanit';
+}
+.welcomeContent{
+    text-align: center;
+}
+.headerContent{
+    font-family: 'Kanit';
+    font-size: 5em!important;
+    margin-bottom: 30px!important;
+}
+.content{
+    font-family: 'Kanit';
+}
+.buttonSignUp{
+    font-family: 'Kanit'!important;
+    font-weight: bold;
+    text-decoration: underline;
+    font-size: 30px!important;
+    cursor: pointer;
+}
+.enterSite{
+    margin-top: 10em!important;
+    font-family: 'Kanit'!important;
+    cursor: pointer;
+    font-size: 20px!important;
+}
+
+/* mobile */
+.logoTextMobile{
+    color: aliceblue!important;
+    font-size: 20px!important;
+    /* font-weight: bold!important; */
+    padding: 5px!important;
+}
+.MenuMobile{
+    height: 5em!important;
+}
+.searchBarMobile{
+    width: 50%!important;
+}
+.enterSiteMobile{
+    margin-top: 8em!important;
+    font-family: 'Kanit'!important;
+    cursor: pointer;
+    font-size: 20px!important;
+}
