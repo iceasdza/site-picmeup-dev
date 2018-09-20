@@ -1,37 +1,52 @@
 import React, { Component } from "react";
-import {Image, Menu, Input, Icon} from "semantic-ui-react";
+import { Image, Menu, Input, Icon, Sidebar } from "semantic-ui-react";
 import Cookies from "js-cookie";
 import { Redirect } from "react-router-dom";
 import "../../static/Header.css";
-import Login from '../../containers/users/login/login'
-import Navbar from '../../components/header/header'
+import Login from "../../containers/users/login/login";
+import Navbar from "../../components/header/header";
 
 // import Home from '../Home'
 class HeaderControl extends Component {
-constructor(props){
-  super(props)
-  this.state={
+  constructor(props) {
+    super(props);
+    this.state = {
       redirect: false,
-      visible: false,
+      visible: false
+    };
   }
-}
 
   handleButtonClick = () => {
     this.setState({ visible: !this.state.visible });
   };
 
-  componentWillMount = () =>{
-    this.setState({components:Login})
-  }
+  componentWillMount = () => {
+    this.setState({ components: Login });
+  };
 
   handleSidebarHide = () => this.setState({ visible: false });
 
   linkMenuBar = () => {
     return (
       <Menu.Menu position="left">
-        <Menu.Item className="navBarMenu" onClick={e=>this.props.getComponent('place')}>สถานที่</Menu.Item>
-        <Menu.Item className="navBarMenu" onClick={e=>this.props.getComponent('event')}>อีเว้นท์</Menu.Item>
-        <Menu.Item className="navBarMenu" onClick={e=>this.props.getComponent('meeting')}>มีตติ้ง</Menu.Item>
+        <Menu.Item
+          className="navBarMenu"
+          onClick={e => this.props.getComponent("place")}
+        >
+          สถานที่
+        </Menu.Item>
+        <Menu.Item
+          className="navBarMenu"
+          onClick={e => this.props.getComponent("event")}
+        >
+          อีเว้นท์
+        </Menu.Item>
+        <Menu.Item
+          className="navBarMenu"
+          onClick={e => this.props.getComponent("meeting")}
+        >
+          มีตติ้ง
+        </Menu.Item>
       </Menu.Menu>
     );
   };
@@ -46,7 +61,7 @@ constructor(props){
   searchMenuBarMobile = () => {
     return (
       <Menu.Item className="searchBarMobile">
-        <Input transparent inverted icon="search" placeholder="Search..." />;
+        <Input transparent inverted icon="search" placeholder="Search..." />
       </Menu.Item>
     );
   };
@@ -63,7 +78,80 @@ constructor(props){
     );
   };
 
-  
+  sidebarMenu = () => {
+    let tmp = "";
+    if (Cookies.get("user") === undefined) {
+      tmp = (
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          icon="labeled"
+          inverted
+          onHide={this.handleSidebarHide}
+          vertical
+          visible={this.state.visible}
+          width="thin"
+          onClick={this.handleSidebarHide}
+        >
+          <Menu.Item as="a" onClick={e => this.props.getComponent("home")}>
+            <p className="sideMenuMobile">หน้าแรก</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("place")}>
+            <p className="sideMenuMobile">สถานที่</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("event")}>
+            <p className="sideMenuMobile">อีเว้นท์</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("meeting")}>
+            <p className="sideMenuMobile">มีตติ้ง</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("login")}>
+            <p className="sideMenuMobile">เข้าสู่ระบบ</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("register")}>
+            <p className="sideMenuMobile">สมัครสมาชิก</p>
+          </Menu.Item>
+        </Sidebar>
+      );
+    } else {
+      tmp = (
+        <Sidebar
+          as={Menu}
+          animation="overlay"
+          icon="labeled"
+          inverted
+          onHide={this.handleSidebarHide}
+          vertical
+          visible={this.state.visible}
+          width="thin"
+          onClick={this.handleSidebarHide}
+        >
+          <Menu.Item as="a" onClick={e => this.props.getComponent("home")}>
+            <p className="sideMenuMobile">หน้าแรก</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("place")}>
+            <p className="sideMenuMobile">สถานที่</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("event")}>
+            <p className="sideMenuMobile">อีเว้นท์</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("meeting")}>
+            <p className="sideMenuMobile">มีตติ้ง</p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={e => this.props.getComponent("register")}>
+            <p className="sideMenuMobile">
+              ยินดีต้อนรับคุณ {Cookies.get("user")}
+            </p>
+          </Menu.Item>
+          <Menu.Item as="a" onClick={this.logout}>
+            <p className="sideMenuMobile">ลงชื่อออก</p>
+          </Menu.Item>
+        </Sidebar>
+      );
+    }
+
+    return tmp;
+  };
 
   loginTab = () => {
     let tmp = "";
@@ -75,7 +163,9 @@ constructor(props){
             <Image src={Cookies.get("userAvatar")} avatar />
           </Menu.Item>
           <Menu.Item>
-          <p className="rightMenuBar" onClick={this.logout}>ลงชื่อออก</p>
+            <p className="rightMenuBar" onClick={this.logout}>
+              ลงชื่อออก
+            </p>
           </Menu.Item>
         </Menu.Menu>
       );
@@ -83,10 +173,20 @@ constructor(props){
       tmp = (
         <Menu.Menu position="right">
           <Menu.Item>
-              <p className="rightMenuBar" onClick={e=>this.props.getComponent('login')}>ลงชื่อเข้าใช้</p>
+            <p
+              className="rightMenuBar"
+              onClick={e => this.props.getComponent("login")}
+            >
+              ลงชื่อเข้าใช้
+            </p>
           </Menu.Item>
           <Menu.Item>
-              <p className="rightMenuBar" onClick={e=>this.props.getComponent('register')}>สมัครสมาชิก</p>
+            <p
+              className="rightMenuBar"
+              onClick={e => this.props.getComponent("register")}
+            >
+              สมัครสมาชิก
+            </p>
           </Menu.Item>
         </Menu.Menu>
       );
@@ -97,7 +197,6 @@ constructor(props){
   logout = () => {
     Cookies.remove("user");
     this.setState({ redirect: true });
-    console.log(Cookies.get("user"));
   };
 
   render() {
@@ -107,14 +206,15 @@ constructor(props){
       return <Redirect to="/" />;
     }
     return (
-        <Navbar
+      <Navbar
         linkMenuBar={this.linkMenuBar}
         searchMunuBar={this.searchMunuBar}
         loginTab={this.loginTab}
         hamburgerMenu={this.hamburgerMenu}
         searchMenuBarMobile={this.searchMenuBarMobile}
         visible={this.state.visible}
-        />
+        sidebarMenu={this.sidebarMenu}
+      />
     );
   }
 }

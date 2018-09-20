@@ -46,12 +46,11 @@ const welcomeComponent = () => {
           <Menu.Item header className="logoTextMobile">
             PICMEUP
           </Menu.Item>
-          <Menu.Item className="searchBarMobile">
+          <Menu.Item >
+          <Input transparent inverted icon="search" placeholder="Search..." />
+          </Menu.Item>          {/* <Menu.Item className="searchBarMobile">
             <Input transparent inverted icon="search" placeholder="Search..." />
-          </Menu.Item>
-          <Menu.Menu position="right">
-            <Menu.Item className="menuRight">Log In</Menu.Item>
-          </Menu.Menu>
+          </Menu.Item> */}
         </Menu>
         {/* Start Body */}
         <div className="welcomeContent">
