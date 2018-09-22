@@ -7,6 +7,7 @@ import Welcome from "../welcome";
 
 import MeetingList from '../topic/topicList'
 import MeeingInfo from '../topic/topicInfo'
+import CreateMeeting from '../topic/createTopic'
 
 import AddPlace from '../admin/places/addPlace'
 import updatePlace from '../admin/places/upDatePlace'
@@ -22,8 +23,11 @@ export default () => (
     <Route exact path="/main" component={Home} />
     <Route exact path="/register" component={Register} />
     <Route exact path="/login" component={Login} />
+
     <Route exact path="/meeting" component={MeetingList} />
     <Route exact path="/topic" component={MeeingInfo} />
+    <Route exact path="/createtopic" component={CreateMeeting} />
+
     <Route exact path="/addPlace" component={AddPlace} />
     <Route exact path="/updatePlace" component={updatePlace} />
     <Route exact path="/placeInfo" component={PlaceInfo} />

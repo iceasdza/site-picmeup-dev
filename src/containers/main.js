@@ -23,11 +23,11 @@ class Main extends Component {
   NavLinkMenuBar = () => {
     return (
       <Menu.Menu position="left">
-        <NavLink to="/">
+        <NavLink to="/main">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
 
-        <NavLink to="/">
+        <NavLink to="/main">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
         <NavLink to="/meeting">
@@ -86,12 +86,12 @@ class Main extends Component {
             <p className="sideMenuMobile">หน้าแรก</p>
           </Menu.Item>
           </NavLink>
-          <NavLink to="/">
+          <NavLink to="/main">
           <Menu.Item as="a" >
             <p className="sideMenuMobile">สถานที่</p>
           </Menu.Item>
           </NavLink>
-          <NavLink to="/">
+          <NavLink to="/main">
           <Menu.Item as="a" >
             <p className="sideMenuMobile">อีเว้นท์</p>
           </Menu.Item>
@@ -126,19 +126,29 @@ class Main extends Component {
           width="thin"
           onClick={this.handleSidebarHide}
         >
-          <Menu.Item as="a" onClick={e => this.props.getComponent("home")}>
+        <NavLink to="/main">
+          <Menu.Item as="a" >
             <p className="sideMenuMobile">หน้าแรก</p>
           </Menu.Item>
-          <Menu.Item as="a" onClick={e => this.props.getComponent("place")}>
+          </NavLink>
+
+          <NavLink to="/main">
+          <Menu.Item as="a" >
             <p className="sideMenuMobile">สถานที่</p>
           </Menu.Item>
-          <Menu.Item as="a" onClick={e => this.props.getComponent("event")}>
+          </NavLink>
+
+          <NavLink to="/main">
+          <Menu.Item as="a" >
             <p className="sideMenuMobile">อีเว้นท์</p>
           </Menu.Item>
-          <Menu.Item as="a" onClick={e => this.props.getComponent("meeting")}>
+          </NavLink>
+          <NavLink to="/meeting">
+          <Menu.Item as="a" >
             <p className="sideMenuMobile">มีตติ้ง</p>
           </Menu.Item>
-          <Menu.Item as="a" onClick={e => this.props.getComponent("register")}>
+          </NavLink>
+          <Menu.Item as="a" >
             <p className="sideMenuMobile">
               ยินดีต้อนรับคุณ {Cookies.get("user")}
             </p>

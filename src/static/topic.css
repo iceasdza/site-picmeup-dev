@@ -26,3 +26,10 @@ img{
   font-size: 1.5em;
   padding: 0.7em
 }
+
+.ui.dropdown .menu .selected.item, .ui.dropdown.selected{
+  color: black!important;
+}
+.ui.selection.dropdown .menu>.item{
+  color: black!important;
+}
