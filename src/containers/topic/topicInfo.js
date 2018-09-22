@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Navbar from "../header/headercontrol";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
@@ -76,7 +75,6 @@ class TopicInfo extends Component {
   render() {
     return (
       <div>
-        <Navbar />
         <TopicComponent
           topicName={this.state.topicName}
           content={this.state.content}

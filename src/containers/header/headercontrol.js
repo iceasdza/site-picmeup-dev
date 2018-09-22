@@ -5,7 +5,7 @@ import { Redirect } from "react-router-dom";
 import "../../static/Header.css";
 import Login from "../../containers/users/login/login";
 import Navbar from "../../components/header/header";
-
+import { Link } from "react-router-dom";
 // import Home from '../Home'
 class HeaderControl extends Component {
   constructor(props) {
@@ -29,24 +29,16 @@ class HeaderControl extends Component {
   linkMenuBar = () => {
     return (
       <Menu.Menu position="left">
-        <Menu.Item
-          className="navBarMenu"
-          onClick={e => this.props.getComponent("place")}
-        >
-          สถานที่
-        </Menu.Item>
-        <Menu.Item
-          className="navBarMenu"
-          onClick={e => this.props.getComponent("event")}
-        >
-          อีเว้นท์
-        </Menu.Item>
-        <Menu.Item
-          className="navBarMenu"
-          onClick={e => this.props.getComponent("meeting")}
-        >
-          มีตติ้ง
-        </Menu.Item>
+        <Link to="/">
+          <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
+        </Link>
+
+        <Link to="/">
+          <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
+        </Link>
+        <Link to="/meeting">
+          <Menu.Item className="navBarMenu">มีตติ้ง</Menu.Item>
+        </Link>
       </Menu.Menu>
     );
   };
@@ -172,22 +164,24 @@ class HeaderControl extends Component {
     } else {
       tmp = (
         <Menu.Menu position="right">
+        <Link to="/login">
           <Menu.Item>
             <p
               className="rightMenuBar"
-              onClick={e => this.props.getComponent("login")}
             >
               ลงชื่อเข้าใช้
             </p>
           </Menu.Item>
+          </Link>
+          <Link to="/register">
           <Menu.Item>
             <p
               className="rightMenuBar"
-              onClick={e => this.props.getComponent("register")}
             >
               สมัครสมาชิก
             </p>
           </Menu.Item>
+          </Link>
         </Menu.Menu>
       );
     }
@@ -203,7 +197,10 @@ class HeaderControl extends Component {
     const { redirect } = this.state;
     if (redirect && Cookies.get("user") === undefined) {
       console.log("logout");
-      return <Redirect to="/" />;
+      return  <Redirect
+      from={window.location.href}
+      to={{ pathname: "/main" }}
+    />
     }
     return (
       <Navbar

@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Navbar from "../header/headercontrol";
 import CreateTopicComponent from "../../components/topic/createTopicComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
@@ -30,7 +29,6 @@ class CreateTopic extends Component {
   render() {
     return (
       <div>
-        <Navbar />
         <CreateTopicComponent
           text={this.state.text}
           handleChange={this.handleChange}

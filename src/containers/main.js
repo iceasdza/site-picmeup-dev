@@ -47,7 +47,7 @@ class Main extends Component {
   render() {
     return (
       <div>
-        <Navbar getComponent={this.getComponent} />
+        {/* <Navbar getComponent={this.getComponent} /> */}
         {this.state.renderItem}
       </div>
     );
