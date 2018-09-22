@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
-import HeaderControl from '../../containers/header/headercontrol'
 import EventDetail from '../../components/events/eventInfo'
 import axios from '../../lib/axios';
 
@@ -77,7 +76,6 @@ class EventInfo extends Component {
     render = () => {
         return (
             <div>
-                <HeaderControl />
                 <EventDetail
                 eventName={this.state.eventName}
                 eventDes={this.state.eventDes}

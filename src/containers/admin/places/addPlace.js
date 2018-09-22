@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PlaceForm from '../../../components/admin/places/addPlaceForm'
 import { Form } from 'formsy-semantic-ui-react'
-import HeaderControl from '../../header/headercontrol'
 import axios from '../../../lib/axios';
 
 class AddPlace extends Component {
@@ -130,7 +129,6 @@ class AddPlace extends Component {
     render() {
         return (
             <div>
-                <HeaderControl />
                 <Form onSubmit={this.CreatePlace}>
                     <PlaceForm
                         // passing value

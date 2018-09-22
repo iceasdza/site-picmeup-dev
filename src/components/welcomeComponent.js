@@ -1,5 +1,5 @@
 import React from "react";
-import { Menu, Responsive, Input } from "semantic-ui-react";
+import {  Responsive } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../static/welcome.css";
 const welcomeComponent = () => {
@@ -8,7 +8,7 @@ const welcomeComponent = () => {
       {/* onlyComputer */}
       <Responsive {...Responsive.onlyComputer}>
         {/*Start Navbar */}
-        <Menu secondary className="NavbarMenu">
+        {/* <Menu secondary className="NavbarMenu">
           <Menu.Item header className="logoText">
             PICMEUP
           </Menu.Item>
@@ -19,7 +19,7 @@ const welcomeComponent = () => {
             <Menu.Item className="menuRight">ลงชื่อเข้าใช้</Menu.Item>
             <Menu.Item className="menuRight">สมัครสมาชิก</Menu.Item>
           </Menu.Menu>
-        </Menu>
+        </Menu> */}
         {/*End Navbar */}
         {/* Start Body */}
         <div className="welcomeContent">
@@ -42,16 +42,14 @@ const welcomeComponent = () => {
       
       {/* onlyMobile */}
       <Responsive {...Responsive.onlyMobile}>
-        <Menu secondary className="MenuMobile">
+        {/* <Menu secondary className="MenuMobile">
           <Menu.Item header className="logoTextMobile">
             PICMEUP
           </Menu.Item>
           <Menu.Item >
           <Input transparent inverted icon="search" placeholder="Search..." />
-          </Menu.Item>          {/* <Menu.Item className="searchBarMobile">
-            <Input transparent inverted icon="search" placeholder="Search..." />
-          </Menu.Item> */}
-        </Menu>
+          </Menu.Item>    
+        </Menu> */}
         {/* Start Body */}
         <div className="welcomeContent">
           <p className="headerContent">ค้นหาและท่องเที่ยว</p>

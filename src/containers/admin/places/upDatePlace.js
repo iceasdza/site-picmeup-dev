@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import HeaderControl from "../../header/headercontrol";
 import PlaceEdit from "../../../components/admin/places/placeEditForm";
 import { Form } from "formsy-semantic-ui-react";
 import axios from "../../../lib/axios";
@@ -175,7 +174,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <HeaderControl />
         <Form onSubmit={this.UpdatePlace}>
           <PlaceEdit
             placeName={this.state.placeName}

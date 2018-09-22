@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import 'semantic-ui-css/semantic.min.css';
-import HeaderControl from '../../header/headercontrol'
 import { Form } from 'formsy-semantic-ui-react'
 import EventEditForm from '../../../components/admin/events/eventEditForm'
 import axios from '../../../lib/axios';
@@ -191,7 +190,6 @@ class UpdateEvent extends Component {
     render() {
         return (
             <div>
-                <HeaderControl />
                 <Form onSubmit={this.UpdateEvent}>
                     <EventEditForm
                         eventName={this.state.eventName}

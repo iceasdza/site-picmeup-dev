@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import HeaderControl from "../../header/headercontrol";
 import { Form } from "formsy-semantic-ui-react";
 import EventForm from "../../../components/admin/events/eventAddForm";
 import axios from "../../../lib/axios";
@@ -140,7 +139,6 @@ class AddEvent extends Component {
   render() {
     return (
       <div>
-        <HeaderControl />
         <Form onSubmit={this.CreateEvent}>
           <EventForm
             eventName={this.state.eventName}

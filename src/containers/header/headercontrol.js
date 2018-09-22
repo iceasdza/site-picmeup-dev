@@ -6,7 +6,6 @@ import "../../static/Header.css";
 import Login from "../../containers/users/login/login";
 import Navbar from "../../components/header/header";
 import { Link } from "react-router-dom";
-// import Home from '../Home'
 class HeaderControl extends Component {
   constructor(props) {
     super(props);
