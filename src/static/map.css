@@ -1,0 +1,9 @@
+.map {
+  width: 30% !important;
+  height: 50% !important;
+}
+.mapView {
+  width: 30% !important;
+  height: 50% !important;
+  position: initial !important;
+}

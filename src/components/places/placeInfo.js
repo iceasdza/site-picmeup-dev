@@ -38,6 +38,20 @@ const PlaceInfo = props => (
         <p> Car parking : {props.carParking}</p>
         <Message.Header>Tags</Message.Header>
         <Message.List items={props.tags} />
+        <Card>
+          {props.renderMap()}
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+          <br />
+        </Card>
       </Message>
     </Container>
     {props.renderComment()}

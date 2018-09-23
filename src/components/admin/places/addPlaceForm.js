@@ -249,8 +249,9 @@ const Place_Form = props => {
         />
       </div>
       <p>แผนที่</p>
+      {props.renderGoogleMap()}
       <div>
-        <Form.Button floated="right" size="big">
+        <Form.Button floated="right" size="big" style={{zIndex:'4'}}>
           สร้างสถานที่
           </Form.Button>
       </div>
