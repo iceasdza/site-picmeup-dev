@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import 'semantic-ui-css/semantic.min.css';
 import PlaceDetail from '../../components/places/placeInfo'
+import { Divider, Form, Comment } from "semantic-ui-react";
+import Cookies from "js-cookie";
 import axios from '../../lib/axios';
 
 class PlaceInfo extends Component {
@@ -24,7 +26,10 @@ class PlaceInfo extends Component {
             images: [],
             id:"",
             open: false,
-            index:null
+            index:null,
+            comments: [],
+            text:'',
+            
         };
       }
 
@@ -43,7 +48,8 @@ class PlaceInfo extends Component {
             carParking: data.carParking,
             days: data.days,
             tags: data.tags,
-            images: data.images
+            images: data.images,
+            comments: data.comments,
         })
     }
 
@@ -58,6 +64,63 @@ class PlaceInfo extends Component {
       onCloseModal = () => {
         this.setState({ open: false });
       };
+
+      handleOnchage = e => {
+        this.setState({ text: e });
+      };
+    
+      handleSubmitComment = async () => {
+        const id = this.props.location.search.replace("?", "");
+        const comments = this.state.comments;
+        if (Cookies.get("user") === undefined) {
+          comments.push({ comment: this.state.text, commentator: "Guest" });
+        } else {
+          comments.push({
+            comment: this.state.text,
+            commentator: Cookies.get("user")
+          });
+        }
+        this.setState({ comments: comments, text: "" });
+        await axios.put("/api/addPlaceComment/" + id, {
+          comments: this.state.comments
+        });
+        this.getData();
+      };
+    
+      renderComment = () =>{
+          return (
+              <div className="container fluid">
+            <Divider horizontal>Comments</Divider>
+            <Form onSubmit={this.handleSubmitComment}>
+              <Form.TextArea
+                label="เขียนควาคิดเห็น"
+                placeholder="แสดงความคิดเห็น"
+                value={this.state.text}
+                onChange={e => this.handleOnchage(e.target.value)}
+                required
+              />
+              <Form.Button>ตกลง</Form.Button>
+            </Form>
+            <Divider />
+            <Comment.Group>
+              {this.state.comments.map((data, index) => (
+                <Comment key={index}>
+                  <Comment.Avatar
+                    as="a"
+                    src="https://react.semantic-ui.com/images/avatar/small/stevie.jpg"
+                  />
+                  <Comment.Content>
+                    <Comment.Author>
+                      แสดงความคิดเห็นโดยคุณ {data.commentator}
+                    </Comment.Author>
+                    <Comment.Text>{data.comment}</Comment.Text>
+                  </Comment.Content>
+                </Comment>
+              ))}
+            </Comment.Group>
+            </div>
+          )
+      }
 
 
     render = () => {
@@ -79,6 +142,7 @@ class PlaceInfo extends Component {
                 onCloseModal={this.onCloseModal}
                 onOpenModal={this.onOpenModal}
                 open = {this.state.open}
+                renderComment={this.renderComment}
                 />
 
             </div>
