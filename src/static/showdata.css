@@ -1,0 +1,52 @@
+.headers{
+    font-family: 'Kanit'!important;
+    font-size: 2.3em!important;    
+}
+
+.showhotframe{   
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+    padding-top: 40px!important;
+    
+}
+
+.showhotcard{   
+    object-fit: cover;
+    width: 27%!important;
+    height: 17%!important;    
+}
+
+.showhotimage{    
+    width: 15cm!important;
+    height: 6cm!important;  
+}
+
+.showhotname{
+    font-family: 'Kanit'!important;
+    font-size: 1.5em!important;
+    text-align: center!important;
+}
+
+.showframe{   
+    padding-left: 10px!important;
+    padding-right: 10px!important;
+    padding-top: 40px!important;
+    
+}
+
+.showcard{   
+    /* object-fit: cover; */
+    width: 17%!important;
+    height: 7%!important;    
+}
+
+.showimage{    
+    width: 10cm!important;
+    height: 6cm!important;  
+}
+
+.showname{
+    font-family: 'Kanit'!important;
+    font-size: 1.5em!important;
+    text-align: center!important;
+}
