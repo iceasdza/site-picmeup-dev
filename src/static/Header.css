@@ -8,18 +8,21 @@
     color: white!important;
     font-family: 'Kanit'!important;
     cursor: pointer;
-    padding-left: 2em!important;
-    font-size: 14px
-}
-.searchBar{
-    width: 45%!important;
+    /* padding-left: 2em!important; */
+    font-size: 14px;
+    padding-top: 23px!important;
 }
 .rightMenuBar{
     color: white!important;
     font-family: 'Kanit'!important;
     font-size: 14px!important;
     cursor: pointer;
+    padding-top: 8px!important;
 }
+.ui.menu:not(.vertical) .item>.input{
+    width: 40rem!important;
+}
+
 .MenuMobile{
     background-color: #333;
     margin-bottom: 0px;

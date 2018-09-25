@@ -34,7 +34,7 @@ class Login extends Component {
       const data = await axios.get('api/findUserName/'+this.state.userName)
       Cookies.set('userAvatar',data.data.avatar)
       Cookies.set('user',this.state.userName)
-      this.props.getComponent('home')
+      this.setState({redirect:true})
     }else{
       this.setState({ open: !this.state.open })
     }
@@ -47,10 +47,12 @@ class Login extends Component {
   render() {
     const { open,redirect } = this.state
     if(redirect && Cookies.get('user') !== undefined){
-    return  <Redirect
-      from={window.location.href}
+    return  (
+      <Redirect
+      // from={window.location.href}
       to={{ pathname: "/main" }}
     />
+    )
     }
     return (
       <div>

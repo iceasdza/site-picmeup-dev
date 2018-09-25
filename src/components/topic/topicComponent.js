@@ -5,10 +5,11 @@ const TopicComponent = props => {
     <div className="container fluid">
       <Header as="h1">{props.topicName}</Header>
       โดยคุณ {props.creator}
-      <br/>
+      <br />
       {props.editTopic()}
       <Divider />
       <div dangerouslySetInnerHTML={{ __html: props.content }} />
+      {props.renderPlace()}
       <Divider horizontal>Comments</Divider>
       <Form onSubmit={props.handleSubmitComment}>
         <Form.TextArea
@@ -23,19 +24,19 @@ const TopicComponent = props => {
       <Divider />
       <Comment.Group>
         {props.comments.map((data, index) => (
-              <Comment key={index}>
-                <Comment.Avatar
-                  as="a"
-                  src="https://react.semantic-ui.com/images/avatar/small/stevie.jpg"
-                />
-                <Comment.Content>
-                  <Comment.Author>แสดงความคิดเห็นโดยคุณ {data.commentator}</Comment.Author>
-                  <Comment.Text >
-                    {data.comment}
-                  </Comment.Text>
-                </Comment.Content>
-              </Comment>
-            ))}
+          <Comment key={index}>
+            <Comment.Avatar
+              as="a"
+              src="https://react.semantic-ui.com/images/avatar/small/stevie.jpg"
+            />
+            <Comment.Content>
+              <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {data.commentator}
+              </Comment.Author>
+              <Comment.Text>{data.comment}</Comment.Text>
+            </Comment.Content>
+          </Comment>
+        ))}
       </Comment.Group>
     </div>
   );

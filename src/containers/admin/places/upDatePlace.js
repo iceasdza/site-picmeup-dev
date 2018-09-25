@@ -1,10 +1,13 @@
 import React, { Component } from "react";
-import "semantic-ui-css/semantic.min.css";
-import HeaderControl from "../../header/headercontrol";
 import PlaceEdit from "../../../components/admin/places/placeEditForm";
 import { Form } from "formsy-semantic-ui-react";
 import axios from "../../../lib/axios";
-
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import PlacesAutocomplete, {
+  geocodeByAddress,
+  getLatLng
+} from "react-places-autocomplete";
+import "../../../static/map.css";
 class Home extends Component {
   state = {
     placeName: "",
@@ -23,7 +26,10 @@ class Home extends Component {
     images: [],
     id: "",
     message: "",
-    files: []
+    files: [],
+    address: "",
+    lat: null,
+    lng: null
   };
 
   FeeOption = (field, value) => {
@@ -61,8 +67,85 @@ class Home extends Component {
       days: data.days,
       tags: data.tags,
       id: _id,
-      images: data.images
+      images: data.images,
+      lat:data.lat,
+      lng:data.lng
     });
+  };
+
+  handleChange = address => {
+    this.setState({ address });
+  };
+
+  handleSelect = address => {
+    geocodeByAddress(address)
+      .then(results => getLatLng(results[0]))
+      .then(latLng => this.setState({ lat: latLng.lat, lng: latLng.lng }))
+      .catch(error => console.error("Error", error));
+  };
+
+  renderGoogleMap = () => {
+    return (
+      <div className="container fluid">
+        <PlacesAutocomplete
+          styles={{ position: "absolute" }}
+          value={this.state.address}
+          onChange={this.handleChange}
+          onSelect={this.handleSelect}
+        >
+          {({
+            getInputProps,
+            suggestions,
+            getSuggestionItemProps,
+            loading
+          }) => (
+            <div>
+              <input
+                {...getInputProps({
+                  placeholder: "Search Places ...",
+                  className: "location-search-input"
+                })}
+              />
+              <div className="autocomplete-dropdown-container">
+                {loading && <div>Loading...</div>}
+                {suggestions.map(suggestion => {
+                  const className = suggestion.active
+                    ? "suggestion-item--active"
+                    : "suggestion-item";
+                  // inline style for demonstration purpose
+                  const style = suggestion.active
+                    ? { backgroundColor: "#fafafa", cursor: "pointer" }
+                    : { backgroundColor: "#ffffff", cursor: "pointer" };
+                  return (
+                    <div
+                      {...getSuggestionItemProps(suggestion, {
+                        className,
+                        style
+                      })}
+                    >
+                      <span>{suggestion.description}</span>
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+        </PlacesAutocomplete>
+        <Map
+        className="map"
+        //   style={style}
+          google={this.props.google}
+          zoom={18}
+          onClick={this.onMapClicked}
+          center={{
+            lat: this.state.lat,
+            lng: this.state.lng
+          }}
+        >
+          <Marker position={{ lat: this.state.lat, lng: this.state.lng }} />
+        </Map>
+        </div>
+    );
   };
 
   setField = (field, value) => {
@@ -119,7 +202,9 @@ class Home extends Component {
         FileList: this.state.FileList,
         editor: "Patis editor",
         images: this.state.images,
-        edit_date: date
+        edit_date: date,
+        lat:this.state.lat,
+        lng:this.state.lng
       });
 
       window.location.replace("/");
@@ -165,8 +250,10 @@ class Home extends Component {
         FileList: this.state.FileList,
         editor: "Patis editor",
         edit_date: date,
-        images:this.state.images
-    })
+        images:this.state.images,
+        lat:this.state.lat,
+        lng:this.state.lng
+      })
 
     //reload for test
     window.location.replace("/")
@@ -175,7 +262,6 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <HeaderControl />
         <Form onSubmit={this.UpdatePlace}>
           <PlaceEdit
             placeName={this.state.placeName}
@@ -197,6 +283,7 @@ class Home extends Component {
             DaysSelected={this.DaysSelected}
             handleSelectImage={this.handleSelectImage}
             DeleteImage={this.DeleteImage}
+            renderGoogleMap={this.renderGoogleMap}
           />
         </Form>
       </div>
@@ -204,4 +291,7 @@ class Home extends Component {
   }
 }
 
-export default Home;
+// export default Home;
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyAxyyre9woDQlaPEGTb-Hmqprwjyd2rD88"
+})(Home);

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import Navbar from "../header/headercontrol";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
-import { Button, Icon } from "semantic-ui-react";
-
+import { Button, Icon,Card,Image } from "semantic-ui-react";
+import { Link } from "react-router-dom";
 let user = Cookies.get("user");
 
 class TopicInfo extends Component {
@@ -17,6 +16,10 @@ class TopicInfo extends Component {
       creator: "",
       comments: [],
       text: "",
+      placeId:"",
+      placeName:'',
+      placeImage:''
+
     };
   }
 
@@ -29,10 +32,36 @@ class TopicInfo extends Component {
       topicName: data.topicName,
       create_at: data.create_date,
       comments: data.comments,
-      creator: data.creator
+      creator: data.creator,
+      placeId:data.placeId
     });
-  };
 
+    const place = await axios.get("/api/getPlaceInfoFromId/"+this.state.placeId)
+    const placeData = place.data[0]
+    this.setState({
+        placeName:placeData.placeName,
+        placeImage:placeData.images[0]
+    })
+  };
+  renderPlace = () =>{
+    return (
+      <Card>
+        
+      <Image src={this.state.placeImage} />
+      {this.state.placeName}
+      <Card.Content>
+        <Link
+          to={{
+            pathname: "/placeInfo",
+            search: this.state.placeId
+          }}
+        >
+          <Button primary content="View" />
+        </Link>
+      </Card.Content>
+    </Card>
+    )
+  }
   handleOnchage = e => {
     this.setState({ text: e });
   };
@@ -76,7 +105,7 @@ class TopicInfo extends Component {
   render() {
     return (
       <div>
-        <Navbar />
+        {console.log(this.state)}
         <TopicComponent
           topicName={this.state.topicName}
           content={this.state.content}
@@ -86,6 +115,7 @@ class TopicInfo extends Component {
           editTopic={this.editTopic}
           text={this.state.text}
           handleSubmitComment={this.handleSubmitComment}
+          renderPlace={this.renderPlace}
         />
       </div>
     );

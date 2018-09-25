@@ -63,6 +63,7 @@ const EventInfo = props => (
         <Message.List items={props.tags} />
       </Message>
     </Container>
+    {props.renderComment()}
   </div>
 );
 export default EventInfo;

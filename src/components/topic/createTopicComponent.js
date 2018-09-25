@@ -8,6 +8,7 @@ const createTopicComponent = props => {
     <div className="container fluid">
       <div>
         <Input fluid size="massive" placeholder="หัวข้อกระทู้..." onChange={e=>props.handleName(e.target.value)}/>
+        {props.renderPlaceList()}
         <ReactQuill
           value={props.text}
           modules={createTopicComponent.modules}
