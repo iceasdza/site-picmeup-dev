@@ -3,6 +3,8 @@ import "semantic-ui-css/semantic.min.css";
 import { Form } from "formsy-semantic-ui-react";
 import EventForm from "../../../components/admin/events/eventAddForm";
 import axios from "../../../lib/axios";
+import { Redirect } from "react-router-dom";
+import {  Dimmer, Loader } from "semantic-ui-react";
 class AddEvent extends Component {
   state = {
     eventName: "",
@@ -22,7 +24,9 @@ class AddEvent extends Component {
     PlaceId: "",
     message: "",
     images: [],
-    files: []
+    files: [],
+    redirect: false,
+    open: false
   };
 
   setField = (field, value) => {
@@ -96,11 +100,13 @@ class AddEvent extends Component {
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
+      this.setState({ open: true });
       const dataFile = document.getElementById("img").files[0];
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSingleEvent", data);
       this.setState({ images: resp.data });
     } else {
+      this.setState({ open: true });
       const dataFile = document.getElementById("img").files;
       for (var y = 0; y < dataFile.length; y++) {
         data.append("img", dataFile[y]);
@@ -133,13 +139,24 @@ class AddEvent extends Component {
     });
 
     // reload for test
-    window.location.replace("/");
+    this.setState({redirect:true})
   };
 
   render() {
+    const { redirect ,open} = this.state
+    if(redirect){
+    return  (
+      <Redirect
+      to={{ pathname: "/main" }}
+    />
+    )
+    }
     return (
       <div>
         <Form onSubmit={this.CreateEvent}>
+        <Dimmer active={open} page>
+          <Loader size='massive'><p>รอแปปนึงกำลังอัพโหลดรูป</p></Loader>
+          </Dimmer>
           <EventForm
             eventName={this.state.eventName}
             eventDes={this.state.eventDes}

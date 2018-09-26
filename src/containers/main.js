@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import "../static/Header.css";
 import { Menu, Responsive } from "semantic-ui-react";
 import { Image, Input, Icon, Sidebar } from "semantic-ui-react";
-import { NavLink } from "react-router-dom";
 import Routing from "./routes";
 import Cookies from "js-cookie";
+import {NavLink } from "react-router-dom";
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -204,8 +204,14 @@ class Main extends Component {
     Cookies.remove("user");
     this.setState({ redirect: true });
   };
-
+  componentDidUpdate() {
+    console.log('tet')
+  }
   render() {
+    let {redirect} = this.state
+    if(redirect&&Cookies.get("user")=== undefined){
+      window.location.replace("/");
+    }
     return (
       <div>
         <Responsive {...Responsive.onlyComputer}>

@@ -94,7 +94,7 @@ const Place_Form = props => {
         </label>
         <Card.Group itemsPerRow={6}>
           {props.files.map((data, index) => (
-            <Card key={index}>
+            <Card>
               <div>
                 <Icon
                   circular
@@ -104,7 +104,9 @@ const Place_Form = props => {
                   onClick={() => props.DeletePhotoUploaded("files", index)}
                 />
               </div>
-              <Image src={data} className="imageUploadSize" />
+              <Image
+              onLoad={console.log('loading')}
+              src={data} className="imageUploadSize" />
             </Card>
           ))}
         </Card.Group>
