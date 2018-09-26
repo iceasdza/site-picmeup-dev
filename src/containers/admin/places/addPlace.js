@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PlaceForm from "../../../components/admin/places/addPlaceForm";
 import { Form } from "formsy-semantic-ui-react";
-import {  Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader, Card, Icon, Image } from "semantic-ui-react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import { Redirect } from "react-router-dom";
 import PlacesAutocomplete, {
@@ -32,7 +32,41 @@ class AddPlace extends Component {
     lat: 13.6525851,
     lng: 100.49361,
     redirect: false,
-    open: false
+    open: false,
+    imageState:true
+  };
+
+  handleImageLoaded = () => {
+    this.setState({imageState:false})
+  };
+  renderImage = () => {
+    return (
+      <Card.Group itemsPerRow={6}>
+        {this.state.files.map((data, index) => (
+          <Card key={index}>
+            <div>
+              <Icon
+                circular
+                inverted
+                name="remove"
+                color="red"
+                onClick={() => this.DeletePhotoUploaded("files", index)}
+              />
+            </div>
+              <Dimmer active={this.state.imageState}>
+                <Loader >
+                  โหลดดิ้ง
+                </Loader>
+              </Dimmer>
+            <Image
+              onLoad={this.handleImageLoaded}
+              src={data}
+              className="imageUploadSize"
+            />
+          </Card>
+        ))}
+      </Card.Group>
+    );
   };
 
   FeeOption = (field, value) => {
@@ -63,6 +97,7 @@ class AddPlace extends Component {
   };
 
   handleSelectImage = event => {
+    this.setState({imageState:true})
     const files = event.target.files;
     const arr = [];
     for (var x = 0; x < files.length; x++) {
@@ -219,7 +254,9 @@ class AddPlace extends Component {
       <div>
         <Form onSubmit={this.CreatePlace}>
           <Dimmer active={open} page>
-          <Loader size='massive'><p>รอแปปนึงกำลังอัพโหลดรูป</p></Loader>
+            <Loader size="massive">
+              <p>รอแปปนึงกำลังอัพโหลดรูป</p>
+            </Loader>
           </Dimmer>
 
           <PlaceForm
@@ -245,6 +282,8 @@ class AddPlace extends Component {
             DeletePhotoUploaded={this.DeletePhotoUploaded}
             handleSelectImage={this.handleSelectImage}
             renderGoogleMap={this.renderGoogleMap}
+            renderImage={this.renderImage}
+            handleSetImageState={this.handleSetImageState}
           />
         </Form>
       </div>

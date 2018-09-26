@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Image, Card, Icon,Divider} from "semantic-ui-react";
+import { Label,Divider} from "semantic-ui-react";
 import "../../../static/Form.css";
 
 const optionsTag = [
@@ -92,24 +92,7 @@ const Place_Form = props => {
             multiple
           />
         </label>
-        <Card.Group itemsPerRow={6}>
-          {props.files.map((data, index) => (
-            <Card>
-              <div>
-                <Icon
-                  circular
-                  inverted
-                  name="remove"
-                  color="red"
-                  onClick={() => props.DeletePhotoUploaded("files", index)}
-                />
-              </div>
-              <Image
-              onLoad={console.log('loading')}
-              src={data} className="imageUploadSize" />
-            </Card>
-          ))}
-        </Card.Group>
+        {props.renderImage()}
       </Form.Field>
       <div className="Gap">
         <Form.Group>

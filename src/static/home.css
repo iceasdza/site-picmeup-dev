@@ -27,10 +27,15 @@
     font-size: 18px!important
  }
 
-.showDtat{
+.showData{
     font-family: 'Kanit'!important;
     font-size: 25px!important;
     width: 50px!important;
     height: 50px!important;
     
+}
+.desc{
+    font-family: 'Kanit'!important;
+    font-size: 18px!important;
+    padding:1em;
 }
