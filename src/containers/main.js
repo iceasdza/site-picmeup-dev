@@ -209,7 +209,7 @@ class Main extends Component {
     return (
       <div>
         <Responsive {...Responsive.onlyComputer}>
-          <Menu secondary>
+          <Menu inverted secondary>
             <Menu.Item header className="logoText">
               PICMEUP
             </Menu.Item>
@@ -217,6 +217,7 @@ class Main extends Component {
             {this.loginTab()}
           </Menu>
         </Responsive>
+        
         <Responsive {...Responsive.onlyMobile}>
           <Menu secondary>
             {this.hamburgerMenu()}

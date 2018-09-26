@@ -1,6 +1,6 @@
 import React from "react";
 import { Divider } from "semantic-ui-react";
-import "../../static/topic.css";
+import "../../static/topicView.css";
 const TopicsListComponent = props => {
   return (
     <div className="container fluid">

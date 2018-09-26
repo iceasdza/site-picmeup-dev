@@ -2,27 +2,16 @@ import React from "react";
 import {  Responsive } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../static/welcome.css";
+// import bg1 from '../static/welcome/1.jpg'
+import bg from '../static/welcome/26115.jpg'
+// import bg2 from '../static/welcome/5.jpg'
+// import bg3 from '../static/welcome/9.jpg'
 const welcomeComponent = () => {
   return (
     <div>
       {/* onlyComputer */}
       <Responsive {...Responsive.onlyComputer}>
-        {/*Start Navbar */}
-        {/* <Menu secondary className="NavbarMenu">
-          <Menu.Item header className="logoText">
-            PICMEUP
-          </Menu.Item>
-          <Menu.Item className="searchBar">
-            <Input icon="search" placeholder="ค้นหา..." />
-          </Menu.Item>
-          <Menu.Menu position="right">
-            <Menu.Item className="menuRight">ลงชื่อเข้าใช้</Menu.Item>
-            <Menu.Item className="menuRight">สมัครสมาชิก</Menu.Item>
-          </Menu.Menu>
-        </Menu> */}
-        {/*End Navbar */}
-        {/* Start Body */}
-        <div className="welcomeContent">
+        <div className="welcomeContent" style={{backgroundImage:"url("+bg+")"}}>
           <p className="headerContent">ค้นหาและท่องเที่ยว</p>
           <p className="content">
             ค้นหาสถานที่สำหรับคุณและไปถ่ายรูป

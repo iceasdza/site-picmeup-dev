@@ -52,7 +52,7 @@ const EventInfo = props => (
             <Link
               to={{
                 pathname: "/placeInfo",
-                state: { id: props.placeId }
+                search : props.placeId 
               }}
             >
               <Button primary content="View" />
