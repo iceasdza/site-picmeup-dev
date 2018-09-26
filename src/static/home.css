@@ -5,8 +5,32 @@
     height: 200px;
  }
  .showImage{
-    object-fit: cover;
-    width: 100%;
-    height: 100%;
+    object-fit: cover; 
     cursor: pointer;
  }
+
+ .showCard{   
+    cursor: pointer;
+ }
+
+ .showPlace{
+     text-align: center!important;    
+ }
+
+ .topoicHeader{
+    font-family: 'Kanit'!important;
+    font-size: 25px!important
+ }
+
+ .topoicData{
+    font-family: 'Kanit'!important;
+    font-size: 18px!important
+ }
+
+.showDtat{
+    font-family: 'Kanit'!important;
+    font-size: 25px!important;
+    width: 50px!important;
+    height: 50px!important;
+    
+}
