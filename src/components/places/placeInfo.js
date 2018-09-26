@@ -2,16 +2,19 @@ import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import "../../static/home.css";
 import Modal from "react-responsive-modal";
-import { Message, Card, Container, Header, Image } from "semantic-ui-react";
+import { 
+  Message,
+  Card,
+  Image,
+  Grid
+} from "semantic-ui-react";
 
 const PlaceInfo = props => (
   <div>
-    <Container textAlign="center">
-      <Header as="h2">{props.placeName}</Header>
-      <p>{props.placeDes}</p>
-      <Card.Group itemsPerRow={3}>
+    <div>
+      <Card.Group itemsPerRow={4}>
         {props.images.map((src, index) => (
-          <Card key={index}>
+          <Card key={index} className="showCard">
             <Image
               src={src}
               onClick={() => props.onOpenModal(index)}
@@ -28,33 +31,100 @@ const PlaceInfo = props => (
           <Image src={props.images[props.index]} />
         </Modal>
       </Card.Group>
-      <Message>
-        <Message.Header>open day</Message.Header>
-        <Message.List items={props.days} />
-        <p> Tel. : {props.tel}</p>
-        <p> Open time : {props.openTime}</p>
-        <p> Close time : {props.closeTime}</p>
-        <p> Fee : {props.fee}</p>
-        <p> Car parking : {props.carParking}</p>
-        <Message.Header>Tags</Message.Header>
-        <Message.List items={props.tags} />
-        <Card>
-          {props.renderMap()}
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-          <br />
-        </Card>
-      </Message>
-    </Container>
-    {props.renderComment()}
+    </div>
+    <Grid>
+      <Grid.Column width={8}>
+        <div>
+          {props.renderComment()}
+        </div>
+      </Grid.Column>
+      <Grid.Column width={8}>
+        <Message>
+          <Grid>
+            <Grid.Column width={8}>
+              <div>
+              <Message.Header className="topoicHeader">{props.placeName}</Message.Header>
+                <Message.Header className="topoicHeader">วันเปิดทำการ</Message.Header>
+                <Message.List items={props.days} className="topoicData" />
+                <Message.Header className="topoicHeader">เวลาเปิดทำการ</Message.Header>
+                <p className="topoicData"> {props.openTime}</p>
+                <Message.Header className="topoicHeader">เวลาปิดทำการ</Message.Header>
+                <p className="topoicData"> {props.closeTime}</p>
+
+              </div>
+            </Grid.Column>
+            <Grid.Column width={8}>
+              <div>
+                <Message.Header className="topoicHeader">รายละเอียด</Message.Header>
+                <p className="topoicData"> ค่าเข้า : {props.fee}</p>
+                <p className="topoicData"> ที่จอดรถ : {props.carParking}</p>
+                <Message.Header className="topoicHeader">การติดต่อ</Message.Header>
+                <p className="topoicData"> เบอร์ติดต่อ : {props.tel}</p>
+                <Message.Header className="topoicHeader">ประเภทของอีเว้นท์</Message.Header>
+                <Message.List items={props.tags} />
+                <Message.Header className="topoicHeader">สถานที่จัด</Message.Header>
+                <div>
+                {props.renderMap()}
+                </div>
+              </div>
+            </Grid.Column>
+            <Message className="showDtat">{props.placeDes}</Message>
+          </Grid>
+         
+        </Message>
+      </Grid.Column>
+    </Grid>
   </div>
+  // <div>
+  //   <Container textAlign="center">
+  //     <Header as="h2">{props.placeName}</Header>
+  //     <p>{props.placeDes}</p>
+  //     <Card.Group itemsPerRow={3}>
+  //       {props.images.map((src, index) => (
+  //         <Card key={index}>
+  //           <Image
+  //             src={src}
+  //             onClick={() => props.onOpenModal(index)}
+  //             className="showImage"
+  //           />
+  //         </Card>
+  //       ))}
+  //       <Modal
+  //         open={props.open}
+  //         onClose={props.onCloseModal}
+  //         center
+  //         animationDuration={500}
+  //       >
+  //         <Image src={props.images[props.index]} />
+  //       </Modal>
+  //     </Card.Group>
+  //     <Message>
+  //       <Message.Header>open day</Message.Header>
+  //       <Message.List items={props.days} />
+  //       <p> Tel. : {props.tel}</p>
+  //       <p> Open time : {props.openTime}</p>
+  //       <p> Close time : {props.closeTime}</p>
+  //       <p> Fee : {props.fee}</p>
+  //       <p> Car parking : {props.carParking}</p>
+  //       <Message.Header>Tags</Message.Header>
+  //       <Message.List items={props.tags} />
+  //       <Card>
+  //         {props.renderMap()}
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //         <br />
+  //       </Card>
+  //     </Message>
+  //   </Container>
+  //   {props.renderComment()}
+  // </div>
 );
 export default PlaceInfo;
