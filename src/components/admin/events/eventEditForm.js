@@ -1,9 +1,9 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Image, Card, Icon } from "semantic-ui-react";
+import { Label } from "semantic-ui-react";
 import "../../../static/Form.css";
 
-import Imagecontrol from "../../../containers/imagerender/imagecontrol"
+import Imagecontrol from "../../../containers/imagerender/imageEditControl"
 
 const optionsTag = [
   { key: 1, text: "สัตว์เลี้ยง", value: "สัตว์เลี้ยง" },
@@ -105,7 +105,8 @@ const EventForm = props => {
               require="true"
             />
           </label>
-          <Imagecontrol files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
+          {console.log(props.images)}
+          <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
           {/* <Card.Group itemsPerRow={6}>
           {props.images.map((src, index) => (
             <Card key={index}>

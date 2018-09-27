@@ -305,6 +305,7 @@ class Home extends Component {
             renderGoogleMap={this.renderGoogleMap}
             imageState={this.state.imageState} 
             handleImageLoaded={this.handleImageLoaded} 
+            DeletePhotoUploaded={this.DeletePhotoUploaded}
           />
         </Form>
       </div>
