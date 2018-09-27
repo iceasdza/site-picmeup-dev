@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import CreateTopicComponent from "../../components/topic/createTopicComponent";
 import axios from "../../lib/axios";
+import { Redirect } from "react-router-dom";
 import Cookies from "js-cookie";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label } from "semantic-ui-react";
@@ -18,7 +19,8 @@ class CreateTopic extends Component {
       text: "",
       topicName: "",
       placesName: [],
-      placeId:''
+      placeId:'',
+      redirect:false
     };
   }
 
@@ -73,8 +75,18 @@ class CreateTopic extends Component {
       creator: Cookies.get("user"),
       placeId:this.state.placeId
     });
+    this.setState({redirect:true})
   };
+
   render() {
+    const { redirect } = this.state
+    if(redirect){
+    return  (
+      <Redirect
+      to={{ pathname: "/meeting" }}
+    />
+    )
+    }
     return (
       <div>
         <Form>

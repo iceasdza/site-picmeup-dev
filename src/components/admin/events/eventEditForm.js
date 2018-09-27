@@ -3,6 +3,8 @@ import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label, Image, Card, Icon } from "semantic-ui-react";
 import "../../../static/Form.css";
 
+import Imagecontrol from "../../../containers/imagerender/imagecontrol"
+
 const optionsTag = [
   { key: 1, text: "สัตว์เลี้ยง", value: "สัตว์เลี้ยง" },
   { key: 2, text: "ท่องเที่ยว", value: "ท่องเที่ยว" },
@@ -20,6 +22,29 @@ const optionsDay = [
   { key: 6, text: "วันเสาร์", value: "sat" },
   { key: 7, text: "วันอาทิตย์", value: "sun" }
 ];
+
+const optionsTime = [
+  { key: 1, text: "05:00", value: "05:00" },
+  { key: 2, text: "06:00", value: "06:00" },
+  { key: 3, text: "07:00", value: "07:00" },
+  { key: 4, text: "08:00", value: "08:00" },
+  { key: 5, text: "09:00", value: "09:00" },
+  { key: 6, text: "10:00", value: "10:00" },
+  { key: 7, text: "11:00", value: "11:00" },
+  { key: 8, text: "12:00", value: "12:00" },
+  { key: 9, text: "13:00", value: "13:00" },
+  { key: 10, text: "14:00", value: "14:00" },
+  { key: 11, text: "15:00", value: "15:00" },
+  { key: 12, text: "16:00", value: "16:00" },
+  { key: 13, text: "17:00", value: "17:00" },
+  { key: 14, text: "18:00", value: "18:00" },
+  { key: 15, text: "19:00", value: "19:00" },
+  { key: 16, text: "20:00", value: "20:00" },
+  { key: 17, text: "21:00", value: "21:00" },
+  { key: 18, text: "22:00", value: "22:00" },
+  { key: 19, text: "23:00", value: "23:00" },
+  { key: 20, text: "24:00", value: "24:00" },
+]
 
 const renderLabel = label => ({
   color: "blue",
@@ -80,7 +105,8 @@ const EventForm = props => {
               require="true"
             />
           </label>
-          <Card.Group itemsPerRow={6}>
+          <Imagecontrol files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
+          {/* <Card.Group itemsPerRow={6}>
           {props.images.map((src, index) => (
             <Card key={index}>
               <div>
@@ -109,7 +135,7 @@ const EventForm = props => {
               <Image src={data} className="imageUploadSize" />
             </Card>
           ))}
-        </Card.Group>
+        </Card.Group> */}
         </Form.Field>
         <div className="Gap">
           <Form.Group>
@@ -130,39 +156,43 @@ const EventForm = props => {
                 maxLength: "โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง"
               }}
             />
-            <Form.Input
-              name="place_open"
-              label="เวลาเปิดทำการ"
-              placeholder="ใส่ตัวเลข 4 ตัว"
-              width={3}
-              required
-              value={props.openTime}
-              onChange={(e, { value }) => props.setField("openTime", value)}
-              errorLabel={<Label color="red" pointing />}
-              validations="isNumeric,isLength:4"
-              validationErrors={{
-                isDefaultRequiredValue: "จำเป็นต้องใส่เวลาเปิด",
-                isNumeric: "รูปแบบของเวลาไม่ถูกต้อง",
-                isLength: "โปรดใส่เวลาให้ถูกต้อง"
-              }}
-            />
-            <Form.Input
-              name="place_close"
-              label="ถึง"
-              placeholder="ใส่ตัวเลข 4 ตัว"
-              width={3}
-              required
-              value={props.closeTime}
-              onChange={(e, { value }) => props.setField("closeTime", value)}
-              errorLabel={<Label color="red" pointing />}
-              validations="isNumeric,isLength:4"
-              validationErrors={{
-                isDefaultRequiredValue: "จำเป็นต้องใส่เวลาปิด",
-                isNumeric: "รูปแบบของเวลาไม่ถูกต้อง",
-                isLength: "โปรดใส่เวลาให้ถูกต้อง"
-              }}
-            />
           </Form.Group>
+          <Form.Group>
+      <div className="Body">
+      <label>เวลาเปิดทำการ</label>
+        <Dropdown                    
+          selection
+          options={optionsTime}
+          placeholder="เวลาเปิดทำการ"
+          renderLabel={renderLabel}
+          require="true"
+          name="place_open"
+          errorLabel={<Label color="red" pointing />}
+          validations={{
+            customValidation: (values, value) => !(!value || value.length < 1)
+          }}
+          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
+          onChange={(e, { value }) => props.setField("openTime", value)}
+        />
+      </div>     
+      <div className="Body">
+      <label>เวลาปิดทำการ</label>
+        <Dropdown                    
+          selection
+          options={optionsTime}
+          placeholder="เวลาปิดทำการ"
+          renderLabel={renderLabel}
+          require="true"
+          name="place_close"
+          errorLabel={<Label color="red" pointing />}
+          validations={{
+            customValidation: (values, value) => !(!value || value.length < 1)
+          }}
+          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
+          onChange={(e, { value }) => props.setField("closeTime", value)}
+        />
+      </div>      
+</Form.Group>
         </div>
         <Form.Group>
           <div className="Radio">

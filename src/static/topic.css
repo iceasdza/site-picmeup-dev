@@ -33,3 +33,19 @@ img{
 .ui.selection.dropdown .menu>.item{
   color: black!important;
 }
+
+blockquote{
+  border-left: 4px solid #ccc;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    padding-left: 16px;
+}
+.ql-size-huge{
+  font-size: 2.5em;
+}
+.ql-size-large {
+  font-size: 1.5em;
+}
+.ql-size-small {
+  font-size: 0.75em;
+}

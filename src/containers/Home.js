@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Card, Image, Button, Divider } from "semantic-ui-react";
+import { Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "../lib/axios";
 import "../static/home.css";
+import "../static/showdata.css";
+import MainInfo from "../components/main/mainInfo"
 class Home extends Component {
   state = {
     placesData: [],
@@ -47,8 +49,7 @@ class Home extends Component {
   render() {
     return (
       <div>
-        <div>
-        <Divider horizontal>SHORT CUT</Divider>
+        <br />
         <Link to={{ pathname: "/addplace" }}>
           <Button primary content="Add place" />
         </Link>
@@ -61,77 +62,13 @@ class Home extends Component {
         <Link to={{ pathname: "/login" }}>
           <Button primary content="Login" />
         </Link>
-        <Divider horizontal>PLACE</Divider>
-        <Card.Group itemsPerRow={4}>
-          {this.state.placesData.map((data, index) => (
-            <Card key={index}>
-              <Image
-               src={data.images[0]} 
-               className="imageHomeSize"
-              />
-              <Card.Content>
-
-              <h3>{data.placeName}</h3>
-                <Link
-                  to={{
-                    pathname: "/placeInfo/",
-                    search:data._id
-                  }}
-                >
-                  <Button primary content="View" />
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/updatePlace",
-                    state: { id: data._id }
-                  }}
-                >
-                  <Button primary content="Edit" />
-                </Link>
-                <Button
-                  color="red"
-                  content="DELETE"
-                  value={index}
-                  onClick={this.deletePlace}
-                />
-              </Card.Content>
-            </Card>
-          ))}
-        </Card.Group>
-        <Divider horizontal>EVENT</Divider>
-        <Card.Group itemsPerRow={4}>
-          {this.state.eventData.map((data, index) => (
-            <Card key={index}>
-              <Image src={data.images[0]} 
-              className="imageHomeSize"/>
-              <Card.Content>
-              <h3>{data.eventName}</h3>
-                <Link
-                  to={{
-                    pathname: "/eventInfo/",
-                    search:data._id
-                  }}
-                >
-                  <Button primary content="View" />
-                </Link>
-                <Link
-                  to={{
-                    pathname: "/updateEvent",
-                    state: { id: data._id }
-                  }}
-                >
-                  <Button primary content="Edit" />
-                </Link>
-                <Button
-                  color="red"
-                  content="DELETE"
-                  value={index}
-                  onClick={this.deleteEvent}
-                />
-              </Card.Content>
-            </Card>
-          ))}
-        </Card.Group>
+        <div>
+          <MainInfo
+            eventData={this.state.eventData}
+            placesData={this.state.placesData}
+            deletePlace={this.deletePlace}
+            deleteEvent={this.deleteEvent}
+          />
         </div>
       </div>
     );

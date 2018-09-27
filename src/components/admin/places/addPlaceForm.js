@@ -1,7 +1,9 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Image, Card, Icon,Divider} from "semantic-ui-react";
+import { Label,Divider} from "semantic-ui-react";
 import "../../../static/Form.css";
+
+import Imagecontrol from "../../../containers/imagerender/imagecontrol"
 
 const optionsTag = [
   { key: 1, text: "สวน", value: "สวน" },
@@ -91,23 +93,8 @@ const Place_Form = props => {
             onChange={e => props.handleSelectImage(e)}
             multiple
           />
-        </label>
-        <Card.Group itemsPerRow={6}>
-          {props.files.map((data, index) => (
-            <Card key={index}>
-              <div>
-                <Icon
-                  circular
-                  inverted
-                  name="remove"
-                  color="red"
-                  onClick={() => props.DeletePhotoUploaded("files", index)}
-                />
-              </div>
-              <Image src={data} className="imageUploadSize" />
-            </Card>
-          ))}
-        </Card.Group>
+        </label>        
+        <Imagecontrol files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
       </Form.Field>
       <div className="Gap">
         <Form.Group>

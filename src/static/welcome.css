@@ -1,5 +1,5 @@
 .ui.secondary.menu{
-    background-color: black!important;
+    background-color: #111!important;
     padding: 10px!important;
 }
 .logoText{
@@ -17,6 +17,11 @@
 }
 .welcomeContent{
     text-align: center;
+    /* background-image: url("./welcome/26115.jpg"); */
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 680px;
 }
 .headerContent{
     font-family: 'Kanit';
@@ -34,10 +39,11 @@
     cursor: pointer;
 }
 .enterSite{
-    margin-top: 10em!important;
+    margin-top: 5em!important;
     font-family: 'Kanit'!important;
     cursor: pointer;
     font-size: 20px!important;
+    color: white;
 }
 
 /* mobile */

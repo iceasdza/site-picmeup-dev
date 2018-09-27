@@ -2,11 +2,13 @@ import React, { Component } from "react";
 import PlaceEdit from "../../../components/admin/places/placeEditForm";
 import { Form } from "formsy-semantic-ui-react";
 import axios from "../../../lib/axios";
+import {  Dimmer, Loader } from "semantic-ui-react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
+import { Redirect } from "react-router-dom";
 import "../../../static/map.css";
 class Home extends Component {
   state = {
@@ -29,7 +31,13 @@ class Home extends Component {
     files: [],
     address: "",
     lat: null,
-    lng: null
+    lng: null,
+    redirect:false,
+    open: false,
+    imageState:true
+  };
+  handleImageLoaded = () => {
+    this.setState({imageState:false})
   };
 
   FeeOption = (field, value) => {
@@ -184,7 +192,7 @@ class Home extends Component {
     || formData.place_tag === undefined){
         return
     }
-
+    this.setState({ open: true });
     const lengthOfFile = document.getElementById("img").files.length;
     //--------no image updated-----------//
     if (lengthOfFile === 0) {
@@ -207,7 +215,7 @@ class Home extends Component {
         lng:this.state.lng
       });
 
-      window.location.replace("/");
+      this.setState({redirect:true})
       return
     }
     //---------add 1 image---------------//
@@ -256,13 +264,24 @@ class Home extends Component {
       })
 
     //reload for test
-    window.location.replace("/")
+    this.setState({redirect:true})
   };
 
   render() {
+    const { redirect,open } = this.state
+    if(redirect){
+    return  (
+      <Redirect
+      to={{ pathname: "/main" }}
+    />
+    )
+    }
     return (
       <div>
         <Form onSubmit={this.UpdatePlace}>
+        <Dimmer active={open} page>
+          <Loader size='massive'><p>รอแปปนึงกำลังอัพโหลดรูป</p></Loader>
+          </Dimmer>
           <PlaceEdit
             placeName={this.state.placeName}
             placeDes={this.state.placeDes}
@@ -284,6 +303,8 @@ class Home extends Component {
             handleSelectImage={this.handleSelectImage}
             DeleteImage={this.DeleteImage}
             renderGoogleMap={this.renderGoogleMap}
+            imageState={this.state.imageState} 
+            handleImageLoaded={this.handleImageLoaded} 
           />
         </Form>
       </div>

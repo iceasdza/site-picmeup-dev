@@ -3,6 +3,8 @@ import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label, Image, Card, Icon, Divider } from "semantic-ui-react";
 import "../../../static/Form.css";
 
+import Imagecontrol from "../../../containers/imagerender/imagecontrol"
+
 const optionsTag = [
   { key: 1, text: "สวน", value: "สวน" },
   { key: 2, text: "ป่า", value: "ป่า" },
@@ -91,7 +93,8 @@ const PlaceEditForm = props => {
             onChange={e => props.handleSelectImage(e)}
           />
         </label>
-        <Card.Group itemsPerRow={6}>
+        <Imagecontrol files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
+        {/* <Card.Group itemsPerRow={6}>
           {props.images.map((src, index) => (
             <Card key={index}>
               <div>
@@ -120,7 +123,7 @@ const PlaceEditForm = props => {
               <Image src={data} className="imageUploadSize" />
             </Card>
           ))}
-        </Card.Group>
+        </Card.Group> */}
       </Form.Field>
       <div className="Gap">
         <Form.Group>

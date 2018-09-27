@@ -16,10 +16,10 @@ import PlaceInfo from '../places/placeInfo'
 import AddEvent from '../admin/events/addEvent'
 import UpdateEvent from '../admin/events/updateEvent'
 import EventInfo from '../events/eventInfo'
-
 export default () => (
   <Switch>
     <Route exact path="/" component={Welcome} />
+    
     <Route exact path="/main" component={Home} />
     <Route exact path="/register" component={Register} />
     <Route exact path="/login" component={Login} />

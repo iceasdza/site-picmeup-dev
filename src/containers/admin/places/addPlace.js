@@ -1,17 +1,15 @@
 import React, { Component } from "react";
 import PlaceForm from "../../../components/admin/places/addPlaceForm";
 import { Form } from "formsy-semantic-ui-react";
+import { Dimmer, Loader, Card, Icon, Image } from "semantic-ui-react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import { Redirect } from "react-router-dom";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
 } from "react-places-autocomplete";
 import "../../../static/map.css";
 import axios from "../../../lib/axios";
-// const style = {
-//   width: "30%",
-//   height: "50%"
-// };
 class AddPlace extends Component {
   state = {
     placeName: "",
@@ -32,7 +30,43 @@ class AddPlace extends Component {
     files: [],
     address: "",
     lat: 13.6525851,
-    lng: 100.49361
+    lng: 100.49361,
+    redirect: false,
+    open: false,
+    imageState:true
+  };
+
+  handleImageLoaded = () => {
+    this.setState({imageState:false})
+  };
+  renderImage = () => {
+    return (
+      <Card.Group itemsPerRow={6}>
+        {this.state.files.map((data, index) => (
+          <Card key={index}>
+            <div>
+              <Icon
+                circular
+                inverted
+                name="remove"
+                color="red"
+                onClick={() => this.DeletePhotoUploaded("files", index)}
+              />
+            </div>
+              <Dimmer active={this.state.imageState}>
+                <Loader >
+                  โหลดดิ้ง
+                </Loader>
+              </Dimmer>
+            <Image
+              onLoad={this.handleImageLoaded}
+              src={data}
+              className="imageUploadSize"
+            />
+          </Card>
+        ))}
+      </Card.Group>
+    );
   };
 
   FeeOption = (field, value) => {
@@ -63,6 +97,7 @@ class AddPlace extends Component {
   };
 
   handleSelectImage = event => {
+    this.setState({imageState:true})
     const files = event.target.files;
     const arr = [];
     for (var x = 0; x < files.length; x++) {
@@ -77,11 +112,15 @@ class AddPlace extends Component {
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
+      this.setState({ open: true });
+      console.log(this.state.open);
       const dataFile = document.getElementById("img").files[0];
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSinglePlace", data);
       this.setState({ images: resp.data });
     } else {
+      this.setState({ open: true });
+      console.log(this.state.open);
       const dataFile = document.getElementById("img").files;
       for (var y = 0; y < dataFile.length; y++) {
         data.append("img", dataFile[y]);
@@ -110,7 +149,6 @@ class AddPlace extends Component {
     ) {
       return;
     }
-
     await axios.post("/api/addplace", {
       placeName: this.state.placeName,
       placeDes: this.state.placeDes,
@@ -122,11 +160,10 @@ class AddPlace extends Component {
       tags: this.state.tags,
       days: this.state.days,
       images: this.state.images,
-      lat:this.state.lat,
-      lng:this.state.lng      
+      lat: this.state.lat,
+      lng: this.state.lng
     });
-    //reload for test
-    // window.location.replace("/")
+    this.setState({ redirect: true });
   };
 
   setField = (field, value) => {
@@ -193,8 +230,8 @@ class AddPlace extends Component {
           )}
         </PlacesAutocomplete>
         <Map
-        className="map"
-        //   style={style}
+          className="map"
+          //   style={style}
           google={this.props.google}
           zoom={18}
           onClick={this.onMapClicked}
@@ -205,15 +242,23 @@ class AddPlace extends Component {
         >
           <Marker position={{ lat: this.state.lat, lng: this.state.lng }} />
         </Map>
-        </div>
+      </div>
     );
   };
-
   render() {
+    const { redirect, open } = this.state;
+    if (redirect) {
+      return <Redirect to={{ pathname: "/main" }} />;
+    }
     return (
       <div>
-        {console.log(this.state.lat, this.state.lng)}
         <Form onSubmit={this.CreatePlace}>
+          <Dimmer active={open} page>
+            <Loader size="massive">
+              <p>รอแปปนึงกำลังอัพโหลดรูป</p>
+            </Loader>
+          </Dimmer>
+
           <PlaceForm
             // passing value
             placeName={this.state.placeName}
@@ -237,6 +282,10 @@ class AddPlace extends Component {
             DeletePhotoUploaded={this.DeletePhotoUploaded}
             handleSelectImage={this.handleSelectImage}
             renderGoogleMap={this.renderGoogleMap}
+            //renderImage={this.renderImage}     
+            imageState={this.state.imageState} 
+            handleImageLoaded={this.handleImageLoaded}     
+            handleSetImageState={this.handleSetImageState}
           />
         </Form>
       </div>
@@ -246,5 +295,5 @@ class AddPlace extends Component {
 
 // export default AddPlace
 export default GoogleApiWrapper({
-    apiKey: "AIzaSyAxyyre9woDQlaPEGTb-Hmqprwjyd2rD88"
-  })(AddPlace);
+  apiKey: "AIzaSyAxyyre9woDQlaPEGTb-Hmqprwjyd2rD88"
+})(AddPlace);
