@@ -35,7 +35,6 @@ class Login extends Component {
       Cookies.set('user',this.state.userName)
       this.setState({redirect:true})
     }else{
-      console.log(this.state.open)
       this.setState({ open: true })
     }
 

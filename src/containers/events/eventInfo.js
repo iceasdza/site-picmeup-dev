@@ -34,7 +34,6 @@ class EventInfo extends Component {
   getData = async () => {
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getEventInfoFromId/" + _id);
-    // console.log(axios)
     const data = resp.data[0];
     this.setState({
       eventName: data.eventName,
@@ -60,7 +59,6 @@ class EventInfo extends Component {
       placeImage: placeData.images[0]
     });
 
-    console.log(this.state);
   };
 
   componentDidMount = () => {

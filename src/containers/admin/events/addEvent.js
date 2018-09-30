@@ -32,7 +32,6 @@ class AddEvent extends Component {
 
   setField = (field, value) => {
     this.setState({ [field]: value });
-    console.log(field + " : " + value);
   };
 
   handleImageLoaded = () => {

@@ -204,9 +204,6 @@ class Main extends Component {
     Cookies.remove("user");
     this.setState({ redirect: true });
   };
-  componentDidUpdate() {
-    console.log('tet')
-  }
   render() {
     let {redirect} = this.state
     if(redirect&&Cookies.get("user")=== undefined){

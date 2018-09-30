@@ -40,7 +40,7 @@ const mainInfo = props => {
                                 />
                             </Card.Content>
                         </Card>
-                    ) : (<p></p>))}
+                    ) : (<p key={index}></p>))}
                 </Card.Group>
             </div>
             <br />
@@ -78,7 +78,7 @@ const mainInfo = props => {
                                 />
                             </Card.Content>
                         </Card>
-                    ) : (<p></p>))}
+                    ) : (<p key={index}></p>))}
                 </Card.Group>
             </div>
             <br />
@@ -157,7 +157,7 @@ const mainInfo = props => {
                                 />
                             </Card.Content>
                         </Card>
-                    ) : (<p></p>))}
+                    ) : (<p key={index}></p>))}
                 </Card.Group>
             </div>
         </div>

@@ -105,7 +105,6 @@ const EventForm = props => {
               require="true"
             />
           </label>
-          {console.log(props.images)}
           <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
           {/* <Card.Group itemsPerRow={6}>
           {props.images.map((src, index) => (

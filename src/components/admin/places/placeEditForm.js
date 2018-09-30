@@ -94,36 +94,6 @@ const PlaceEditForm = props => {
           />
         </label>
         <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
-          {/* <Card.Group itemsPerRow={6}>
-          {props.images.map((src, index) => (
-            <Card key={index}>
-              <div>
-                <Icon
-                  circular
-                  inverted
-                  name="remove"
-                  color="red"
-                  onClick={() => props.DeleteImage(index)}
-                />
-              </div>
-              <Image src={src} className="imageUploadSize" />
-            </Card>
-          ))}
-          {props.files.map((data, index) => (
-            <Card key={index}>
-              <div>
-                <Icon
-                  circular
-                  inverted
-                  name="remove"
-                  color="red"
-                  onClick={() => props.DeletePhotoUploaded("files", index)}
-                />
-              </div>
-              <Image src={data} className="imageUploadSize" />
-            </Card>
-          ))}
-        </Card.Group> */}
       </Form.Field>
       <div className="Gap">
         <Form.Group>

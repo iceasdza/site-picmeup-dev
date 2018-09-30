@@ -88,33 +88,27 @@ class UpdateEvent extends Component {
 
   FeeOption = (field, value) => {
     this.setState({ [field]: value });
-    console.log("fee : ", value);
   };
 
   CarParkingOption = (field, value) => {
     this.setState({ [field]: value });
-    console.log("car parking : " + value);
   };
 
   TagSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.tags);
   };
 
   PlaceSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.PlaceId);
   };
 
   DaysSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.days);
   };
 
   componentDidMount = async () => {
     this.getData();
     this.getPlaceDetail();
-    // console.log(this.state.placesData)
   };
 
   UpdateEvent = async formData => {
@@ -156,7 +150,6 @@ class UpdateEvent extends Component {
     let data = new FormData();
     if (lengthOfFile === 1) {
       this.setState({ open: true });
-      console.log(lengthOfFile);
       const temp = this.state.images;
       const dataFile = document.getElementById("img").files[0];
       data.append("img", dataFile);

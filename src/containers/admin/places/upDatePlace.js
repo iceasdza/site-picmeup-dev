@@ -42,22 +42,18 @@ class Home extends Component {
 
   FeeOption = (field, value) => {
     this.setState({ [field]: value });
-    console.log("fee : ", value);
   };
 
   CarParkingOption = (field, value) => {
     this.setState({ [field]: value });
-    console.log("car parking : " + value);
   };
 
   TagSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.tags);
   };
 
   DaysSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.days);
   };
 
   getData = async () => {

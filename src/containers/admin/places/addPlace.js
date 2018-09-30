@@ -71,7 +71,6 @@ class AddPlace extends Component {
 
   FeeOption = (field, value) => {
     this.setState({ [field]: value });
-    console.log("fee : ", value);
   };
 
   DeletePhotoUploaded = (field, index) => {
@@ -83,17 +82,16 @@ class AddPlace extends Component {
 
   CarParkingOption = (field, value) => {
     this.setState({ [field]: value });
-    console.log("car parking : " + value);
+    
   };
 
   TagSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.tags);
+    
   };
 
   DaysSelected = (field, value) => {
     this.setState({ [field]: value });
-    console.log(this.state.days);
   };
 
   handleSelectImage = event => {
@@ -113,14 +111,12 @@ class AddPlace extends Component {
     let data = new FormData();
     if (lengthOfFile === 1) {
       this.setState({ open: true });
-      console.log(this.state.open);
       const dataFile = document.getElementById("img").files[0];
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSinglePlace", data);
       this.setState({ images: resp.data });
     } else {
       this.setState({ open: true });
-      console.log(this.state.open);
       const dataFile = document.getElementById("img").files;
       for (var y = 0; y < dataFile.length; y++) {
         data.append("img", dataFile[y]);
@@ -168,7 +164,6 @@ class AddPlace extends Component {
 
   setField = (field, value) => {
     this.setState({ [field]: value });
-    console.log(field + " : " + value);
   };
 
   handleChange = address => {

@@ -127,7 +127,6 @@ class Register extends Component {
 
     if(this.state.password!==this.state.rePassword){
       this.setState({rePasswordLabel:''})
-      console.log(this.state.files)
         return
     }
     if(this.state.files.length===0){

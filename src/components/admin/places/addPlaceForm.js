@@ -89,6 +89,7 @@ const Place_Form = props => {
             name="img"
             id="img"
             type="file"
+            accept="image/*"
             style={{ display: "none" }}
             onChange={e => props.handleSelectImage(e)}
             multiple
