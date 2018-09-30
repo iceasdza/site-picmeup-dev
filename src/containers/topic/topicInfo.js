@@ -105,7 +105,6 @@ class TopicInfo extends Component {
   render() {
     return (
       <div>
-        {console.log(this.state)}
         <TopicComponent
           topicName={this.state.topicName}
           content={this.state.content}
