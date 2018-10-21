@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 import axios from "../lib/axios";
 import "../static/home.css";
 import "../static/showdata.css";
-import MainInfo from "../components/main/mainInfo"
+import MainInfo from "../components/main/mainInfo";
+import Cookies from "js-cookie";
+
+const user = Cookies.get("user");
+
 class Home extends Component {
   state = {
     placesData: [],
@@ -46,22 +50,33 @@ class Home extends Component {
     this.getData();
   };
 
+  superUltimateConsolePlanel = () => {
+    if (user === undefined || user !=='admin') {
+      return;
+    } else {
+      return (
+        <div className="container fluid">
+          <br />
+          <h1>THIS IS A SUPER ULTIMATE CONTOL PANEL</h1>
+          <br />
+          <Link to={{ pathname: "/addplace" }}>
+            <Button primary content="Add place" />
+          </Link>
+          <Link to={{ pathname: "/addevent" }}>
+            <Button primary content="Add event" />
+          </Link>
+          <Link to={{ pathname: "/createalbum" }}>
+            <Button primary content="Create album" />
+          </Link>
+        </div>
+      );
+    }
+  };
+
   render() {
     return (
       <div>
-        <br />
-        <Link to={{ pathname: "/addplace" }}>
-          <Button primary content="Add place" />
-        </Link>
-        <Link to={{ pathname: "/addevent" }}>
-          <Button primary content="Add event" />
-        </Link>
-        <Link to={{ pathname: "/register" }}>
-          <Button primary content="Register" />
-        </Link>
-        <Link to={{ pathname: "/login" }}>
-          <Button primary content="Login" />
-        </Link>
+        {this.superUltimateConsolePlanel()}
         <div>
           <MainInfo
             eventData={this.state.eventData}

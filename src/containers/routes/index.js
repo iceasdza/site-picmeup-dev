@@ -4,6 +4,7 @@ import Home from "../Home";
 import Login from "../users/login/login";
 import Register from "../users/register/register";
 import Welcome from "../welcome";
+import CreateAlbum from '../users/album/createAlbum'
 
 import MeetingList from '../topic/topicList'
 import MeeingInfo from '../topic/topicInfo'
@@ -23,6 +24,7 @@ export default () => (
     <Route exact path="/main" component={Home} />
     <Route exact path="/register" component={Register} />
     <Route exact path="/login" component={Login} />
+    <Route exact path="/createalbum" component={CreateAlbum} />
 
     <Route exact path="/meeting" component={MeetingList} />
     <Route exact path="/topic" component={MeeingInfo} />

@@ -5,7 +5,6 @@ const options = [
   { key: "m", text: "Male", value: "male" },
   { key: "f", text: "Female", value: "female" }
 ];
-
 const RegisterForm = props => {
   return (
     <div className="container fluid">
