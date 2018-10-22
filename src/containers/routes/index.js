@@ -10,6 +10,9 @@ import MeetingList from '../topic/topicList'
 import MeeingInfo from '../topic/topicInfo'
 import CreateMeeting from '../topic/createTopic'
 
+import Gallery from '../gallery/gallery'
+import AlbumInfo from '../gallery/albumInfo'
+
 import AddPlace from '../admin/places/addPlace'
 import updatePlace from '../admin/places/upDatePlace'
 import PlaceInfo from '../places/placeInfo'
@@ -17,6 +20,8 @@ import PlaceInfo from '../places/placeInfo'
 import AddEvent from '../admin/events/addEvent'
 import UpdateEvent from '../admin/events/updateEvent'
 import EventInfo from '../events/eventInfo'
+
+import FindByNear from '../users/findByNear/findByNear'
 export default () => (
   <Switch>
     <Route exact path="/" component={Welcome} />
@@ -33,9 +38,14 @@ export default () => (
     <Route exact path="/addPlace" component={AddPlace} />
     <Route exact path="/updatePlace" component={updatePlace} />
     <Route exact path="/placeInfo" component={PlaceInfo} />
+    <Route exact path="/gallery" component={Gallery} />
+    <Route exact path="/gallery/albumInfo/*" component={AlbumInfo} />
 
     <Route exact path="/addevent" component={AddEvent} />
     <Route exact path="/updateEvent" component={UpdateEvent} />
     <Route exact path="/eventInfo" component={EventInfo} />
+
+
+    <Route exact path="/findbynear" component={FindByNear} />
   </Switch>
 );

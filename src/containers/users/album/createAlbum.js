@@ -28,7 +28,8 @@ class CreateAlbum extends Component {
       arr.push(URL.createObjectURL(files[x]));
     }
     this.setState({
-      files: arr
+      files: arr,
+      fileList:files
     });
   };
   handleImageLoaded = () => {
@@ -42,7 +43,7 @@ class CreateAlbum extends Component {
     data.splice(index,1)
     arr.splice(index, 1);
     this.setState({ files: arr });
-    console.log(data)
+    console.log(document.getElementById("img").files)
   };
 
   renderForm = () => {
@@ -104,8 +105,8 @@ class CreateAlbum extends Component {
     }
 
     const resp = await axios.post("/api/addAlbum", {
-      albumName: this.state.placeName,
-      albumDes: this.state.albumDes,
+      albumName: this.state.albumName,
+      albumDes: "mock up des",
       comments: [],
       albumOwner: user,
       images: this.state.images

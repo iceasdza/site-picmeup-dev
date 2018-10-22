@@ -33,6 +33,9 @@ class Main extends Component {
         <NavLink to="/meeting">
           <Menu.Item className="navBarMenu">มีตติ้ง</Menu.Item>
         </NavLink>
+        <NavLink to="/gallery">
+          <Menu.Item className="navBarMenu">แกลอรี่</Menu.Item>
+        </NavLink>
       </Menu.Menu>
     );
   };
@@ -99,6 +102,11 @@ class Main extends Component {
           <NavLink to="/meeting">
           <Menu.Item as="a" >
             <p className="sideMenuMobile">มีตติ้ง</p>
+          </Menu.Item>
+          </NavLink>
+          <NavLink to="/gallery">
+          <Menu.Item as="a" >
+            <p className="sideMenuMobile">แกลอรี่</p>
           </Menu.Item>
           </NavLink>
           <NavLink to="/login">
