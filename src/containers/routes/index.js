@@ -21,6 +21,8 @@ import AddEvent from '../admin/events/addEvent'
 import UpdateEvent from '../admin/events/updateEvent'
 import EventInfo from '../events/eventInfo'
 
+import Profile from '../users/profile/profile'
+
 import FindByNear from '../users/findByNear/findByNear'
 export default () => (
   <Switch>
@@ -29,6 +31,7 @@ export default () => (
     <Route exact path="/main" component={Home} />
     <Route exact path="/register" component={Register} />
     <Route exact path="/login" component={Login} />
+    <Route exact path="/profile" component={Profile} />
     <Route exact path="/createalbum" component={CreateAlbum} />
 
     <Route exact path="/meeting" component={MeetingList} />

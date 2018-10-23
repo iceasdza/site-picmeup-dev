@@ -177,10 +177,12 @@ class Main extends Component {
       tmp = (
         <Menu.Menu position="right" className="navBarMenuRight">
         {this.searchMenuBar()}
+        <NavLink to="/profile">
           <Menu.Item >
             ยินดีต้อนรับคุณ {Cookies.get("user")} &nbsp;&nbsp;&nbsp;&nbsp;
             <Image src={Cookies.get("userAvatar")} avatar />
           </Menu.Item>
+        </NavLink>
           <Menu.Item >
             <p className="rightMenuBar" onClick={this.logout}>
               ลงชื่อออก
