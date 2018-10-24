@@ -24,7 +24,6 @@ class Demo extends React.Component {
             <tr><td>altitude</td><td>{this.props.coords.altitude}</td></tr>
             <tr><td>heading</td><td>{this.props.coords.heading}</td></tr>
             <tr><td>speed</td><td>{this.props.coords.speed}</td></tr>
-            {console.log(this.props.coords)}
           </tbody>
         </table>
         : <div>Getting the location data&hellip; </div>;
