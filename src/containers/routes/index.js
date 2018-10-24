@@ -24,7 +24,7 @@ import EventInfo from '../events/eventInfo'
 
 import Profile from '../users/profile/profile'
 
-import FindByNear from '../users/findByNear/findByNear'
+import FindByNear from '../users/findByNear/findByNearPage'
 export default () => (
   <Switch>
     <Route exact path="/" component={Welcome} />
