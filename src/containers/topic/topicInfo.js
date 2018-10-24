@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
-import { Button, Icon,Card,Image } from "semantic-ui-react";
+import { Button,Card,Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 let user = Cookies.get("user");
 
@@ -18,7 +18,8 @@ class TopicInfo extends Component {
       text: "",
       placeId:"",
       placeName:'',
-      placeImage:''
+      placeImage:'',
+      _id:''
 
     };
   }
@@ -28,6 +29,7 @@ class TopicInfo extends Component {
     const resp = await axios.get("/api/getTopicFromId/" + id);
     const data = resp.data[0];
     this.setState({
+      _id:data._id,
       content: data.content,
       topicName: data.topicName,
       create_at: data.create_date,
@@ -70,9 +72,14 @@ class TopicInfo extends Component {
     let tag = "";
     if (user === this.state.creator) {
       tag = (
-        <Button icon>
-          แก้ไขกระทู้<Icon name="edit" />
-        </Button>
+        <Link
+          to={{
+            pathname: "/editTopic/",
+            search: this.state._id
+          }}
+        >
+          <Button  content="edit" />
+        </Link>
       );
     } else {
       tag = ''

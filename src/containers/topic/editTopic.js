@@ -1,31 +1,31 @@
 import React, { Component } from "react";
-import CreateTopicComponent from "../../components/topic/createTopicComponent";
+import EditTopicComponent from "../../components/topic/editTopicComponent";
 import axios from "../../lib/axios";
 import { Redirect } from "react-router-dom";
-import Cookies from "js-cookie";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label } from "semantic-ui-react";
-import '../../static/topic.css'
-// const renderLabel = label => ({
-//   color: "blue",
-//   content: `${label.text}`,
-//   icon: "check"
-// });
-
+import "../../static/topic.css";
 class CreateTopic extends Component {
   constructor(props) {
     super(props);
     this.state = {
       text: "",
-      topicName: "",
       placesName: [],
-      placeId:'',
-      redirect:false
+      placeId: "",
+      redirect: false,
+      content: null,
+      topicName: "",
+      create_at: null,
+      creator: "",
+      comments: [],
+      placeName:'',
+      placeImage:'',
+      _id:''
     };
   }
 
   handleChange = value => {
-    this.setState({ text: value });
+    this.setState({ content: value });
   };
 
   handleName = value => {
@@ -37,9 +37,22 @@ class CreateTopic extends Component {
   };
 
   getData = async () => {
+    const id = this.props.location.search.replace("?", "");
+    const resp = await axios.get("/api/getTopicFromId/" + id);
+    const data = resp.data[0];
+    this.setState({
+      _id: data._id,
+      content: data.content,
+      topicName: data.topicName,
+      create_at: data.create_date,
+      comments: data.comments,
+      creator: data.creator,
+      placeId: data.placeId
+    });
+
     const placesName = [];
-    const resp = await axios.get("/api/getPlaceInfo");
-    resp.data.map((data, index) =>
+    const resp2 = await axios.get("/api/getPlaceInfo");
+    resp2.data.map((data, index) =>
       placesName.push({ key: index + 1, text: data.placeName, value: data._id })
     );
     this.setState({ placesName: placesName });
@@ -53,6 +66,7 @@ class CreateTopic extends Component {
         placeholder="สถานที่จัดงาน"
         require="true"
         name="place_select"
+        value={this.state.placeId}
         onChange={(e, { value }) => this.PlaceSelected("PlaceId", value)}
         errorLabel={<Label color="red" pointing />}
         validations={{
@@ -68,38 +82,35 @@ class CreateTopic extends Component {
   };
 
   handleSubmit = async () => {
-    if(this.state.placeId ===  ''){
-      return
-    }else{
-      await axios.post("/api/createTopic", {
+    if (this.state.placeId === "") {
+      return;
+    } else {
+      await axios.put("/api/updateTopic/"+this.state._id, {
         topicName: this.state.topicName,
-        content: this.state.text,
-        creator: Cookies.get("user"),
-        placeId:this.state.placeId
+        content: this.state.content,
+        placeId: this.state.placeId
       });
-      this.setState({redirect:true})
+      this.setState({ redirect: true });
     }
-
   };
 
   render() {
-    const { redirect } = this.state
-    if(redirect){
-    return  (
-      <Redirect
-      to={{ pathname: "/meeting" }}
-    />
-    )
+    const { redirect } = this.state;
+    if (redirect) {
+      return <Redirect to={{ pathname: "/meeting" }} />;
     }
     return (
       <div>
         <Form>
-          <CreateTopicComponent
+            {console.log(this.state.content)}
+          <EditTopicComponent
             renderPlaceList={this.renderPlaceList}
             text={this.state.text}
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
             handleName={this.handleName}
+            topicName={this.state.topicName}
+            content={this.state.content}
           />
         </Form>
       </div>

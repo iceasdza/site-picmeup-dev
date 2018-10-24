@@ -9,6 +9,7 @@ import CreateAlbum from '../users/album/createAlbum'
 import MeetingList from '../topic/topicList'
 import MeeingInfo from '../topic/topicInfo'
 import CreateMeeting from '../topic/createTopic'
+import EditMeeting from '../topic/editTopic'
 
 import Gallery from '../gallery/gallery'
 import AlbumInfo from '../gallery/albumInfo'
@@ -37,6 +38,8 @@ export default () => (
     <Route exact path="/meeting" component={MeetingList} />
     <Route exact path="/topic" component={MeeingInfo} />
     <Route exact path="/createtopic" component={CreateMeeting} />
+    <Route exact path="/editTopic" component={EditMeeting} />
+    
 
     <Route exact path="/addPlace" component={AddPlace} />
     <Route exact path="/updatePlace" component={updatePlace} />
