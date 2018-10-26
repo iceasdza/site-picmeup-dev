@@ -42,11 +42,12 @@ class Main extends Component {
 
   searchMenuBar = () => {
     return (
-      <Menu.Menu position="left">
-        <Menu.Item>
-          <Input inverted transparent icon="search" placeholder="ค้นหา..." />
-        </Menu.Item>
-      </Menu.Menu>
+      <p></p>
+      // <Menu.Menu position="left">
+      //   <Menu.Item className="searchBar">
+      //     <Input inverted transparent icon="search" placeholder="ค้นหา..." />
+      //   </Menu.Item>
+      // </Menu.Menu>
     );
   };
   searchMenuBarMobile = () => {
@@ -116,7 +117,7 @@ class Main extends Component {
           </NavLink>
           <NavLink to="/register">
           <Menu.Item as="a" >
-            <p className="sideMenuMobile">เข้าสู่ระบบ</p>
+            <p className="sideMenuMobile">สมัครสมาชิก</p>
           </Menu.Item>
           </NavLink>
         </Sidebar>
@@ -155,6 +156,11 @@ class Main extends Component {
           <Menu.Item as="a" >
             <p className="sideMenuMobile">มีตติ้ง</p>
           </Menu.Item>
+          <NavLink to="/findbynear">
+          <Menu.Item as="a" >
+            <p className="sideMenuMobile">หาคนใกล้เคียง</p>
+          </Menu.Item>
+          </NavLink>
           </NavLink>
           <Menu.Item as="a" >
             <p className="sideMenuMobile">
@@ -176,9 +182,16 @@ class Main extends Component {
     if (Cookies.get("user") !== undefined) {
       tmp = (
         <Menu.Menu position="right" className="navBarMenuRight">
-        {this.searchMenuBar()}
-        <NavLink to="/profile">
+        {/* {this.searchMenuBar()} */}
+        <NavLink to="/findbynear">
           <Menu.Item >
+          <p className="rightMenuBar">
+              หาคนใกล้เคียง
+            </p>
+          </Menu.Item>
+        </NavLink>
+        <NavLink to="/profile">
+          <Menu.Item className="welcome">
             ยินดีต้อนรับคุณ {Cookies.get("user")} &nbsp;&nbsp;&nbsp;&nbsp;
             <Image src={Cookies.get("userAvatar")} avatar />
           </Menu.Item>
