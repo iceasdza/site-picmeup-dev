@@ -1,74 +1,28 @@
 import React from "react"
-import {  Message } from "semantic-ui-react";
+import { Message } from "semantic-ui-react";
 
 
 const ProfileForm = props => {
     return (
         <div>
             <Message>
-                <Message.Header>Changes in Service</Message.Header>
-                <p>
-                    We updated our privacy policy here to better service our customers. We recommend reviewing the
-                    changes.
-    </p>
+                <Message.Header>ชื่อ</Message.Header>
+                <p>{props.firstName}</p>
+                <Message.Header>นามสกุล</Message.Header>
+                <p>{props.lastName}</p>
+                <Message.Header>เพศ</Message.Header>
+                <p>{props.gender}</p>
+                <Message.Header>E-Mail</Message.Header>
+                <p>{props.email}</p>
+                <Message.Header>ชื่อผู้ใช้</Message.Header>
+                <p>{props.userName}</p>
+                <Message.Header>เบอร์โทรศัพท์</Message.Header>
+                <p>{props.tel}</p>
+                <Message.Header>ตำเเหน่ง</Message.Header>
+                <p></p>
+                <Message.Header>สถานะใช้งาน</Message.Header>
+                <p></p>
             </Message>
-            {/* <Form.Group widths="equal">
-                <Form.Input
-                    fluid
-                    name="fistName"
-                    label="ชื่อ"
-                    placeholder="First name"                  
-                />
-                <Form.Input
-                    fluid
-                    name="lastName"
-                    label="นามสกุล"
-                    placeholder="Last name"
-                    required                    
-                />
-            </Form.Group>
-            <Form.Input
-                    fluid
-                    name="fistGender"
-                    label="เพศ"               
-                    placeholder="Gender"
-                    required                   
-                />
-            <Form.Input
-                fluid
-                name="email"
-                label="อีเมล"
-                placeholder="email"
-                required               
-            />           
-            <br />
-            <br />    
-            <Form.Input
-                fluid
-                name="userName"
-                label={"ชื่อผู้ใช้"}
-                placeholder="username"
-                required
-            />
-            <Form.Input
-                fluid
-                name="password"
-                label="พาสเวิร์ด"
-                placeholder="Password"
-                type="password"
-                required
-            />            
-            <Form.Input
-                fluid
-                name="tel"
-                label="เบอร์โทร"
-                placeholder="tel"
-                required
-            />
-            <br />
-            <br />
-            <br />
-            <Button>Submit</Button> */}
         </div>
     )
 }
