@@ -76,7 +76,8 @@ class Demo extends React.Component {
         data.longitude
       );
       arr.push({ distance: resp, userName: data.userName });
-    });
+    }
+    )
     this.setState({
       userDistanceInfo: arr
     });
