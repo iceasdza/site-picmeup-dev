@@ -47,3 +47,22 @@
 .welcome{
     margin-top: 3px!important;
 }
+.ui.segments:not(.horizontal)>.segment:first-child{
+    padding: 0px;
+}
+.searchBar767{
+    margin-top: 0.7em!important;
+    height: 2.5em;
+    width: 30em;
+    margin-left: 1em;
+}
+.searchBarMore767{
+    margin-top: 0.7em!important;
+    height: 2.5em;
+    width: 55em;
+    margin-left: 1em;
+}
+.ui.segments{
+    border:none!important;
+    box-shadow: none!important;
+}
