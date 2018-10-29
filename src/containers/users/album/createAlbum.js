@@ -20,30 +20,55 @@ class CreateAlbum extends Component {
   setField = (field, value) => {
     this.setState({ [field]: value });
   };
-  handleSelectImage = event => {
+
+  handleSelectImage = async() => {
+
     this.setState({ imageState: true });
-    const files = event.target.files;
-    const arr = [];
-    for (var x = 0; x < files.length; x++) {
-      arr.push(URL.createObjectURL(files[x]));
+    const lengthOfFile = this.state.fileList.length;
+    let data = new FormData();
+    if (lengthOfFile === 1) {
+      this.setState({ open: true });
+      const dataFile = document.getElementById("img").files[0];
+      data.append("img", dataFile);
+      const resp = await axios.post("/api/uploadSingleImage", data);
+      console.log(resp.status)
+      if(resp.status === 200){
+        this.setState({ images: resp.data });
+      }else{
+        console.log(resp.status)
+      }
+
+
+    } else {
+      this.setState({ open: true });
+      const dataFile = document.getElementById("img").files;
+      for (var y = 0; y < dataFile.length; y++) {
+        data.append("img", dataFile[y]);
+      }
+      const resp = await axios.post("/api/uploadMultipleImage", data);
+      console.log(resp.status)
+      if(resp.status === 200){
+        data = [];
+        for (let x = 0; x < resp.data.length; x++) {
+          data.push(resp.data[x].location);
+        }
+        this.setState({ images: data });
+      }else{
+        console.log(resp.status)
+      }
     }
-    this.setState({
-      files: arr,
-      fileList:files
-    });
+
+
   };
+
   handleImageLoaded = () => {
     this.setState({ imageState: false });
   };
 
   DeletePhotoUploaded = (field, index) => {
-    const data = Array.from(document.getElementById("img").files)
-    let arr = [];
-    arr = this.state.files;
-    data.splice(index,1)
-    arr.splice(index, 1);
-    this.setState({ files: arr });
-    console.log(document.getElementById("img").files)
+    let image = this.state.images
+    image.splice(index, 1);
+    this.setState({ image: image });
   };
 
   renderForm = () => {
@@ -81,29 +106,14 @@ class CreateAlbum extends Component {
     );
   };
 
-  handleSunmit = async () => {
-    const lengthOfFile = document.getElementById("img").files.length;
-    let data = new FormData();
-    if (lengthOfFile === 1) {
-      this.setState({ open: true });
-      const dataFile = document.getElementById("img").files[0];
-      data.append("img", dataFile);
-      const resp = await axios.post("/api/uploadSingleImage", data);
-      this.setState({ images: resp.data });
-    } else {
-      this.setState({ open: true });
-      const dataFile = document.getElementById("img").files;
-      for (var y = 0; y < dataFile.length; y++) {
-        data.append("img", dataFile[y]);
-      }
-      const resp = await axios.post("/api/uploadMultipleImage", data);
-      data = [];
-      for (let x = 0; x < resp.data.length; x++) {
-        data.push(resp.data[x].location);
-      }
-      this.setState({ images: data });
-    }
+  FileList = () =>{
 
+  }
+
+  handleSunmit = async () => {
+    if(this.state.images.length === 0){
+      return ;
+    }
     const resp = await axios.post("/api/addAlbum", {
       albumName: this.state.albumName,
       albumDes: "mock up des",
@@ -122,7 +132,7 @@ class CreateAlbum extends Component {
           renderForm={this.renderForm()}
           handleImageLoaded={this.handleImageLoaded}
           imageState={this.state.imageState}
-          files={this.state.files}
+          files={this.state.images}
           DeletePhotoUploaded={this.DeletePhotoUploaded}
         />
         <br />
