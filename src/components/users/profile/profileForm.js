@@ -1,10 +1,10 @@
 import React from "react"
 import { Message } from "semantic-ui-react";
-
+import {NavLink } from "react-router-dom";
 
 const ProfileForm = props => {
     return (
-        <div>
+        <div>             
             <Message>
                 <Message.Header>ชื่อ</Message.Header>
                 <p>{props.firstName}</p>
@@ -22,7 +22,13 @@ const ProfileForm = props => {
                 <p></p>
                 <Message.Header>สถานะใช้งาน</Message.Header>
                 <p></p>
+                <NavLink to="/editprofile">
+          
+        <Message.Header>เเก้ไขโปรไฟล์</Message.Header></NavLink>
             </Message>
+            
+       
+              
         </div>
     )
 }
