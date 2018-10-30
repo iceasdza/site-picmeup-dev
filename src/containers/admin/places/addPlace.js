@@ -74,10 +74,9 @@ class AddPlace extends Component {
   };
 
   DeletePhotoUploaded = (field, index) => {
-    let arr = [];
-    arr = this.state.files;
-    arr.splice(index, 1);
-    this.setState({ files: arr });
+    let image = this.state.images
+    image.splice(index, 1);
+    this.setState({ image: image });
   };
 
   CarParkingOption = (field, value) => {
@@ -94,29 +93,19 @@ class AddPlace extends Component {
     this.setState({ [field]: value });
   };
 
-  handleSelectImage = event => {
-    this.setState({imageState:true})
-    const files = event.target.files;
-    const arr = [];
-    for (var x = 0; x < files.length; x++) {
-      arr.push(URL.createObjectURL(files[x]));
-    }
-    this.setState({
-      files: arr
-    });
-  };
-
-  CreatePlace = async formData => {
+  handleSelectImage = async() => {
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
-      this.setState({ open: true });
+      // this.setState({ open: true });
       const dataFile = document.getElementById("img").files[0];
+      const arr = []
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSinglePlace", data);
-      this.setState({ images: resp.data });
+      arr.push(resp.data)
+      this.setState({ images: arr });
     } else {
-      this.setState({ open: true });
+      // this.setState({ open: true });
       const dataFile = document.getElementById("img").files;
       for (var y = 0; y < dataFile.length; y++) {
         data.append("img", dataFile[y]);
@@ -128,7 +117,10 @@ class AddPlace extends Component {
       }
       this.setState({ images: data });
     }
+  };
 
+  CreatePlace = async formData => {
+    const lengthOfFile = this.state.images.length
     if (lengthOfFile === 0) {
       this.setState({ message: "กรุณาเลือกรูปภาพ" });
       return;
@@ -145,7 +137,8 @@ class AddPlace extends Component {
     ) {
       return;
     }
-    await axios.post("/api/addplace", {
+    this.setState({ open: true });
+    const resp = await axios.post("/api/addplace", {
       placeName: this.state.placeName,
       placeDes: this.state.placeDes,
       tel: this.state.tel,
@@ -159,7 +152,9 @@ class AddPlace extends Component {
       lat: this.state.lat,
       lng: this.state.lng
     });
-    this.setState({ redirect: true });
+    if(resp.status === 200){
+      this.setState({ redirect: true });
+    }
   };
 
   setField = (field, value) => {
@@ -266,7 +261,7 @@ class AddPlace extends Component {
             days={this.state.days}
             tags={this.state.tags}
             message={this.state.message}
-            files={this.state.files}
+            files={this.state.images}
             // pass method
             TagSelected={this.TagSelected}
             FeeOption={this.FeeOption}

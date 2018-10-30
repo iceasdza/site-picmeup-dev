@@ -4,11 +4,13 @@ import { Link } from "react-router-dom";
 import TopicsListComponent from "../../components/topic/topicsListComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
+import LoadingScreen from '../screen/loading'
 class TopicList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      topicsData: []
+      topicsData: [],
+      open:true
     };
   }
 
@@ -18,7 +20,9 @@ class TopicList extends Component {
 
   getAllTopics = async () => {
     const resp = await axios.get("/api/getalltopics");
-    this.setState({ topicsData: resp.data });
+    if(resp.status === 200 ){
+      this.setState({ topicsData: resp.data,open:false });
+    }
   };
 
   renderTopicList = () => {
@@ -52,6 +56,9 @@ class TopicList extends Component {
   render() {
     return (
       <div>
+        <LoadingScreen
+        open={this.state.open}
+        />
         <TopicsListComponent
           topics={this.state.topicsData}
           CreateTopicButton={this.CreateTopicButton}

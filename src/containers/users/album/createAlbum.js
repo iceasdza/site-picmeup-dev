@@ -14,7 +14,6 @@ class CreateAlbum extends Component {
       files: [],
       imageState: true,
       images: [],
-      fileList : []
     };
   }
   setField = (field, value) => {
@@ -22,22 +21,22 @@ class CreateAlbum extends Component {
   };
 
   handleSelectImage = async() => {
-
     this.setState({ imageState: true });
-    const lengthOfFile = this.state.fileList.length;
+    const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
+      const arr = []
       this.setState({ open: true });
       const dataFile = document.getElementById("img").files[0];
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSingleImage", data);
-      console.log(resp.status)
+      arr.push(resp.data)
+      console.log(arr)
       if(resp.status === 200){
-        this.setState({ images: resp.data });
+        this.setState({ images: arr });
       }else{
         console.log(resp.status)
       }
-
 
     } else {
       this.setState({ open: true });
@@ -46,7 +45,6 @@ class CreateAlbum extends Component {
         data.append("img", dataFile[y]);
       }
       const resp = await axios.post("/api/uploadMultipleImage", data);
-      console.log(resp.status)
       if(resp.status === 200){
         data = [];
         for (let x = 0; x < resp.data.length; x++) {
@@ -106,9 +104,6 @@ class CreateAlbum extends Component {
     );
   };
 
-  FileList = () =>{
-
-  }
 
   handleSunmit = async () => {
     if(this.state.images.length === 0){

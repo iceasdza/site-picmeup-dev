@@ -70,15 +70,37 @@ class UpdateEvent extends Component {
     arr.splice(index, 1);
     this.setState({ files: arr });
   };
-  handleSelectImage = event => {
-    const files = event.target.files;
-    const arr = [];
-    for (var x = 0; x < files.length; x++) {
-      arr.push(URL.createObjectURL(files[x]));
+  handleSelectImage = async() => {
+    const lengthOfFile = document.getElementById("img").files.length;
+    let data = new FormData();
+    if (lengthOfFile === 1) {
+    const temp = this.state.images;
+      const dataFile = document.getElementById("img").files[0];
+      const arr = []
+      data.append("img", dataFile);
+      const resp = await axios.post("/api/uploadSingleEvent", data);
+      arr.push(resp.data)
+      temp.push(resp.data);
+      this.setState({ 
+        // files: arr,
+        images: temp });
+    } else {
+      // this.setState({ open: true });
+      const dataFile = document.getElementById("img").files;
+      for (var y = 0; y < dataFile.length; y++) {
+        data.append("img", dataFile[y]);
+      }
+      const resp = await axios.post("/api/uploadMultiplePlaces", data);
+      const temp = this.state.images;
+      data = [];
+      for (let x = 0; x < resp.data.length; x++) {
+        data.push(resp.data[x].location);
+        temp.push(resp.data[x].location);
+      }
+      this.setState({ 
+        // files: data,
+        images: temp });
     }
-    this.setState({
-      files: arr
-    });
   };
 
   getPlaceDetail = async () => {
@@ -129,7 +151,7 @@ class UpdateEvent extends Component {
     //--------no image updated-----------//
     if (lengthOfFile === 0) {
       this.setState({ open: true });
-      await axios.put("/api/UpdateEventFromId/" + this.state.id, {
+      const resp = await axios.put("/api/UpdateEventFromId/" + this.state.id, {
         eventName: this.state.eventName,
         eventDes: this.state.eventDes,
         tel: this.state.tel,
@@ -142,36 +164,13 @@ class UpdateEvent extends Component {
         images: this.state.images,
         PlaceId: this.state.PlaceId
       });
-
-      this.setState({redirect:true})
-    }
-
-    //---------add 1 image---------------//
-    let data = new FormData();
-    if (lengthOfFile === 1) {
-      this.setState({ open: true });
-      const temp = this.state.images;
-      const dataFile = document.getElementById("img").files[0];
-      data.append("img", dataFile);
-      const resp = await axios.post("/api/uploadSingleEvent", data);
-      temp.push(resp.data);
-      this.setState({ images: temp });
-    }
-    //---------add > 1 image---------------//
-    else if (lengthOfFile > 1) {
-      this.setState({ open: true });
-      const dataFile = document.getElementById("img").files;
-      for (var y = 0; y < dataFile.length; y++) {
-        data.append("img", dataFile[y]);
+      if(resp.status === 200){
+        this.setState({ redirect: true });
       }
-      const resp = await axios.post("/api/uploadMultiplePlaces", data);
-      const temp = this.state.images;
-      for (let x = 0; x < resp.data.length; x++) {
-        temp.push(resp.data[x].location);
-      }
-      this.setState({ images: temp });
     }
-    await axios.put("/api/UpdateEventFromId/" + this.state.id, {
+
+   
+    const resp = await axios.put("/api/UpdateEventFromId/" + this.state.id, {
       eventName: this.state.eventName,
       eventDes: this.state.eventDes,
       tel: this.state.tel,
@@ -186,8 +185,9 @@ class UpdateEvent extends Component {
       FileName: this.state.FileName,
       images: this.state.images
     });
-
-    this.setState({redirect:true})
+    if(resp.status === 200){
+      this.setState({ redirect: true });
+    }
   };
 
   render() {
