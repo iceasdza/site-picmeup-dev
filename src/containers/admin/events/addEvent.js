@@ -4,7 +4,7 @@ import { Form } from "formsy-semantic-ui-react";
 import EventForm from "../../../components/admin/events/eventAddForm";
 import axios from "../../../lib/axios";
 import { Redirect } from "react-router-dom";
-import {  Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader } from "semantic-ui-react";
 class AddEvent extends Component {
   state = {
     eventName: "",
@@ -27,7 +27,7 @@ class AddEvent extends Component {
     files: [],
     redirect: false,
     open: false,
-    imageState:true
+    imageState: true
   };
 
   setField = (field, value) => {
@@ -35,25 +35,41 @@ class AddEvent extends Component {
   };
 
   handleImageLoaded = () => {
-    this.setState({imageState:false})
+    this.setState({ imageState: false });
   };
 
-  handleSelectImage = event => {
-    const files = event.target.files;
-    const arr = [];
-    for (var x = 0; x < files.length; x++) {
-      arr.push(URL.createObjectURL(files[x]));
+  handleSelectImage = async() => {
+    const lengthOfFile = document.getElementById("img").files.length;
+    let data = new FormData();
+    if (lengthOfFile === 1) {
+      // this.setState({ open: true });
+      const arr = []
+      const dataFile = document.getElementById("img").files[0];
+      data.append("img", dataFile);
+      const resp = await axios.post("/api/uploadSingleEvent", data);
+      arr.push(resp.data)
+      this.setState({ images: arr });
+    
+    } else {
+      // this.setState({ open: true });
+      const dataFile = document.getElementById("img").files;
+      for (var y = 0; y < dataFile.length; y++) {
+        data.append("img", dataFile[y]);
+      }
+      const resp = await axios.post("/api/uploadMultipleEvents", data);
+      data = [];
+      for (let x = 0; x < resp.data.length; x++) {
+        data.push(resp.data[x].location);
+      }
+      console.log(data)
+      this.setState({ images: data });
     }
-    this.setState({
-      files: arr
-    });
   };
 
   DeletePhotoUploaded = (field, index) => {
-    let arr = [];
-    arr = this.state.files;
-    arr.splice(index, 1);
-    this.setState({ files: arr });
+    let image = this.state.images
+    image.splice(index, 1);
+    this.setState({ image: image });
   };
 
   getPlaceDetail = async () => {
@@ -88,6 +104,7 @@ class AddEvent extends Component {
   onValidSubmit = formData => alert(JSON.stringify(formData));
 
   CreateEvent = async formData => {
+    const lengthOfFile = document.getElementById("img").files.length;
     if (
       formData.place_name === "" ||
       formData.place_desc === "" ||
@@ -100,35 +117,12 @@ class AddEvent extends Component {
     ) {
       return;
     }
-
-    const lengthOfFile = document.getElementById("img").files.length;
-    let data = new FormData();
-    if (lengthOfFile === 1) {
-      this.setState({ open: true });
-      const dataFile = document.getElementById("img").files[0];
-      data.append("img", dataFile);
-      const resp = await axios.post("/api/uploadSingleEvent", data);
-      this.setState({ images: resp.data });
-    } else {
-      this.setState({ open: true });
-      const dataFile = document.getElementById("img").files;
-      for (var y = 0; y < dataFile.length; y++) {
-        data.append("img", dataFile[y]);
-      }
-      const resp = await axios.post("/api/uploadMultipleEvents", data);
-      data = [];
-      for (let x = 0; x < resp.data.length; x++) {
-        data.push(resp.data[x].location);
-      }
-      this.setState({ images: data });
-    }
-
     if (lengthOfFile === 0) {
       this.setState({ message: "กรุณาเลือกรูปภาพ" });
       return;
     }
-
-    await axios.post("/api/addevent", {
+    this.setState({ open: true });
+   const resp  = await axios.post("/api/addevent", {
       eventName: this.state.eventName,
       eventDes: this.state.eventDes,
       tel: this.state.tel,
@@ -139,27 +133,28 @@ class AddEvent extends Component {
       tags: this.state.tags,
       days: this.state.days,
       PlaceId: this.state.PlaceId,
-      images:this.state.images
+      images: this.state.images
     });
 
     // reload for test
-    this.setState({redirect:true})
+    if(resp.status === 200){
+      this.setState({ redirect: true });
+    }
+    
   };
 
   render() {
-    const { redirect ,open} = this.state
-    if(redirect){
-    return  (
-      <Redirect
-      to={{ pathname: "/main" }}
-    />
-    )
+    const { redirect, open } = this.state;
+    if (redirect) {
+      return <Redirect to={{ pathname: "/main" }} />;
     }
     return (
       <div>
         <Form onSubmit={this.CreateEvent}>
-        <Dimmer active={open} page>
-          <Loader size='massive'><p>รอแปปนึงกำลังอัพโหลดรูป</p></Loader>
+          <Dimmer active={open} page>
+            <Loader size="massive">
+              <p>รอแปปนึงกำลังอัพโหลดรูป</p>
+            </Loader>
           </Dimmer>
           <EventForm
             eventName={this.state.eventName}
@@ -171,10 +166,9 @@ class AddEvent extends Component {
             carParking={this.state.carParking}
             days={this.state.days}
             tags={this.state.tags}
-            FileList={this.state.FileList}
             placesData={this.state.placesData}
             message={this.state.message}
-            files={this.state.files}
+            files={this.state.images}
             setField={this.setField}
             GetFileUploaded={this.GetFileUploaded}
             DeletePhotoUploaded={this.DeletePhotoUploaded}
@@ -184,7 +178,7 @@ class AddEvent extends Component {
             DaysSelected={this.DaysSelected}
             PlaceSelected={this.PlaceSelected}
             handleSelectImage={this.handleSelectImage}
-            imageState={this.state.imageState} 
+            imageState={this.state.imageState}
             handleImageLoaded={this.handleImageLoaded}
           />
         </Form>

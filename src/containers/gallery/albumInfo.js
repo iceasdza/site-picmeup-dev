@@ -1,19 +1,24 @@
 import React, { Component } from "react";
 import AlbumInfoComponent from "../../components/gallery/albumInfoComponent";
-import { Card ,Comment,Form,Divider} from "semantic-ui-react";
+import { Card, Comment, Form, Divider } from "semantic-ui-react";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
+import LoadingScreen from '../screen/loading'
+import swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+import '../../static/image.css'
 export default class AlbumInfo extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      albumOwner:'',
-      albumName:'',
-      albumDes:'',
-      comments:[],
-      createDate:'',
-      images:[],
-      text:''
+      albumOwner: "",
+      albumName: "",
+      albumDes: "",
+      comments: [],
+      createDate: "",
+      images: [],
+      text: "",
+      open: true
     };
   }
 
@@ -21,17 +26,31 @@ export default class AlbumInfo extends Component {
     this.setState({ text: e });
   };
 
+  modalImage = (src) =>{
+    return(
+      swal({
+        imageUrl: src,
+        width:'100%',
+        imageWidth:100,
+        // animation: true
+      })
+    )
+  }
+
   getData = async () => {
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getAlbumFromId/" + _id);
-    this.setState({ 
-      albumOwner: resp.data[0].albumOwner,
-      albumName:resp.data[0].albumName,
-      albumDes:resp.data[0].albumDes,
-      comments:resp.data[0].comments,
-      createDate:resp.data[0].createDate,
-      images:resp.data[0].images
-    });
+    if (resp.status === 200) {
+      this.setState({
+        albumOwner: resp.data[0].albumOwner,
+        albumName: resp.data[0].albumName,
+        albumDes: resp.data[0].albumDes,
+        comments: resp.data[0].comments,
+        createDate: resp.data[0].createDate,
+        images: resp.data[0].images,
+        open: false
+      });
+    }
   };
 
   componentDidMount() {
@@ -56,15 +75,17 @@ export default class AlbumInfo extends Component {
     this.getData();
   };
 
-  renderImages = () =>{
-    return(
+  renderImages = () => {
+    return (
       <Card.Group itemsPerRow={6}>
-      {this.state.images.map((data,index)=>(
-        <Card raised image={data} key={index}/>
-      ))}
-    </Card.Group>
-    )
-  }
+        {this.state.images.map((data, index) => (
+          <Card raised image={data} key={index} 
+          onClick={()=>this.modalImage(data)}
+          />
+        ))}
+      </Card.Group>
+    );
+  };
 
   renderComment = () => {
     return (
@@ -104,10 +125,11 @@ export default class AlbumInfo extends Component {
   render() {
     return (
       <div className="container fluid">
-      <AlbumInfoComponent
-      renderImages={this.renderImages}
-      renderComment={this.renderComment}
-      />
+        <LoadingScreen open={this.state.open} />
+        <AlbumInfoComponent
+          renderImages={this.renderImages}
+          renderComment={this.renderComment}
+        />
       </div>
     );
   }

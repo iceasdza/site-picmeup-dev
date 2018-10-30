@@ -5,7 +5,7 @@ import { Image, Input, Icon, Sidebar, Segment } from "semantic-ui-react";
 import Routing from "./routes";
 import Cookies from "js-cookie";
 import { NavLink } from "react-router-dom";
-
+import 'sweetalert2/src/sweetalert2.scss'
 class Main extends Component {
   constructor(props) {
     super(props);
@@ -314,15 +314,15 @@ class Main extends Component {
 
 
         {/* iPad */}
-        <Responsive as={Segment} minWidth={768} maxWidth={1024}>
+        {/* <Responsive as={Segment} minWidth={768} maxWidth={1024}>
         <Menu secondary>
             {this.hamburgerMenu()}
             {this.searchMenuBarMobile()}
           </Menu>
           {this.sidebarMenu()}
-        </Responsive>
+        </Responsive> */}
 
-        <Responsive as={Segment} minWidth={0} maxWidth={767}>
+        <Responsive as={Segment} minWidth={0} maxWidth={1024}>
           <Menu secondary>
             {this.hamburgerMenu()}
             {this.searchMenuBarMobile()}

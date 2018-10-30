@@ -7,7 +7,7 @@ import {
   Grid
 } from "semantic-ui-react";
 import "../../static/home.css";
-import Modal from "react-responsive-modal";
+// import Modal from "react-responsive-modal";
 import { Link } from "react-router-dom";
 
 const EventInfo = props => (
@@ -18,19 +18,19 @@ const EventInfo = props => (
           <Card key={index} className="showCard">
             <Image
               src={src}
-              onClick={() => props.onOpenModal(index)}
+              onClick={()=>props.modalImage(src)}
               className="showImage"
             />
           </Card>
         ))}
-        <Modal
+        {/* <Modal
           open={props.open}
           onClose={props.onCloseModal}
           center
           animationDuration={500}
         >
           <Image src={props.images[props.index]} />
-        </Modal>
+        </Modal> */}
       </Card.Group>
     </div>
     <Grid>
