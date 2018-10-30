@@ -3,17 +3,22 @@ import GalleryComponent from "../../components/gallery/galleryComponent";
 import { Card, Image } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import axios from "../../lib/axios";
+import LoadingScreen from '../screen/loading'
+
 export default class Gallery extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      albums: []
+      albums: [],
+      open:true
     };
   }
 
   getData = async () => {
     const resp = await axios.get("/api/getAlbums");
-    this.setState({ albums: resp.data });
+    if(resp.status=== 200){
+      this.setState({ albums: resp.data,open:false });
+    }
   };
 
   renderGalleryList = () => {
@@ -51,6 +56,9 @@ export default class Gallery extends Component {
   render() {
     return (
       <div className="container fluid">
+      <LoadingScreen
+      open={this.state.open}
+      />
         <GalleryComponent renderGalleryList={this.renderGalleryList} />
       </div>
     );

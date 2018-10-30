@@ -6,6 +6,10 @@ import Cookies from "js-cookie";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import "../../static/map.css";
 import axios from "../../lib/axios";
+import LoadingScreen from '../screen/loading'
+import swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+import '../../static/image.css'
 
 class PlaceInfo extends Component {
   constructor(props) {
@@ -26,35 +30,50 @@ class PlaceInfo extends Component {
       },
       images: [],
       id: "",
-      open: false,
       index: null,
       comments: [],
       text: "",
       lat:'',
-      lng:''
+      lng:'',
+      open:true
     };
+  }
+
+  modalImage = (src) =>{
+    return(
+      swal({
+        imageUrl: src,
+        width:'100%',
+        imageWidth:100,
+        // animation: true
+      })
+    )
   }
 
 
   getData = async () => {
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getPlaceInfoFromId/" + _id);
-    const data = resp.data[0];
-    this.setState({
-      placeName: data.placeName,
-      placeDes: data.placeDes,
-      tel: data.tel,
-      openTime: data.openTime,
-      closeTime: data.closeTime,
-      fee: data.fee,
-      carParking: data.carParking,
-      days: data.days,
-      tags: data.tags,
-      images: data.images,
-      comments: data.comments,
-      lat:data.lat,
-      lng:data.lng
-    });
+    if(resp.status ===200){
+      const data = resp.data[0];
+      this.setState({
+        placeName: data.placeName,
+        placeDes: data.placeDes,
+        tel: data.tel,
+        openTime: data.openTime,
+        closeTime: data.closeTime,
+        fee: data.fee,
+        carParking: data.carParking,
+        days: data.days,
+        tags: data.tags,
+        images: data.images,
+        comments: data.comments,
+        lat:data.lat,
+        lng:data.lng,
+        open:false
+      });
+  
+    }
   };
 
   renderMap =()=>{
@@ -148,9 +167,13 @@ class PlaceInfo extends Component {
   render = () => {
     return (
       <div>
+        <LoadingScreen
+        open={this.state.open}
+        />
         <PlaceDetail
           placeName={this.state.placeName}
           placeDes={this.state.placeDes}
+          modalImage = {this.modalImage}
           tel={this.state.tel}
           openTime={this.state.openTime}
           closeTime={this.state.closeTime}

@@ -7,6 +7,7 @@ import "../static/home.css";
 import "../static/showdata.css";
 import MainInfo from "../components/main/mainInfo";
 import Cookies from "js-cookie";
+import LoadingScreen from '../containers/screen/loading'
 
 const user = Cookies.get("user");
 
@@ -14,15 +15,17 @@ class Home extends Component {
   state = {
     placesData: [],
     eventData: [],
-    open: false,
+    open: true,
     targetId: "",
-    FileName: []
+    FileName: [],
   };
 
   getData = async () => {
     const places = await axios.get("/api/getPlaceInfo");
     const events = await axios.get("/api/GetEventInfo");
-    this.setState({ placesData: places.data, eventData: events.data });
+    if(places.status === 200 && events.status === 200){
+      this.setState({ placesData: places.data, eventData: events.data ,open:false});
+    }
   };
 
   componentDidMount = async () => {
@@ -51,7 +54,7 @@ class Home extends Component {
   };
 
   superUltimateConsolePlanel = () => {
-    if (user === undefined || user !=='admin') {
+    if (user === undefined || user !== "admin") {
       return;
     } else {
       return (
@@ -76,6 +79,9 @@ class Home extends Component {
   render() {
     return (
       <div>
+        <LoadingScreen 
+        open = {this.state.open}
+        />
         {this.superUltimateConsolePlanel()}
         <div>
           <MainInfo

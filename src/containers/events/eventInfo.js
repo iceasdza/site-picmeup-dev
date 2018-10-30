@@ -4,7 +4,10 @@ import { Divider, Form, Comment } from "semantic-ui-react";
 import Cookies from "js-cookie";
 import EventDetail from "../../components/events/eventInfo";
 import axios from "../../lib/axios";
-
+import swal from 'sweetalert2'
+import 'sweetalert2/src/sweetalert2.scss'
+import '../../static/image.css'
+import LoadingScreen from '../screen/loading'
 class EventInfo extends Component {
   state = {
     eventName: "",
@@ -25,39 +28,58 @@ class EventInfo extends Component {
     placeId: "",
     placeImage: "",
     placeName: "",
-    open: false,
+    open: true,
     index: null,
     comments: [],
     text:''
   };
 
+  modalImage = (src) =>{
+    return(
+      swal({
+        imageUrl: src,
+        width:'100%',
+        imageWidth:100,
+        // animation: true
+      })
+    )
+  }
+
   getData = async () => {
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getEventInfoFromId/" + _id);
-    const data = resp.data[0];
-    this.setState({
-      eventName: data.eventName,
-      eventDes: data.eventDes,
-      tel: data.tel,
-      openTime: data.openTime,
-      closeTime: data.closeTime,
-      fee: data.fee,
-      carParking: data.carParking,
-      days: data.days,
-      tags: data.tags,
-      FileList: data.FileList,
-      placeId: data.PlaceId,
-      images: data.images,
-      comments: data.comments,
-    });
-    const place = await axios.get(
-      "/api/getPlaceInfoFromId/" + this.state.placeId
-    );
-    const placeData = place.data[0];
-    this.setState({
-      placeName: placeData.placeName,
-      placeImage: placeData.images[0]
-    });
+    if(resp.status ===200){
+      const data = resp.data[0];
+      this.setState({
+        eventName: data.eventName,
+        eventDes: data.eventDes,
+        tel: data.tel,
+        openTime: data.openTime,
+        closeTime: data.closeTime,
+        fee: data.fee,
+        carParking: data.carParking,
+        days: data.days,
+        tags: data.tags,
+        FileList: data.FileList,
+        placeId: data.PlaceId,
+        images: data.images,
+        comments: data.comments,
+      });
+      const place = await axios.get(
+        "/api/getPlaceInfoFromId/" + this.state.placeId
+      );
+      if(place.status ===200){
+        const placeData = place.data[0];
+        this.setState({
+          placeName: placeData.placeName,
+          placeImage: placeData.images[0],
+          open:false
+        });
+    
+      }
+
+    }
+
 
   };
 
@@ -98,6 +120,9 @@ class EventInfo extends Component {
   renderComment = () =>{
       return (
           <div className="container fluid">
+          <LoadingScreen
+          open={this.state.open}
+          />
         <Divider horizontal>Comments</Divider>
         <Form onSubmit={this.handleSubmitComment}>
           <Form.TextArea
@@ -134,6 +159,7 @@ class EventInfo extends Component {
     return (
       <div>
         <EventDetail
+        modalImage={this.modalImage}
           eventName={this.state.eventName}
           eventDes={this.state.eventDes}
           tel={this.state.tel}
