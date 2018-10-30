@@ -23,6 +23,7 @@ import UpdateEvent from '../admin/events/updateEvent'
 import EventInfo from '../events/eventInfo'
 
 import Profile from '../users/profile/profile'
+import EditProfile from '../users/profile/editprofile'
 
 import FindByNear from '../users/findByNear/findByNearPage'
 export default () => (
@@ -33,6 +34,7 @@ export default () => (
     <Route exact path="/register" component={Register} />
     <Route exact path="/login" component={Login} />
     <Route exact path="/profile" component={Profile} />
+    <Route exact path="/editprofile" component={EditProfile} />
     <Route exact path="/createalbum" component={CreateAlbum} />
 
     <Route exact path="/meeting" component={MeetingList} />
