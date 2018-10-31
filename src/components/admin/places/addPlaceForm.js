@@ -6,13 +6,13 @@ import "../../../static/Form.css";
 import Imagecontrol from "../../../containers/imagerender/imagecontrol";
 
 const optionsDay = [
-  { key: 1, text: "วันจันทร์", value: "mon" },
-  { key: 2, text: "วันอังคาร", value: "tue" },
-  { key: 3, text: "วันพุธ", value: "wed" },
-  { key: 4, text: "วันพฤหัสบดี", value: "thu" },
-  { key: 5, text: "วันศุกร์", value: "fri" },
-  { key: 6, text: "วันเสาร์", value: "sat" },
-  { key: 7, text: "วันอาทิตย์", value: "sun" }
+  { key: 1, text: "วันจันทร์", value: "จันทร์" },
+  { key: 2, text: "วันอังคาร", value: "อังคาร" },
+  { key: 3, text: "วันพุธ", value: "พุธ" },
+  { key: 4, text: "วันพฤหัสบดี", value: "พฤหัสบดี" },
+  { key: 5, text: "วันศุกร์", value: "ศุกร์" },
+  { key: 6, text: "วันเสาร์", value: "เสาว์" },
+  { key: 7, text: "วันอาทิตย์", value: "อาทิตย์" }
 ];
 
 const optionsTime = [
@@ -127,11 +127,25 @@ const Place_Form = props => {
               checked={props.fee === "yes"}
               onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
+            {props.fee === 'yes' ? (
+              <Form.TextArea
+                name="feePrice"
+                label="ค่าเข้าชม"
+                placeholder="ค่าเข้าชม"
+                width={14}
+                value={props.feePrice}
+                onChange={(e, { value }) => props.FeeOption("feePrice", value)
+              }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องขนาดลานจอดรถ" }}
+              />
+            ) : <p />}
             <Form.Radio
               label="ไม่มี"
               name="fee"
-              value="no"
-              checked={props.fee === "no"}
+              value="-"
+              checked={props.fee === "-"}
               onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
           </Form.Group>
@@ -148,11 +162,41 @@ const Place_Form = props => {
                 props.CarParkingOption("carParking", value)
               }
             />
+            {props.carParking === 'yes' ? (
+              <Form.TextArea
+                name="parking_size"
+                label="ขนาดลานจอดรถ"
+                placeholder="ขนาดลานจอดรถ"
+                width={14}
+                value={props.carParkSize}
+                onChange={(e, { value }) =>
+                props.CarParkingOption("carParkSize", value)
+              }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องขนาดลานจอดรถ" }}
+              />
+            ) : <p />}
+            {props.carParking === 'yes' ? (
+              <Form.TextArea
+                name="parking_price"
+                label="ค่าบริการ"
+                placeholder="ค่าบริการ"
+                width={14}
+                value={props.carParkPrice}
+                onChange={(e, { value }) =>
+                props.CarParkingOption("carParkPrice", value)
+              }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่ค่าบริการ" }}
+              />
+            ) : <p />}
             <Form.Radio
               label="ไม่มี"
               name="parking"
-              value="no"
-              checked={props.carParking === "no"}
+              value="-"
+              checked={props.carParking === "-"}
               onChange={(e, { value }) =>
                 props.CarParkingOption("carParking", value)
               }
@@ -160,6 +204,7 @@ const Place_Form = props => {
           </Form.Group>
         </div>
       </Form.Group>
+                  
       <label>วันที่เปิดทำการ</label>
       <div className="Body">
         <Dropdown

@@ -19,8 +19,16 @@
 
  .topoicHeader{
     font-family: 'Kanit'!important;
-    font-size: 25px!important
+    font-size: 25px!important;
  }
+
+ .topoicMainHeader{
+    font-family: 'Kanit'!important;
+    font-size: 25px!important;
+    text-align: center!important;  
+ }
+
+ 
 
  .topoicData{
     font-family: 'Kanit'!important;

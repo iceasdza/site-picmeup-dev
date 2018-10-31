@@ -21,7 +21,10 @@ class PlaceInfo extends Component {
       openTime: "",
       closeTime: "",
       fee: "no",
+      feePrice:0,
       carParking: "yes",
+      carParkSize:0,
+      carParkPrice:0,
       days: [],
       tags: [],
       map: {
@@ -63,7 +66,10 @@ class PlaceInfo extends Component {
         openTime: data.openTime,
         closeTime: data.closeTime,
         fee: data.fee,
+        feePrice:data.feePrice,
         carParking: data.carParking,
+        carParkSize: data.carParkSize,
+        carParkPrice: data.carParkPrice,
         days: data.days,
         tags: data.tags,
         images: data.images,
@@ -132,7 +138,7 @@ class PlaceInfo extends Component {
   renderComment = () => {
     return (
       <div className="container fluid">
-        <Divider horizontal>Comments</Divider>
+        <Divider horizontal>ความคิดเห็น</Divider>
         <Form onSubmit={this.handleSubmitComment}>
           <Form.TextArea
             label="เขียนควาคิดเห็น"
@@ -164,6 +170,23 @@ class PlaceInfo extends Component {
     );
   };
 
+  setDayOpen=()=>{
+    let setDay=''
+    switch(this.state.days.length) {
+      case 7:
+          return setDay ='ทุกวัน'
+          break;
+          case 1:
+          return setDay = this.state.days[0]
+          break;
+          default:
+          let dayOne = this.state.days[0]
+          let last = this.state.days.length
+          let lastDay = this.state.days[last-1]
+        return setDay = dayOne +' - '+lastDay
+  }
+  }
+
   render = () => {
     return (
       <div>
@@ -178,8 +201,11 @@ class PlaceInfo extends Component {
           openTime={this.state.openTime}
           closeTime={this.state.closeTime}
           fee={this.state.fee}
+          feePrice={this.state.feePrice}
           carParking={this.state.carParking}
-          days={this.state.days}
+          parkingPrice={this.state.carParkPrice}
+          parkingSize={this.state.carParkSize}
+          days={this.setDayOpen()}
           tags={this.state.tags}
           images={this.state.images}
           index={this.state.index}

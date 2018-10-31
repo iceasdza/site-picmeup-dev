@@ -18,7 +18,10 @@ class AddPlace extends Component {
     openTime: "",
     closeTime: "",
     fee: "no",
+    feePrice:0,
     carParking: "yes",
+    carParkSize:0,
+    carParkPrice:0,
     days: [],
     tags: [],
     map: {
@@ -169,7 +172,10 @@ class AddPlace extends Component {
       openTime: this.state.openTime,
       closeTime: this.state.closeTime,
       fee: this.state.fee,
+      feePrice: this.state.feePrice,
       carParking: this.state.carParking,
+      carParkSize: this.state.carParkSize,
+      carParkPrice:this.state.carParkPrice,
       tags: this.state.tags,
       days: this.state.days,
       images: this.state.images,
@@ -282,7 +288,10 @@ class AddPlace extends Component {
             openTime={this.state.openTime}
             closeTime={this.state.closeTime}
             fee={this.state.fee}
+            feePrice={this.state.feePrice}
             carParking={this.state.carParking}
+            carParkSize={this.state.carParkSize}
+            carParkPrice={this.state.carParkPrice}
             days={this.state.days}
             tags={this.state.tags}
             message={this.state.message}
