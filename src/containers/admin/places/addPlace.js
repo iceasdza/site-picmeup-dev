@@ -34,11 +34,14 @@ class AddPlace extends Component {
     redirect: false,
     open: false,
     imageState:true,
-    tagsData:[]
+    tagsData:[],
+    activitiesData:[],
+    activities:[]
   };
 
   componentDidMount(){
     this.getTagDetail()
+    this.getActivityDetail()
   }
 
   handleImageLoaded = () => {
@@ -51,6 +54,15 @@ class AddPlace extends Component {
       arr.push({ key: index+1, text: data.tagName, value: data.tagName })
     ))
     this.setState({tagsData:arr})
+  }
+
+  getActivityDetail = async () =>{
+    const arr = []
+    const resp = await axios.get("/api/getAllActivity");
+    resp.data.map((data,index)=>(
+      arr.push({ key: index+1, text: data.activityName, value: data.activityName })
+    ))
+    this.setState({activitiesData:arr})
   }
   renderImage = () => {
     return (
@@ -99,7 +111,6 @@ class AddPlace extends Component {
 
   TagSelected = (field, value) => {
     this.setState({ [field]: value });
-    
   };
 
   DaysSelected = (field, value) => {
@@ -163,7 +174,8 @@ class AddPlace extends Component {
       days: this.state.days,
       images: this.state.images,
       lat: this.state.lat,
-      lng: this.state.lng
+      lng: this.state.lng,
+      activities:this.state.activities
     });
     if(resp.status === 200){
       this.setState({ redirect: true });
@@ -290,6 +302,7 @@ class AddPlace extends Component {
             handleImageLoaded={this.handleImageLoaded}     
             handleSetImageState={this.handleSetImageState}
             tagsData={this.state.tagsData}
+            activitiesData={this.state.activitiesData}
           />
         </Form>
       </div>

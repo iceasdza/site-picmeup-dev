@@ -35,8 +35,19 @@ class Home extends Component {
     redirect:false,
     open: false,
     imageState:true,
-    tagsData:[]
+    tagsData:[],
+    activitiesData:[],
+    activities:[]
   };
+
+  getActivityDetail = async () =>{
+    const arr = []
+    const resp = await axios.get("/api/getAllActivity");
+    resp.data.map((data,index)=>(
+      arr.push({ key: index+1, text: data.activityName, value: data.activityName })
+    ))
+    this.setState({activitiesData:arr})
+  }
 
   getTagDetail = async () =>{
     const arr = []
@@ -84,7 +95,8 @@ class Home extends Component {
       id: _id,
       images: data.images,
       lat:data.lat,
-      lng:data.lng
+      lng:data.lng,
+      activities:data.activities
     });
   };
 
@@ -214,6 +226,7 @@ class Home extends Component {
   componentDidMount = () => {
     this.getData();
     this.getTagDetail()
+    this.getActivityDetail()
   };
 
   UpdatePlace = async formData => {
@@ -239,6 +252,7 @@ class Home extends Component {
         days: this.state.days,
         FileList: this.state.FileList,
         editor: "Patis editor",
+        activities:this.state.activities,
         images: this.state.images,
         lat:this.state.lat,
         lng:this.state.lng
@@ -261,6 +275,7 @@ class Home extends Component {
         FileList: this.state.FileList,
         editor: "Patis editor",
         images:this.state.images,
+        activities:this.state.activities,
         lat:this.state.lat,
         lng:this.state.lng
       })
@@ -309,6 +324,7 @@ class Home extends Component {
             handleImageLoaded={this.handleImageLoaded} 
             DeletePhotoUploaded={this.DeletePhotoUploaded}
             tagsData={this.state.tagsData}
+            activitiesData={this.state.activitiesData}
           />
         </Form>
       </div>

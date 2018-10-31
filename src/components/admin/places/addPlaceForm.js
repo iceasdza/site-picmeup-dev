@@ -1,11 +1,9 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label,Divider} from "semantic-ui-react";
+import { Label, Divider } from "semantic-ui-react";
 import "../../../static/Form.css";
 
-import Imagecontrol from "../../../containers/imagerender/imagecontrol"
-
-
+import Imagecontrol from "../../../containers/imagerender/imagecontrol";
 
 const optionsDay = [
   { key: 1, text: "วันจันทร์", value: "mon" },
@@ -37,8 +35,8 @@ const optionsTime = [
   { key: 17, text: "21:00", value: "21:00" },
   { key: 18, text: "22:00", value: "22:00" },
   { key: 19, text: "23:00", value: "23:00" },
-  { key: 20, text: "24:00", value: "24:00" },
-]
+  { key: 20, text: "24:00", value: "24:00" }
+];
 
 const renderLabel = label => ({
   color: "blue",
@@ -76,8 +74,7 @@ const Place_Form = props => {
       />
       <Form.Field>
         <label>
-          อัพโหลดรูปภาพสถานที่{" "}
-          <h3 style={{ color: "red" }}>{props.message}</h3>
+          อัพโหลดรูปภาพสถานที่ <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
         <label className="custom-file-upload">
           <p className="Color">อัพโหลดรูปภาพ</p>
@@ -90,8 +87,13 @@ const Place_Form = props => {
             onChange={e => props.handleSelectImage(e)}
             multiple
           />
-        </label>        
-        <Imagecontrol files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
+        </label>
+        <Imagecontrol
+          files={props.files}
+          DeletePhotoUploaded={props.DeletePhotoUploaded}
+          imageState={props.imageState}
+          handleImageLoaded={props.handleImageLoaded}
+        />
       </Form.Field>
       <div className="Gap">
         <Form.Group>
@@ -154,7 +156,7 @@ const Place_Form = props => {
               onChange={(e, { value }) =>
                 props.CarParkingOption("carParking", value)
               }
-            />            
+            />
           </Form.Group>
         </div>
       </Form.Group>
@@ -176,42 +178,42 @@ const Place_Form = props => {
           onChange={(e, { value }) => props.DaysSelected("days", value)}
         />
       </div>
-<Form.Group>
-      <div className="Body">
-      <label>เวลาเปิดทำการ</label>
-        <Dropdown                    
-          selection
-          options={optionsTime}
-          placeholder="เวลาเปิดทำการ"
-          renderLabel={renderLabel}
-          require="true"
-          name="place_open"
-          errorLabel={<Label color="red" pointing />}
-          validations={{
-            customValidation: (values, value) => !(!value || value.length < 1)
-          }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
-          onChange={(e, { value }) => props.setField("openTime", value)}
-        />
-      </div>     
-      <div className="Body">
-      <label>เวลาปิดทำการ</label>
-        <Dropdown                    
-          selection
-          options={optionsTime}
-          placeholder="เวลาปิดทำการ"
-          renderLabel={renderLabel}
-          require="true"
-          name="place_close"
-          errorLabel={<Label color="red" pointing />}
-          validations={{
-            customValidation: (values, value) => !(!value || value.length < 1)
-          }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
-          onChange={(e, { value }) => props.setField("closeTime", value)}
-        />
-      </div>      
-</Form.Group>
+      <Form.Group>
+        <div className="Body">
+          <label>เวลาเปิดทำการ</label>
+          <Dropdown
+            selection
+            options={optionsTime}
+            placeholder="เวลาเปิดทำการ"
+            renderLabel={renderLabel}
+            require="true"
+            name="place_open"
+            errorLabel={<Label color="red" pointing />}
+            validations={{
+              customValidation: (values, value) => !(!value || value.length < 1)
+            }}
+            validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
+            onChange={(e, { value }) => props.setField("openTime", value)}
+          />
+        </div>
+        <div className="Body">
+          <label>เวลาปิดทำการ</label>
+          <Dropdown
+            selection
+            options={optionsTime}
+            placeholder="เวลาปิดทำการ"
+            renderLabel={renderLabel}
+            require="true"
+            name="place_close"
+            errorLabel={<Label color="red" pointing />}
+            validations={{
+              customValidation: (values, value) => !(!value || value.length < 1)
+            }}
+            validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
+            onChange={(e, { value }) => props.setField("closeTime", value)}
+          />
+        </div>
+      </Form.Group>
       <label>แท็กประเภทสถานที่</label>
       <div className="Body">
         <Dropdown
@@ -232,12 +234,34 @@ const Place_Form = props => {
           onChange={(e, { value }) => props.TagSelected("tags", value)}
         />
       </div>
+
+      <label>กิจกรรม</label>
+      <div className="Body">
+        <Dropdown
+          multiple
+          selection
+          options={props.activitiesData}
+          placeholder="กิจกรรม"
+          renderLabel={renderLabel}
+          require="true"
+          name="place_activity"
+          errorLabel={<Label color="red" pointing />}
+          validations={{
+            customValidation: (values, value) => !(!value || value.length < 1)
+          }}
+          validationErrors={{
+            customValidation: "ต้องเลือกแท็กอย่างน้อย 1 กิจกรรม"
+          }}
+          onChange={(e, { value }) => props.TagSelected("activities", value)}
+        />
+      </div>
+
       <p>แผนที่</p>
       {props.renderGoogleMap()}
       <div>
-        <Form.Button floated="right" size="big" style={{zIndex:'4'}}>
+        <Form.Button floated="right" size="big" style={{ zIndex: "4" }}>
           สร้างสถานที่
-          </Form.Button>
+        </Form.Button>
       </div>
     </div>
   );

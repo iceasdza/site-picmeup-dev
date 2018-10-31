@@ -11,6 +11,59 @@ const mainInfo = props => {
       <div>
         <Divider horizontal>
           {" "}
+          <p className="headers">ไป{props.activeActivity}ที่ไหนดี</p>
+        </Divider>
+        <Card.Group itemsPerRow={4} centered className="showframe">
+          {props.recomendPlace.map(
+            (data, index) =>
+              index < 10 ? (
+                <Card key={index} className="showcard">
+                  <Image src={data.images[0]} className="showimage" />
+                  <Card.Content>
+                    <Link
+                      to={{
+                        pathname: "/placeInfo/",
+                        search: data._id
+                      }}
+                    >
+                      <h3 className="showhotname">{data.placeName}</h3>
+                      <p className='description'>{data.placeDes}</p>
+                    </Link>
+                    {user === 'admin' ? (
+                      <div>
+                        {" "}
+                        <Link
+                      to={{
+                        pathname: "/updatePlace",
+                        state: { id: data._id }
+                      }}
+                    >
+                      <Button primary content="Edit" />
+                    </Link>
+                    <Button
+                      color="red"
+                      content="DELETE"
+                      value={index}
+                      onClick={props.deletePlace}
+                    />
+                      </div>
+                    ) : (
+                      <p></p>
+                    )}
+                  </Card.Content>
+                </Card>
+              ) : (
+                <p key={index} />
+              )
+          )}
+        </Card.Group>
+      </div>
+
+{/* =================================================end recomend=================================================== */}
+
+      <div>
+        <Divider horizontal>
+          {" "}
           <p className="headers">อีเว้นท์</p>
         </Divider>
         <Card.Group itemsPerRow={3} centered className="showhotframe">

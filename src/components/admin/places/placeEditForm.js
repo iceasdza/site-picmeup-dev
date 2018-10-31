@@ -213,6 +213,28 @@ const PlaceEditForm = props => {
           onChange={(e, { value }) => props.TagSelected("tags", value)}
         />
       </div>
+
+                  <label>กิจกรรม</label>
+                  {console.log(this.props)}
+      <div className="Body">
+        <Dropdown
+          multiple
+          selection
+          options={props.activitiesData}
+          placeholder="กิจกรรม"
+          renderLabel={renderLabel}
+          require="true"
+          name="place_activity"
+          errorLabel={<Label color="red" pointing />}
+          validations={{
+            customValidation: (values, value) => !(!value || value.length < 1)
+          }}
+          validationErrors={{
+            customValidation: "ต้องเลือกแท็กอย่างน้อย 1 กิจกรรม"
+          }}
+          onChange={(e, { value }) => props.TagSelected("activities", value)}
+        />
+      </div>
       <p>แผนที่</p>
       {props.renderGoogleMap()}
       <div>

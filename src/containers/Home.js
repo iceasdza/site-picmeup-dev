@@ -10,6 +10,7 @@ import Cookies from "js-cookie";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label, Input } from "semantic-ui-react";
 import LoadingScreen from "../containers/screen/loading";
+import { Accordion, Icon } from "semantic-ui-react";
 
 const user = Cookies.get("user");
 class Home extends Component {
@@ -20,9 +21,20 @@ class Home extends Component {
     targetId: "",
     FileName: [],
     tagName: "",
-    tagsData: [],
-    activeTag: "",
-    newTag:''
+    activitiesData: [],
+    activeActivity: "",
+    newActivity: "",
+    recomendPlace: [],
+    activityName: "",
+    activeIndex: 0
+  };
+
+  handleClick = (e, titleProps) => {
+    const { index } = titleProps;
+    const { activeIndex } = this.state;
+    const newIndex = activeIndex === index ? -1 : index;
+
+    this.setState({ activeIndex: newIndex });
   };
 
   getData = async () => {
@@ -39,19 +51,41 @@ class Home extends Component {
 
   componentDidMount = async () => {
     this.getData();
-    this.getTagDetail();
+    const resp = await this.getActivityDetail();
+    if (resp) {
+      this.getPlaceFromActivity();
+    }
   };
-  getTagDetail = async () => {
+
+  getPlaceFromActivity = async () => {
+    const resp = await axios.get(
+      "/api/getPlaceFromActivity/" + this.state.activeActivity
+    );
+    console.log(resp.data);
+    if (resp.status === 200) {
+      this.setState({
+        recomendPlace: resp.data,
+        open: false
+      });
+    }
+  };
+
+  getActivityDetail = async () => {
     const arr = [];
-    const resp = await axios.get("/api/getAllTags");
+    const resp = await axios.get("/api/getAllActivity");
     resp.data.map((data, index) => {
-      if (data.tagStatus === true) {
-        this.setState({ activeTag: data.tagName });
+      if (data.status === true) {
+        this.setState({ activeActivity: data.activityName });
       } else {
-        arr.push({ key: index + 1, text: data.tagName, value: data.tagName });
+        arr.push({
+          key: index + 1,
+          text: data.activityName,
+          value: data.activityName
+        });
       }
     });
-    this.setState({ tagsData: arr });
+    this.setState({ activitiesData: arr });
+    return true;
   };
 
   deletePlace = async event => {
@@ -78,6 +112,15 @@ class Home extends Component {
   handleChage = e => {
     this.setState({ tagName: e });
   };
+  handleChageActivetyValue = e => {
+    this.setState({ activityName: e });
+  };
+  handleAddActivity = async () => {
+    await axios.post("/api/addActivity", {
+      activityName: this.state.activityName
+    });
+    this.setState({ activityName: "" });
+  };
 
   handleAddTag = async () => {
     await axios.post("/api/addTag", {
@@ -86,19 +129,21 @@ class Home extends Component {
     this.setState({ tagName: "" });
   };
 
-  handleChageTagActive= async() =>{
-    const newActive = this.state.newTag
-    const resp = await axios.put('/api/updateActiveTag',{
-      oldTag : this.state.activeTag,
-      newTag : this.state.newTag
-    })
-    if(resp.status ===200){
-      this.getTagDetail()
-      this.setState({activeTag:newActive,newTag:' '})
+  handleChageTagActive = async () => {
+    const newActivity = this.state.newActivity;
+    const activeActivity = this.state.activeActivity;
+    console.log(newActivity, activeActivity);
+    const resp = await axios.put("/api/updateActivity", {
+      oldTag: this.state.activeActivity,
+      newTag: this.state.newActivity
+    });
+    if (resp.status === 200) {
+      this.getActivityDetail();
+      this.setState({ activeActivity: newActivity, newActivity: " " });
     }
-  }
+  };
   TagSelected = (field, value) => {
-    this.setState({ newTag: value });
+    this.setState({ newActivity: value });
   };
 
   superUltimateConsolePlanel = () => {
@@ -110,7 +155,17 @@ class Home extends Component {
           <br />
           <h1>THIS IS A SUPER ULTIMATE CONTOL PANEL</h1>
           <br />
-          <Link to={{ pathname: "/addplace" }}>
+          <Accordion>
+            <Accordion.Title
+              active={this.state.activeIndex === 0}
+              index={0}
+              onClick={this.handleClick}
+            >
+              <Icon name="dropdown" />
+              create content
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 0}>
+            <Link to={{ pathname: "/addplace" }}>
             <Button primary content="Add place" />
           </Link>
           <Link to={{ pathname: "/addevent" }}>
@@ -119,8 +174,18 @@ class Home extends Component {
           <Link to={{ pathname: "/createalbum" }}>
             <Button primary content="Create album" />
           </Link>
-          <div>
-            <br />
+            </Accordion.Content>
+
+            <Accordion.Title
+              active={this.state.activeIndex === 1}
+              index={1}
+              onClick={this.handleClick}
+            >
+              <Icon name="dropdown" />
+              Tag Manage
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 1}>
+              <p>
             <Form onSubmit={this.handleAddTag}>
               <Form.Field required>
                 <label>add tag</label>
@@ -131,30 +196,65 @@ class Home extends Component {
                   onChange={e => this.handleChage(e.target.value)}
                 />
                 <br />
+                <br />
                 <Form.Button content="Submit" />
               </Form.Field>
             </Form>
+              </p>
+            </Accordion.Content>
 
-            <Form onSubmit={this.handleChageTagActive}>
-            <h1> {this.state.activeTag}</h1>
-              <Dropdown
-                selection
-                options={this.state.tagsData}
-                placeholder="แท็ก"
-                require="true"
-                name="place_open"
-                errorLabel={<Label color="red" pointing />}
-                value={this.state.newTag}
-                validations={{
-                  customValidation: (values, value) =>
-                    !(!value || value.length < 1)
-                }}
-                validationErrors={{ customValidation: "เลือกแท็ก" }}
-                onChange={(e, { value }) => this.TagSelected("newTag", value)}
-              />
-              <Form.Button content='Submit' />
-            </Form>
-          </div>
+            <Accordion.Title
+              active={this.state.activeIndex === 2}
+              index={2}
+              onClick={this.handleClick}
+            >
+              <Icon name="dropdown" />
+              Activity Mange
+            </Accordion.Title>
+            <Accordion.Content active={this.state.activeIndex === 2}>
+            <div>
+
+
+<br />
+<Form onSubmit={this.handleAddActivity}>
+  <Form.Field required>
+    <label>add activity</label>
+    <Input
+      require="true"
+      placeholder="Activity name"
+      value={this.state.activityName}
+      onChange={e => this.handleChageActivetyValue(e.target.value)}
+    />
+    <br />
+    <br />
+    <Form.Button content="Submit" />
+  </Form.Field>
+</Form>
+
+<Form onSubmit={this.handleChageTagActive}>
+  <br />
+  <h1>Active tag : {this.state.activeActivity}</h1>
+  <Dropdown
+    selection
+    options={this.state.activitiesData}
+    placeholder="แท็ก"
+    require="true"
+    name="place_open"
+    errorLabel={<Label color="red" pointing />}
+    value={this.state.newActivity}
+    validations={{
+      customValidation: (values, value) =>
+        !(!value || value.length < 1)
+    }}
+    validationErrors={{ customValidation: "เลือกแท็ก" }}
+    onChange={(e, { value }) => this.TagSelected("newTag", value)}
+  />
+  <Form.Button content="Submit" />
+</Form>
+</div>
+            </Accordion.Content>
+          </Accordion>
+        
         </div>
       );
     }
@@ -167,10 +267,12 @@ class Home extends Component {
         {this.superUltimateConsolePlanel()}
         <div>
           <MainInfo
+            recomendPlace={this.state.recomendPlace}
             eventData={this.state.eventData}
             placesData={this.state.placesData}
             deletePlace={this.deletePlace}
             deleteEvent={this.deleteEvent}
+            activeActivity={this.state.activeActivity}
           />
         </div>
       </div>
