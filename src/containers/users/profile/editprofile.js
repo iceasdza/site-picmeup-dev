@@ -2,7 +2,7 @@ import React, { Component } from "react"
 import axios from '../../../lib/axios'
 import Cookies from "js-cookie";
 import { Form } from "formsy-semantic-ui-react";
-import {Button } from 'semantic-ui-react'
+import { Button , Label } from 'semantic-ui-react'
 const user = Cookies.get("user")
 class EditProfile extends Component {
     constructor(props) {
@@ -51,40 +51,60 @@ class EditProfile extends Component {
         return (
             <div>
                 <Form onSubmit={this.handleSubmit}>
-                        <Form.Input
-                            label="ชื่อ"
-                            name="first_name"
-                            placeholder={this.state.firstName}
-                            width={8}
-                            value={this.state.firstName}
-                            // onChange={e=>this.handleOnChange('firstName',e.target.value)}
-                            onChange={this.handleOnChange('firstName')}
-                        />
-                        <Form.Input
-                            label="นามสกุล"
-                            name="last_name"
-                            placeholder={this.state.lastName}
-                            width={8}
-                            value={this.state.lastName}
-                            onChange={this.handleOnChange('lastName')}
-                        />
-                        <Form.Input
-                            label="email"
-                            name="email"
-                            placeholder={this.state.email}
-                            width={8}
-                            value={this.state.email}
-                            onChange={this.handleOnChange('email')}
-                        />
-                        <Form.Input
-                            label="เบอร์โทรศัพท์"
-                            name="tel"
-                            placeholder={this.state.tel}
-                            width={8}
-                            value={this.state.tel}
-                            onChange={this.handleOnChange('tel')}
-                        />
-                        <Button>Submit</Button>
+                    <Form.Input
+                        label="ชื่อ"
+                        name="first_name"
+                        placeholder={this.state.firstName}
+                        width={8}
+                        value={this.state.firstName}
+                        required
+                        errorLabel={<Label color="red" pointing />}
+                        validationErrors={{
+                            isDefaultRequiredValue: "ต้องใส่ชื่อ"
+                        }}
+                        // onChange={e=>this.handleOnChange('firstName',e.target.value)}
+                        onChange={this.handleOnChange('firstName')}
+                    />
+                    <Form.Input
+                        label="นามสกุล"
+                        name="last_name"
+                        placeholder={this.state.lastName}
+                        width={8}
+                        value={this.state.lastName}
+                        required
+                        errorLabel={<Label color="red" pointing />}
+                        validationErrors={{
+                            isDefaultRequiredValue: "ต้องใส่นามสกุล"
+                        }}
+                        onChange={this.handleOnChange('lastName')}
+                    />
+                    <Form.Input
+                        label="email"
+                        name="email"
+                        placeholder={this.state.email}
+                        width={8}
+                        value={this.state.email}
+                        required
+                        errorLabel={<Label color="red" pointing />}
+                        validationErrors={{
+                            isDefaultRequiredValue: "โปรดระบุอีเมล"
+                        }}
+                        onChange={this.handleOnChange('email')}
+                    />
+                    <Form.Input
+                        label="เบอร์โทรศัพท์"
+                        name="tel"
+                        placeholder={this.state.tel}
+                        width={8}
+                        value={this.state.tel}
+                        required
+                        errorLabel={<Label color="red" pointing />}
+                        validationErrors={{
+                            isDefaultRequiredValue: "กรุณาใส่เบอร์โทร"
+                        }}
+                        onChange={this.handleOnChange('tel')}
+                    />
+                    <Button>Submit</Button>
                 </Form>
             </div>
         )

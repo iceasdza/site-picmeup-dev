@@ -1,6 +1,7 @@
 import React from "react"
 import { Message } from "semantic-ui-react";
 import {NavLink } from "react-router-dom";
+import {Button} from "semantic-ui-react";
 
 const ProfileForm = props => {
     return (
@@ -24,7 +25,7 @@ const ProfileForm = props => {
                 <p></p>
                 <NavLink to="/editprofile">
           
-        <Message.Header>เเก้ไขโปรไฟล์</Message.Header></NavLink>
+            <Button color='blue'>แก้ไขโปรไฟล์</Button></NavLink>
             </Message>
             
        
