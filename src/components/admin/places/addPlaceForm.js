@@ -138,7 +138,7 @@ const Place_Form = props => {
               }
                 required
                 errorLabel={<Label color="red" pointing />}
-                validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องขนาดลานจอดรถ" }}
+                validationErrors={{ isDefaultRequiredValue: "ต้องระบุค่าใช้จ่าย" }}
               />
             ) : <p />}
             <Form.Radio
