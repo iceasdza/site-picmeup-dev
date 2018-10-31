@@ -37,11 +37,14 @@ class Main extends Component {
         <NavLink to="/gallery">
           <Menu.Item className="navBarMenu">แกลอรี่</Menu.Item>
         </NavLink>
-        <Input
+        <NavLink to="/activity">
+          <Menu.Item className="navBarMenu">กิจกรรม</Menu.Item>
+        </NavLink>
+        {/* <Input
           className="searchBarMore767"
           action={{ icon: "search" }}
           placeholder="Search..."
-        />
+        /> */}
       </Menu.Menu>
     );
   };
@@ -62,11 +65,9 @@ class Main extends Component {
         <NavLink to="/gallery">
           <Menu.Item className="navBarMenu">แกลอรี่</Menu.Item>
         </NavLink>
-        <Input
-          className="searchBar767"
-          action={{ icon: "search" }}
-          placeholder="Search..."
-        />
+        <NavLink to="/activity">
+          <Menu.Item className="navBarMenu">กิจกรรม</Menu.Item>
+        </NavLink>
       </Menu.Menu>
     );
   };
@@ -87,11 +88,9 @@ class Main extends Component {
         <NavLink to="/gallery">
           <Menu.Item className="navBarMenu">แกลอรี่</Menu.Item>
         </NavLink>
-        <Input
-          className="searchBar767"
-          action={{ icon: "search" }}
-          placeholder="Search..."
-        />
+        <NavLink to="/activity">
+          <Menu.Item className="navBarMenu">กิจกรรม</Menu.Item>
+        </NavLink>
       </Menu.Menu>
     );
   };
@@ -165,6 +164,11 @@ class Main extends Component {
               <p className="sideMenuMobile">แกลอรี่</p>
             </Menu.Item>
           </NavLink>
+          <NavLink to="/activity">
+            <Menu.Item as="a">
+              <p className="sideMenuMobile">กิจกรรม</p>
+            </Menu.Item>
+          </NavLink>
           <NavLink to="/login">
             <Menu.Item as="a">
               <p className="sideMenuMobile">เข้าสู่ระบบ</p>
@@ -215,6 +219,11 @@ class Main extends Component {
           <NavLink to="/gallery">
             <Menu.Item as="a">
               <p className="sideMenuMobile">แกลอรี่</p>
+            </Menu.Item>
+          </NavLink>
+          <NavLink to="/activity">
+            <Menu.Item as="a">
+              <p className="sideMenuMobile">กิจกรรม</p>
             </Menu.Item>
           </NavLink>
           <NavLink to="/findbynear">

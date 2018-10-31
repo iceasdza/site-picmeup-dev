@@ -26,6 +26,8 @@ import Profile from '../users/profile/profile'
 import EditProfile from '../users/profile/editprofile'
 
 import FindByNear from '../users/findByNear/findByNearPage'
+
+import Activity from '../activity/activity'
 export default () => (
   <Switch>
     <Route exact path="/" component={Welcome} />
@@ -52,6 +54,7 @@ export default () => (
     <Route exact path="/addevent" component={AddEvent} />
     <Route exact path="/updateEvent" component={UpdateEvent} />
     <Route exact path="/eventInfo" component={EventInfo} />
+    <Route exact path="/activity" component={Activity} />
 
 
     <Route exact path="/findbynear" component={FindByNear} />
