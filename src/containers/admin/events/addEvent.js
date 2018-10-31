@@ -84,8 +84,7 @@ class AddEvent extends Component {
     resp.data.map((data,index)=>(
       arr.push({ key: index+1, text: data.tagName, value: data.tagName })
     ))
-    
-    return arr
+    this.setState({tagsData:arr})
 
   }
 

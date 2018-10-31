@@ -8,7 +8,7 @@ import "../static/showdata.css";
 import MainInfo from "../components/main/mainInfo";
 import Cookies from "js-cookie";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label,Input } from "semantic-ui-react";
+import { Label, Input } from "semantic-ui-react";
 import LoadingScreen from "../containers/screen/loading";
 
 const user = Cookies.get("user");
@@ -19,14 +19,15 @@ class Home extends Component {
     open: true,
     targetId: "",
     FileName: [],
-    tagName:''
+    tagName: "",
+    tagsData: [],
+    activeTag: "",
+    newTag:''
   };
 
   getData = async () => {
     const places = await axios.get("/api/getPlaceInfo");
     const events = await axios.get("/api/GetEventInfo");
-
-    console.log(places.data);
     if (places.status === 200 && events.status === 200) {
       this.setState({
         placesData: places.data,
@@ -38,6 +39,19 @@ class Home extends Component {
 
   componentDidMount = async () => {
     this.getData();
+    this.getTagDetail();
+  };
+  getTagDetail = async () => {
+    const arr = [];
+    const resp = await axios.get("/api/getAllTags");
+    resp.data.map((data, index) => {
+      if (data.tagStatus === true) {
+        this.setState({ activeTag: data.tagName });
+      } else {
+        arr.push({ key: index + 1, text: data.tagName, value: data.tagName });
+      }
+    });
+    this.setState({ tagsData: arr });
   };
 
   deletePlace = async event => {
@@ -61,18 +75,31 @@ class Home extends Component {
     this.getData();
   };
 
-  handleChage = (e) =>{
-     this.setState({tagName:e})
-  }
+  handleChage = e => {
+    this.setState({ tagName: e });
+  };
 
-  handleAddTag = async () =>{
-    // e.preventDefault()
-    // console.log(this.state.tagName)
-    await axios.post('/api/addTag',{
-      tagName : this.state.tagName
+  handleAddTag = async () => {
+    await axios.post("/api/addTag", {
+      tagName: this.state.tagName
+    });
+    this.setState({ tagName: "" });
+  };
+
+  handleChageTagActive= async() =>{
+    const newActive = this.state.newTag
+    const resp = await axios.put('/api/updateActiveTag',{
+      oldTag : this.state.activeTag,
+      newTag : this.state.newTag
     })
-    this.setState({tagName:''})
+    if(resp.status ===200){
+      this.getTagDetail()
+      this.setState({activeTag:newActive,newTag:' '})
+    }
   }
+  TagSelected = (field, value) => {
+    this.setState({ newTag: value });
+  };
 
   superUltimateConsolePlanel = () => {
     if (user === undefined || user !== "admin") {
@@ -97,24 +124,35 @@ class Home extends Component {
             <Form onSubmit={this.handleAddTag}>
               <Form.Field required>
                 <label>add tag</label>
-                <Input required={true} placeholder="TAGNAME" value={this.state.tagName} onChange={e=>this.handleChage(e.target.value)} />
-                <Form.Button content='Submit' />
+                <Input
+                  require="true"
+                  placeholder="TAGNAME"
+                  value={this.state.tagName}
+                  onChange={e => this.handleChage(e.target.value)}
+                />
+                <br />
+                <Form.Button content="Submit" />
               </Form.Field>
             </Form>
-            <Form>
-              {/* <Dropdown                    
-          selection
-          options={optionsTime}
-          placeholder="แท็ก"
-          // renderLabel={renderLabel}
-          require="true"
-          name="place_open"
-          errorLabel={<Label color="red" pointing />}
-          validations={{
-            customValidation: (values, value) => !(!value || value.length < 1)
-          }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
-        /> */}
+
+            <Form onSubmit={this.handleChageTagActive}>
+            <h1> {this.state.activeTag}</h1>
+              <Dropdown
+                selection
+                options={this.state.tagsData}
+                placeholder="แท็ก"
+                require="true"
+                name="place_open"
+                errorLabel={<Label color="red" pointing />}
+                value={this.state.newTag}
+                validations={{
+                  customValidation: (values, value) =>
+                    !(!value || value.length < 1)
+                }}
+                validationErrors={{ customValidation: "เลือกแท็ก" }}
+                onChange={(e, { value }) => this.TagSelected("newTag", value)}
+              />
+              <Form.Button content='Submit' />
             </Form>
           </div>
         </div>
