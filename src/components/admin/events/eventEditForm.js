@@ -295,8 +295,6 @@ const EventForm = props => {
           />
         </div>
 
-        <p>แผนที่</p>
-
         <div>
           <Form.Button floated="right" size="big">
             แก้ไขอีเวนท์

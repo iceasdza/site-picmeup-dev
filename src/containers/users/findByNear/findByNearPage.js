@@ -73,9 +73,11 @@ class Demo extends React.Component {
         currentUserLat,
         currentUserLng,
         data.latitude,
-        data.longitude
+        data.longitude,
+        data.status
       );
-      arr.push({ distance: resp, userName: data.userName });
+      
+      arr.push({ distance: resp, userName: data.userName,status:data.status });
     }
     )
     this.setState({
@@ -91,6 +93,7 @@ class Demo extends React.Component {
             <Table.HeaderCell>#</Table.HeaderCell>
             <Table.HeaderCell>User</Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
+            <Table.HeaderCell>status</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -100,6 +103,7 @@ class Demo extends React.Component {
               <Table.Cell>{index+1}</Table.Cell>
               <Table.Cell>{data.userName}</Table.Cell>
               <Table.Cell>{data.distance}</Table.Cell>
+              <Table.Cell>{data.status === 'busy' ? 'ไม่ว่าง':'ว่าง'}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>

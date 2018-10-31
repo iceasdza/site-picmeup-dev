@@ -260,7 +260,6 @@ const EventForm = props => {
           validationErrors={{ customValidation: "กรุณาเลือกสถานที่" }}
         />
       </div>
-      <p>แผนที่</p>
 
       <div>
         <Form.Button floated="right" size="big">

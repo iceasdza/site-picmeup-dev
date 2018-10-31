@@ -32,6 +32,9 @@ const EventInfo = props => (
           <Image src={props.images[props.index]} />
         </Modal> */}
       </Card.Group>
+      <div className="container fluid">
+          <p className="desc">{props.eventDes}</p>
+    </div>
     </div>
     <Grid>
       <Grid.Column width={8}>

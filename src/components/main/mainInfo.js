@@ -27,6 +27,7 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.eventName}</h3>
+                      <p className='description'>{data.eventDes}</p>
                     </Link>
                     {user === 'admin' ? (
                       <div>
@@ -78,6 +79,7 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.placeName}</h3>
+                      <p className='description'>{data.placeDes}</p>
                     </Link>
 
                       {user === 'admin' ? (
@@ -134,6 +136,7 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showname">{data.eventName}</h3>
+                      <p className='description'>{data.eventDes}</p>
                     </Link>
                     {user === 'admin' ? (
                       <div>
@@ -184,6 +187,7 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.placeName}</h3>
+                      <p className='description'>{data.placeDes}</p>
                     </Link>
                     {user === 'admin' ? (
                       <div>

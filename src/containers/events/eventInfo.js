@@ -107,7 +107,8 @@ class EventInfo extends Component {
     } else {
       comments.push({
         comment: this.state.text,
-        commentator: Cookies.get("user")
+        commentator: Cookies.get("user"),
+        avatar:Cookies.get("userAvatar")
       });
     }
     this.setState({ comments: comments, text: "" });
@@ -139,8 +140,8 @@ class EventInfo extends Component {
           {this.state.comments.map((data, index) => (
             <Comment key={index}>
               <Comment.Avatar
-                as="a"
-                src="https://react.semantic-ui.com/images/avatar/small/stevie.jpg"
+                as="avatar"
+                src={data.avatar}
               />
               <Comment.Content>
                 <Comment.Author>
