@@ -33,12 +33,25 @@ class AddPlace extends Component {
     lng: 100.49361,
     redirect: false,
     open: false,
-    imageState:true
+    imageState:true,
+    tagsData:[]
   };
+
+  componentDidMount(){
+    this.getTagDetail()
+  }
 
   handleImageLoaded = () => {
     this.setState({imageState:false})
   };
+  getTagDetail = async () =>{
+    const arr = []
+    const resp = await axios.get("/api/getAllTags");
+    resp.data.map((data,index)=>(
+      arr.push({ key: index+1, text: data.tagName, value: data.tagName })
+    ))
+    this.setState({tagsData:arr})
+  }
   renderImage = () => {
     return (
       <Card.Group itemsPerRow={6}>
@@ -276,6 +289,7 @@ class AddPlace extends Component {
             imageState={this.state.imageState} 
             handleImageLoaded={this.handleImageLoaded}     
             handleSetImageState={this.handleSetImageState}
+            tagsData={this.state.tagsData}
           />
         </Form>
       </div>

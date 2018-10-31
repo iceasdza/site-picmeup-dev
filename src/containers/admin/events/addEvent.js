@@ -27,7 +27,8 @@ class AddEvent extends Component {
     files: [],
     redirect: false,
     open: false,
-    imageState: true
+    imageState: true,
+    tagsData:[]
   };
 
   setField = (field, value) => {
@@ -77,6 +78,17 @@ class AddEvent extends Component {
     this.setState({ placesData: resp.data });
   };
 
+  getTagDetail = async () =>{
+    const arr = []
+    const resp = await axios.get("/api/getAllTags");
+    resp.data.map((data,index)=>(
+      arr.push({ key: index+1, text: data.tagName, value: data.tagName })
+    ))
+    
+    return arr
+
+  }
+
   FeeOption = (field, value) => {
     this.setState({ [field]: value });
   };
@@ -99,6 +111,7 @@ class AddEvent extends Component {
 
   componentDidMount = async () => {
     this.getPlaceDetail();
+    this.getTagDetail();
   };
 
   onValidSubmit = formData => alert(JSON.stringify(formData));
@@ -180,6 +193,7 @@ class AddEvent extends Component {
             handleSelectImage={this.handleSelectImage}
             imageState={this.state.imageState}
             handleImageLoaded={this.handleImageLoaded}
+            tagsData={this.state.tagsData}
           />
         </Form>
       </div>

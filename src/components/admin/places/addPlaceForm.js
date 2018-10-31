@@ -5,11 +5,7 @@ import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imagecontrol"
 
-const optionsTag = [
-  { key: 1, text: "สวน", value: "สวน" },
-  { key: 2, text: "ป่า", value: "ป่า" },
-  { key: 3, text: "เมือง", value: "เมือง" }
-];
+
 
 const optionsDay = [
   { key: 1, text: "วันจันทร์", value: "mon" },
@@ -221,7 +217,7 @@ const Place_Form = props => {
         <Dropdown
           multiple
           selection
-          options={optionsTag}
+          options={props.tagsData}
           placeholder="แท็กของสถานที่"
           renderLabel={renderLabel}
           require="true"

@@ -29,7 +29,8 @@ class UpdateEvent extends Component {
     files: [],
     redirect: false,
     open: false,
-    imageState:true
+    imageState:true,
+    tagsData:[]
   };
   setField = (field, value) => {
     this.setState({ [field]: value });
@@ -128,9 +129,20 @@ class UpdateEvent extends Component {
     this.setState({ [field]: value });
   };
 
+  getTagDetail = async () =>{
+    const arr = []
+    const resp = await axios.get("/api/getAllTags");
+    resp.data.map((data,index)=>(
+      arr.push({ key: index+1, text: data.tagName, value: data.tagName })
+    ))
+    this.setState({tagsData:arr})
+
+  }
+
   componentDidMount = async () => {
     this.getData();
     this.getPlaceDetail();
+    this.getTagDetail();
   };
 
   UpdateEvent = async formData => {
@@ -230,7 +242,8 @@ class UpdateEvent extends Component {
             handleSelectImage={this.handleSelectImage}
             DeleteImage={this.DeleteImage}
             imageState={this.state.imageState} 
-            handleImageLoaded={this.handleImageLoaded} 
+            handleImageLoaded={this.handleImageLoaded}
+            tagsData={this.state.tagsData}
           />
         </Form>
       </div>

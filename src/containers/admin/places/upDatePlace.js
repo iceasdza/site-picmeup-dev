@@ -35,7 +35,18 @@ class Home extends Component {
     redirect:false,
     open: false,
     imageState:true,
+    tagsData:[]
   };
+
+  getTagDetail = async () =>{
+    const arr = []
+    const resp = await axios.get("/api/getAllTags");
+    resp.data.map((data,index)=>(
+      arr.push({ key: index+1, text: data.tagName, value: data.tagName })
+    ))
+    this.setState({tagsData:arr})
+
+  }
   handleImageLoaded = () => {
     this.setState({imageState:false})
   };
@@ -202,6 +213,7 @@ class Home extends Component {
 
   componentDidMount = () => {
     this.getData();
+    this.getTagDetail()
   };
 
   UpdatePlace = async formData => {
@@ -296,6 +308,7 @@ class Home extends Component {
             imageState={this.state.imageState} 
             handleImageLoaded={this.handleImageLoaded} 
             DeletePhotoUploaded={this.DeletePhotoUploaded}
+            tagsData={this.state.tagsData}
           />
         </Form>
       </div>
