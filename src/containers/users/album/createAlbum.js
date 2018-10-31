@@ -4,6 +4,8 @@ import { Form } from "formsy-semantic-ui-react";
 import { Label, Button, Icon } from "semantic-ui-react";
 import axios from "../../../lib/axios";
 import Cookie from "js-cookie";
+import { Redirect } from "react-router-dom";
+import UpLoadingScreen from '../../screen/uploading'
 const user = Cookie.get("user");
 
 class CreateAlbum extends Component {
@@ -14,6 +16,8 @@ class CreateAlbum extends Component {
       files: [],
       imageState: true,
       images: [],
+      loading:false,
+      redirect: false,
     };
   }
   setField = (field, value) => {
@@ -21,7 +25,7 @@ class CreateAlbum extends Component {
   };
 
   handleSelectImage = async() => {
-    this.setState({ imageState: true });
+    this.setState({ imageState: true,loading:true });
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
@@ -31,9 +35,9 @@ class CreateAlbum extends Component {
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSingleImage", data);
       arr.push(resp.data)
-      console.log(arr)
+      console.log(resp)
       if(resp.status === 200){
-        this.setState({ images: arr });
+        this.setState({ images: arr,loading:false });
       }else{
         console.log(resp.status)
       }
@@ -45,12 +49,13 @@ class CreateAlbum extends Component {
         data.append("img", dataFile[y]);
       }
       const resp = await axios.post("/api/uploadMultipleImage", data);
+      console.log(resp)
       if(resp.status === 200){
         data = [];
         for (let x = 0; x < resp.data.length; x++) {
           data.push(resp.data[x].location);
         }
-        this.setState({ images: data });
+        this.setState({ images: data,loading:false });
       }else{
         console.log(resp.status)
       }
@@ -109,6 +114,7 @@ class CreateAlbum extends Component {
     if(this.state.images.length === 0){
       return ;
     }
+    this.setState({ loading: true });
     const resp = await axios.post("/api/addAlbum", {
       albumName: this.state.albumName,
       albumDes: "mock up des",
@@ -116,13 +122,21 @@ class CreateAlbum extends Component {
       albumOwner: user,
       images: this.state.images
     });
-
-    console.log(resp);
+    if(resp.status === 200){
+      this.setState({ redirect: true });
+    }
   };
 
   render() {
+    const { redirect} = this.state;
+    if (redirect) {
+      return <Redirect to={{ pathname: "/gallery" }} />;
+    }
     return (
       <Form onSubmit={this.handleSunmit} className="container fluid">
+        <UpLoadingScreen
+        loading={this.state.loading}
+        />
         <CreateAlbumComponent
           renderForm={this.renderForm()}
           handleImageLoaded={this.handleImageLoaded}

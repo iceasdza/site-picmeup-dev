@@ -28,7 +28,17 @@ const  imageControl = props => {
                     </Card>
                 ))}
             </Card.Group>
+            // <div>
+            //     {props.files.map((data,index)=>(
+            //         <div>
+            //             <img 
+            //             src={data}
+            //             />
+            //         </div>
+            //     ))}
+            // </div>
         )
+        
     
 }
 export default imageControl;
