@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import ProfileForm from "../../../components/users/profile/profileForm";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
+import { Redirect } from "react-router-dom";
 import { Header, Image, Table } from 'semantic-ui-react'
+import AdminMain from '../../admin/adminMain'
 const user = Cookies.get("user");
 class Profile extends Component {
   constructor(props) {
@@ -71,7 +73,11 @@ class Profile extends Component {
   }
 
   render() {
-      
+    if (user==='admin') {
+      return (
+        <AdminMain/>
+      )
+    }
     return (
       <div>
         

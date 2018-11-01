@@ -7,11 +7,12 @@ import "../static/home.css";
 import "../static/showdata.css";
 import MainInfo from "../components/main/mainInfo";
 import Cookies from "js-cookie";
-import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Input } from "semantic-ui-react";
+import { Form } from "formsy-semantic-ui-react";
+import { Input } from "semantic-ui-react";
 import LoadingScreen from "../containers/screen/loading";
 import { Accordion, Icon } from "semantic-ui-react";
-
+import Autocomplete from "react-autocomplete";
+import '../static/autocomplete.css'
 const user = Cookies.get("user");
 class Home extends Component {
   state = {
@@ -26,7 +27,8 @@ class Home extends Component {
     newActivity: "",
     recomendPlace: [],
     activityName: "",
-    activeIndex: 0
+    activeIndex: 0,
+    value:''
   };
 
   handleClick = (e, titleProps) => {
@@ -78,9 +80,8 @@ class Home extends Component {
         this.setState({ activeActivity: data.activityName });
       } else {
         arr.push({
-          key: index + 1,
-          text: data.activityName,
-          value: data.activityName
+          id:index,
+          label:data.activityName
         });
       }
     });
@@ -234,7 +235,20 @@ class Home extends Component {
 <Form onSubmit={this.handleChageTagActive}>
   <br />
   <h1>Active tag : {this.state.activeActivity}</h1>
-  <Dropdown
+      <Autocomplete
+      items={this.state.activitiesData}
+      shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
+      getItemValue={item => item.label}
+      renderItem={(item,isHighlighted) => (
+        <div key={item.id} className="itemSearch"  style={{ background: isHighlighted ? 'lightgray' : 'white' }}>
+          {item.label}
+        </div>
+      )}
+      value={this.state.newActivity}
+      onChange={e => this.setState({ newActivity: e.target.value })}
+      onSelect={newActivity => this.setState({ newActivity })}
+    />
+  {/* <Dropdown
     selection
     options={this.state.activitiesData}
     placeholder="แท็ก"
@@ -248,7 +262,9 @@ class Home extends Component {
     }}
     validationErrors={{ customValidation: "เลือกแท็ก" }}
     onChange={(e, { value }) => this.TagSelected("newTag", value)}
-  />
+  /> */}
+  <br/>
+  <br/>
   <Form.Button content="Submit" />
 </Form>
 </div>
