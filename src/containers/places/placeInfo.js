@@ -175,10 +175,10 @@ class PlaceInfo extends Component {
     switch(this.state.days.length) {
       case 7:
           return setDay ='ทุกวัน'
-          break;
+          // break;
           case 1:
           return setDay = this.state.days[0]
-          break;
+          // break;
           default:
           let dayOne = this.state.days[0]
           let last = this.state.days.length

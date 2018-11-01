@@ -21,8 +21,7 @@ const ProfileForm = props => {
         <p>{props.tel}</p>
         {/* <Message.Header>ตำเเหน่ง</Message.Header>
                 <p></p> */}
-        <Message.Header>สถานะใช้งาน</Message.Header>
-        {props.renderStatus()}
+        {props.renderMessage()}
         <NavLink to="/editprofile">
           <Button color="blue">แก้ไขโปรไฟล์</Button>
         </NavLink>

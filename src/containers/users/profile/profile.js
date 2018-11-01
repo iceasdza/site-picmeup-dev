@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import ProfileForm from "../../../components/users/profile/profileForm";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
-import { Form } from "semantic-ui-react";
+import { Header, Image, Table } from 'semantic-ui-react'
 const user = Cookies.get("user");
 class Profile extends Component {
   constructor(props) {
@@ -14,47 +14,45 @@ class Profile extends Component {
       userName: "",
       email: "",
       tel: "",
-      onlineStatus: "",
-      value: "avalible"
+      messages:[]
     };
   }
 
-  handleChange = async (e, { value }) => {
-    const resp =await axios.put('/api/updateStatus',{
-        user : user,
-        status: value
-    })
-    if(resp.status === 200 ){
-        this.setState({ value })
-    }
+  renderMessage = () =>{
+    return(
+      <Table basic='very' celled collapsing>
+          <Table.Header>
+      <Table.Row>
+        <Table.HeaderCell>Sender</Table.HeaderCell>
+        <Table.HeaderCell>Message</Table.HeaderCell>
+      </Table.Row>
+    </Table.Header>
+    <Table.Body>
+      {this.state.messages.map((data,index)=>(
+              <Table.Row key={index}>
+              <Table.Cell>
+                <Header as='h4' image>
+                  <Image src={data.avatar} rounded size='mini' />
+                  <Header.Content>
+                    {data.sender}
+                    <Header.Subheader>{data.create_date}</Header.Subheader>
+                  </Header.Content>
+                </Header>
+              </Table.Cell>
+              <Table.Cell>{data.content}</Table.Cell>
+            </Table.Row>
+      ))}
+    </Table.Body>
+      </Table>
+    )
   }
 
-  renderStatus = () => {
-    return (
-      <Form>
-        <Form.Group inline>
-          <label>Size</label>
-          <Form.Radio
-            label="ว่าง"
-            value="avlible"
-            checked={this.state.value === "avlible"}
-            onChange={this.handleChange}
-          />
-          <Form.Radio
-            label="ไม่ว่าง"
-            value="busy"
-            checked={this.state.value === "busy"}
-            onChange={this.handleChange}
-          />
-        </Form.Group>
-      </Form>
-    );
-  };
 
   getData = async () => {
     const resp = await axios.get("/api/profile/" + user);
     const data = resp.data;
-    console.log(data);
+    const message = await axios.get('/api/getMessageFromName/'+user);
+    const messageData  = message.data
     this.setState({
       firstName: data.firstName,
       lastName: data.lastName,
@@ -62,10 +60,11 @@ class Profile extends Component {
       userName: data.userName,
       email: data.email,
       tel: data.tel,
-      value:data.status
-      //   state:data.state,
-      //   onlineStatus:data.onlineStatus
+      value:data.status,
+      messages:messageData
     });
+
+    this.state
   };
   componentDidMount() {
     this.getData();
@@ -75,8 +74,9 @@ class Profile extends Component {
       
     return (
       <div>
+        
         <ProfileForm
-        renderStatus={this.renderStatus}
+        renderMessage={this.renderMessage}
           handleChange={this.handleChange}
           status={this.state.status}
           firstName={this.state.firstName}
@@ -86,6 +86,7 @@ class Profile extends Component {
           email={this.state.email}
           tel={this.state.tel}
           onlineStatus={this.state.onlineStatus}
+          messages={this.state.messages}
         />
       </div>
     );
