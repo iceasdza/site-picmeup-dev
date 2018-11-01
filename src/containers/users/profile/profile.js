@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import ProfileForm from "../../../components/users/profile/profileForm";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
-import { Redirect } from "react-router-dom";
 import { Header, Image, Table } from 'semantic-ui-react'
 import AdminMain from '../../admin/adminMain'
 const user = Cookies.get("user");
@@ -37,7 +36,7 @@ class Profile extends Component {
                   <Image src={data.avatar} rounded size='mini' />
                   <Header.Content>
                     {data.sender}
-                    <Header.Subheader>{data.create_date}</Header.Subheader>
+                    <Header.Subheader>{data.sendDate.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,'ส่งเมื่อ$3/$2/$1'+' เวลา $4:$5 น.')}</Header.Subheader>
                   </Header.Content>
                 </Header>
               </Table.Cell>

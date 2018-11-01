@@ -47,6 +47,7 @@ class Activity extends Component {
   renderAutoComplete = () => {
     return (
       <Autocomplete
+      className="test"
       items={this.state.activitiesData}
       shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
       getItemValue={item => item.label}

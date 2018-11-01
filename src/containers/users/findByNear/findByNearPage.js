@@ -41,7 +41,6 @@ class Demo extends React.Component {
           userGeoLocation: {
             latitude: resp.data.latitude,
             longitude: resp.data.longitude,
-            lastCheckIn:resp.data.lastCheckIn
           }
         });
       }
@@ -64,18 +63,12 @@ class Demo extends React.Component {
         focusConfirm: false,
         preConfirm: () => {
           const message = document.getElementById('swal-input1').value
-          const resp = axios.post('/api/sendMessage',{
+           axios.post('/api/sendMessage',{
             content : message,
             sender:user,
             reciver:reciver,
             avatar:avatar
           })
-
-          console.log(resp)
-          // return [
-          //   // document.getElementById('swal-input1').value
-
-          // ]
         }
       })
     )
@@ -84,6 +77,7 @@ class Demo extends React.Component {
   getData = async () => {
     const resp = await axios.get("/api/getAllGeo/" + user);
     this.setState({ userData: resp.data });
+    console.log(resp.data)
   };
 
   getCurrentUserStatus = async () => {
@@ -131,7 +125,8 @@ class Demo extends React.Component {
         distance: resp,
         userName: data.userName,
         status: data.status,
-        avatar:data.avatar
+        avatar:data.avatar,
+        lastCheckIn:data.lastCheckIn
       });
     });
     this.setState({
@@ -150,6 +145,7 @@ class Demo extends React.Component {
             <Table.HeaderCell>User</Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
             <Table.HeaderCell>status</Table.HeaderCell>
+            <Table.HeaderCell>last check in</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -167,6 +163,7 @@ class Demo extends React.Component {
                   <Label circular color="red" empty />
                 )}
               </Table.Cell>
+                <Table.Cell>{data.lastCheckIn.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,'เช็คอินล่าสุดวันที่ | $3/$2/$1 เวลา $4:$5 น.')}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
