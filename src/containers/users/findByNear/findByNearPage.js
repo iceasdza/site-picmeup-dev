@@ -6,6 +6,7 @@ import { Table, Dimmer, Loader, Radio, Header, Label ,Icon,Image} from "semantic
 import { Redirect } from "react-router-dom";
 import swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import moment from 'moment'
 let user = Cookies.get("user");
 
 class Demo extends React.Component {
@@ -16,7 +17,8 @@ class Demo extends React.Component {
       userData: [],
       userDistanceInfo: [],
       open: true,
-      value: true
+      value: true,
+      lastCheckIn:moment()
     };
   }
 
@@ -38,7 +40,8 @@ class Demo extends React.Component {
         this.setState({
           userGeoLocation: {
             latitude: resp.data.latitude,
-            longitude: resp.data.longitude
+            longitude: resp.data.longitude,
+            lastCheckIn:resp.data.lastCheckIn
           }
         });
       }
@@ -183,7 +186,8 @@ class Demo extends React.Component {
       const resp = await axios.put("/api/updateGeolocation", {
         latitude: this.props.coords.latitude,
         longitude: this.props.coords.longitude,
-        user: user
+        user: user,
+        lastCheckIn:Date.now()
       });
       this.setState({
         userGeoLocation: {
@@ -232,6 +236,7 @@ class Demo extends React.Component {
           checked={this.state.value}
           onChange={this.handleChange}
         />
+        {console.log(this.state.lastCheckIn.startOf('day').fromNow())}
         {this.renderTable()}
       </div>
     );
