@@ -3,10 +3,8 @@ import EditAlbumComponent from "../../../components/users/album/editAlbumCompone
 import { Form } from "formsy-semantic-ui-react";
 import { Label, Button, Icon } from "semantic-ui-react";
 import axios from "../../../lib/axios";
-import Cookie from "js-cookie";
 import { Redirect } from "react-router-dom";
 import UpLoadingScreen from '../../screen/uploading'
-const user = Cookie.get("user");
 
 class EditAlbum extends Component {
   constructor(props) {
