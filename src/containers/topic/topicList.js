@@ -45,7 +45,7 @@ class TopicList extends Component {
   CreateTopicButton = () => {
     let button = "";
     if (Cookies.get("user") === undefined) {
-      button = <Button disabled>สร้างกระทู้</Button>;
+      
     } else {
       button = <Button href="/createtopic">สร้างกระทู้</Button>;
     }

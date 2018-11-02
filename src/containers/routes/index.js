@@ -26,7 +26,7 @@ import Profile from '../users/profile/profile'
 import EditProfile from '../users/profile/editprofile'
 
 import FindByNear from '../users/findByNear/findByNearPage'
-
+import EditAlbum from '../users/album/editAlbum'
 import Activity from '../activity/activity'
 export default () => (
   <Switch>
@@ -58,5 +58,6 @@ export default () => (
 
 
     <Route exact path="/findbynear" component={FindByNear} />
+    <Route exact path="/editalbum" component={EditAlbum}/>
   </Switch>
 );

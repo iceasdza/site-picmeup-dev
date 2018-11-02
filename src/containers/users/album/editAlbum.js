@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import CreateAlbumComponent from "../../../components/users/album/createAlbumComponent";
+import EditAlbumComponent from "../../../components/users/album/editAlbumComponent";
 import { Form } from "formsy-semantic-ui-react";
 import { Label, Button, Icon } from "semantic-ui-react";
 import axios from "../../../lib/axios";
@@ -8,7 +8,7 @@ import { Redirect } from "react-router-dom";
 import UpLoadingScreen from '../../screen/uploading'
 const user = Cookie.get("user");
 
-class CreateAlbum extends Component {
+class EditAlbum extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -18,19 +18,39 @@ class CreateAlbum extends Component {
       images: [],
       loading:false,
       redirect: false,
-      description:''
+      albumDes:'',
+      newImage:[],
+      id:''
     };
   }
   setField = (field, value) => {
     this.setState({ [field]: value });
   };
 
+  componentDidMount(){
+    this.getData()
+  }
+
+  getData=async()=>{
+    const _id = this.props.location.state.id
+    const resp = await axios.get('/api/getAlbumFromId/'+_id)
+    if(resp.status ===200){
+      const data = resp.data[0]
+      this.setState({
+        id:_id,
+        albumName:data.albumName,
+        albumDes:data.albumDes,
+        images:data.images
+      })
+    }
+  }
+
   handleSelectImage = async() => {
     this.setState({ imageState: true,loading:true });
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
-      const arr = []
+      const arr = this.state.images
       this.setState({ open: true });
       const dataFile = document.getElementById("img").files[0];
       data.append("img", dataFile);
@@ -50,7 +70,7 @@ class CreateAlbum extends Component {
       }
       const resp = await axios.post("/api/uploadMultipleImage", data);
       if(resp.status === 200){
-        data = [];
+        data = this.state.images
         for (let x = 0; x < resp.data.length; x++) {
           data.push(resp.data[x].location);
         }
@@ -95,8 +115,8 @@ class CreateAlbum extends Component {
         label="คำอธิบายอัลบั้ม"
         placeholder="เกี่ยวกับอัลบั้ม.."
         width={14}
-        value={this.state.description}
-        onChange={(e, { value }) => this.setField("description", value)}
+        value={this.state.albumDes}
+        onChange={(e, { value }) => this.setField("albumDes", value)}
         required
         errorLabel={<Label color="red" pointing />}
         validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
@@ -127,11 +147,9 @@ class CreateAlbum extends Component {
       return ;
     }
     this.setState({ loading: true });
-    const resp = await axios.post("/api/addAlbum", {
+    const resp = await axios.put("/api/updateAlbum/"+this.state.id,{
       albumName: this.state.albumName,
-      albumDes: this.state.description,
-      comments: [],
-      albumOwner: user,
+      albumDes: this.state.albumDes,
       images: this.state.images
     });
     if(resp.status === 200){
@@ -149,7 +167,7 @@ class CreateAlbum extends Component {
         <UpLoadingScreen
         loading={this.state.loading}
         />
-        <CreateAlbumComponent
+        <EditAlbumComponent
           renderForm={this.renderForm()}
           handleImageLoaded={this.handleImageLoaded}
           imageState={this.state.imageState}
@@ -169,4 +187,4 @@ class CreateAlbum extends Component {
   }
 }
 
-export default CreateAlbum;
+export default EditAlbum;
