@@ -5,6 +5,7 @@ import Cookies from "js-cookie";
 import { Header, Image, Table, Menu, Card, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import AdminMain from "../../admin/adminMain";
+import LoadingScreen from '../../screen/loading'
 import swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 const user = Cookies.get("user");
@@ -20,7 +21,10 @@ class Profile extends Component {
       tel: "",
       messages: [],
       activeItem: "profile",
-      albums: []
+      albums: [],
+      topics:[],
+      commentedTopics:[],
+      open:true
     };
   }
 
@@ -112,18 +116,26 @@ class Profile extends Component {
     const data = resp.data;
     const message = await axios.get("/api/getMessageFromName/" + user);
     const album = await axios.get("/api/getAlbumFromName/" + user);
-    const messageData = message.data;
-    this.setState({
-      firstName: data.firstName,
-      lastName: data.lastName,
-      gender: data.gender,
-      userName: data.userName,
-      email: data.email,
-      tel: data.tel,
-      value: data.status,
-      messages: messageData,
-      albums: album.data
-    });
+    const topic = await axios.get('api/getTopicFromName/'+user)
+    const topicInteract = await axios.get('api/getInteractTopic/'+user)
+    if(topicInteract.status===200){
+      const messageData = message.data;
+      this.setState({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        gender: data.gender,
+        userName: data.userName,
+        email: data.email,
+        tel: data.tel,
+        value: data.status,
+        messages: messageData,
+        albums: album.data,
+        topics:topic.data,
+        commentedTopics:topicInteract.data,
+        open:false
+      });
+    }
+
   };
   componentDidMount() {
     this.getData();
@@ -133,8 +145,44 @@ class Profile extends Component {
     this.setState({ activeItem: name });
   };
 
+  renderTopicList = () => {
+    const data = this.state.topics;
+    return data.map((data, index) => (
+      <Card fluid key={index}>
+        <Link
+          to={{
+            pathname: "/topic/",
+            search: data._id
+          }}
+        >
+          <Card.Content header={data.topicName} />
+        </Link>
+        <Card.Content description={data.creator + " : " + data.create_date} />
+      </Card>
+    ));
+  };
+
+
+  renderInteractTopicList = () => {
+    const data = this.state.commentedTopics;
+    return data.map((data, index) => (
+      <Card fluid key={index}>
+        <Link
+          to={{
+            pathname: "/topic/",
+            search: data.id
+          }}
+        >
+          <Card.Content header={data.name} />
+        </Link>
+        {/* <Card.Content description={data.creator + " : " + data.create_date} /> */}
+      </Card>
+    ));
+  };
+
   renderGalleryList = () => {
     return (
+      
       <Card.Group itemsPerRow={4}>
         {this.state.albums.map((data, index) => (
           <Card key={index}>
@@ -184,6 +232,10 @@ class Profile extends Component {
         return this.renderGalleryList();
       case "message":
         return this.renderMessage();
+        case "topic":
+        return this.renderTopicList();
+        case "กระทู้ที่แสดงความคิดเห็น":
+        return this.renderInteractTopicList()
       default:
         return (
           <ProfileForm
@@ -209,6 +261,9 @@ class Profile extends Component {
     }
     return (
       <div className="container fluid">
+                <LoadingScreen
+          open={this.state.open}
+          />
         <Menu tabular>
           <Menu.Item
             className="menuName"
@@ -228,6 +283,19 @@ class Profile extends Component {
             active={activeItem === "message"}
             onClick={this.handleItemClick}
           />
+          <Menu.Item
+          className="menuName"
+          name="topic"
+          active={activeItem === "topic"}
+          onClick={this.handleItemClick}
+        />
+                  <Menu.Item
+          className="menuName"
+          name="กระทู้ที่แสดงความคิดเห็น"
+          active={activeItem === "กระทู้ที่แสดงความคิดเห็น"}
+          onClick={this.handleItemClick}
+        />
+        
         </Menu>
         {this.handleChangeContent()}
       </div>
