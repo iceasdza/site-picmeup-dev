@@ -58,6 +58,7 @@ class Demo extends React.Component {
     return(
       swal({
         title: 'Send message to '+reciver,
+        
         html:
           '<input id="swal-input1" class="swal2-input">',
         focusConfirm: false,
@@ -233,7 +234,6 @@ class Demo extends React.Component {
           checked={this.state.value}
           onChange={this.handleChange}
         />
-        {console.log(this.state.lastCheckIn.startOf('day').fromNow())}
         {this.renderTable()}
       </div>
     );

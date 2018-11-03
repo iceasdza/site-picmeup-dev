@@ -2,9 +2,11 @@ import React, { Component } from "react";
 import ProfileForm from "../../../components/users/profile/profileForm";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
-import { Header, Image, Table, Menu,Card } from "semantic-ui-react";
+import { Header, Image, Table, Menu, Card, Icon } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import AdminMain from "../../admin/adminMain";
+import swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 const user = Cookies.get("user");
 class Profile extends Component {
   constructor(props) {
@@ -18,17 +20,44 @@ class Profile extends Component {
       tel: "",
       messages: [],
       activeItem: "profile",
-      albums:[]
+      albums: []
     };
   }
 
+  modalInbox = async (reciver, avatar, message,status,id) => {
+    if(status){
+      axios.put('/api/changeMessageState/'+id)
+    }
+    this.getData()
+    return swal({
+      title: reciver + " says : <br/>" + message,
+      html: '<input id="swal-input1" class="swal2-input">',
+      focusConfirm: false,
+      preConfirm: () => {
+        const message = document.getElementById("swal-input1").value;
+        const data = message.replace(/ /g,'')
+        if(data===""){
+          return
+        }else{
+          axios.post("/api/sendMessage", {
+            content: message,
+            sender: user,
+            reciver: reciver,
+            avatar: avatar
+          });
+        }
+      }
+    });
+
+  };
+
   renderMessage = () => {
     return (
-      <Table basic="very" celled collapsing>
+      <Table basic="very" celled>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell>Sender</Table.HeaderCell>
-            <Table.HeaderCell>Message</Table.HeaderCell>
+            <Table.HeaderCell>ตอบกลับ</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -41,14 +70,36 @@ class Profile extends Component {
                     {data.sender}
                     <Header.Subheader>
                       {data.sendDate.replace(
-                        /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,
-                        "ส่งเมื่อ$3/$2/$1" + " เวลา $4:$5 น."
+                        /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,"ส่งเมื่อ$3/$2/$1" + " เวลา $4:$5 น."
                       )}
                     </Header.Subheader>
                   </Header.Content>
                 </Header>
               </Table.Cell>
-              <Table.Cell>{data.content}</Table.Cell>
+              <Table.Cell>
+                {data.status ?                 <Icon.Group
+                  size="big"
+                  color="black"
+                  name="mail"
+                  onClick={e =>
+                    this.modalInbox(data.sender, data.avatar, data.content,data.status,data._id)
+                  }
+                >
+                  <Icon name="mail" />
+                  <Icon corner name="asterisk" color="red" />
+                </Icon.Group>:
+                                <Icon.Group
+                                size="big"
+                                color="black"
+                                name="mail"
+                                onClick={e =>
+                                  this.modalInbox(data.sender, data.avatar, data.content,data.status,data._id)
+                                }
+                              >
+                                <Icon name="mail" />
+                              </Icon.Group>
+                }
+              </Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -60,7 +111,7 @@ class Profile extends Component {
     const resp = await axios.get("/api/profile/" + user);
     const data = resp.data;
     const message = await axios.get("/api/getMessageFromName/" + user);
-    const album = await axios.get('/api/getAlbumFromName/'+user)
+    const album = await axios.get("/api/getAlbumFromName/" + user);
     const messageData = message.data;
     this.setState({
       firstName: data.firstName,
@@ -71,17 +122,15 @@ class Profile extends Component {
       tel: data.tel,
       value: data.status,
       messages: messageData,
-      albums:album.data
+      albums: album.data
     });
-
   };
   componentDidMount() {
     this.getData();
   }
 
-
-  handleItemClick = (e, { name }) =>{
-    this.setState({ activeItem: name })
+  handleItemClick = (e, { name }) => {
+    this.setState({ activeItem: name });
   };
 
   renderGalleryList = () => {
@@ -113,31 +162,45 @@ class Profile extends Component {
     );
   };
 
-  handleChangeContent = () =>{
-    const item = this.state.activeItem
-    switch (item){
-      case 'profile':return(
-        <ProfileForm
-        renderMessage={this.renderMessage}
-        handleChange={this.handleChange}
-        status={this.state.status}
-        firstName={this.state.firstName}
-        lastName={this.state.lastName}
-        gender={this.state.gender}
-        userName={this.state.userName}
-        email={this.state.email}
-        tel={this.state.tel}
-        onlineStatus={this.state.onlineStatus}
-      />
-      )
-      break
-      case 'photos':return(this.renderGalleryList())
-      break
-      case 'message':return(
-        this.renderMessage()
-      )
+  handleChangeContent = () => {
+    const item = this.state.activeItem;
+    switch (item) {
+      case "profile":
+        return (
+          <ProfileForm
+            renderMessage={this.renderMessage}
+            handleChange={this.handleChange}
+            status={this.state.status}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            gender={this.state.gender}
+            userName={this.state.userName}
+            email={this.state.email}
+            tel={this.state.tel}
+            onlineStatus={this.state.onlineStatus}
+          />
+        );
+      case "photos":
+        return this.renderGalleryList();
+      case "message":
+        return this.renderMessage();
+      default:
+        return (
+          <ProfileForm
+            renderMessage={this.renderMessage}
+            handleChange={this.handleChange}
+            status={this.state.status}
+            firstName={this.state.firstName}
+            lastName={this.state.lastName}
+            gender={this.state.gender}
+            userName={this.state.userName}
+            email={this.state.email}
+            tel={this.state.tel}
+            onlineStatus={this.state.onlineStatus}
+          />
+        );
     }
-  }
+  };
   render() {
     const { activeItem } = this.state;
 
@@ -167,7 +230,6 @@ class Profile extends Component {
           />
         </Menu>
         {this.handleChangeContent()}
-
       </div>
     );
   }
