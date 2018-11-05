@@ -3,17 +3,18 @@ import { Responsive, Segment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../static/welcome.css";
 // import bg1 from '../static/welcome/1.jpg'
-import bg from "../static/welcome/26115.jpg";
+// import bg from "../static/welcome/26115.jpg";
 // import bg2 from '../static/welcome/5.jpg'
 // import bg3 from '../static/welcome/9.jpg'
 const welcomeComponent = () => {
   return (
-    <Segment.Group>
+    <Segment.Group
+    >
       {/* full hd screen */}
       <Responsive as={Segment} minWidth={1570}>
       <div
           className="welcomeContentFullHd"
-          style={{ backgroundImage: "url(" + bg + ")" }}
+          
         >
           <p className="headerContent">ค้นหาและท่องเที่ยว</p>
           <p className="content">
@@ -35,7 +36,6 @@ const welcomeComponent = () => {
       <Responsive as={Segment} minWidth={1025} maxWidth={1569}>
         <div
           className="welcomeContent"
-          style={{ backgroundImage: "url(" + bg + ")" }}
         >
           <p className="headerContent">ค้นหาและท่องเที่ยว</p>
           <p className="content">
@@ -58,7 +58,6 @@ const welcomeComponent = () => {
       <Responsive as={Segment} minWidth={768} maxWidth={1024}>
       <div
           className="welcomeContentIpad"
-          style={{ backgroundImage: "url(" + bg + ")" }}
         >
           <p className="headerContent">ค้นหาและท่องเที่ยว</p>
           <p className="content">
@@ -81,7 +80,6 @@ const welcomeComponent = () => {
       <Responsive as={Segment} minWidth={0} maxWidth={767}>
       <div
           className="welcomeContentMobile"
-          style={{ backgroundImage: "url(" + bg + ")" }}
         >
           <p className="headerContent">ค้นหาและท่องเที่ยว</p>
           <p className="content">

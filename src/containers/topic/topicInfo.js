@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
-import { Button,Card,Image } from "semantic-ui-react";
+import { Button,Card,Image,Form,Divider,Comment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 let user = Cookies.get("user");
 
@@ -91,11 +91,12 @@ class TopicInfo extends Component {
     const id = this.props.location.search.replace("?", "");
     const comments = this.state.comments;
     if (Cookies.get("user") === undefined) {
-      comments.push({ comment: this.state.text, commentator: "Guess" });
+      comments.push({ comment: this.state.text, commentator: "Guest" });
     } else {
       comments.push({
         comment: this.state.text,
-        commentator: Cookies.get("user")
+        commentator: Cookies.get("user"),
+        avatar:Cookies.get("userAvatar")
       });
     }
     this.setState({ comments: comments, text: "" });
@@ -104,6 +105,41 @@ class TopicInfo extends Component {
     });
     this.getData();
   };
+
+  renderComment = () =>{
+    return (
+        <div className="container fluid">
+      <Divider horizontal>Comments</Divider>
+      <Form onSubmit={this.handleSubmitComment}>
+        <Form.TextArea
+          label="เขียนควาคิดเห็น"
+          placeholder="แสดงความคิดเห็น"
+          value={this.state.text}
+          onChange={e => this.handleOnchage(e.target.value)}
+          required
+        />
+        <Form.Button>ตกลง</Form.Button>
+      </Form>
+      <Divider />
+      <Comment.Group>
+        {this.state.comments.map((data, index) => (
+          <Comment key={index}>
+            <Comment.Avatar
+              as="avatar"
+              src={data.avatar}
+            />
+            <Comment.Content>
+              <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {data.commentator}
+              </Comment.Author>
+              <Comment.Text>{data.comment}</Comment.Text>
+            </Comment.Content>
+          </Comment>
+        ))}
+      </Comment.Group>
+      </div>
+    )
+}
 
   componentDidMount() {
     this.getData();
@@ -122,6 +158,7 @@ class TopicInfo extends Component {
           text={this.state.text}
           handleSubmitComment={this.handleSubmitComment}
           renderPlace={this.renderPlace}
+          renderComment={this.renderComment}
         />
       </div>
     );

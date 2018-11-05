@@ -125,7 +125,8 @@ class PlaceInfo extends Component {
     } else {
       comments.push({
         comment: this.state.text,
-        commentator: Cookies.get("user")
+        commentator: Cookies.get("user"),
+        avatar:Cookies.get("userAvatar")
       });
     }
     this.setState({ comments: comments, text: "" });
@@ -135,40 +136,43 @@ class PlaceInfo extends Component {
     this.getData();
   };
 
-  renderComment = () => {
+  renderComment = () =>{
     return (
-      <div className="container fluid">
-        <Divider horizontal>ความคิดเห็น</Divider>
-        <Form onSubmit={this.handleSubmitComment}>
-          <Form.TextArea
-            label="เขียนควาคิดเห็น"
-            placeholder="แสดงความคิดเห็น"
-            value={this.state.text}
-            onChange={e => this.handleOnchage(e.target.value)}
-            required
-          />
-          <Form.Button>ตกลง</Form.Button>
-        </Form>
-        <Divider />
-        <Comment.Group>
-          {this.state.comments.map((data, index) => (
-            <Comment key={index}>
-              <Comment.Avatar
-                as="a"
-                src="https://react.semantic-ui.com/images/avatar/small/stevie.jpg"
-              />
-              <Comment.Content>
-                <Comment.Author>
-                  แสดงความคิดเห็นโดยคุณ {data.commentator}
-                </Comment.Author>
-                <Comment.Text>{data.comment}</Comment.Text>
-              </Comment.Content>
-            </Comment>
-          ))}
-        </Comment.Group>
+        <div className="container fluid">
+        <LoadingScreen
+        open={this.state.open}
+        />
+      <Divider horizontal>Comments</Divider>
+      <Form onSubmit={this.handleSubmitComment}>
+        <Form.TextArea
+          label="เขียนควาคิดเห็น"
+          placeholder="แสดงความคิดเห็น"
+          value={this.state.text}
+          onChange={e => this.handleOnchage(e.target.value)}
+          required
+        />
+        <Form.Button>ตกลง</Form.Button>
+      </Form>
+      <Divider />
+      <Comment.Group>
+        {this.state.comments.map((data, index) => (
+          <Comment key={index}>
+            <Comment.Avatar
+              as="avatar"
+              src={data.avatar}
+            />
+            <Comment.Content>
+              <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {data.commentator}
+              </Comment.Author>
+              <Comment.Text>{data.comment}</Comment.Text>
+            </Comment.Content>
+          </Comment>
+        ))}
+      </Comment.Group>
       </div>
-    );
-  };
+    )
+}
 
   setDayOpen=()=>{
     let setDay=''

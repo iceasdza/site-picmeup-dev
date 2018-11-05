@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import GalleryComponent from "../../components/gallery/galleryComponent";
-import { Card, Image } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Card, Image,Button } from "semantic-ui-react";
+import { Link,NavLink } from "react-router-dom";
 import axios from "../../lib/axios";
+import Cookie from "js-cookie";
 import LoadingScreen from '../screen/loading'
+const user = Cookie.get("user");
 
 export default class Gallery extends Component {
   constructor(props) {
@@ -23,7 +25,7 @@ export default class Gallery extends Component {
 
   renderGalleryList = () => {
     return (
-      <Card.Group itemsPerRow={6}>
+      <Card.Group itemsPerRow={4}>
         {this.state.albums.map((data, index) => (
           <Card key={index}>
             <Image src={data.images[0]} />
@@ -35,13 +37,14 @@ export default class Gallery extends Component {
                     search: data._id
                   }}
                 >
-                  <h3 className="showname">{data.albumName}</h3>
+                  <h3 className="">{data.albumName}</h3>
                 </Link>
               </Card.Header>
+              <Card.Description>{data.albumDes}</Card.Description>
+              <Card.Description>{data.albumOwner}</Card.Description>
               <Card.Meta>
                 <span className="date">{data.createDate}</span>
               </Card.Meta>
-              <Card.Description>{data.albumDes}</Card.Description>
             </Card.Content>
           </Card>
         ))}
@@ -53,13 +56,35 @@ export default class Gallery extends Component {
     this.getData();
   }
 
+  renderCreateAlbumButton = () =>{
+    if(user === undefined){
+      return(
+        <div></div>
+      )
+    }else{
+      return(
+        <div>
+          <br/>
+          <NavLink to="/createalbum">
+          <Button fluid color='blue'  className="showname">สร้างอัลบั้มของคุณ</Button>
+
+          </NavLink>
+          <br/>
+        </div>
+      )
+    }
+  }
+
   render() {
+    
     return (
       <div className="container fluid">
       <LoadingScreen
       open={this.state.open}
       />
-        <GalleryComponent renderGalleryList={this.renderGalleryList} />
+        <GalleryComponent 
+        renderCreateAlbumButton={this.renderCreateAlbumButton}
+        renderGalleryList={this.renderGalleryList} />
       </div>
     );
   }

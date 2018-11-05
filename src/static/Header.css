@@ -66,3 +66,6 @@
     border:none!important;
     box-shadow: none!important;
 }
+a.active.item.menuName,a.item.menuName{
+    color: black!important
+}

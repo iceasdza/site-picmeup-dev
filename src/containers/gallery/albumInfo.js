@@ -1,12 +1,14 @@
 import React, { Component } from "react";
 import AlbumInfoComponent from "../../components/gallery/albumInfoComponent";
-import { Card, Comment, Form, Divider } from "semantic-ui-react";
+import { Card, Comment, Form, Divider, Button } from "semantic-ui-react";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
-import LoadingScreen from '../screen/loading'
-import swal from 'sweetalert2'
-import 'sweetalert2/src/sweetalert2.scss'
-import '../../static/image.css'
+import LoadingScreen from "../screen/loading";
+import swal from "sweetalert2";
+import { Link } from "react-router-dom";
+import "sweetalert2/src/sweetalert2.scss";
+import "../../static/image.css";
+const user = Cookies.get("user");
 export default class AlbumInfo extends Component {
   constructor(props) {
     super(props);
@@ -18,7 +20,8 @@ export default class AlbumInfo extends Component {
       createDate: "",
       images: [],
       text: "",
-      open: true
+      open: true,
+      id:''
     };
   }
 
@@ -26,22 +29,21 @@ export default class AlbumInfo extends Component {
     this.setState({ text: e });
   };
 
-  modalImage = (src) =>{
-    return(
-      swal({
-        imageUrl: src,
-        width:'100%',
-        imageWidth:100,
-        // animation: true
-      })
-    )
-  }
+  modalImage = src => {
+    return swal({
+      imageUrl: src,
+      width: "100%",
+      imageWidth: 100
+      // animation: true
+    });
+  };
 
   getData = async () => {
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getAlbumFromId/" + _id);
     if (resp.status === 200) {
       this.setState({
+        id:resp.data[0]._id,
         albumOwner: resp.data[0].albumOwner,
         albumName: resp.data[0].albumName,
         albumDes: resp.data[0].albumDes,
@@ -65,7 +67,8 @@ export default class AlbumInfo extends Component {
     } else {
       comments.push({
         comment: this.state.text,
-        commentator: Cookies.get("user")
+        commentator: Cookies.get("user"),
+        avatar: Cookies.get("userAvatar")
       });
     }
     this.setState({ comments: comments, text: "" });
@@ -79,12 +82,36 @@ export default class AlbumInfo extends Component {
     return (
       <Card.Group itemsPerRow={6}>
         {this.state.images.map((data, index) => (
-          <Card raised image={data} key={index} 
-          onClick={()=>this.modalImage(data)}
+          <Card
+            raised
+            image={data}
+            key={index}
+            onClick={() => this.modalImage(data)}
           />
         ))}
       </Card.Group>
     );
+  };
+
+  renderEditButton = () => {
+    if (this.state.albumOwner === user) {
+      return (
+        <div>
+          <Link
+            to={{
+              pathname: "/editalbum",
+              state: { id: this.state.id }
+            }}
+          >
+          <Button>
+            Edit
+          </Button>
+          </Link>
+        </div>
+      );
+    } else {
+      return <div />;
+    }
   };
 
   renderComment = () => {
@@ -105,10 +132,7 @@ export default class AlbumInfo extends Component {
         <Comment.Group>
           {this.state.comments.map((data, index) => (
             <Comment key={index}>
-              <Comment.Avatar
-                as="a"
-                src="https://react.semantic-ui.com/images/avatar/small/stevie.jpg"
-              />
+              <Comment.Avatar as="avatar" src={data.avatar} />
               <Comment.Content>
                 <Comment.Author>
                   แสดงความคิดเห็นโดยคุณ {data.commentator}
@@ -121,11 +145,11 @@ export default class AlbumInfo extends Component {
       </div>
     );
   };
-
   render() {
     return (
       <div className="container fluid">
         <LoadingScreen open={this.state.open} />
+        {this.renderEditButton()}
         <AlbumInfoComponent
           renderImages={this.renderImages}
           renderComment={this.renderComment}

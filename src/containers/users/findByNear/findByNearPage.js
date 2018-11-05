@@ -6,6 +6,7 @@ import { Table, Dimmer, Loader, Radio, Header, Label ,Icon,Image} from "semantic
 import { Redirect } from "react-router-dom";
 import swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import moment from 'moment'
 let user = Cookies.get("user");
 
 class Demo extends React.Component {
@@ -16,7 +17,8 @@ class Demo extends React.Component {
       userData: [],
       userDistanceInfo: [],
       open: true,
-      value: true
+      value: true,
+      lastCheckIn:moment()
     };
   }
 
@@ -38,7 +40,7 @@ class Demo extends React.Component {
         this.setState({
           userGeoLocation: {
             latitude: resp.data.latitude,
-            longitude: resp.data.longitude
+            longitude: resp.data.longitude,
           }
         });
       }
@@ -56,23 +58,18 @@ class Demo extends React.Component {
     return(
       swal({
         title: 'Send message to '+reciver,
+        
         html:
           '<input id="swal-input1" class="swal2-input">',
         focusConfirm: false,
         preConfirm: () => {
           const message = document.getElementById('swal-input1').value
-          const resp = axios.post('/api/sendMessage',{
+           axios.post('/api/sendMessage',{
             content : message,
             sender:user,
             reciver:reciver,
             avatar:avatar
           })
-
-          console.log(resp)
-          // return [
-          //   // document.getElementById('swal-input1').value
-
-          // ]
         }
       })
     )
@@ -81,6 +78,7 @@ class Demo extends React.Component {
   getData = async () => {
     const resp = await axios.get("/api/getAllGeo/" + user);
     this.setState({ userData: resp.data });
+    console.log(resp.data)
   };
 
   getCurrentUserStatus = async () => {
@@ -128,7 +126,8 @@ class Demo extends React.Component {
         distance: resp,
         userName: data.userName,
         status: data.status,
-        avatar:data.avatar
+        avatar:data.avatar,
+        lastCheckIn:data.lastCheckIn
       });
     });
     this.setState({
@@ -147,6 +146,7 @@ class Demo extends React.Component {
             <Table.HeaderCell>User</Table.HeaderCell>
             <Table.HeaderCell>Distance</Table.HeaderCell>
             <Table.HeaderCell>status</Table.HeaderCell>
+            <Table.HeaderCell>last check in</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
 
@@ -164,6 +164,7 @@ class Demo extends React.Component {
                   <Label circular color="red" empty />
                 )}
               </Table.Cell>
+                <Table.Cell>{data.lastCheckIn.replace(/(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,'เช็คอินล่าสุดวันที่ | $3/$2/$1 เวลา $4:$5 น.')}</Table.Cell>
             </Table.Row>
           ))}
         </Table.Body>
@@ -183,7 +184,8 @@ class Demo extends React.Component {
       const resp = await axios.put("/api/updateGeolocation", {
         latitude: this.props.coords.latitude,
         longitude: this.props.coords.longitude,
-        user: user
+        user: user,
+        lastCheckIn:Date.now()
       });
       this.setState({
         userGeoLocation: {

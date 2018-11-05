@@ -1,0 +1,11 @@
+.itemSearch{
+    font-family: 'Kanit'!important;
+    font-size: 14px!important;
+    margin-left: 0.4em!important;
+}
+input{
+    font-family: 'Kanit'!important;
+    /* width: 40em!important; */
+    margin-top: 2em!important;
+    font-size: 14px!important;
+}
