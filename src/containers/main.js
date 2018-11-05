@@ -24,11 +24,11 @@ class Main extends Component {
   NavLinkMenuBar = () => {
     return (
       <Menu.Menu position="left">
-        <NavLink to="/main">
+        <NavLink to="/places">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
 
-        <NavLink to="/main">
+        <NavLink to="/events">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
         <NavLink to="/meeting">
@@ -52,11 +52,11 @@ class Main extends Component {
   NavLinkMenuBar767 = () => {
     return (
       <Menu.Menu position="left">
-        <NavLink to="/main">
+        <NavLink to="/places">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
 
-        <NavLink to="/main">
+        <NavLink to="/events">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
         <NavLink to="/meeting">
@@ -75,11 +75,11 @@ class Main extends Component {
   NavLinkMenuBariPad = () => {
     return (
       <Menu.Menu position="left">
-        <NavLink to="/main">
+        <NavLink to="/places">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
 
-        <NavLink to="/main">
+        <NavLink to="/events">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
         <NavLink to="/meeting">
@@ -144,12 +144,12 @@ class Main extends Component {
               <p className="sideMenuMobile">หน้าแรก</p>
             </Menu.Item>
           </NavLink>
-          <NavLink to="/main">
+          <NavLink to="/places">
             <Menu.Item as="a">
               <p className="sideMenuMobile">สถานที่</p>
             </Menu.Item>
           </NavLink>
-          <NavLink to="/main">
+          <NavLink to="/events">
             <Menu.Item as="a">
               <p className="sideMenuMobile">อีเว้นท์</p>
             </Menu.Item>
@@ -200,13 +200,13 @@ class Main extends Component {
             </Menu.Item>
           </NavLink>
 
-          <NavLink to="/main">
+          <NavLink to="/places">
             <Menu.Item as="a">
               <p className="sideMenuMobile">สถานที่</p>
             </Menu.Item>
           </NavLink>
 
-          <NavLink to="/main">
+          <NavLink to="/events">
             <Menu.Item as="a">
               <p className="sideMenuMobile">อีเว้นท์</p>
             </Menu.Item>
@@ -303,9 +303,15 @@ class Main extends Component {
       <Segment.Group>
         <Responsive as={Segment} minWidth={1570}>
           <Menu inverted secondary>
-            <Menu.Item header className="logoText">
+            {/* <Menu.Item header className="logoText">
+            
               PICMEUP
+            </Menu.Item> */}
+            <NavLink to="/main">
+            <Menu.Item header className="logoText">
+             PICMEUP
             </Menu.Item>
+          </NavLink>
             {this.NavLinkMenuBar()}
             {this.loginTab()}
           </Menu>
@@ -313,9 +319,11 @@ class Main extends Component {
       {/* HD screen */}
         <Responsive as={Segment} minWidth={1025} maxWidth={1569}>
           <Menu inverted secondary>
+          <NavLink to="/main">
             <Menu.Item header className="logoText">
-              PICMEUP
+             PICMEUP
             </Menu.Item>
+          </NavLink>
             {this.NavLinkMenuBar767()}
             {this.loginTab()}
           </Menu>

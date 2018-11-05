@@ -5,7 +5,8 @@ import Login from "../users/login/login";
 import Register from "../users/register/register";
 import Welcome from "../welcome";
 import CreateAlbum from '../users/album/createAlbum'
-
+import Events from '../events/eventPage'
+import Places from '../places/placePage'
 import MeetingList from '../topic/topicList'
 import MeeingInfo from '../topic/topicInfo'
 import CreateMeeting from '../topic/createTopic'
@@ -59,5 +60,8 @@ export default () => (
 
     <Route exact path="/findbynear" component={FindByNear} />
     <Route exact path="/editalbum" component={EditAlbum}/>
+
+    <Route exact path="/events" component={Events}/>
+    <Route exact path="/places" component={Places}/>
   </Switch>
 );
