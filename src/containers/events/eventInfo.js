@@ -16,6 +16,7 @@ class EventInfo extends Component {
     openTime: "",
     closeTime: "",
     fee: "no",
+    feePrice:0,
     carParking: "yes",
     days: [],
     tags: [],
@@ -57,6 +58,7 @@ class EventInfo extends Component {
         openTime: data.openTime,
         closeTime: data.closeTime,
         fee: data.fee,
+        feePrice: data.feePrice,
         carParking: data.carParking,
         days: data.days,
         tags: data.tags,
@@ -167,6 +169,7 @@ class EventInfo extends Component {
           openTime={this.state.openTime}
           closeTime={this.state.closeTime}
           fee={this.state.fee}
+          feePrice={this.state.feePrice}
           carParking={this.state.carParking}
           days={this.state.days}
           tags={this.state.tags}
