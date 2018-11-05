@@ -13,7 +13,6 @@ class AddEvent extends Component {
     openTime: "",
     closeTime: "",
     fee: "no",
-    carParking: "yes",
     days: [],
     tags: [],
     map: {
@@ -141,7 +140,6 @@ class AddEvent extends Component {
       openTime: this.state.openTime,
       closeTime: this.state.closeTime,
       fee: this.state.fee,
-      carParking: this.state.carParking,
       tags: this.state.tags,
       days: this.state.days,
       PlaceId: this.state.PlaceId,
@@ -175,7 +173,6 @@ class AddEvent extends Component {
             openTime={this.state.openTime}
             closeTime={this.state.closeTime}
             fee={this.state.fee}
-            carParking={this.state.carParking}
             days={this.state.days}
             tags={this.state.tags}
             placesData={this.state.placesData}

@@ -6,15 +6,7 @@ import "../../../static/Form.css";
 import Imagecontrol from "../../../containers/imagerender/imagecontrol"
 
 
-const optionsDay = [
-  { key: 1, text: "วันจันทร์", value: "mon" },
-  { key: 2, text: "วันอังคาร", value: "tue" },
-  { key: 3, text: "วันพุธ", value: "wed" },
-  { key: 4, text: "วันพฤหัสบดี", value: "thu" },
-  { key: 5, text: "วันศุกร์", value: "fri" },
-  { key: 6, text: "วันเสาร์", value: "sat" },
-  { key: 7, text: "วันอาทิตย์", value: "sun" }
-];
+
 
 const optionsTime = [
   { key: 1, text: "05:00", value: "05:00" },
@@ -119,7 +111,7 @@ const EventForm = props => {
         </Form.Group>
       </div>
       <Form.Group>
-        <div className="Radio">
+      <div className="Radio">
           <Form.Group grouped>
             <label>ค่าใช้จ่าย</label>
             <Form.Radio
@@ -129,57 +121,44 @@ const EventForm = props => {
               checked={props.fee === "yes"}
               onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
+            {props.fee === 'yes' ? (
+              <Form.TextArea
+                name="feePrice"
+                label="ค่าเข้าชม"
+                placeholder="ค่าเข้าชม"
+                width={14}
+                value={props.feePrice}
+                onChange={(e, { value }) => props.FeeOption("feePrice", value)
+              }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "ต้องระบุค่าใช้จ่าย" }}
+              />
+            ) : <p />}
             <Form.Radio
               label="ไม่มี"
               name="fee"
-              value="no"
-              checked={props.fee === "no"}
+              value="-"
+              checked={props.fee === "-"}
               onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
           </Form.Group>
         </div>
-        <div className="Radio">
-          <Form.Group grouped>
-            <label>ที่จอดรถ</label>
-            <Form.Radio
-              label="มี"
-              name="parking"
-              value="yes"
-              checked={props.carParking === "yes"}
-              onChange={(e, { value }) =>
-                props.CarParkingOption("carParking", value)
-              }
-            />
-            <Form.Radio
-              label="ไม่มี"
-              name="parking"
-              value="no"
-              checked={props.carParking === "no"}
-              onChange={(e, { value }) =>
-                props.CarParkingOption("carParking", value)
-              }
-            />
-          </Form.Group>
-        </div>
       </Form.Group>
-      <label>วันที่เปิดทำการ</label>
-      <div className="Body">
-        <Dropdown
-          multiple
-          selection
-          options={optionsDay}
-          placeholder="วันที่เปิดทำการ"
-          renderLabel={renderLabel}
-          require="true"
-          name="day_tag"
-          errorLabel={<Label color="red" pointing />}
-          validations={{
-            customValidation: (values, value) => !(!value || value.length < 1)
-          }}
-          validationErrors={{ customValidation: "ต้องเลือกวันที่เปิดทำการ" }}
-          onChange={(e, { value }) => props.DaysSelected("days", value)}
-        />
-      </div>      
+      
+
+
+  <Form.TextArea
+    name="day_tag"
+    label="ช่วงเวลาจัดงาน"
+    placeholder="ช่วงเวลาจัดงาน"
+    width={14}
+    //value={placeholder}
+    onChange={(e, { value }) => props.DaysSelected("days", value)}
+    required
+    errorLabel={<Label color="red" pointing />}
+    validationErrors={{ customValidation: "ต้องเลือกช่วงเวลาจัดงาน" }}
+  />
       <div className="Body">
       <label>เวลาเปิดทำการ</label>
         <Dropdown                    
