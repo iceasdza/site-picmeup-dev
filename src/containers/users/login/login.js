@@ -47,12 +47,6 @@ class Login extends Component {
     const { open,redirect } = this.state
     if(redirect && Cookies.get('user') !== undefined){
       window.location.replace("/main");
-    // return  (
-    //   <Redirect
-    //   // from={window.location.href}
-    //   to={{ pathname: "/main" }}
-    // />
-    // )
     }
     return (
       <div>

@@ -11,7 +11,7 @@ const mainInfo = props => {
       <div>
         <Divider horizontal>
           {" "}
-          <p className="headers">ไป{props.activeActivity}ที่ไหนดี</p>
+          <p className="headers">{props.activityText}</p>
         </Divider>
         <Card.Group itemsPerRow={4} centered className="showframe">
           {props.recomendPlace.map(
@@ -44,7 +44,7 @@ const mainInfo = props => {
                       color="red"
                       content="DELETE"
                       value={index}
-                      onClick={props.deletePlace}
+                      onClick={e=>props.removeData('place',data._id,data.placeName)}
                     />
                       </div>
                     ) : (
@@ -97,7 +97,7 @@ const mainInfo = props => {
                           color="red"
                           content="DELETE"
                           value={index}
-                          onClick={props.deleteEvent}
+                          onClick={e=>props.removeData('event',data._id,data.eventName)}
                         />
                       </div>
                     ) : (
@@ -150,7 +150,7 @@ const mainInfo = props => {
                       color="red"
                       content="DELETE"
                       value={index}
-                      onClick={props.deletePlace}
+                      onClick={e=>props.removeData('place',data._id,data.placeName)}
                     />
                       </div>
                     ) : (
@@ -206,7 +206,7 @@ const mainInfo = props => {
                           color="red"
                           content="DELETE"
                           value={index}
-                          onClick={props.deleteEvent}
+                          onClick={e=>props.removeData('event',data._id,data.eventName)}
                         />
                       </div>
                     ) : (
@@ -257,7 +257,7 @@ const mainInfo = props => {
                       color="red"
                       content="DELETE"
                       value={index}
-                      onClick={props.deletePlace}
+                      onClick={e=>props.removeData('place',data._id,data.placeName)}
                     />
                       </div>
                     ) : (

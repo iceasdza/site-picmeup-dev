@@ -5,6 +5,8 @@ import EventForm from "../../../components/admin/events/eventAddForm";
 import axios from "../../../lib/axios";
 import { Redirect } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
+import Cookies from "js-cookie";
+const user = Cookies.get("user");
 class AddEvent extends Component {
   state = {
     eventName: "",
@@ -158,6 +160,9 @@ class AddEvent extends Component {
   render() {
     const { redirect, open } = this.state;
     if (redirect) {
+      return <Redirect to={{ pathname: "/main" }} />;
+    }
+    if (user!=='admin') {
       return <Redirect to={{ pathname: "/main" }} />;
     }
     return (

@@ -2,9 +2,9 @@ import React, { Component } from "react";
 import ProfileForm from "../../../components/users/profile/profileForm";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
-import { Header, Image, Table, Menu, Card, Icon } from "semantic-ui-react";
+import { Header, Image, Table, Menu, Card, Icon ,Button} from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import AdminMain from "../../admin/adminMain";
+// import AdminMain from "../../admin/adminMain";
 import LoadingScreen from '../../screen/loading'
 import swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
@@ -27,6 +27,50 @@ class Profile extends Component {
       open:true
     };
   }
+
+  modalRemoveAlbum = async(id,albumName)=>{
+      return(
+        swal({
+          title: 'คุณแน่ใจหรือ ?',
+          text: "คุณต้องการจะลบอัลบั้ม "+albumName+" หรือไม่ ?",
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes'
+        }).then((result) => {
+          if (result.value) {
+            axios.post('/api/deleteAlbum/'+id)
+            swal(
+              'ลบเรียบร้อย!'
+            )
+            this.getData()
+          }
+        })
+      )
+  }
+
+  modalRemoveTopic = async(id,albumName)=>{
+    return(
+      swal({
+        title: 'คุณแน่ใจหรือ ?',
+        text: "คุณต้องการจะลบมีตติ้ง "+albumName+" หรือไม่ ?",
+        type: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes'
+      }).then((result) => {
+        if (result.value) {
+          const data = axios.post('/api/deleteTopic/'+id)
+          swal(
+            'ลบเรียบร้อย!'
+          )
+          this.getData()
+        }
+      })
+    )
+}
 
   modalInbox = async (reciver, avatar, message,status,id) => {
     if(status){
@@ -157,7 +201,9 @@ class Profile extends Component {
         >
           <Card.Content header={data.topicName} />
         </Link>
-        <Card.Content description={data.creator + " : " + data.create_date} />
+        <Card.Content >{data.creator + " : " + data.create_date} <Button color='red' onClick={e=>this.modalRemoveTopic(data._id,data.topicName)}>Delete</Button>
+        </Card.Content>
+           
       </Card>
     ));
   };
@@ -203,6 +249,7 @@ class Profile extends Component {
               <Card.Meta>
                 <span className="date">{data.createDate}</span>
               </Card.Meta>
+              <Button color='red' onClick={e=>this.modalRemoveAlbum(data._id,data.albumName)}>Delete</Button>
             </Card.Content>
           </Card>
         ))}
@@ -255,10 +302,6 @@ class Profile extends Component {
   };
   render() {
     const { activeItem } = this.state;
-
-    if (user === "admin") {
-      return <AdminMain />;
-    }
     return (
       <div className="container fluid">
                 <LoadingScreen
