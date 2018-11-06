@@ -69,3 +69,6 @@
 a.active.item.menuName,a.item.menuName{
     color: black!important
 }
+.uploadAvatar{
+    background-color: blue;
+}

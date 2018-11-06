@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Button, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import TopicsListComponent from "../../components/topic/topicsListComponent";
+// import TopicsListComponent from "../../components/topic/topicsListComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
 import { Pagination } from 'semantic-ui-react'
@@ -40,8 +40,7 @@ class TopicList extends Component {
   }
 
   handlePaginationChange = (e, { activePage }) => {
-    this.setState({ activePage })
-    
+    this.setState({ activePage })   
 }
 
 renderTopic = () =>{

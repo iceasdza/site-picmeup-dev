@@ -10,6 +10,8 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import "../../../static/map.css";
 import axios from "../../../lib/axios";
+import Cookies from "js-cookie";
+const user = Cookies.get("user");
 class AddPlace extends Component {
   state = {
     placeName: "",
@@ -269,6 +271,9 @@ class AddPlace extends Component {
   render() {
     const { redirect, open } = this.state;
     if (redirect) {
+      return <Redirect to={{ pathname: "/main" }} />;
+    }
+    if (user!=='admin') {
       return <Redirect to={{ pathname: "/main" }} />;
     }
     return (
