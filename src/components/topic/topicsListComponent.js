@@ -3,7 +3,7 @@ import { Divider } from "semantic-ui-react";
 import "../../static/topicView.css";
 const TopicsListComponent = props => {
   return (
-    <div className="container fluid">
+    <div>
       <Divider horizontal>กระทู้</Divider>
       {props.CreateTopicButton()}
       {props.renderTopicList()}

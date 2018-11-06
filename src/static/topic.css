@@ -49,3 +49,6 @@ blockquote{
 .ql-size-small {
   font-size: 0.75em;
 }
+.ui.pagination.menu .item{
+  color: black!important;
+}
