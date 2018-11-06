@@ -1,0 +1,28 @@
+.imageHomeSize{
+    object-fit: cover;
+    width: 100%;
+    height: 200px;
+ }
+ .showImage{
+    object-fit: cover; 
+    cursor: pointer;
+ }
+
+ .showCard{   
+    cursor: pointer;
+ }
+
+ .showPlace{
+     text-align: center!important;    
+ }
+
+ .topoicHeader{
+    font-family: 'Kanit'!important;
+    font-size: 25px!important;
+ }
+
+ .inputScarch{
+    font-family: 'Kanit'!important;
+    font-size: 25px!important;    
+    text-align: center!important;  
+ }

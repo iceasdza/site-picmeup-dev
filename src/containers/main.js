@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import "../static/Header.css";
 import { Menu, Responsive } from "semantic-ui-react";
-import { Image, Input, Icon, Sidebar, Segment } from "semantic-ui-react";
+import { Image, Icon, Sidebar, Segment } from "semantic-ui-react";
 import Routing from "./routes";
 import Cookies from "js-cookie";
 import { NavLink } from "react-router-dom";
@@ -27,7 +27,6 @@ class Main extends Component {
         <NavLink to="/places">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
-
         <NavLink to="/events">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
@@ -40,11 +39,9 @@ class Main extends Component {
         <NavLink to="/activity">
           <Menu.Item className="navBarMenu">กิจกรรม</Menu.Item>
         </NavLink>
-        {/* <Input
-          className="searchBarMore767"
-          action={{ icon: "search" }}
-          placeholder="Search..."
-        /> */}
+        <NavLink to="/searchpage">
+          <Menu.Item className="navBarMenu">ค้นหา</Menu.Item>
+        </NavLink>
       </Menu.Menu>
     );
   };
@@ -55,7 +52,6 @@ class Main extends Component {
         <NavLink to="/places">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
-
         <NavLink to="/events">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
@@ -67,6 +63,9 @@ class Main extends Component {
         </NavLink>
         <NavLink to="/activity">
           <Menu.Item className="navBarMenu">กิจกรรม</Menu.Item>
+        </NavLink>
+        <NavLink to="/searchpage">
+          <Menu.Item className="navBarMenu">ค้นหา</Menu.Item>
         </NavLink>
       </Menu.Menu>
     );
@@ -78,7 +77,6 @@ class Main extends Component {
         <NavLink to="/places">
           <Menu.Item className="navBarMenu">สถานที่</Menu.Item>
         </NavLink>
-
         <NavLink to="/events">
           <Menu.Item className="navBarMenu">อีเว้นท์</Menu.Item>
         </NavLink>
@@ -91,26 +89,13 @@ class Main extends Component {
         <NavLink to="/activity">
           <Menu.Item className="navBarMenu">กิจกรรม</Menu.Item>
         </NavLink>
+        <NavLink to="/searchpage">
+          <Menu.Item className="navBarMenu">ค้นหา</Menu.Item>
+        </NavLink>
       </Menu.Menu>
     );
-  };
+  };  
 
-  searchMenuBar = () => {
-    return (
-      <Menu.Menu>
-        <Menu.Item className="searchBar">
-          <Input inverted transparent icon="search" placeholder="ค้นหา..." />
-        </Menu.Item>
-      </Menu.Menu>
-    );
-  };
-  searchMenuBarMobile = () => {
-    return (
-      <Menu.Item className="searchBarMobile">
-        <Input transparent inverted icon="search" placeholder="Search..." />
-      </Menu.Item>
-    );
-  };
   hamburgerMenu = () => {
     return (
       <Menu.Item onClick={this.handleButtonClick}>
@@ -169,6 +154,11 @@ class Main extends Component {
               <p className="sideMenuMobile">กิจกรรม</p>
             </Menu.Item>
           </NavLink>
+          <NavLink to="/searchpage">
+          <Menu.Item as="a">
+              <p className="sideMenuMobile">ค้นหา</p>
+            </Menu.Item>          
+        </NavLink>
           <NavLink to="/login">
             <Menu.Item as="a">
               <p className="sideMenuMobile">เข้าสู่ระบบ</p>
@@ -211,38 +201,49 @@ class Main extends Component {
               <p className="sideMenuMobile">อีเว้นท์</p>
             </Menu.Item>
           </NavLink>
+
           <NavLink to="/meeting">
             <Menu.Item as="a">
               <p className="sideMenuMobile">มีตติ้ง</p>
             </Menu.Item>
           </NavLink>
+
           <NavLink to="/gallery">
             <Menu.Item as="a">
               <p className="sideMenuMobile">แกลอรี่</p>
             </Menu.Item>
           </NavLink>
+
           <NavLink to="/activity">
             <Menu.Item as="a">
               <p className="sideMenuMobile">กิจกรรม</p>
             </Menu.Item>
           </NavLink>
+
+          <NavLink to="/searchpage">
+          <Menu.Item as="a">
+              <p className="sideMenuMobile">ค้นหา</p>
+            </Menu.Item>         
+        </NavLink>
+
           <NavLink to="/findbynear">
               <Menu.Item as="a">
                 <p className="sideMenuMobile">หาคนใกล้เคียง</p>
               </Menu.Item>
             </NavLink>
+
           <Menu.Item as="a">
             <p className="sideMenuMobile">
               ยินดีต้อนรับคุณ {Cookies.get("user")}
             </p>
           </Menu.Item>
+
           <Menu.Item as="a" onClick={this.logout}>
             <p className="sideMenuMobile">ลงชื่อออก</p>
           </Menu.Item>
         </Sidebar>
       );
     }
-
     return tmp;
   };
 
@@ -251,7 +252,6 @@ class Main extends Component {
     if (Cookies.get("user") !== undefined) {
       tmp = (
         <Menu.Menu position="right" className="navBarMenuRight">
-          {/* {this.searchMenuBar()} */}
           <NavLink to="/findbynear">
             <Menu.Item>
               <p className="rightMenuBar">หาคนใกล้เคียง</p>
@@ -273,7 +273,6 @@ class Main extends Component {
     } else {
       tmp = (
         <Menu.Menu position="right">
-          {/* {this.searchMenuBar()} */}
           <NavLink to="/login">
             <Menu.Item>
               <p className="rightMenuBar">ลงชื่อเข้าใช้</p>
@@ -294,6 +293,7 @@ class Main extends Component {
     Cookies.remove("user");
     this.setState({ redirect: true });
   };
+
   render() {
     let { redirect } = this.state;
     if (redirect && Cookies.get("user") === undefined) {
@@ -303,10 +303,6 @@ class Main extends Component {
       <Segment.Group>
         <Responsive as={Segment} minWidth={1570}>
           <Menu inverted secondary>
-            {/* <Menu.Item header className="logoText">
-            
-              PICMEUP
-            </Menu.Item> */}
             <NavLink to="/main">
             <Menu.Item header className="logoText">
              PICMEUP
@@ -329,20 +325,18 @@ class Main extends Component {
           </Menu>
         </Responsive>
 
-
         {/* iPad */}
         {/* <Responsive as={Segment} minWidth={768} maxWidth={1024}>
         <Menu secondary>
             {this.hamburgerMenu()}
-            {this.searchMenuBarMobile()}
+            
           </Menu>
           {this.sidebarMenu()}
         </Responsive> */}
 
         <Responsive as={Segment} minWidth={0} maxWidth={1024}>
           <Menu secondary>
-            {this.hamburgerMenu()}
-            {this.searchMenuBarMobile()}
+            {this.hamburgerMenu()}            
           </Menu>
           {this.sidebarMenu()}
         </Responsive>
