@@ -193,7 +193,7 @@ class Demo extends React.Component {
           longitude: resp.data.longitude
         }
       });
-      this.getData()
+      window.location.reload()
     }else{
       await axios.put("/api/updateGeolocation", {
         latitude: null,

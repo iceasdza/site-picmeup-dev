@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import EditTopicComponent from "../../components/topic/editTopicComponent";
 import axios from "../../lib/axios";
+import swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 import { Redirect } from "react-router-dom";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label } from "semantic-ui-react";
@@ -85,12 +87,33 @@ class CreateTopic extends Component {
     if (this.state.placeId === "") {
       return;
     } else {
-      await axios.put("/api/updateTopic/"+this.state._id, {
+      return swal({
+        title: "คุณแน่ใจหรือ ?",
+        text: "คุณต้องการจะบันทึกการแก้ไข้มมีตติ้ง " + this.state.topicName + " หรือไม่ ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then(result => {
+        if (result.value) {
+        axios.put("/api/updateTopic/"+this.state._id, {
         topicName: this.state.topicName,
         content: this.state.content,
         placeId: this.state.placeId
+      }).then(value=>{
+        if(value.status === 200){
+          this.setState({ redirect: true }) 
+        }
+      })
+        }
       });
-      this.setState({ redirect: true });
+      // await axios.put("/api/updateTopic/"+this.state._id, {
+      //   topicName: this.state.topicName,
+      //   content: this.state.content,
+      //   placeId: this.state.placeId
+      // });
+      // this.setState({ redirect: true });
     }
   };
 

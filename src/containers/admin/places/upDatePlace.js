@@ -10,6 +10,8 @@ import PlacesAutocomplete, {
 } from "react-places-autocomplete";
 import { Redirect } from "react-router-dom";
 import "../../../static/map.css";
+import swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 class Home extends Component {
   state = {
     placeName: "",
@@ -238,50 +240,97 @@ class Home extends Component {
     this.setState({ open: true });
     const lengthOfFile = document.getElementById("img").files.length;
     //--------no image updated-----------//
+    
     if (lengthOfFile === 0) {
       this.setState({ open: true });
-      const resp = await axios.put("/api/UpdatePlaceFromId/" + this.state.id, {
-        placeName: this.state.placeName,
-        placeDes: this.state.placeDes,
-        tel: this.state.tel,
-        openTime: this.state.openTime,
-        closeTime: this.state.closeTime,
-        fee: this.state.fee,
-        carParking: this.state.carParking,
-        tags: this.state.tags,
-        days: this.state.days,
-        FileList: this.state.FileList,
-        editor: "Patis editor",
-        activities:this.state.activities,
-        images: this.state.images,
-        lat:this.state.lat,
-        lng:this.state.lng
-      });
-      if(resp.status === 200){
-        this.setState({ redirect: true });
-      }
+      return swal({
+        title: "คุณแน่ใจหรือ ?",
+        text: "คุณต้องการแก้ไขสถานที่" + this.state.placeName + "ระบบหรือไม่ ?",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then(result => {
+        if (result.value) {
+        axios.put("/api/UpdatePlaceFromId/" + this.state.id, {
+            placeName: this.state.placeName,
+            placeDes: this.state.placeDes,
+            tel: this.state.tel,
+            openTime: this.state.openTime,
+            closeTime: this.state.closeTime,
+            fee: this.state.fee,
+            carParking: this.state.carParking,
+            tags: this.state.tags,
+            days: this.state.days,
+            FileList: this.state.FileList,
+            editor: "Patis editor",
+            activities:this.state.activities,
+            images: this.state.images,
+            lat:this.state.lat,
+            lng:this.state.lng
+          }).then(value=>{
+            if(value.status===200){
+              this.setState({ redirect: true });
+            }
+          })
+        }
+      })
     }
     this.setState({ open: true });
-    const resp =await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
-        placeName: this.state.placeName,
-        placeDes: this.state.placeDes,
-        tel: this.state.tel,
-        openTime: this.state.openTime,
-        closeTime: this.state.closeTime,
-        fee: this.state.fee,
-        carParking: this.state.carParking,
-        tags: this.state.tags,
-        days: this.state.days,
-        FileList: this.state.FileList,
-        editor: "Patis editor",
-        images:this.state.images,
-        activities:this.state.activities,
-        lat:this.state.lat,
-        lng:this.state.lng
-      })
-      if(resp.status === 200){
-        this.setState({ redirect: true });
+    return swal({
+      title: "คุณแน่ใจหรือ ?",
+      text: "คุณต้องการแก้ไขสถานที่" + this.state.placeName + "ระบบหรือไม่ ?",
+      type: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then(result => {
+      if (result.value) {
+        axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
+              placeName: this.state.placeName,
+              placeDes: this.state.placeDes,
+              tel: this.state.tel,
+              openTime: this.state.openTime,
+              closeTime: this.state.closeTime,
+              fee: this.state.fee,
+              carParking: this.state.carParking,
+              tags: this.state.tags,
+              days: this.state.days,
+              FileList: this.state.FileList,
+              editor: "Patis editor",
+              images:this.state.images,
+              activities:this.state.activities,
+              lat:this.state.lat,
+              lng:this.state.lng
+            }).then(value=>{
+          if(value.status===200){
+            this.setState({ redirect: true });
+          }
+        })
       }
+    })
+    // const resp =await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
+    //     placeName: this.state.placeName,
+    //     placeDes: this.state.placeDes,
+    //     tel: this.state.tel,
+    //     openTime: this.state.openTime,
+    //     closeTime: this.state.closeTime,
+    //     fee: this.state.fee,
+    //     carParking: this.state.carParking,
+    //     tags: this.state.tags,
+    //     days: this.state.days,
+    //     FileList: this.state.FileList,
+    //     editor: "Patis editor",
+    //     images:this.state.images,
+    //     activities:this.state.activities,
+    //     lat:this.state.lat,
+    //     lng:this.state.lng
+    //   })
+    //   if(resp.status === 200){
+    //     this.setState({ redirect: true });
+    //   }
   };
 
   render() {

@@ -5,6 +5,8 @@ import EventEditForm from "../../../components/admin/events/eventEditForm";
 import axios from "../../../lib/axios";
 import { Redirect } from "react-router-dom";
 import {  Dimmer, Loader } from "semantic-ui-react";
+import swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 class UpdateEvent extends Component {
   state = {
     eventName: "",
@@ -163,7 +165,17 @@ class UpdateEvent extends Component {
     //--------no image updated-----------//
     if (lengthOfFile === 0) {
       this.setState({ open: true });
-      const resp = await axios.put("/api/UpdateEventFromId/" + this.state.id, {
+      return swal({
+        title: "คุณแน่ใจหรือ ?",
+        text: "คุณต้องการแก้ไขอีเว้นท์" + this.state.eventName + "ระบบหรือไม่ ?",
+        type: "question",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then(result => {
+        if (result.value) {
+        axios.put("/api/UpdateEventFromId/" + this.state.id, {
         eventName: this.state.eventName,
         eventDes: this.state.eventDes,
         tel: this.state.tel,
@@ -175,14 +187,25 @@ class UpdateEvent extends Component {
         days: this.state.days,
         images: this.state.images,
         PlaceId: this.state.PlaceId
-      });
-      if(resp.status === 200){
-        this.setState({ redirect: true });
-      }
+      }).then(value=>{
+            if(value.status===200){
+              this.setState({ redirect: true });
+            }
+          })
+        }
+      })
     }
-
-   
-    const resp = await axios.put("/api/UpdateEventFromId/" + this.state.id, {
+    return swal({
+      title: "คุณแน่ใจหรือ ?",
+      text: "คุณต้องการแก้ไขอีเว้นท์" + this.state.eventName + "ระบบหรือไม่ ?",
+      type: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes"
+    }).then(result => {
+      if (result.value) {
+      axios.put("/api/UpdateEventFromId/" + this.state.id, {
       eventName: this.state.eventName,
       eventDes: this.state.eventDes,
       tel: this.state.tel,
@@ -196,10 +219,13 @@ class UpdateEvent extends Component {
       PlaceId: this.state.PlaceId,
       FileName: this.state.FileName,
       images: this.state.images
-    });
-    if(resp.status === 200){
-      this.setState({ redirect: true });
-    }
+    }).then(value=>{
+          if(value.status===200){
+            this.setState({ redirect: true });
+          }
+        })
+      }
+    })
   };
 
   render() {
