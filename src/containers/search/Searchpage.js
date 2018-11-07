@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Input, Form, Card } from 'semantic-ui-react'
+import { Input, Form, Card,Image } from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 import '../../static/Scarch.css'
 import axios from "../../lib/axios";
@@ -10,7 +10,8 @@ class Searchpage extends Component {
         super(props);
         this.state = {
             isLoading: false,
-            results: [],
+            resultPlaces: [],
+            resultEvents: [],
             value: ""
         };
     }
@@ -21,16 +22,27 @@ class Searchpage extends Component {
         )
     }
     getDataForSearch = async () => {
-        const resp = await axios.get(
-            "/api/getDataForSearch/" + this.state.value
+        const respPlaces = await axios.get(
+            "/api/getDataForSearchPlace/" + this.state.value
+        );
+        const respEvents = await axios.get(
+            "/api/getDataForSearchEvent/" + this.state.value
         );
         this.setState({ isLoading: true })
-        if (resp.status === 200) {
+        if (respPlaces.status === 200) {
             this.setState({
                 isLoading: false,
-                results: resp.data
+                resultPlaces: respPlaces.data,    
+                resultEvents: respEvents.data,       
             });
-        }
+        }      
+        if (respEvents.status === 200) {
+            this.setState({
+                isLoading: false,
+                
+                resultEvents: respEvents.data,       
+            });
+        }        
     };
 
 
@@ -45,10 +57,12 @@ class Searchpage extends Component {
                 <Form className="inputScarch" onSubmit={this.getDataForSearch}>
                     {this.inputScarch()}
                 </Form>
+                <p className="inputScarch">สถานที่</p>
                 <div>
                     <Card.Group itemsPerRow={4} centered >
-                        { this.state.results.map((data, index) => (
+                        { this.state.resultPlaces.map((data, index) => (
                             <Card key={index} >
+                            <Image src={data.images[0]} className="showhotimage" />
                                 <Card.Content>
                                     <Link
                                         to={{
@@ -58,6 +72,28 @@ class Searchpage extends Component {
                                     >
                                         <h3 className="showhotname">{data.placeName}</h3>
                                         <p className="description">{data.placeDes}</p>
+                                    </Link>
+                                </Card.Content>
+                            </Card>
+                        ))}
+                    </Card.Group>
+                </div>
+<p className="inputScarch">อีเว้นท์</p>
+
+                <div>
+                    <Card.Group itemsPerRow={4} centered >
+                        { this.state.resultEvents.map((data, index) => (
+                            <Card key={index} >
+                            <Image src={data.images[0]} className="showhotimage" />
+                                <Card.Content>
+                                    <Link
+                                        to={{
+                                            pathname: "/eventInfo/",
+                                            search: data._id
+                                        }}
+                                    >
+                                       <h3 className="showhotname">{data.eventName}</h3>
+                      <p className="description">{data.eventDes}</p>
                                     </Link>
                                 </Card.Content>
                             </Card>
