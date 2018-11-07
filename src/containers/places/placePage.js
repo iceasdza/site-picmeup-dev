@@ -59,6 +59,9 @@ class PlacePage extends Component {
                 <h3 className="showhotname">{data.placeName}</h3>
                 <p className="description">{data.placeDes}</p>
               </Link>
+              <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
             </Card.Content>
           </Card>
         ))}

@@ -33,6 +33,8 @@ class Home extends Component {
     value: "",
     activeContent:'',
     activityText:'',
+    hotEvents:[],
+    hotPlaces:[]
   };
 
   handleClick = (e, titleProps) => {
@@ -46,10 +48,14 @@ class Home extends Component {
   getData = async () => {
     const places = await axios.get("/api/getPlaceInfo");
     const events = await axios.get("/api/GetEventInfo");
+    const hotEvents = await axios.get('/api/getHotEvent');
+    const hotPlaces = await axios.get('/api/getHotPlace')
     if (places.status === 200 && events.status === 200) {
       this.setState({
         placesData: places.data,
         eventData: events.data,
+        hotEvents:hotEvents.data,
+        hotPlaces:hotPlaces.data,
         open: false
       });
     }
@@ -387,6 +393,8 @@ class Home extends Component {
             activeActivity={this.state.activeActivity}
             removeData={this.removeData}
             activityText={this.state.activityText}
+            hotEvents={this.state.hotEvents}
+            hotPlaces={this.state.hotPlaces}
           />
         </div>
       </div>

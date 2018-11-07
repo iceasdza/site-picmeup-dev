@@ -75,7 +75,7 @@ class TopicInfo extends Component {
         <Link
           to={{
             pathname: "/editTopic/",
-            search: this.state._id
+            state: { id: this.state._id }
           }}
         >
           <Button  content="edit" />

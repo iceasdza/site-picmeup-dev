@@ -29,11 +29,13 @@ import EditProfile from '../users/profile/editprofile'
 import FindByNear from '../users/findByNear/findByNearPage'
 import EditAlbum from '../users/album/editAlbum'
 import Activity from '../activity/activity'
+import UserDetail from '../users/userDetail'
 
 import Searchpage from '../search/Searchpage'
 export default () => (
   <Switch>
     <Route exact path="/" component={Welcome} />
+    <Route exact path="/user" component={UserDetail} />
     
     <Route exact path="/main" component={Home} />
     <Route exact path="/register" component={Register} />

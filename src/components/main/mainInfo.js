@@ -1,9 +1,10 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Card, Image, Button, Divider } from "semantic-ui-react";
+import { Card, Image, Button, Divider} from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../static/showdata.css";
 import Cookies from "js-cookie";
+import '../../static/home.css'
 const user = Cookies.get("user");
 const mainInfo = props => {
   return (
@@ -27,28 +28,33 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.placeName}</h3>
-                      <p className='description'>{data.placeDes}</p>
+                      <p className="description">{data.placeDes}</p>
                     </Link>
-                    {user === 'admin' ? (
+                    <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
+                    {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
-                      to={{
-                        pathname: "/updatePlace",
-                        state: { id: data._id }
-                      }}
-                    >
-                      <Button primary content="Edit" />
-                    </Link>
-                    <Button
-                      color="red"
-                      content="DELETE"
-                      value={index}
-                      onClick={e=>props.removeData('place',data._id,data.placeName)}
-                    />
+                          to={{
+                            pathname: "/updatePlace",
+                            state: { id: data._id }
+                          }}
+                        >
+                          <Button primary content="Edit" />
+                        </Link>
+                        <Button
+                          color="red"
+                          content="DELETE"
+                          value={index}
+                          onClick={e =>
+                            props.removeData("place", data._id, data.placeName)
+                          }
+                        />
                       </div>
                     ) : (
-                      <p></p>
+                      <p />
                     )}
                   </Card.Content>
                 </Card>
@@ -59,7 +65,7 @@ const mainInfo = props => {
         </Card.Group>
       </div>
 
-{/* =================================================end recomend=================================================== */}
+      {/* =================================================end recomend=================================================== */}
 
       <div>
         <Divider horizontal>
@@ -67,7 +73,7 @@ const mainInfo = props => {
           <p className="headers">อีเว้นท์</p>
         </Divider>
         <Card.Group itemsPerRow={3} centered className="showhotframe">
-          {props.eventData.map(
+          {props.hotEvents.map(
             (data, index) =>
               index < 3 ? (
                 <Card key={index} className="showhotcard">
@@ -80,9 +86,12 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.eventName}</h3>
-                      <p className='description'>{data.eventDes}</p>
+                      <p className="description">{data.eventDes}</p>
                     </Link>
-                    {user === 'admin' ? (
+                    <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
+                    {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
@@ -97,13 +106,14 @@ const mainInfo = props => {
                           color="red"
                           content="DELETE"
                           value={index}
-                          onClick={e=>props.removeData('event',data._id,data.eventName)}
+                          onClick={e =>
+                            props.removeData("event", data._id, data.eventName)
+                          }
                         />
                       </div>
                     ) : (
-                      <p></p>
+                      <p />
                     )}
-                    
                   </Card.Content>
                 </Card>
               ) : (
@@ -119,7 +129,7 @@ const mainInfo = props => {
           <p className="headers">สถานที่</p>
         </Divider>
         <Card.Group itemsPerRow={3} centered className="showhotframe">
-          {props.placesData.map(
+          {props.hotPlaces.map(
             (data, index) =>
               index < 3 ? (
                 <Card key={index} className="showhotcard">
@@ -132,31 +142,34 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.placeName}</h3>
-                      <p className='description'>{data.placeDes}</p>
+                      <p className="description">{data.placeDes}</p>
                     </Link>
-
-                      {user === 'admin' ? (
+                    <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
+                    {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
-                      to={{
-                        pathname: "/updatePlace",
-                        state: { id: data._id }
-                      }}
-                    >
-                      <Button primary content="Edit" />
-                    </Link>
-                    <Button
-                      color="red"
-                      content="DELETE"
-                      value={index}
-                      onClick={e=>props.removeData('place',data._id,data.placeName)}
-                    />
+                          to={{
+                            pathname: "/updatePlace",
+                            state: { id: data._id }
+                          }}
+                        >
+                          <Button primary content="Edit" />
+                        </Link>
+                        <Button
+                          color="red"
+                          content="DELETE"
+                          value={index}
+                          onClick={e =>
+                            props.removeData("place", data._id, data.placeName)
+                          }
+                        />
                       </div>
                     ) : (
-                      <p></p>
+                      <p />
                     )}
- 
                   </Card.Content>
                 </Card>
               ) : (
@@ -189,9 +202,12 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showname">{data.eventName}</h3>
-                      <p className='description'>{data.eventDes}</p>
+                      <p className="description">{data.eventDes}</p>
                     </Link>
-                    {user === 'admin' ? (
+                    <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
+                    {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
@@ -206,11 +222,13 @@ const mainInfo = props => {
                           color="red"
                           content="DELETE"
                           value={index}
-                          onClick={e=>props.removeData('event',data._id,data.eventName)}
+                          onClick={e =>
+                            props.removeData("event", data._id, data.eventName)
+                          }
                         />
                       </div>
                     ) : (
-                      <p></p>
+                      <p />
                     )}
                   </Card.Content>
                 </Card>
@@ -240,28 +258,33 @@ const mainInfo = props => {
                       }}
                     >
                       <h3 className="showhotname">{data.placeName}</h3>
-                      <p className='description'>{data.placeDes}</p>
+                      <p className="description">{data.placeDes}</p>
                     </Link>
-                    {user === 'admin' ? (
+                    <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
+                    {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
-                      to={{
-                        pathname: "/updatePlace",
-                        state: { id: data._id }
-                      }}
-                    >
-                      <Button primary content="Edit" />
-                    </Link>
-                    <Button
-                      color="red"
-                      content="DELETE"
-                      value={index}
-                      onClick={e=>props.removeData('place',data._id,data.placeName)}
-                    />
+                          to={{
+                            pathname: "/updatePlace",
+                            state: { id: data._id }
+                          }}
+                        >
+                          <Button primary content="Edit" />
+                        </Link>
+                        <Button
+                          color="red"
+                          content="DELETE"
+                          value={index}
+                          onClick={e =>
+                            props.removeData("place", data._id, data.placeName)
+                          }
+                        />
                       </div>
                     ) : (
-                      <p></p>
+                      <p />
                     )}
                   </Card.Content>
                 </Card>

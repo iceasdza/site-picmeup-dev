@@ -58,7 +58,11 @@ class EventPage extends Component {
                       <h3 className="showhotname">{data.eventName}</h3>
                       <p className="description">{data.eventDes}</p>
                     </Link>
+                    <Card.Content extra>
+                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
+                    </Card.Content>
                   </Card.Content>
+                  
                 </Card>
           )}
         </Card.Group>

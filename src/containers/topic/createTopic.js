@@ -20,7 +20,8 @@ class CreateTopic extends Component {
       topicName: "",
       placesName: [],
       placeId:'',
-      redirect:false
+      redirect:false,
+      topicPlace:''
     };
   }
 
@@ -33,14 +34,14 @@ class CreateTopic extends Component {
   };
 
   PlaceSelected = (field, value) => {
-    this.setState({ placeId: value });
+    this.setState({ placeId: value.id,topicPlace:value.name });
   };
 
   getData = async () => {
     const placesName = [];
     const resp = await axios.get("/api/getPlaceInfo");
     resp.data.map((data, index) =>
-      placesName.push({ key: index + 1, text: data.placeName, value: data._id })
+      placesName.push({ key: index + 1, text: data.placeName, value: {id:data._id,name:data.placeName} })
     );
     this.setState({ placesName: placesName });
   };
@@ -53,7 +54,7 @@ class CreateTopic extends Component {
         placeholder="สถานที่จัดงาน"
         require="true"
         name="place_select"
-        onChange={(e, { value }) => this.PlaceSelected("PlaceId", value)}
+        onChange={(e, { value},) => this.PlaceSelected("PlaceId", value)}
         errorLabel={<Label color="red" pointing />}
         validations={{
           customValidation: (values, value) => !(!value || value.length < 1)
@@ -75,7 +76,9 @@ class CreateTopic extends Component {
         topicName: this.state.topicName,
         content: this.state.text,
         creator: Cookies.get("user"),
-        placeId:this.state.placeId
+        placeId:this.state.placeId,
+        topicPlace:this.state.topicPlace
+        // placeName
       });
       this.setState({redirect:true})
     }

@@ -27,7 +27,7 @@ const editTopicComponent = props => {
 
 editTopicComponent.modules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ header: "1" }, { header: "2" }],
     [{ size: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [
@@ -46,7 +46,6 @@ editTopicComponent.modules = {
 };
 editTopicComponent.formats = [
   "header",
-  "font",
   "size",
   "bold",
   "italic",

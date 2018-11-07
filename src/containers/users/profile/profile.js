@@ -62,7 +62,7 @@ class Profile extends Component {
         confirmButtonText: 'Yes'
       }).then((result) => {
         if (result.value) {
-          const data = axios.post('/api/deleteTopic/'+id)
+          axios.post('/api/deleteTopic/'+id)
           swal(
             'ลบเรียบร้อย!'
           )

@@ -58,22 +58,18 @@ renderTopic = () =>{
       >
         <Card.Content header={data.topicName} />
       </Link>
-      <Card.Content description={data.creator + " : " + data.create_date} />
+      <Link
+        to={{
+          pathname: "/user/",
+          search: data.creator
+        }}
+      >
+      {data.creator}
+      </Link>
+      <Card.Content description={"ที่ "+data.topicPlace} />
     </Card>
     ))
   }
-//   const {page,activePage} = this.state
-//   if(page[activePage-1]){ 
-//   return page[activePage-1].map((data,index)=>{
-// (
-//   <p>aaaa</p>
-// )
-//   })
-//   }else{
-//     return(
-//       <p>loading...</p>
-//     )
-//   }
 }
 
   renderTopicList = () => {
@@ -111,13 +107,8 @@ renderTopic = () =>{
         <LoadingScreen
         open={this.state.open}
         />
-        {/* <TopicsListComponent
-          topics={this.state.topicsData}
-          CreateTopicButton={this.CreateTopicButton}
-          renderTopicList={this.renderTopicList}
-        /> */}
+        {this.CreateTopicButton()}
           {this.renderTopic()}
-        {/* {this.renderTopic()} */}
         <Pagination className="pagination" defaultActivePage={1} totalPages={this.state.page.length} onPageChange={this.handlePaginationChange}/>
       </div>
     );

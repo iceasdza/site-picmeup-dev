@@ -22,7 +22,8 @@ class CreateTopic extends Component {
       comments: [],
       placeName:'',
       placeImage:'',
-      _id:''
+      _id:'',
+      topicPlace:[]
     };
   }
 
@@ -35,11 +36,12 @@ class CreateTopic extends Component {
   };
 
   PlaceSelected = (field, value) => {
-    this.setState({ placeId: value });
+    console.log(value)
+    this.setState({ placeId: value.id,topicPlace:value.name });
   };
 
   getData = async () => {
-    const id = this.props.location.search.replace("?", "");
+    let id = this.props.location.state.id;
     const resp = await axios.get("/api/getTopicFromId/" + id);
     const data = resp.data[0];
     this.setState({
@@ -55,7 +57,7 @@ class CreateTopic extends Component {
     const placesName = [];
     const resp2 = await axios.get("/api/getPlaceInfo");
     resp2.data.map((data, index) =>
-      placesName.push({ key: index + 1, text: data.placeName, value: data._id })
+      placesName.push({ key: index + 1, text: data.placeName, value:{id:data._id,name:data.placeName} })
     );
     this.setState({ placesName: placesName });
   };
@@ -68,7 +70,6 @@ class CreateTopic extends Component {
         placeholder="สถานที่จัดงาน"
         require="true"
         name="place_select"
-        value={this.state.placeId}
         onChange={(e, { value }) => this.PlaceSelected("PlaceId", value)}
         errorLabel={<Label color="red" pointing />}
         validations={{
@@ -100,7 +101,8 @@ class CreateTopic extends Component {
         axios.put("/api/updateTopic/"+this.state._id, {
         topicName: this.state.topicName,
         content: this.state.content,
-        placeId: this.state.placeId
+        placeId: this.state.placeId,
+        topicPlace:this.state.topicPlace
       }).then(value=>{
         if(value.status === 200){
           this.setState({ redirect: true }) 

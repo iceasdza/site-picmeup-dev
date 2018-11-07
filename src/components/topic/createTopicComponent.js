@@ -27,7 +27,7 @@ const createTopicComponent = props => {
 
 createTopicComponent.modules = {
   toolbar: [
-    [{ header: "1" }, { header: "2" }, { font: [] }],
+    [{ header: "1" }, { header: "2" }],
     [{ size: [] }],
     ["bold", "italic", "underline", "strike", "blockquote"],
     [
@@ -46,7 +46,6 @@ createTopicComponent.modules = {
 };
 createTopicComponent.formats = [
   "header",
-  "font",
   "size",
   "bold",
   "italic",
