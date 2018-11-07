@@ -29,6 +29,8 @@ import EditProfile from '../users/profile/editprofile'
 import FindByNear from '../users/findByNear/findByNearPage'
 import EditAlbum from '../users/album/editAlbum'
 import Activity from '../activity/activity'
+
+import Searchpage from '../search/Searchpage'
 export default () => (
   <Switch>
     <Route exact path="/" component={Welcome} />
@@ -63,5 +65,7 @@ export default () => (
 
     <Route exact path="/events" component={Events}/>
     <Route exact path="/places" component={Places}/>
+
+    <Route exact path="/searchpage" component={Searchpage} />
   </Switch>
 );
