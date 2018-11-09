@@ -6,17 +6,9 @@ class UserDetail extends Component {
     constructor(props) {
         super(props);
         this.state = {
-          firstName: "",
-          lastName: "",
-          gender: "",
-          userName: "",
-          email: "",
-          tel: "",
-          messages: [],
-          activeItem: "profile",
           albums: [],
           topics:[],
-          commentedTopics:[],
+          user:[],
           open:true
         };
       }
@@ -28,12 +20,7 @@ class UserDetail extends Component {
         const topic = await axios.get('api/getTopicFromName/'+user)
         if(topic.status === 200 && data.status === 200 && album.status === 200){
             this.setState({
-                firstName: data.firstName,
-                lastName: data.lastName,
-                gender: data.gender,
-                userName: data.userName,
-                email: data.email,
-                tel: data.tel,
+                user:data.data,
                 albums: album.data,
                 topics:topic.data,
               });
@@ -52,12 +39,51 @@ class UserDetail extends Component {
             >
               <Card.Content header={data.topicName} />
             </Link>
-            <Card.Content >{data.creator + " : " + data.create_date} <Button color='red' onClick={e=>this.modalRemoveTopic(data._id,data.topicName)}>Delete</Button>
+            <Card.Content >{data.creator + " : " + data.create_date} 
             </Card.Content>
                
           </Card>
         ));
       };
+
+      renderGalleryList = () => {
+        return (
+          
+          <Card.Group itemsPerRow={4}>
+            {this.state.albums.map((data, index) => (
+              <Card key={index}>
+                <Image src={data.images[0]} />
+                <Card.Content>
+                  <Card.Header>
+                    <Link
+                      to={{
+                        pathname: "/gallery/albumInfo/",
+                        search: data._id
+                      }}
+                    >
+                      <h3 className="">{data.albumName}</h3>
+                    </Link>
+                  </Card.Header>
+                  <Card.Description>{data.albumDes}</Card.Description>
+                  <Card.Description>{data.albumOwner}</Card.Description>
+                  <Card.Meta>
+                    <span className="date">{data.createDate}</span>
+                  </Card.Meta>
+                </Card.Content>
+              </Card>
+            ))}
+          </Card.Group>
+        );
+      };
+
+      renderProfile=()=>{
+        return(
+          <div>
+            <Image src={this.state.user.avatar}/>
+            {this.state.user.userName}
+          </div>
+        )
+      }
 
       componentDidMount(){
           this.getData()
@@ -66,7 +92,9 @@ class UserDetail extends Component {
     render(){
         return(
             <div className="container fluid">
-                profile
+                {this.renderProfile()}
+                {this.renderGalleryList()}
+                {this.renderTopicList()}
             </div>
         )
     }
