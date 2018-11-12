@@ -1,12 +1,15 @@
 .headers{
     font-family: 'Kanit'!important;
-    font-size: 2.3em!important;    
+    font-size: 1.5em!important;    
+    margin-bottom: 0px;
+    font-weight: bold;
+    padding:0.7em;
 }
 
 .showhotframe{   
     padding-left: 10px!important;
     padding-right: 10px!important;
-    padding-top: 40px!important;
+    /* padding-top: 40px!important; */
     
 }
 
@@ -24,13 +27,18 @@
 .showhotname{
     font-family: 'Kanit'!important;
     font-size: 1.5em!important;
-    text-align: center!important;
+    white-space: nowrap; 
+    width: 100%; 
+    overflow: hidden;
+    text-overflow:ellipsis;
+    font-size: 16px!important;
+    color: #444;
+    margin: 0px;
 }
 
 .showframe{   
     padding-left: 10px!important;
     padding-right: 10px!important;
-    padding-top: 40px!important;
     
 }
 
@@ -49,13 +57,15 @@
     font-family: 'Kanit'!important;
     font-size: 1.5em!important;
     text-align: center!important;
+    
 }
 .description{
     white-space: nowrap; 
     width: 100%; 
     overflow: hidden;
     text-overflow:ellipsis;
-    font-size: 16px!important;
+    font-size: 1em!important;
+    color: #777
     /* display: -webkit-box;
 -webkit-line-clamp: 3;
 -webkit-box-orient: vertical;
