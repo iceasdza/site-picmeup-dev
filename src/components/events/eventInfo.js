@@ -4,7 +4,9 @@ import {
   Message,
   Card,
   Image,
-  Grid
+  Grid,
+  Label,
+  Icon
 } from "semantic-ui-react";
 import "../../static/home.css";
 // import Modal from "react-responsive-modal";
@@ -12,13 +14,29 @@ import { Link } from "react-router-dom";
 
 const EventInfo = props => (
   <div>
+    <Message.Header className="topHeader">
+      <p>
+        {props.eventName}
+      </p>
+    </Message.Header>
+    <Message.Header className="topHeader">
+      <p>สถานที่จัด :
+                    <Link
+          to={{
+            pathname: "/placeInfo",
+            search: props.placeId
+          }}
+        >{props.placeName}</Link>
+      </p>
+    </Message.Header>
+
     <div>
       <Card.Group itemsPerRow={4}>
         {props.images.map((src, index) => (
           <Card key={index} className="showCard">
             <Image
               src={src}
-              onClick={()=>props.modalImage(src)}
+              onClick={() => props.modalImage(src)}
               className="showImage"
             />
           </Card>
@@ -33,8 +51,11 @@ const EventInfo = props => (
         </Modal> */}
       </Card.Group>
       <div className="container fluid">
-          <p className="desc">{props.eventDes}</p>
-    </div>
+        <Message.Header className="topoicMainHeader">
+          <p>{props.eventName} [มีอะไร]</p>
+        </Message.Header>
+        <p className="desc">{props.eventDes}</p>
+      </div>
     </div>
     <Grid>
       <Grid.Column width={8}>
@@ -44,41 +65,36 @@ const EventInfo = props => (
       </Grid.Column>
       <Grid.Column width={8}>
         <Message>
-
           <Grid>
             <Grid.Column width={8}>
               <div>
                 <Message.Header className="topoicHeader">ช่วงเวลาจัดงาน</Message.Header>
-                <p className="topoicData">{props.days}</p>               
+                <p className="topoicData">{props.days}</p>
                 <Message.Header className="topoicHeader">เวลาจัดงาน</Message.Header>
-                <p className="topoicData"> {props.openTime} - {props.closeTime}</p>    
-                <Message.Header className="topoicHeader">ประเภทของอีเว้นท์</Message.Header>
-                <Message.List items={props.tags} />            
+                <p className="topoicData"> {props.openTime} - {props.closeTime}</p>
+                
+                <Message.List items={props.tags} />
               </div>
             </Grid.Column>
             <Grid.Column width={8}>
               <div>
                 <Message.Header className="topoicHeader">รายละเอียด</Message.Header>
-                <p className="topoicData"> ค่าบัตรเข้าร่วมงาน : {props.fee==='-'?'-':props.feePrice}</p>
+                <p className="topoicData"> ค่าบัตรเข้าร่วมงาน : {props.fee === '-' ? '-' : props.feePrice}</p>
                 <Message.Header className="topoicHeader">การติดต่อ</Message.Header>
-                <p className="topoicData"> เบอร์ติดต่อ : {props.tel}</p>                
-                <Message.Header className="topoicHeader">สถานที่จัด</Message.Header>
-                <div>
-                  <Message.Header className="topoicData">
-                    <Link
-                      to={{
-                        pathname: "/placeInfo",
-                        search: props.placeId
-                      }}
-                    >{props.placeName}</Link>
-                  </Message.Header>
-                </div>
+                <p className="topoicData"> ช่องทางการติดต่อ : {props.content}</p>
               </div>
             </Grid.Column>
           </Grid>
         </Message>
+        <Message.Header className="topoicData">ประเภทของอีเว้นท์</Message.Header>
+        {props.tags.map((tag, index) => (
+          <Label key={index} as='a' image>
+          <Icon disabled name='tag' />
+        {tag}
+      </Label>         
+        ))}          
       </Grid.Column>
-    </Grid>
+    </Grid>    
   </div>
 );
 export default EventInfo;
