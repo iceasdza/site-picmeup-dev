@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Divider } from "semantic-ui-react";
+import { Label, Divider,Icon } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imagecontrol";
@@ -76,18 +76,19 @@ const Place_Form = props => {
         <label>
           อัพโหลดรูปภาพสถานที่ <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
-        <label className="custom-file-upload">
-          <p className="Color">อัพโหลดรูปภาพ</p>
-          <input
-            name="img"
-            id="img"
+        <label> 
+        <Icon className='Pic' size='massive' name='camera'  />
+          <input          
             type="file"
             accept="image/*"
-            style={{ display: "none" }}
-            onChange={e => props.handleSelectImage(e)}
+            name="img"
+            id="img"
             multiple
+            im
+            onChange={e => props.handleSelectImage(e)}
+            require="true"
           />
-        </label>
+           </label>   
         <Imagecontrol
           files={props.files}
           DeletePhotoUploaded={props.DeletePhotoUploaded}
