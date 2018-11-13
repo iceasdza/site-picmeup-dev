@@ -43,6 +43,12 @@ input[type="file"] {
     padding: 5px 0px 0px 0px;
 }
 
+.Pic{
+    color: #8c8b8b;
+    text-align: center;
+    cursor: pointer;  
+}
+
 .Radio{
     padding: 0px 180px 0px 20px;
 }

@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label,Divider } from "semantic-ui-react";
+import { Label,Divider,Icon} from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imagecontrol"
@@ -73,47 +73,39 @@ const EventForm = props => {
         <label>
           อัพโหลดรูปภาพอีเวนท์
           <h3 style={{ color: "red" }}>{props.message}</h3>
-        </label>
-        <label className="custom-file-upload">
-          <p className="Color">อัพโหลดรูปภาพ</p>
-          <input
+        </label>         
+         <label> 
+        <Icon className='Pic' size='massive' name='camera'  />
+          <input          
             type="file"
             accept="image/*"
             name="img"
             id="img"
             multiple
+            im
             onChange={e => props.handleSelectImage(e)}
             require="true"
           />
-        </label>
+           </label>         
         <Imagecontrol files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
       </Form.Field>
       <div className="Gap">
-        <Form.Group>
-          <Form.Input
-            name="place_tel"
-            label="เบอร์โทรติดต่อ"
-            placeholder="ใส่เลขเบอร์ 9 หรือ 10 ตัว"
-            width={5}
-            required
-            value={props.tel}
-            onChange={(e, { value }) => props.setField("tel", value)}
-            errorLabel={<Label color="red" pointing />}
-            validations="isNumeric,minLength:9,maxLength:10"
-            validationErrors={{
-              isDefaultRequiredValue: "จำเป็นต้องใส่เบอร์ติดต่อ",
-              isNumeric: "รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง",
-              minLength: "โปรดใส่เบอร์โทรศัพท์ให้ครบถ้วน",
-              maxLength: "โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง"
-            }}
-          />
-         
-        </Form.Group>
+          <Form.TextArea
+        name="place_content"
+        label="ช่องทางการติดต่อ"
+        placeholder="ช่องทางการติดต่อสอบถามข้อมูล.."
+        width={14}
+        value={props.content}
+        onChange={(e, { value }) => props.setField("content", value)}
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{ isDefaultRequiredValue: "หากไม่มีช่องทางการติดต่อกรุณาใส่ ' - ' " }}
+      />
       </div>
       <Form.Group>
       <div className="Radio">
           <Form.Group grouped>
-            <label>ค่าใช้จ่าย</label>
+            <label>ค่าเข้าร่วมงาน</label>
             <Form.Radio
               label="มี"
               name="fee"
@@ -124,11 +116,11 @@ const EventForm = props => {
             {props.fee === 'yes' ? (
               <Form.TextArea
                 name="feePrice"
-                label="ค่าเข้าชม"
-                placeholder="ค่าเข้าชม"
+                label="ค่าเข้าร่วมงาน"
+                placeholder="ค่าเข้าร่วมงาน"
                 width={14}
                 value={props.feePrice}
-                onChange={(e, { value }) => props.FeeOption("feePrice", value)
+                onChange={(e, { value }) => props.FeeOption("feePrice", value)                
               }
                 required
                 errorLabel={<Label color="red" pointing />}
@@ -145,26 +137,22 @@ const EventForm = props => {
           </Form.Group>
         </div>
       </Form.Group>
-      
-
-
-  <Form.TextArea
+      <Form.TextArea
     name="day_tag"
     label="ช่วงเวลาจัดงาน"
     placeholder="ช่วงเวลาจัดงาน"
-    width={14}
-    //value={placeholder}
+    width={14}    
     onChange={(e, { value }) => props.DaysSelected("days", value)}
     required
     errorLabel={<Label color="red" pointing />}
-    validationErrors={{ customValidation: "ต้องเลือกช่วงเวลาจัดงาน" }}
+    validationErrors={{ isDefaultRequiredValue: "ระบุช่วงเวลาของการจัดงาน" }}
   />
       <div className="Body">
-      <label>เวลาเปิดทำการ</label>
+      <label>เวลาเริ่มงาน</label>
         <Dropdown                    
           selection
           options={optionsTime}
-          placeholder="เวลาเปิดทำการ"
+          placeholder="เวลาเริ่มงาน"
           renderLabel={renderLabel}
           require="true"
           name="place_open"
@@ -172,16 +160,16 @@ const EventForm = props => {
           validations={{
             customValidation: (values, value) => !(!value || value.length < 1)
           }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
+          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเริ่มงาน" }}
           onChange={(e, { value }) => props.setField("openTime", value)}
         />
       </div>     
       <div className="Body">
-      <label>เวลาปิดทำการ</label>
+      <label>เวลาปิดงาน</label>
         <Dropdown                    
           selection
           options={optionsTime}
-          placeholder="เวลาปิดทำการ"
+          placeholder="เวลาปิดงาน"
           renderLabel={renderLabel}
           require="true"
           name="place_close"
@@ -189,7 +177,7 @@ const EventForm = props => {
           validations={{
             customValidation: (values, value) => !(!value || value.length < 1)
           }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
+          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิดงาน" }}
           onChange={(e, { value }) => props.setField("closeTime", value)}
         />
       </div>      
@@ -233,7 +221,7 @@ const EventForm = props => {
         />
       </div>
 
-      <div>
+      <div>      
         <Form.Button floated="right" size="big">
           สร้างอีเวนท์
         </Form.Button>

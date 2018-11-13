@@ -17,7 +17,7 @@ class PlaceInfo extends Component {
     this.state = {
       placeName: "",
       placeDes: "",
-      tel: "",
+      contact: "",
       openTime: "",
       closeTime: "",
       fee: "no",
@@ -62,7 +62,7 @@ class PlaceInfo extends Component {
       this.setState({
         placeName: data.placeName,
         placeDes: data.placeDes,
-        tel: data.tel,
+        contact: data.contact,
         openTime: data.openTime,
         closeTime: data.closeTime,
         fee: data.fee,
@@ -142,7 +142,7 @@ class PlaceInfo extends Component {
         <LoadingScreen
         open={this.state.open}
         />
-      <Divider horizontal>Comments</Divider>
+      <Divider horizontal>ความคิดเห็น</Divider>
       <Form onSubmit={this.handleSubmitComment}>
         <Form.TextArea
           label="เขียนควาคิดเห็น"
@@ -201,7 +201,7 @@ class PlaceInfo extends Component {
           placeName={this.state.placeName}
           placeDes={this.state.placeDes}
           modalImage = {this.modalImage}
-          tel={this.state.tel}
+          contact={this.state.contact}
           openTime={this.state.openTime}
           closeTime={this.state.closeTime}
           fee={this.state.fee}

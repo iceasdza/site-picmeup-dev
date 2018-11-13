@@ -16,14 +16,14 @@ class AddPlace extends Component {
   state = {
     placeName: "",
     placeDes: "",
-    tel: "",
+    contact: "",
     openTime: "",
     closeTime: "",
-    fee: "no",
-    feePrice:0,
+    fee: "yes",
+    feePrice:null,
     carParking: "yes",
-    carParkSize:0,
-    carParkPrice:0,
+    carParkSize:null,
+    carParkPrice:null,
     days: [],
     tags: [],
     map: {
@@ -157,7 +157,7 @@ class AddPlace extends Component {
     if (
       formData.place_name === "" ||
       formData.place_desc === "" ||
-      formData.place_tel === "" ||
+      formData.place_contact === "" ||
       formData.place_open === "" ||
       formData.place_close === "" ||
       formData.place_tag === "" ||
@@ -170,7 +170,7 @@ class AddPlace extends Component {
     const resp = await axios.post("/api/addplace", {
       placeName: this.state.placeName,
       placeDes: this.state.placeDes,
-      tel: this.state.tel,
+      contact: this.state.contact,
       openTime: this.state.openTime,
       closeTime: this.state.closeTime,
       fee: this.state.fee,
@@ -289,7 +289,7 @@ class AddPlace extends Component {
             // passing value
             placeName={this.state.placeName}
             placeDes={this.state.placeDes}
-            tel={this.state.tel}
+            contact={this.state.contact}
             openTime={this.state.openTime}
             closeTime={this.state.closeTime}
             fee={this.state.fee}

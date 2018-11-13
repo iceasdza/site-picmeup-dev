@@ -12,7 +12,7 @@ class EventInfo extends Component {
   state = {
     eventName: "",
     eventDes: "",
-    tel: "",
+    content: "",
     openTime: "",
     closeTime: "",
     fee: "no",
@@ -54,7 +54,7 @@ class EventInfo extends Component {
       this.setState({
         eventName: data.eventName,
         eventDes: data.eventDes,
-        tel: data.tel,
+        content: data.content,
         openTime: data.openTime,
         closeTime: data.closeTime,
         fee: data.fee,
@@ -126,7 +126,7 @@ class EventInfo extends Component {
           <LoadingScreen
           open={this.state.open}
           />
-        <Divider horizontal>Comments</Divider>
+        <Divider horizontal>ความคิดเห็น</Divider>
         <Form onSubmit={this.handleSubmitComment}>
           <Form.TextArea
             label="เขียนควาคิดเห็น"
@@ -165,7 +165,7 @@ class EventInfo extends Component {
         modalImage={this.modalImage}
           eventName={this.state.eventName}
           eventDes={this.state.eventDes}
-          tel={this.state.tel}
+          content={this.state.content}
           openTime={this.state.openTime}
           closeTime={this.state.closeTime}
           fee={this.state.fee}

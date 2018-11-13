@@ -11,11 +11,11 @@ class AddEvent extends Component {
   state = {
     eventName: "",
     eventDes: "",
-    tel: "",
+    content: null,
     openTime: "",
     closeTime: "",
-    fee: "no",
-    feePrice:0,
+    fee: "yes",
+    feePrice:null,
     days: [],
     tags: [],
     map: {
@@ -122,7 +122,7 @@ class AddEvent extends Component {
     if (
       formData.place_name === "" ||
       formData.place_desc === "" ||
-      formData.place_tel === "" ||
+      formData.place_content === "" ||
       formData.place_open === "" ||
       formData.place_close === "" ||
       formData.day_tag === undefined ||
@@ -139,7 +139,7 @@ class AddEvent extends Component {
    const resp  = await axios.post("/api/addevent", {
       eventName: this.state.eventName,
       eventDes: this.state.eventDes,
-      tel: this.state.tel,
+      content: this.state.content,
       openTime: this.state.openTime,
       closeTime: this.state.closeTime,
       fee: this.state.fee,
@@ -176,7 +176,7 @@ class AddEvent extends Component {
           <EventForm
             eventName={this.state.eventName}
             eventDes={this.state.eventDes}
-            tel={this.state.tel}
+            content={this.state.content}
             openTime={this.state.openTime}
             closeTime={this.state.closeTime}
             fee={this.state.fee}

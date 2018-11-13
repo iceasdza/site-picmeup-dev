@@ -1,11 +1,11 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
 import "../../static/home.css";
-import { Message, Card, Image, Grid } from "semantic-ui-react";
+import { Message, Card, Image, Grid,Label,Icon } from "semantic-ui-react";
 
 const PlaceInfo = props => (
   <div>
-    <Message.Header className="topoicHeader">
+    <Message.Header className="topHeader">
                   <p>{props.placeName}</p>
                 </Message.Header>
     <Card.Group itemsPerRow={4}>
@@ -54,13 +54,9 @@ const PlaceInfo = props => (
                   <p className="topoicData"> ค่าจอดรถ : {props.parkingPrice}</p>
                 ) : (<p />)}
                 <Message.Header className="topoicHeader">
-                  การติดต่อ
+                  ช่องทางการติดต่อ
                 </Message.Header>
-                <p className="topoicData"> เบอร์ติดต่อ : {props.tel}</p>
-                <Message.Header className="topoicHeader">
-                  ประเภทของอีเว้นท์
-                </Message.Header>
-                <Message.List items={props.tags} />
+                <p className="desc">{props.contact}</p>        
               </div>
             </Grid.Column>
             <Grid.Column width={8}>
@@ -68,6 +64,14 @@ const PlaceInfo = props => (
             </Grid.Column>
           </Grid>
         </Message>
+        <Message.Header className="topoicData">ประเภทของสถานที่</Message.Header>
+        {props.tags.map((tag, index) => (
+          <Label key={index} as='a' image>
+          <Icon disabled name='tag' />
+        {tag}
+      </Label>
+          
+        ))}        
       </Grid.Column>
     </Grid>
   </div>

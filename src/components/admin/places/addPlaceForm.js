@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Divider } from "semantic-ui-react";
+import { Label, Divider,Icon } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imagecontrol";
@@ -76,18 +76,19 @@ const Place_Form = props => {
         <label>
           อัพโหลดรูปภาพสถานที่ <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
-        <label className="custom-file-upload">
-          <p className="Color">อัพโหลดรูปภาพ</p>
-          <input
-            name="img"
-            id="img"
+        <label> 
+        <Icon className='Pic' size='massive' name='camera'  />
+          <input          
             type="file"
             accept="image/*"
-            style={{ display: "none" }}
-            onChange={e => props.handleSelectImage(e)}
+            name="img"
+            id="img"
             multiple
+            im
+            onChange={e => props.handleSelectImage(e)}
+            require="true"
           />
-        </label>
+           </label>   
         <Imagecontrol
           files={props.files}
           DeletePhotoUploaded={props.DeletePhotoUploaded}
@@ -96,15 +97,15 @@ const Place_Form = props => {
         />
       </Form.Field>
       <div className="Gap">
-        <Form.Group>
-          <Form.Input
-            name="place_tel"
+      {/*   <Form.Group> */}
+          {/* <Form.Input
+            name="place_contact"
             label="เบอร์โทรติดต่อ"
             placeholder="ใส่เลขเบอร์ 9 หรือ 10 ตัว"
             width={5}
             required
-            value={props.tel}
-            onChange={(e, { value }) => props.setField("tel", value)}
+            value={props.contact}
+            onChange={(e, { value }) => props.setField("contact", value)}
             errorLabel={<Label color="red" pointing />}
             validations="isNumeric,minLength:9,maxLength:10"
             validationErrors={{
@@ -113,9 +114,20 @@ const Place_Form = props => {
               minLength: "โปรดใส่เบอร์โทรศัพท์ให้ครบถ้วน",
               maxLength: "โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง"
             }}
-          />
-        </Form.Group>
-      </div>
+          /> */}           
+          <Form.TextArea
+        name="place_contact"
+        label="วิธีการติดต่อขอข้อมูลเกี่ยวกับสถานที่"
+        placeholder="วิธีการติดต่อ.."
+        width={14}
+        value={props.contact}
+        onChange={(e, { value }) => props.setField("contact", value)}
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{ isDefaultRequiredValue: "หากไม่มีช่องทางการติดต่อกรุณากรอก ' - ' " }}
+      />
+      {/*   </Form.Group>*/}
+      </div> 
       <Form.Group>
         <div className="Radio">
           <Form.Group grouped>
