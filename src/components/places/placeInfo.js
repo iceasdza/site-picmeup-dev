@@ -54,9 +54,9 @@ const PlaceInfo = props => (
                   <p className="topoicData"> ค่าจอดรถ : {props.parkingPrice}</p>
                 ) : (<p />)}
                 <Message.Header className="topoicHeader">
-                  การติดต่อ
+                  ช่องทางการติดต่อ
                 </Message.Header>
-                <p className="topoicData"> เบอร์ติดต่อ : {props.tel}</p>
+                <p className="desc">{props.contact}</p>
                 <Message.Header className="topoicHeader">
                   ประเภทของอีเว้นท์
                 </Message.Header>

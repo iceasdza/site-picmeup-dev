@@ -96,15 +96,15 @@ const Place_Form = props => {
         />
       </Form.Field>
       <div className="Gap">
-        <Form.Group>
-          <Form.Input
-            name="place_tel"
+      {/*   <Form.Group> */}
+          {/* <Form.Input
+            name="place_contact"
             label="เบอร์โทรติดต่อ"
             placeholder="ใส่เลขเบอร์ 9 หรือ 10 ตัว"
             width={5}
             required
-            value={props.tel}
-            onChange={(e, { value }) => props.setField("tel", value)}
+            value={props.contact}
+            onChange={(e, { value }) => props.setField("contact", value)}
             errorLabel={<Label color="red" pointing />}
             validations="isNumeric,minLength:9,maxLength:10"
             validationErrors={{
@@ -113,9 +113,20 @@ const Place_Form = props => {
               minLength: "โปรดใส่เบอร์โทรศัพท์ให้ครบถ้วน",
               maxLength: "โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง"
             }}
-          />
-        </Form.Group>
-      </div>
+          /> */}           
+          <Form.TextArea
+        name="place_contact"
+        label="วิธีการติดต่อขอข้อมูลเกี่ยวกับสถานที่"
+        placeholder="วิธีการติดต่อ.."
+        width={14}
+        value={props.contact}
+        onChange={(e, { value }) => props.setField("contact", value)}
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{ isDefaultRequiredValue: "หากไม่มีช่องทางการติดต่อกรุณากรอก ' - ' " }}
+      />
+      {/*   </Form.Group>*/}
+      </div> 
       <Form.Group>
         <div className="Radio">
           <Form.Group grouped>
