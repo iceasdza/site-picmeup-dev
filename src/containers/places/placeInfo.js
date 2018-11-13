@@ -142,7 +142,7 @@ class PlaceInfo extends Component {
         <LoadingScreen
         open={this.state.open}
         />
-      <Divider horizontal>Comments</Divider>
+      <Divider horizontal>ความคิดเห็น</Divider>
       <Form onSubmit={this.handleSubmitComment}>
         <Form.TextArea
           label="เขียนควาคิดเห็น"
