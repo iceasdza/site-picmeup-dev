@@ -27,26 +27,45 @@ export default class Gallery extends Component {
     return (
       <Card.Group itemsPerRow={4}>
         {this.state.albums.map((data, index) => (
-          <Card key={index}>
-            <Image src={data.images[0]} />
-            <Card.Content>
-              <Card.Header>
-                <Link
-                  to={{
-                    pathname: "/gallery/albumInfo/",
-                    search: data._id
-                  }}
-                >
-                  <h3 className="">{data.albumName}</h3>
-                </Link>
-              </Card.Header>
-              <Card.Description>{data.albumDes}</Card.Description>
-              <Card.Description>{data.albumOwner}</Card.Description>
-              <Card.Meta>
-                <span className="date">{data.createDate}</span>
-              </Card.Meta>
-            </Card.Content>
-          </Card>
+          <Card key={index} className="showhotcard">
+          <Link
+            to={{
+              pathname: "/gallery/albumInfo/",
+              search: data._id
+            }}
+          >
+            <Image src={data.images[0]} className="showhotimage" />
+            <div class="text-block">
+            <h3 className="showhotname">{data.albumOwner}</h3>
+                <h3 className="showhotname">{data.albumName}</h3>
+                <p className="description">{data.albumDes}</p>
+                {/* <p className="extraDetail">
+                  เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                  {data.comments.length}
+                </p> */}
+            </div>
+          </Link>
+        </Card>
+          // <Card key={index}>
+          //   <Image src={data.images[0]} />
+          //   <Card.Content>
+          //     <Card.Header>
+          //       <Link
+          //         to={{
+          //           pathname: "/gallery/albumInfo/",
+          //           search: data._id
+          //         }}
+          //       >
+          //         <h3 className="">{data.albumName}</h3>
+          //       </Link>
+          //     </Card.Header>
+          //     <Card.Description>{data.albumDes}</Card.Description>
+          //     <Card.Description>{data.albumOwner}</Card.Description>
+          //     <Card.Meta>
+          //       <span className="date">{data.createDate}</span>
+          //     </Card.Meta>
+          //   </Card.Content>
+          // </Card>
         ))}
       </Card.Group>
     );

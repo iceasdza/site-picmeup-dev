@@ -101,20 +101,24 @@ class Activity extends Component {
           <Card.Group itemsPerRow={4} centered className="showframe">
             {this.state.recomendPlace.map((data, index) => (
               // console.log(data)
-              <Card key={index} className="showcard">
-                <Image src={data.images[0]} className="showimage" />
-                <Card.Content>
-                  <Link
-                    to={{
-                      pathname: "/placeInfo/",
-                      search: data._id
-                    }}
-                  >
-                    <h3 className="showhotname">{data.placeName}</h3>
-                    <p className="description">{data.placeDes}</p>
-                  </Link>
-                </Card.Content>
-              </Card>
+              <Card key={index} className="showhotcard">
+          <Link
+            to={{
+              pathname: "/placeInfo/",
+              search: data._id
+            }}
+          >
+            <Image src={data.images[0]} className="showhotimage" />
+            <div class="text-block">
+              <h3 className="showhotname">{data.placeName}</h3>
+              <p className="description">{data.placeDes}</p>
+              <p className="extraDetail">
+                เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                {data.comments.length}
+              </p>
+            </div>
+          </Link>
+        </Card>
             ))}
             {/* {props.recomendPlace.map(
             (data, index) =>

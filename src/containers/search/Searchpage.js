@@ -1,8 +1,10 @@
 import React, { Component } from "react";
-import { Input, Form, Card,Image } from 'semantic-ui-react'
+import { Input, Form, Card,Image,Button} from 'semantic-ui-react'
 import { Link } from "react-router-dom";
 import '../../static/Scarch.css'
 import axios from "../../lib/axios";
+import Cookies from "js-cookie";
+const user = Cookies.get("user");
 
 class Searchpage extends Component {
 
@@ -61,20 +63,52 @@ class Searchpage extends Component {
                 <div>
                     <Card.Group itemsPerRow={4} centered >
                         { this.state.resultPlaces.map((data, index) => (
-                            <Card key={index} >
-                            <Image src={data.images[0]} className="showhotimage" />
-                                <Card.Content>
+                            <Card key={index} className="showhotcard">
+                            <Link
+                              to={{
+                                pathname: "/placeInfo/",
+                                search: data._id
+                              }}
+                            >
+                              <Image src={data.images[0]} className="showhotimage" />
+                              <div class="text-block">
+                              <br/>
+                              {user === "admin" ? (
+                                  <div>
+                                    {" "}
                                     <Link
-                                        to={{
-                                            pathname: "/placeInfo/",
-                                            search: data._id
-                                        }}
+                                      to={{
+                                        pathname: "/updatePlace",
+                                        state: { id: data._id }
+                                      }}
                                     >
-                                        <h3 className="showhotname">{data.placeName}</h3>
-                                        <p className="description">{data.placeDes}</p>
+                                      <Button primary content="Edit" />
                                     </Link>
-                                </Card.Content>
-                            </Card>
+                                    <Button
+                                      color="red"
+                                      content="DELETE"
+                                      value={index}
+                                      onClick={e =>
+                                        this.removeData(
+                                          "event",
+                                          data._id,
+                                          data.placeName
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                ) : (
+                                    <span></span>
+                                )}
+                                <h3 className="showhotname">{data.placeName}</h3>
+                                <p className="description">{data.placeDes}</p>
+                                <p className="extraDetail">
+                                  เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                                  {data.comments.length}
+                                </p>
+                              </div>
+                            </Link>
+                          </Card>
                         ))}
                     </Card.Group>
                 </div>
@@ -83,20 +117,52 @@ class Searchpage extends Component {
                 <div>
                     <Card.Group itemsPerRow={4} centered >
                         { this.state.resultEvents.map((data, index) => (
-                            <Card key={index} >
-                            <Image src={data.images[0]} className="showhotimage" />
-                                <Card.Content>
+                            <Card key={index} className="showhotcard">
+                            <Link
+                              to={{
+                                pathname: "/eventInfo/",
+                                search: data._id
+                              }}
+                            >
+                              <Image src={data.images[0]} className="showhotimage" />
+                              <div class="text-block">
+                              <br/>
+                              {user === "admin" ? (
+                                  <div>
+                                    {" "}
                                     <Link
-                                        to={{
-                                            pathname: "/eventInfo/",
-                                            search: data._id
-                                        }}
+                                      to={{
+                                        pathname: "/updateEvent",
+                                        state: { id: data._id }
+                                      }}
                                     >
-                                       <h3 className="showhotname">{data.eventName}</h3>
-                      <p className="description">{data.eventDes}</p>
+                                      <Button primary content="Edit" />
                                     </Link>
-                                </Card.Content>
-                            </Card>
+                                    <Button
+                                      color="red"
+                                      content="DELETE"
+                                      value={index}
+                                      onClick={e =>
+                                        this.removeData(
+                                          "event",
+                                          data._id,
+                                          data.eventName
+                                        )
+                                      }
+                                    />
+                                  </div>
+                                ) : (
+                                  <span></span>
+                                )}
+                                <h3 className="showhotname">{data.eventName}</h3>
+                                <p className="description">{data.eventDes}</p>
+                                <p className="extraDetail">
+                                  เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                                  {data.comments.length}
+                                </p>
+                              </div>
+                            </Link>
+                          </Card>
                         ))}
                     </Card.Group>
                 </div>

@@ -9,19 +9,24 @@
 .showhotframe{   
     padding-left: 10px!important;
     padding-right: 10px!important;
+    position: relative;
     /* padding-top: 40px!important; */
     
 }
 
 .showhotcard{   
     object-fit: cover;
-    width: 27%!important;
-    height: 17%!important;    
+    /* width: 27%!important;
+    height: 17%!important;     */
 }
 
 .showhotimage{    
     width: 15cm!important;
-    height: 6cm!important;  
+    height: 6cm!important;
+    
+}
+img.ui.image.showhotimage{
+    background: rgba(39,62,84,0.82)!important;
 }
 
 .showhotname{
@@ -32,7 +37,8 @@
     overflow: hidden;
     text-overflow:ellipsis;
     font-size: 16px!important;
-    color: #444;
+    /* color: #444; */
+    color: white;
     margin: 0px;
 }
 
@@ -65,7 +71,8 @@
     overflow: hidden;
     text-overflow:ellipsis;
     font-size: 1em!important;
-    color: #777
+    color: whitesmoke;
+    margin-bottom: 0px;
     /* display: -webkit-box;
 -webkit-line-clamp: 3;
 -webkit-box-orient: vertical;

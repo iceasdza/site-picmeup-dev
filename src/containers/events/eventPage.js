@@ -46,24 +46,24 @@ class EventPage extends Component {
         <Card.Group itemsPerRow={3} centered className="showhotframe">
           {data.map(
             (data, index) =>
-                <Card key={index} className="showhotcard">
-                  <Image src={data.images[0]} className="showhotimage" />
-                  <Card.Content>
-                    <Link
-                      to={{
-                        pathname: "/eventInfo/",
-                        search: data._id
-                      }}
-                    >
-                      <h3 className="showhotname">{data.eventName}</h3>
-                      <p className="description">{data.eventDes}</p>
-                    </Link>
-                    <Card.Content extra>
-                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
-                    </Card.Content>
-                  </Card.Content>
-                  
-                </Card>
+            <Card key={index} className="showhotcard">
+            <Link
+              to={{
+                pathname: "/eventInfo/",
+                search: data._id
+              }}
+            >
+              <Image src={data.images[0]} className="showhotimage" />
+              <div class="text-block">
+                <h3 className="showhotname">{data.eventName}</h3>
+                <p className="description">{data.eventDes}</p>
+                <p className="extraDetail">
+                  เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                  {data.comments.length}
+                </p>
+              </div>
+            </Link>
+          </Card>
           )}
         </Card.Group>
       );

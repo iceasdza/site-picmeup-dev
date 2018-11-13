@@ -1,0 +1,41 @@
+.bannerFindByNear{
+    background:    linear-gradient(
+        rgba(99, 93, 93, 0.45), 
+        rgba(99, 93, 93, 0.45)
+      ),
+      /* bottom, image */
+      url("../static/banner.jpg");
+    /* background-color: #222; */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-align: center;
+    height: 400px;
+    padding-top: 2em;
+}
+.bannerHeaderFindByNear{
+    color: #333;
+    font-size: 3em;
+    font-family: 'Kanit'!important;
+    background-color: white;
+    opacity: 0.8;
+    width: 50%;
+    padding: 0.2em;
+}
+.formSelect{
+    background-color: white;
+    padding: 1em;
+    margin-top: 1em;
+    font-family: 'Kanit'!important;
+    opacity: 0.8;
+}
+.radioSelect{
+    display: inline;
+    font-family: 'Kanit'!important;
+}
+.headerSelect{
+    font-family: 'Kanit'!important;
+    padding-bottom: 1em;
+}
+.tableData{
+    padding-top: 2em;
+}

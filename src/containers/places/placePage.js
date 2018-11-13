@@ -48,22 +48,23 @@ class PlacePage extends Component {
       <Card.Group itemsPerRow={3} centered className="showhotframe">
         {data.map((data, index) => (
           <Card key={index} className="showhotcard">
+          <Link
+            to={{
+              pathname: "/placeInfo/",
+              search: data._id
+            }}
+          >
             <Image src={data.images[0]} className="showhotimage" />
-            <Card.Content>
-              <Link
-                to={{
-                  pathname: "/placeInfo/",
-                  search: data._id
-                }}
-              >
-                <h3 className="showhotname">{data.placeName}</h3>
-                <p className="description">{data.placeDes}</p>
-              </Link>
-              <Card.Content extra>
-                      <p className="extraDetail">เข้าชม {data.viewCount} แสดงความคิดเห็น {data.comments.length}</p>
-                    </Card.Content>
-            </Card.Content>
-          </Card>
+            <div class="text-block">
+              <h3 className="showhotname">{data.placeName}</h3>
+              <p className="description">{data.placeDes}</p>
+              <p className="extraDetail">
+                เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                {data.comments.length}
+              </p>
+            </div>
+          </Link>
+        </Card>
         ))}
       </Card.Group>
     );
