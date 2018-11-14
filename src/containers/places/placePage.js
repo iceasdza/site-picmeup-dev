@@ -45,6 +45,7 @@ class PlacePage extends Component {
     const data = page[activePage-1]
     if(data){
     return (
+      <div className="getAllPage">
       <Card.Group itemsPerRow={3} centered className="showhotframe">
         {data.map((data, index) => (
           <Card key={index} className="showhotcard">
@@ -67,6 +68,7 @@ class PlacePage extends Component {
         </Card>
         ))}
       </Card.Group>
+      </div>
     );
     }
   };

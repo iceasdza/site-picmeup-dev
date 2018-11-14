@@ -1,0 +1,39 @@
+.topicDeleteBtn{
+    float: right;
+}
+.topicDelete{
+    padding-top: 1em;
+    height: 100%;
+    cursor: pointer;
+    margin-left: 4em;
+    color: red;
+    font-size: 1em;    
+}
+.topicDelete:hover{
+    color: crimson
+}
+.topicPlace{
+    padding-left: 1em;
+    margin-top: -1em!important;
+    /* margin-bottom: -1em!important; */
+}
+.messageOwner{
+    margin-left: 1em;
+}
+.delAulbumBtn{
+    font-family: 'Kanit'!important;
+}
+.comment{
+    color: #777!important
+}
+.editProfile{
+    color: cornflowerblue;
+    font-family: 'Kanit'!important;
+    font-size: 1.4em;
+}
+.editProfile:hover{
+    text-decoration: underline
+}
+.menuName{
+    font-family: 'Kanit'!important;
+}

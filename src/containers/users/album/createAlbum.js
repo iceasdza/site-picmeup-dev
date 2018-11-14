@@ -141,6 +141,9 @@ class CreateAlbum extends Component {
 
   render() {
     const { redirect} = this.state;
+    if(user===undefined){
+      return <Redirect to={{ pathname: "/login" }} />
+    }
     if (redirect) {
       return <Redirect to={{ pathname: "/gallery" }} />;
     }

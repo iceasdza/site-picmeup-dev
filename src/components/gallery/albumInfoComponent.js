@@ -4,6 +4,7 @@ const albumInfoComponent = (props) => {
     return(
         <div>
             {props.renderImages()}
+            {props.albumDes}
             {props.renderComment()}
         </div>
         

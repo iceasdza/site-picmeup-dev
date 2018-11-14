@@ -1,0 +1,32 @@
+.bannerGallery{
+    background:    linear-gradient(
+        rgba(99, 93, 93, 0.45), 
+        rgba(99, 93, 93, 0.45)
+      ),
+      /* bottom, image */
+      url("../static/banner-gallery.jpg");
+    /* background-color: #222; */
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    text-align: center;
+    height: 400px;
+    padding-top: 2em;
+}
+.createAlbumContent{
+    color: white;
+    font-family: 'Kanit'!important;
+    font-size:3em!important;
+    padding-top: 4em!important;
+    text-decoration: underline
+}
+.createAlbumContent:hover{
+    color: white;
+    opacity: 0.5;
+    text-decoration: underline
+}
+.headerWrap{
+    padding-top: 5em;
+}
+.galleryCard{
+    padding: 1em;
+}

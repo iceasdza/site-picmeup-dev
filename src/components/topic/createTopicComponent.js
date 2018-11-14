@@ -11,8 +11,6 @@ const createTopicComponent = props => {
         {props.renderPlaceList()}
         <ReactQuill
           value={props.text}
-          modules={createTopicComponent.modules}
-          formats={createTopicComponent.formats}
           onChange={props.handleChange}
         />
         <Divider horizontal>
@@ -24,40 +22,5 @@ const createTopicComponent = props => {
     </div>
   );
 };
-
-createTopicComponent.modules = {
-  toolbar: [
-    [{ header: "1" }, { header: "2" }],
-    [{ size: [] }],
-    ["bold", "italic", "underline", "strike", "blockquote"],
-    [
-      { list: "ordered" },
-      { list: "bullet" },
-      { indent: "-1" },
-      { indent: "+1" }
-    ],
-    ["link", "image", "video"],
-    ["clean"]
-  ],
-  clipboard: {
-    // toggle to add extra line breaks when pasting HTML:
-    matchVisual: false
-  }
-};
-createTopicComponent.formats = [
-  "header",
-  "size",
-  "bold",
-  "italic",
-  "underline",
-  "strike",
-  "blockquote",
-  "list",
-  "bullet",
-  "indent",
-  "link",
-  "image",
-  "video"
-];
 
 export default createTopicComponent;

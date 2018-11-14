@@ -5,6 +5,7 @@ import { Link,NavLink } from "react-router-dom";
 import axios from "../../lib/axios";
 import Cookie from "js-cookie";
 import LoadingScreen from '../screen/loading'
+import '../../static/gallery.css'
 const user = Cookie.get("user");
 
 export default class Gallery extends Component {
@@ -25,7 +26,7 @@ export default class Gallery extends Component {
 
   renderGalleryList = () => {
     return (
-      <Card.Group itemsPerRow={4}>
+      <Card.Group itemsPerRow={4 } className="galleryCard">
         {this.state.albums.map((data, index) => (
           <Card key={index} className="showhotcard">
           <Link
@@ -36,36 +37,12 @@ export default class Gallery extends Component {
           >
             <Image src={data.images[0]} className="showhotimage" />
             <div class="text-block">
-            <h3 className="showhotname">{data.albumOwner}</h3>
-                <h3 className="showhotname">{data.albumName}</h3>
+            <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
+                <h3 className="showhotname">อัลบั้ม : {data.albumName}</h3>
                 <p className="description">{data.albumDes}</p>
-                {/* <p className="extraDetail">
-                  เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                  {data.comments.length}
-                </p> */}
             </div>
           </Link>
         </Card>
-          // <Card key={index}>
-          //   <Image src={data.images[0]} />
-          //   <Card.Content>
-          //     <Card.Header>
-          //       <Link
-          //         to={{
-          //           pathname: "/gallery/albumInfo/",
-          //           search: data._id
-          //         }}
-          //       >
-          //         <h3 className="">{data.albumName}</h3>
-          //       </Link>
-          //     </Card.Header>
-          //     <Card.Description>{data.albumDes}</Card.Description>
-          //     <Card.Description>{data.albumOwner}</Card.Description>
-          //     <Card.Meta>
-          //       <span className="date">{data.createDate}</span>
-          //     </Card.Meta>
-          //   </Card.Content>
-          // </Card>
         ))}
       </Card.Group>
     );
@@ -76,33 +53,27 @@ export default class Gallery extends Component {
   }
 
   renderCreateAlbumButton = () =>{
-    if(user === undefined){
-      return(
-        <div></div>
-      )
-    }else{
       return(
         <div>
-          <br/>
-          <NavLink to="/createalbum">
-          <Button fluid color='blue'  className="showname">สร้างอัลบั้มของคุณ</Button>
-
-          </NavLink>
-          <br/>
+          <div className="bannerGallery">
+              <h1 className="bannerHeader">ถ่ายทอดประสบการณ์ผ่านรูปถ่าย</h1>
+              <div className="headerWrap">
+              <NavLink to="/createalbum" className="createAlbumContent">สร้างอัลบัมของคุณที่นี่ ! </NavLink>
+              </div>
+          </div>
         </div>
       )
-    }
   }
 
   render() {
     
     return (
-      <div className="container fluid">
+      <div>
       <LoadingScreen
       open={this.state.open}
       />
+      {this.renderCreateAlbumButton()}
         <GalleryComponent 
-        renderCreateAlbumButton={this.renderCreateAlbumButton}
         renderGalleryList={this.renderGalleryList} />
       </div>
     );

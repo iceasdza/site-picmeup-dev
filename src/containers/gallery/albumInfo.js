@@ -80,7 +80,7 @@ export default class AlbumInfo extends Component {
 
   renderImages = () => {
     return (
-      <Card.Group itemsPerRow={6}>
+      <Card.Group itemsPerRow={3} className="imageWrap">
         {this.state.images.map((data, index) => (
           <Card
             raised
@@ -132,7 +132,7 @@ export default class AlbumInfo extends Component {
         <Comment.Group>
           {this.state.comments.map((data, index) => (
             <Comment key={index}>
-              <Comment.Avatar as="avatar" src={data.avatar} />
+              <Comment.Avatar as="avatar" src={data.avatar} className="avatarProfile"/>
               <Comment.Content>
                 <Comment.Author>
                   แสดงความคิดเห็นโดยคุณ {data.commentator}
@@ -151,6 +151,7 @@ export default class AlbumInfo extends Component {
         <LoadingScreen open={this.state.open} />
         {this.renderEditButton()}
         <AlbumInfoComponent
+        albumDes={this.state.albumDes}
           renderImages={this.renderImages}
           renderComment={this.renderComment}
         />

@@ -52,3 +52,12 @@ blockquote{
 .ui.pagination.menu .item{
   color: black!important;
 }
+.topicList{
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.ql-toolbar.ql-snow{
+  visibility: hidden!important;
+  width: 0px;
+  height: 0px;;
+}

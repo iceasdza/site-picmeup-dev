@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { Button, Card } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-// import TopicsListComponent from "../../components/topic/topicsListComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
 import { Pagination } from 'semantic-ui-react'
@@ -64,40 +63,31 @@ renderTopic = () =>{
           search: data.creator
         }}
       >
-      {data.creator}
+      <Card.Content header={'โดยคุณ '+data.creator} />
       </Link>
-      <Card.Content description={"ที่ "+data.topicPlace} />
+      {data.topicPlace}
+      {/* <Card.Content description={"ที่ "+data.topicPlace} /> */}
     </Card>
     ))
   }
 }
-
-  renderTopicList = () => {
-    const data = this.state.topicsData;
-    return data.map((data, index) => (
-      <Card fluid key={index}>
-        <Link
-          to={{
-            pathname: "/topic/",
-            search: data._id
-          }}
-        >
-          <Card.Content header={data.topicName} />
-        </Link>
-        <Card.Content description={data.creator + " : " + data.create_date} />
-      </Card>
-    ));
-  };
 
   CreateTopicButton = () => {
     let button = "";
     if (Cookies.get("user") === undefined) {
       
     } else {
-      button = <Button href="/createtopic">สร้างกระทู้</Button>;
+      return(
+        <Link
+        to={{
+          pathname: "/createTopic"
+        }}
+      >
+      สร้างกระทู้
+      </Link>
+      )
     }
 
-    return button;
   };
   
 
@@ -108,9 +98,12 @@ renderTopic = () =>{
         open={this.state.open}
         />
         {this.CreateTopicButton()}
-          {this.renderTopic()}
+        <div className="topicList">
+        {this.renderTopic()}
+        </div>
+        <center>
         <Pagination className="pagination" defaultActivePage={1} totalPages={this.state.page.length} onPageChange={this.handlePaginationChange}/>
-      </div>
+        </center></div>
     );
   }
 }

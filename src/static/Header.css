@@ -72,3 +72,6 @@ a.active.item.menuName,a.item.menuName{
 .uploadAvatar{
     background-color: blue;
 }
+.getAllPage{
+    padding-top: 1em;
+}
