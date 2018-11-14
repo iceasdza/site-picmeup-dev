@@ -1,21 +1,11 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label } from "semantic-ui-react";
+import { Label,Divider,Icon } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imageEditControl"
 
 
-
-const optionsDay = [
-  { key: 1, text: "วันจันทร์", value: "mon" },
-  { key: 2, text: "วันอังคาร", value: "tue" },
-  { key: 3, text: "วันพุธ", value: "wed" },
-  { key: 4, text: "วันพฤหัสบดี", value: "thu" },
-  { key: 5, text: "วันศุกร์", value: "fri" },
-  { key: 6, text: "วันเสาร์", value: "sat" },
-  { key: 7, text: "วันอาทิตย์", value: "sun" }
-];
 
 const optionsTime = [
   { key: 1, text: "05:00", value: "05:00" },
@@ -58,106 +48,118 @@ const EventForm = props => {
         <hr className="Hr" />
       </div>
       <div className="Form">
-        <Form.Input
-          label="ชื่ออีเวนท์"
-          name="place_name"
-          placeholder="ชื่ออีเวนท์.."
-          width={8}
-          value={props.eventName}
-          onChange={(e, { value }) => props.setField("eventName", value)}
-          required
-          errorLabel={<Label color="red" pointing />}
-          validationErrors={{
-            isDefaultRequiredValue: "จำเป็นต้องใส่ชื่ออีเวนท์"
-          }}
-        />
-        <Form.TextArea
-          name="place_desc"
-          label="คำอธิบายอีเวนท์"
-          placeholder="เกี่ยวกับอีเวนท์.."
-          width={14}
-          value={props.eventDes}
-          onChange={(e, { value }) => props.setField("eventDes", value)}
-          required
-          errorLabel={<Label color="red" pointing />}
-          validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
-        />
-        <Form.Field>
-          <label>
-            อัพโหลดรูปภาพอีเวนท์
-            <h3 style={{ color: "red" }}>{props.message}</h3>
-          </label>
-          <label className="custom-file-upload">
-            <p className="Color">อัพโหลดรูปภาพ</p>
-            <input
-              type="file"
-              accept="image/*"
-              name="img"
-              id="img"
-              multiple
-              onChange={e => props.handleSelectImage(e)}
-              require="true"
-            />
-          </label>
+      <Form.Input
+        label="ชื่ออีเวนท์"
+        name="place_name"
+        placeholder="ชื่ออีเวนท์.."
+        width={8}
+        value={props.eventName}
+        onChange={(e, { value }) => props.setField("eventName", value)}
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{
+          isDefaultRequiredValue: "จำเป็นต้องใส่ชื่ออีเวนท์"
+        }}
+      />
+      <Form.TextArea
+        name="place_desc"
+        label="คำอธิบายอีเวนท์"
+        placeholder="เกี่ยวกับอีเวนท์.."
+        width={14}
+        value={props.eventDes}
+        onChange={(e, { value }) => props.setField("eventDes", value)}
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
+      />
+       <Form.Field>
+        <label>
+          อัพโหลดรูปภาพอีเวนท์
+          <h3 style={{ color: "red" }}>{props.message}</h3>
+        </label>         
+         <label> 
+        <Icon className='Pic' size='massive' name='camera'  />
+          <input          
+            type="file"
+            accept="image/*"
+            name="images"
+            id="img"
+            multiple
+            im
+            onChange={e => props.handleSelectImage(e)}
+            require="true"
+          />
+           </label>         
+       
+      
           <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
-          {/* <Card.Group itemsPerRow={6}>
-          {props.images.map((src, index) => (
-            <Card key={index}>
-              <div>
-                <Icon
-                  circular
-                  inverted
-                  name="remove"
-                  color="red"
-                  onClick={() => props.DeleteImage(index)}
-                />
-              </div>
-              <Image src={src} className="imageUploadSize" />
-            </Card>
-          ))}
-          {props.files.map((data, index) => (
-            <Card key={index}>
-              <div>
-                <Icon
-                  circular
-                  inverted
-                  name="remove"
-                  color="red"
-                  onClick={() => props.DeletePhotoUploaded("files", index)}
-                />
-              </div>
-              <Image src={data} className="imageUploadSize" />
-            </Card>
-          ))}
-        </Card.Group> */}
-        </Form.Field>
-        <div className="Gap">
-          <Form.Group>
-            <Form.Input
-              name="place_tel"
-              label="เบอร์โทรติดต่อ"
-              placeholder="ใส่เลขเบอร์ 9 หรือ 10 ตัว"
-              width={5}
-              required
-              value={props.tel}
-              onChange={(e, { value }) => props.setField("tel", value)}
-              errorLabel={<Label color="red" pointing />}
-              validations="isNumeric,minLength:9,maxLength:10"
-              validationErrors={{
-                isDefaultRequiredValue: "จำเป็นต้องใส่เบอร์ติดต่อ",
-                isNumeric: "รูปแบบเบอร์โทรศัพท์ไม่ถูกต้อง",
-                minLength: "โปรดใส่เบอร์โทรศัพท์ให้ครบถ้วน",
-                maxLength: "โปรดใส่เบอร์โทรศัพท์ให้ถูกต้อง"
-              }}
+         </Form.Field>
+      <div className="Gap">
+          <Form.TextArea
+        name="place_content"
+        label="ช่องทางการติดต่อ"
+        placeholder="ช่องทางการติดต่อสอบถามข้อมูล.."
+        width={14}
+        value={props.content}
+        onChange={(e, { value }) => props.setField("content", value)}
+        required
+        errorLabel={<Label color="red" pointing />}
+        validationErrors={{ isDefaultRequiredValue: "หากไม่มีช่องทางการติดต่อกรุณาใส่ ' - ' " }}
+      />
+      </div>
+      <Form.Group>
+      <div className="Radio">
+          <Form.Group grouped>
+            <label>ค่าเข้าร่วมงาน</label>
+            <Form.Radio
+              label="มี"
+              name="fee"
+              value="yes"
+              checked={props.fee === "yes"}
+              onChange={(e, { value }) => props.FeeOption("fee", value)}
+            />
+            {props.fee === 'yes' ? (
+              <Form.TextArea
+                name="feePrice"
+                label="ค่าเข้าร่วมงาน"
+                placeholder="ค่าเข้าร่วมงาน"
+                width={14}
+                value={props.feePrice}
+                onChange={(e, { value }) => props.FeeOption("feePrice", value)                
+              }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "ต้องระบุค่าใช้จ่าย" }}
+              />
+            ) : <p />}
+            <Form.Radio
+              label="ไม่มี"
+              name="fee"
+              value="-"
+              checked={props.fee === "-"}
+              onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
           </Form.Group>
-          <Form.Group>
+        </div>
+      </Form.Group>
+      <Form.TextArea
+    name="day_tag"
+    label="ช่วงเวลาจัดงาน"
+    placeholder="ช่วงเวลาจัดงาน"
+    width={14}    
+    value={props.days}
+    onChange={(e, { value }) => props.DaysSelected("days", value)}
+    required
+    errorLabel={<Label color="red" pointing />}
+    validationErrors={{ isDefaultRequiredValue: "ระบุช่วงเวลาของการจัดงาน" }}
+  />
       <div className="Body">
-      <label>เวลาเปิดทำการ</label>
+      <label>เวลาเริ่มงาน</label>
         <Dropdown                    
           selection
           options={optionsTime}
-          placeholder="เวลาเปิดทำการ"
+          placeholder="เวลาเริ่มงาน"
+          value={props.openTime}
           renderLabel={renderLabel}
           require="true"
           name="place_open"
@@ -165,129 +167,69 @@ const EventForm = props => {
           validations={{
             customValidation: (values, value) => !(!value || value.length < 1)
           }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
+          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเริ่มงาน" }}
           onChange={(e, { value }) => props.setField("openTime", value)}
         />
       </div>     
       <div className="Body">
-      <label>เวลาปิดทำการ</label>
+      <label>เวลาปิดงาน</label>
         <Dropdown                    
           selection
           options={optionsTime}
-          placeholder="เวลาปิดทำการ"
+          placeholder="เวลาปิดงาน"
           renderLabel={renderLabel}
           require="true"
           name="place_close"
+          value={props.closeTime}
           errorLabel={<Label color="red" pointing />}
           validations={{
             customValidation: (values, value) => !(!value || value.length < 1)
           }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
+          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิดงาน" }}
           onChange={(e, { value }) => props.setField("closeTime", value)}
         />
       </div>      
-</Form.Group>
-        </div>
-        <Form.Group>
-          <div className="Radio">
-            <Form.Group grouped>
-              <label>ค่าใช้จ่าย</label>
-              <Form.Radio
-                label="มี"
-                name="fee"
-                value="yes"
-                checked={props.fee === "yes"}
-                onChange={(e, { value }) => props.FeeOption("fee", value)}
-              />
-              <Form.Radio
-                label="ไม่มี"
-                name="fee"
-                value="no"
-                checked={props.fee === "no"}
-                onChange={(e, { value }) => props.FeeOption("fee", value)}
-              />
-            </Form.Group>
-          </div>
-          <div className="Radio">
-            <Form.Group grouped>
-              <label>ที่จอดรถ</label>
-              <Form.Radio
-                label="มี"
-                name="parking"
-                value="yes"
-                checked={props.carParking === "yes"}
-                onChange={(e, { value }) =>
-                  props.CarParkingOption("carParking", value)
-                }
-              />
-              <Form.Radio
-                label="ไม่มี"
-                name="parking"
-                value="no"
-                checked={props.carParking === "no"}
-                onChange={(e, { value }) =>
-                  props.CarParkingOption("carParking", value)
-                }
-              />
-            </Form.Group>
-          </div>
-        </Form.Group>
-        <label>วันที่เปิดทำการ</label>
-        <div className="Body">
-          <Dropdown
-            multiple
-            selection
-            options={optionsDay}
-            placeholder="วันที่เปิดทำการ"
-            renderLabel={renderLabel}
-            require="true"
-            name="day_tag"
-            errorLabel={<Label color="red" pointing />}
-            validations={{
-              customValidation: (values, value) => !(!value || value.length < 1)
-            }}
-            validationErrors={{ customValidation: "ต้องเลือกวันที่เปิดทำการ" }}
-            onChange={(e, { value }) => props.DaysSelected("days", value)}
-          />
-        </div>
-        <label>แท็กประเภทอีเวนท์</label>
-        <div className="Body">
-          <Dropdown
-            multiple
-            selection
-            options={props.tagsData}
-            placeholder="แท็กของอีเวนท์"
-            renderLabel={renderLabel}
-            require="true"
-            name="place_tag"
-            onChange={(e, { value }) => props.TagSelected("tags", value)}
-            errorLabel={<Label color="red" pointing />}
-            validations={{
-              customValidation: (values, value) => !(!value || value.length < 1)
-            }}
-            validationErrors={{
-              customValidation: "ต้องเลือกแท็กอย่างน้อย 1 แท็ก"
-            }}
-          />
-        </div>
 
-        <label>สถานที่จัดงาน</label>
-        <div className="Body">
-          <Dropdown
-            selection
-            options={optionPlace}
-            placeholder="สถานที่จัดงาน"
-            renderLabel={renderLabel}
-            require="true"
-            name="place_select"
-            onChange={(e, { value }) => props.PlaceSelected("PlaceId", value)}
-            errorLabel={<Label color="red" pointing />}
-            validations={{
-              customValidation: (values, value) => !(!value || value.length < 1)
-            }}
-            validationErrors={{ customValidation: "กรุณาเลือกสถานที่" }}
-          />
-        </div>
+      <label>แท็กประเภทอีเวนท์</label>
+      <div className="Body">
+        <Dropdown
+          multiple
+          selection
+          options={props.tagsData}
+          placeholder="แท็กของอีเวนท์"
+          renderLabel={renderLabel}
+          require="true"
+          name="place_tag"
+          value={props.tags}
+          onChange={(e, { value }) => props.TagSelected("tags", value)}
+          errorLabel={<Label color="red" pointing />}
+          validations={{
+            customValidation: (values, value) => !(!value || value.length < 1)
+          }}
+          validationErrors={{
+            customValidation: "ต้องเลือกแท็กอย่างน้อย 1 แท็ก"
+          }}
+        />
+      </div>
+
+      <label>สถานที่จัดงาน</label>
+      <div className="Body">
+        <Dropdown
+          selection
+          options={optionPlace}
+          placeholder="สถานที่จัดงาน"
+          renderLabel={renderLabel}
+          require="true"
+          name="place_select"
+          value={props.PlaceId}
+          onChange={(e, { value }) => props.PlaceSelected("PlaceId", value)}
+          errorLabel={<Label color="red" pointing />}
+          validations={{
+            customValidation: (values, value) => !(!value || value.length < 1)
+          }}
+          validationErrors={{ customValidation: "กรุณาเลือกสถานที่" }}
+        />
+      </div>
 
         <div>
           <Form.Button floated="right" size="big">
