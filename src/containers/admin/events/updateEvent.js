@@ -11,11 +11,11 @@ class UpdateEvent extends Component {
   state = {
     eventName: "",
     eventDes: "",
-    tel: "",
+    content: "",
     openTime: "",
     closeTime: "",
     fee: "no",
-    carParking: "yes",
+    feePrice:null,
     days: [],
     tags: [],
     map: {
@@ -48,11 +48,11 @@ class UpdateEvent extends Component {
     this.setState({
       eventName: data.eventName,
       eventDes: data.eventDes,
-      tel: data.tel,
+      content: data.content,
       openTime: data.openTime,
       closeTime: data.closeTime,
       fee: data.fee,
-      carParking: data.carParking,
+      feePrice: data.feePrice,
       days: data.days,
       tags: data.tags,
       FileList: data.FileList,
@@ -151,7 +151,7 @@ class UpdateEvent extends Component {
     if (
       formData.place_name === "" ||
       formData.place_desc === "" ||
-      formData.place_tel === "" ||
+      formData.place_content === "" ||
       formData.place_open === "" ||
       formData.place_close === "" ||
       formData.day_tag === undefined ||
@@ -178,11 +178,11 @@ class UpdateEvent extends Component {
         axios.put("/api/UpdateEventFromId/" + this.state.id, {
         eventName: this.state.eventName,
         eventDes: this.state.eventDes,
-        tel: this.state.tel,
+        content: this.state.content,
         openTime: this.state.openTime,
         closeTime: this.state.closeTime,
         fee: this.state.fee,
-        carParking: this.state.carParking,
+        feePrice: this.state.feePrice,
         tags: this.state.tags,
         days: this.state.days,
         images: this.state.images,
@@ -208,11 +208,11 @@ class UpdateEvent extends Component {
       axios.put("/api/UpdateEventFromId/" + this.state.id, {
       eventName: this.state.eventName,
       eventDes: this.state.eventDes,
-      tel: this.state.tel,
+      content: this.state.content,
       openTime: this.state.openTime,
       closeTime: this.state.closeTime,
       fee: this.state.fee,
-      carParking: this.state.carParking,
+      feePrice: this.state.feePrice,
       tags: this.state.tags,
       days: this.state.days,
       FileList: this.state.FileList,
@@ -246,13 +246,14 @@ class UpdateEvent extends Component {
           <EventEditForm
             eventName={this.state.eventName}
             eventDes={this.state.eventDes}
-            tel={this.state.tel}
+            content={this.state.content}
             openTime={this.state.openTime}
             closeTime={this.state.closeTime}
             fee={this.state.fee}
-            carParking={this.state.carParking}
+            feePrice={this.state.feePrice}
             days={this.state.days}
             tags={this.state.tags}
+            PlaceId={this.state.PlaceId}
             images={this.state.images}
             placesData={this.state.placesData}
             message={this.state.message}

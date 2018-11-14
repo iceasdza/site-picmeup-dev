@@ -15,12 +15,15 @@ import "sweetalert2/src/sweetalert2.scss";
 class Home extends Component {
   state = {
     placeName: "",
-    placeDes: "",
-    tel: "",
+    placeDes: null,
+    contact: null,
     openTime: "",
     closeTime: "",
-    fee: "no",
+    fee: "yes",
+    feePrice:null,
     carParking: "yes",
+    carParkSize:null,
+    carParkPrice:null,
     days: [],
     tags: [],
     map: {
@@ -87,17 +90,19 @@ class Home extends Component {
     this.setState({
       placeName: data.placeName,
       placeDes: data.placeDes,
-      tel: data.tel,
+      contact: data.contact,
       openTime: data.openTime,
       closeTime: data.closeTime,
       fee: data.fee,
+      feePrice: data.feePrice,
       carParking: data.carParking,
-      days: data.days,
+      carParkSize: data.carParkSize,
+      carParkPrice:data.carParkPrice,
       tags: data.tags,
-      id: _id,
+      days: data.days,
       images: data.images,
-      lat:data.lat,
-      lng:data.lng,
+      lat: data.lat,
+      lng: data.lng,
       activities:data.activities
     });
   };
@@ -232,7 +237,8 @@ class Home extends Component {
   };
 
   UpdatePlace = async formData => {
-    if(formData.place_name === "" || formData.place_desc === "" || formData.place_tel === ""
+    let _id = this.props.location.state.id;
+    if(formData.place_name === "" || formData.place_desc === "" || formData.place_contact === ""
     || formData.place_open === "" || formData.place_close === ""|| formData.day_tag === undefined
     || formData.place_tag === undefined){
         return
@@ -253,14 +259,17 @@ class Home extends Component {
         confirmButtonText: "Yes"
       }).then(result => {
         if (result.value) {
-        axios.put("/api/UpdatePlaceFromId/" + this.state.id, {
+        axios.put("/api/UpdatePlaceFromId/" + _id, {
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
-            tel: this.state.tel,
+            contact: this.state.contact,
             openTime: this.state.openTime,
             closeTime: this.state.closeTime,
             fee: this.state.fee,
+            feePrice: this.state.feePrice,
             carParking: this.state.carParking,
+            carParkSize: this.state.carParkSize,
+            carParkPrice:this.state.carParkPrice,
             tags: this.state.tags,
             days: this.state.days,
             FileList: this.state.FileList,
@@ -288,14 +297,17 @@ class Home extends Component {
       confirmButtonText: "Yes"
     }).then(result => {
       if (result.value) {
-        axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
+        axios.put('/api/UpdatePlaceFromId/' +_id, {
               placeName: this.state.placeName,
               placeDes: this.state.placeDes,
-              tel: this.state.tel,
+              contact: this.state.contact,
               openTime: this.state.openTime,
               closeTime: this.state.closeTime,
               fee: this.state.fee,
+              feePrice: this.state.feePrice,
               carParking: this.state.carParking,
+              carParkSize: this.state.carParkSize,
+              carParkPrice:this.state.carParkPrice,
               tags: this.state.tags,
               days: this.state.days,
               FileList: this.state.FileList,
@@ -305,32 +317,13 @@ class Home extends Component {
               lat:this.state.lat,
               lng:this.state.lng
             }).then(value=>{
+              console.log(value)
           if(value.status===200){
             this.setState({ redirect: true });
           }
         })
       }
-    })
-    // const resp =await axios.put('/api/UpdatePlaceFromId/' + this.state.id, {
-    //     placeName: this.state.placeName,
-    //     placeDes: this.state.placeDes,
-    //     tel: this.state.tel,
-    //     openTime: this.state.openTime,
-    //     closeTime: this.state.closeTime,
-    //     fee: this.state.fee,
-    //     carParking: this.state.carParking,
-    //     tags: this.state.tags,
-    //     days: this.state.days,
-    //     FileList: this.state.FileList,
-    //     editor: "Patis editor",
-    //     images:this.state.images,
-    //     activities:this.state.activities,
-    //     lat:this.state.lat,
-    //     lng:this.state.lng
-    //   })
-    //   if(resp.status === 200){
-    //     this.setState({ redirect: true });
-    //   }
+    })    
   };
 
   render() {
@@ -351,11 +344,14 @@ class Home extends Component {
           <PlaceEdit
             placeName={this.state.placeName}
             placeDes={this.state.placeDes}
-            tel={this.state.tel}
+            contact={this.state.contact}
             openTime={this.state.openTime}
             closeTime={this.state.closeTime}
             fee={this.state.fee}
+            feePrice={this.state.feePrice}
             carParking={this.state.carParking}
+            carParkSize={this.state.carParkSize}
+            carParkPrice={this.state.carParkPrice}
             days={this.state.days}
             tags={this.state.tags}
             images={this.state.images}
@@ -373,6 +369,7 @@ class Home extends Component {
             handleImageLoaded={this.handleImageLoaded} 
             DeletePhotoUploaded={this.DeletePhotoUploaded}
             tagsData={this.state.tagsData}
+            activities={this.state.activities}
             activitiesData={this.state.activitiesData}
           />
         </Form>

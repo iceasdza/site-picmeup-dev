@@ -1,18 +1,18 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label,Divider } from "semantic-ui-react";
+import { Label, Divider, Icon } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imageEditControl"
 
 const optionsDay = [
-  { key: 1, text: "วันจันทร์", value: "mon" },
-  { key: 2, text: "วันอังคาร", value: "tue" },
-  { key: 3, text: "วันพุธ", value: "wed" },
-  { key: 4, text: "วันพฤหัสบดี", value: "thu" },
-  { key: 5, text: "วันศุกร์", value: "fri" },
-  { key: 6, text: "วันเสาร์", value: "sat" },
-  { key: 7, text: "วันอาทิตย์", value: "sun" }
+  { key: 1, text: "วันจันทร์", value: "จันทร์" },
+  { key: 2, text: "วันอังคาร", value: "อังคาร" },
+  { key: 3, text: "วันพุธ", value: "พุธ" },
+  { key: 4, text: "วันพฤหัสบดี", value: "พฤหัสบดี" },
+  { key: 5, text: "วันศุกร์", value: "ศุกร์" },
+  { key: 6, text: "วันเสาร์", value: "เสาว์" },
+  { key: 7, text: "วันอาทิตย์", value: "อาทิตย์" }
 ];
 const optionsTime = [
   { key: 1, text: "05:00", value: "05:00" },
@@ -76,69 +76,36 @@ const PlaceEditForm = props => {
           อัพโหลดรูปภาพสถานที่
           <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
-        <label className="custom-file-upload">
-          <p className="Color">อัพโหลดรูปภาพ</p>
+        <label>
+          <Icon className='Pic' size='massive' name='camera' />
           <input
             type="file"
             accept="image/*"
             name="img"
             id="img"
             multiple
+            im
             onChange={e => props.handleSelectImage(e)}
+            require="true"
           />
         </label>
-        <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
+        <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded} />
       </Form.Field>
       <div className="Gap">
-        <Form.Group>
-          <Form.Input
-            name="place_tel"
-            label="เบอร์โทรติดต่อ"
-            placeholder="เบอร์โทร"
-            width={5}
-            required
-            value={props.tel}
-            onChange={(e, { value }) => props.setField("tel", value)}
-          />
-        </Form.Group>
-        <Form.Group>
-      <div className="Body">
-      <label>เวลาเปิดทำการ</label>
-        <Dropdown                    
-          selection
-          options={optionsTime}
-          placeholder="เวลาเปิดทำการ"
-          renderLabel={renderLabel}
-          require="true"
-          name="place_open"
+        <Form.TextArea
+          name="place_contact"
+          label="วิธีการติดต่อขอข้อมูลเกี่ยวกับสถานที่"
+          placeholder="วิธีการติดต่อ.."
+          width={14}
+          value={props.contact}
+          onChange={(e, { value }) => props.setField("contact", value)}
+          required
           errorLabel={<Label color="red" pointing />}
-          validations={{
-            customValidation: (values, value) => !(!value || value.length < 1)
-          }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
-          onChange={(e, { value }) => props.setField("openTime", value)}
+          validationErrors={{ isDefaultRequiredValue: "หากไม่มีช่องทางการติดต่อกรุณากรอก ' - ' " }}
         />
-      </div>     
-      <div className="Body">
-      <label>เวลาปิดทำการ</label>
-        <Dropdown                    
-          selection
-          options={optionsTime}
-          placeholder="เวลาปิดทำการ"
-          renderLabel={renderLabel}
-          require="true"
-          name="place_close"
-          errorLabel={<Label color="red" pointing />}
-          validations={{
-            customValidation: (values, value) => !(!value || value.length < 1)
-          }}
-          validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
-          onChange={(e, { value }) => props.setField("closeTime", value)}
-        />
-      </div>      
-</Form.Group>
       </div>
       <Form.Group>
+
         <div className="Radio">
           <Form.Group grouped>
             <label>ค่าใช้จ่าย</label>
@@ -149,15 +116,30 @@ const PlaceEditForm = props => {
               checked={props.fee === "yes"}
               onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
+            {props.fee === 'yes' ? (
+              <Form.TextArea
+                name="feePrice"
+                label="ค่าเข้าชม"
+                placeholder="ค่าเข้าชม"
+                width={14}
+                value={props.feePrice}
+                onChange={(e, { value }) => props.FeeOption("feePrice", value)
+                }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "ต้องระบุค่าใช้จ่าย" }}
+              />
+            ) : <p />}
             <Form.Radio
               label="ไม่มี"
               name="fee"
-              value="no"
-              checked={props.fee === "no"}
+              value="-"
+              checked={props.fee === "-"}
               onChange={(e, { value }) => props.FeeOption("fee", value)}
             />
           </Form.Group>
         </div>
+
         <div className="Radio">
           <Form.Group grouped>
             <label>ที่จอดรถ</label>
@@ -170,11 +152,41 @@ const PlaceEditForm = props => {
                 props.CarParkingOption("carParking", value)
               }
             />
+            {props.carParking === 'yes' ? (
+              <Form.TextArea
+                name="parking_size"
+                label="ขนาดลานจอดรถ"
+                placeholder="ขนาดลานจอดรถ"
+                width={14}
+                value={props.carParkSize}
+                onChange={(e, { value }) =>
+                  props.CarParkingOption("carParkSize", value)
+                }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องขนาดลานจอดรถ" }}
+              />
+            ) : <p />}
+            {props.carParking === 'yes' ? (
+              <Form.TextArea
+                name="parking_price"
+                label="ค่าบริการ"
+                placeholder="ค่าบริการ"
+                width={14}
+                value={props.carParkPrice}
+                onChange={(e, { value }) =>
+                  props.CarParkingOption("carParkPrice", value)
+                }
+                required
+                errorLabel={<Label color="red" pointing />}
+                validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่ค่าบริการ" }}
+              />
+            ) : <p />}
             <Form.Radio
               label="ไม่มี"
               name="parking"
-              value="no"
-              checked={props.carParking === "no"}
+              value="-"
+              checked={props.carParking === "-"}
               onChange={(e, { value }) =>
                 props.CarParkingOption("carParking", value)
               }
@@ -182,11 +194,13 @@ const PlaceEditForm = props => {
           </Form.Group>
         </div>
       </Form.Group>
+
       <label>วันที่เปิดทำการ</label>
       <div className="Body">
         <Dropdown
           multiple
           selection
+          value={props.days}
           options={optionsDay}
           placeholder="วันที่เปิดทำการ"
           renderLabel={renderLabel}
@@ -200,11 +214,50 @@ const PlaceEditForm = props => {
           onChange={(e, { value }) => props.DaysSelected("days", value)}
         />
       </div>
+      <Form.Group>
+        <div className="Body">
+          <label>เวลาเปิดทำการ</label>
+          <Dropdown
+            selection
+            value={props.openTime}
+            options={optionsTime}
+            placeholder="เวลาเปิดทำการ"
+            renderLabel={renderLabel}
+            require="true"
+            name="place_open"
+            errorLabel={<Label color="red" pointing />}
+            validations={{
+              customValidation: (values, value) => !(!value || value.length < 1)
+            }}
+            validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาเปิด" }}
+            onChange={(e, { value }) => props.setField("openTime", value)}
+          />
+        </div>
+        <div className="Body">
+          <label>เวลาปิดทำการ</label>
+          <Dropdown
+            selection
+            options={optionsTime}
+            value={props.closeTime}
+            placeholder="เวลาปิดทำการ"
+            renderLabel={renderLabel}
+            require="true"
+            name="place_close"
+            errorLabel={<Label color="red" pointing />}
+            validations={{
+              customValidation: (values, value) => !(!value || value.length < 1)
+            }}
+            validationErrors={{ customValidation: "จำเป็นต้องใส่เวลาปิด" }}
+            onChange={(e, { value }) => props.setField("closeTime", value)}
+          />
+        </div>
+      </Form.Group>
       <label>แท็กประเภทสถานที่</label>
       <div className="Body">
         <Dropdown
           multiple
           selection
+          value={props.tags}
           options={props.tagsData}
           placeholder="แท็กของสถานที่"
           renderLabel={renderLabel}
@@ -213,13 +266,12 @@ const PlaceEditForm = props => {
           onChange={(e, { value }) => props.TagSelected("tags", value)}
         />
       </div>
-
-                  <label>กิจกรรม</label>
-                  {console.log(this.props)}
+      <label>กิจกรรม</label>
       <div className="Body">
         <Dropdown
           multiple
           selection
+          value={props.activities}
           options={props.activitiesData}
           placeholder="กิจกรรม"
           renderLabel={renderLabel}
