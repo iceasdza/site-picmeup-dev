@@ -121,11 +121,13 @@ class EditAlbum extends Component {
         validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
       />
 
-        <label>
+       <label>
+          อัพโหลดรูปภาพสถานที่
           <h3 style={{ color: "red" }}>{this.state.message}</h3>
         </label>
-        <label className="custom-file-upload">
-          <p className="Color">อัพโหลดรูปภาพ</p>
+        <br/>
+        <label>
+          <Icon className='Pic' size='massive' name='camera' />
           <input
             type="file"
             accept="image/*"
