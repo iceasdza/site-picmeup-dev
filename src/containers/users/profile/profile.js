@@ -104,8 +104,8 @@ class Profile extends Component {
       <Table basic="very" celled>
         <Table.Header>
           <Table.Row>
-            <Table.HeaderCell>Sender</Table.HeaderCell>
-            <Table.HeaderCell>ตอบกลับ</Table.HeaderCell>
+            <Table.HeaderCell className="tableMessage">ผู้ส่ง</Table.HeaderCell>
+            <Table.HeaderCell className="tableMessage">ตอบกลับ</Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
@@ -177,6 +177,7 @@ class Profile extends Component {
     const album = await axios.get("/api/getAlbumFromName/" + user);
     const topic = await axios.get("api/getTopicFromName/" + user);
     const topicInteract = await axios.get("api/getInteractTopic/" + user);
+    console.log(data)
     if (topicInteract.status === 200) {
       const messageData = message.data;
       this.setState({
@@ -217,7 +218,9 @@ class Profile extends Component {
           <Card.Content header={data.topicName} />
         </Link>
         <Card.Content>
-          <span className="topicPlace">สถานที่ {data.topicPlace}<span className="topicDelete" onClick={e => this.modalRemoveTopic(data._id, data.topicName)}>ลบมีตติ้งนี้</span></span>
+          <span className="topicPlace">สถานที่ {data.topicPlace}
+          <span className="topicDelete" onClick={e => this.modalRemoveTopic(data._id, data.topicName)}>ลบมีตติ้งนี้ &nbsp; <Icon name="trash"/></span>
+          </span>
         </Card.Content>
       </Card>
     ));
@@ -274,7 +277,8 @@ class Profile extends Component {
               onClick={e => this.modalRemoveAlbum(data._id, data.albumName)}
               className="delAulbumBtn"
             >
-              ลบอัลบั้มนี้
+              ลบอัลบั้มนี้{" "}
+              <Icon name="trash"/>
             </Button>
             <Link
               to={{
@@ -304,10 +308,10 @@ class Profile extends Component {
             circular
             className="avatar-uploaded imageSize"
           />
-          <p>
+          <p className="profileData">
             {this.state.firstName} {this.state.lastName}
           </p>
-          <p>
+          <p className="profileData2">
             {this.state.userName} | {this.state.email}
           </p>
           <NavLink to="/editprofile">

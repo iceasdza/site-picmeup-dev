@@ -56,12 +56,13 @@ class EventPage extends Component {
             >
               <Image src={data.images[0]} className="showhotimage" />
               <div class="text-block">
-                <h3 className="showhotname">{data.eventName}</h3>
+              <div className="activity">
+              <h3 className="showhotname">{data.eventName}</h3>
                 <p className="description">{data.eventDes}</p>
                 <p className="extraDetail">
                   เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
                   {data.comments.length}
-                </p>
+                </p></div>
               </div>
             </Link>
           </Card>

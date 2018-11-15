@@ -32,8 +32,15 @@ const mainInfo = props => {
               >
                 <Image src={data.images[0]} className="showhotimage" />
                 <div class="text-block">
+                  
+                  <h3 className="showhotname">{data.placeName}</h3>
+                  <p className="description">{data.placeDes}</p>
+                  <p className="extraDetail">
+                    เข้าชม {data.viewCount}
+                    แสดงความคิดเห็น {data.comments.length}
+                  </p>
                   {user === "admin" ? (
-                    <div>
+                    <div className="manageBtn">
                       <br />{" "}
                       <Link
                         to={{
@@ -41,11 +48,15 @@ const mainInfo = props => {
                           state: { id: data._id }
                         }}
                       >
-                        <Button primary content="Edit" />
+                        <Button primary content="แก้ไข" icon='edit' className="homeBtn" size='mini'/>
                       </Link>
+                      {' '}
                       <Button
+                        icon='trash'
+                        size='mini'
+                        className="homeBtn"
                         color="red"
-                        content="DELETE"
+                        content="ลบ"
                         value={index}
                         onClick={e =>
                           props.removeData("place", data._id, data.placeName)
@@ -53,14 +64,8 @@ const mainInfo = props => {
                       />
                     </div>
                   ) : (
-                    <p />
+                    <span/>
                   )}
-                  <h3 className="showhotname">{data.placeName}</h3>
-                  <p className="description">{data.placeDes}</p>
-                  <p className="extraDetail">
-                    เข้าชม {data.viewCount}
-                    แสดงความคิดเห็น {data.comments.length}
-                  </p>
                 </div>
               </Link>
             </Card>
@@ -82,9 +87,14 @@ const mainInfo = props => {
                     >
                       <Image src={data.images[0]} className="showhotimage" />
                       <div class="text-block">
-                      <br/>
-                      {user === "admin" ? (
-                          <div>
+                        <h3 className="showhotname">{data.eventName}</h3>
+                        <p className="description">{data.eventDes}</p>
+                        <p className="extraDetail">
+                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                          {data.comments.length}
+                        </p>
+                        {user === "admin" ? (
+                          <div className="manageBtn">
                             {" "}
                             <Link
                               to={{
@@ -92,11 +102,14 @@ const mainInfo = props => {
                                 state: { id: data._id }
                               }}
                             >
-                              <Button primary content="Edit" />
+                              <Button primary  content="แก้ไข" icon='edit' className="homeBtn" size='mini' />
                             </Link>
                             <Button
                               color="red"
-                              content="DELETE"
+                              content="ลบ"
+                              icon='trash'
+                              size='mini'
+                              className="homeBtn"
                               value={index}
                               onClick={e =>
                                 props.removeData(
@@ -110,12 +123,6 @@ const mainInfo = props => {
                         ) : (
                           <span></span>
                         )}
-                        <h3 className="showhotname">{data.eventName}</h3>
-                        <p className="description">{data.eventDes}</p>
-                        <p className="extraDetail">
-                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                          {data.comments.length}
-                        </p>
                       </div>
                     </Link>
                   </Card>
@@ -142,8 +149,15 @@ const mainInfo = props => {
                         <Image src={data.images[0]} className="showhotimage" />
                         <div class="text-block">
                         <br/>
-                        {user === "admin" ? (
-                            <div>
+                        
+                          <h3 className="showhotname">{data.placeName}</h3>
+                          <p className="description">{data.placeDes}</p>
+                          <p className="extraDetail">
+                            เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                            {data.comments.length}
+                          </p>
+                          {user === "admin" ? (
+                            <div className="manageBtn">
                               {" "}
                               <Link
                                 to={{
@@ -151,11 +165,14 @@ const mainInfo = props => {
                                   state: { id: data._id }
                                 }}
                               >
-                                <Button primary content="Edit" />
-                              </Link>
-                              <Button
-                                color="red"
-                                content="DELETE"
+                              <Button primary  content="แก้ไข" icon='edit' className="homeBtn" size='mini' />
+                            </Link>
+                            <Button
+                              color="red"
+                              content="ลบ"
+                              icon='trash'
+                              size='mini'
+                              className="homeBtn"
                                 value={index}
                                 onClick={e =>
                                   props.removeData(
@@ -169,12 +186,6 @@ const mainInfo = props => {
                           ) : (
                             <span></span>
                           )}
-                          <h3 className="showhotname">{data.placeName}</h3>
-                          <p className="description">{data.placeDes}</p>
-                          <p className="extraDetail">
-                            เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                            {data.comments.length}
-                          </p>
                         </div>
                       </Link>
                     </Card>
@@ -203,8 +214,15 @@ const mainInfo = props => {
                       <Image src={data.images[0]} className="showhotimage" />
                       <div class="text-block">
                       <br/>
-                      {user === "admin" ? (
-                          <div>
+                      
+                        <h3 className="showhotname">{data.eventName}</h3>
+                        <p className="description">{data.eventDes}</p>
+                        <p className="extraDetail">
+                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                          {data.comments.length}
+                        </p>
+                        {user === "admin" ? (
+                          <div className="manageBtn">
                             {" "}
                             <Link
                               to={{
@@ -212,11 +230,14 @@ const mainInfo = props => {
                                 state: { id: data._id }
                               }}
                             >
-                              <Button primary content="Edit" />
+                              <Button primary  content="แก้ไข" icon='edit' className="homeBtn" size='mini' />
                             </Link>
                             <Button
                               color="red"
-                              content="DELETE"
+                              content="ลบ"
+                              icon='trash'
+                              size='mini'
+                              className="homeBtn"
                               value={index}
                               onClick={e =>
                                 props.removeData(
@@ -230,12 +251,6 @@ const mainInfo = props => {
                         ) : (
                           <span></span>
                         )}
-                        <h3 className="showhotname">{data.eventName}</h3>
-                        <p className="description">{data.eventDes}</p>
-                        <p className="extraDetail">
-                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                          {data.comments.length}
-                        </p>
                       </div>
                     </Link>
                   </Card>
@@ -263,8 +278,15 @@ const mainInfo = props => {
                       <Image src={data.images[0]} className="showhotimage" />
                       <div class="text-block">
                       <br/>
-                      {user === "admin" ? (
-                          <div>
+                      
+                        <h3 className="showhotname">{data.placeName}</h3>
+                        <p className="description">{data.placeDes}</p>
+                        <p className="extraDetail">
+                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                          {data.comments.length}
+                        </p>
+                        {user === "admin" ? (
+                          <div className="manageBtn">
                             {" "}
                             <Link
                               to={{
@@ -272,11 +294,14 @@ const mainInfo = props => {
                                 state: { id: data._id }
                               }}
                             >
-                              <Button primary content="Edit" />
+                              <Button primary  content="แก้ไข" icon='edit' className="homeBtn" size='mini' />
                             </Link>
                             <Button
                               color="red"
-                              content="DELETE"
+                              content="ลบ"
+                              icon='trash'
+                              size='mini'
+                              className="homeBtn"
                               value={index}
                               onClick={e =>
                                 props.removeData(
@@ -290,12 +315,6 @@ const mainInfo = props => {
                         ) : (
                           <span></span>
                         )}
-                        <h3 className="showhotname">{data.placeName}</h3>
-                        <p className="description">{data.placeDes}</p>
-                        <p className="extraDetail">
-                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                          {data.comments.length}
-                        </p>
                       </div>
                     </Link>
                   </Card>

@@ -57,12 +57,14 @@ class PlacePage extends Component {
           >
             <Image src={data.images[0]} className="showhotimage" />
             <div class="text-block">
+            <div className="activity">
               <h3 className="showhotname">{data.placeName}</h3>
               <p className="description">{data.placeDes}</p>
               <p className="extraDetail">
                 เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
                 {data.comments.length}
               </p>
+              </div>
             </div>
           </Link>
         </Card>

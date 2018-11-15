@@ -2,12 +2,13 @@
     float: right;
 }
 .topicDelete{
-    padding-top: 1em;
     height: 100%;
     cursor: pointer;
     margin-left: 4em;
     color: red;
-    font-size: 1em;    
+    font-size: 1em;
+    float: right;
+
 }
 .topicDelete:hover{
     color: crimson
@@ -36,4 +37,65 @@
 }
 .menuName{
     font-family: 'Kanit'!important;
+}
+.editAvatar{
+    padding-top: 2em;
+}
+.uploadAvatar{
+    background-color: white;
+    font-family: 'Kanit'!important;
+    color:#333;
+    cursor: pointer;
+    align-items: center;
+}
+.uploadAvatar:hover{
+    text-decoration: underline;
+    color: #222;
+}
+.cancleAvatar{
+    color:red;
+    font-family: 'Kanit'!important;
+    font-size: 1em;
+    cursor: pointer;
+    padding-left: 2em;
+}
+.cancleAvatar:hover{
+    text-decoration: underline;
+}
+.avatarBtn{
+    padding-top: 1em;
+}
+.profileData{
+    font-family: 'Kanit'!important; 
+    color:#333
+}
+.profileData2{
+    font-family: 'Kanit'!important; 
+    color:#555
+}
+.submitBtn{
+    background-color: black!important;
+    color: white!important;
+    border-radius: 0px!important;
+    opacity: 0.8;
+    font-family: 'Kanit'!important; 
+}
+.submitBtn:hover{
+    opacity: 0.7;
+}
+.formEditProfile{
+    padding-bottom: 1em;
+}
+input{
+margin-top: 0px!important
+}
+.formEdit{
+    align-items: center
+}
+.editProfile{
+    padding-top: 1em;
+}
+.tableMessage{
+    padding: 1em!important;
+    font-family: 'Kanit'!important; 
 }

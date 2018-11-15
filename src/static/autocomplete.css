@@ -9,3 +9,9 @@ input{
     margin-top: 2em!important;
     font-size: 14px!important;
 }
+.searchHead{
+    font-family: 'Kanit'!important;
+}
+.activity{
+    padding: 0.5em;
+}

@@ -138,25 +138,6 @@ class Home extends Component {
         }
       });
     }
-    // return(
-    //   swal({
-    //     title: 'คุณแน่ใจหรือ ?',
-    //     text: "คุณต้องการจะลบ "+name+" หรือไม่ ?",
-    //     type: 'warning',
-    //     showCancelButton: true,
-    //     confirmButtonColor: '#3085d6',
-    //     cancelButtonColor: '#d33',
-    //     confirmButtonText: 'Yes'
-    //   }).then((result) => {
-    //     if (result.value) {
-    //       axios.post('/api/deleteAlbum/'+id)
-    //       swal(
-    //         'ลบเรียบร้อย!'
-    //       )
-    //       this.getData()
-    //     }
-    //   })
-    // )
   };
 
   handleChage = e => {
@@ -166,10 +147,6 @@ class Home extends Component {
     this.setState({ activityName: e });
   };
   handleAddActivity = async () => {
-    // await axios.post("/api/addActivity", {
-    //   activityName: this.state.activityName
-    // });
-    // this.setState({ activityName: "" });
     const activity = this.state.activityName;
     return swal({
       title: "คุณแน่ใจหรือ ?",
