@@ -17,3 +17,14 @@
 .profileName{
     padding-top: 2em;
 }
+.albumDes{
+    text-align: justify;
+    padding-top: 1em;
+    font-family: 'Kanit'!important;
+}
+.editAlbum{
+    font-family: 'Kanit'!important;
+}
+.editAlbum:hover{
+    text-decoration: underline
+}

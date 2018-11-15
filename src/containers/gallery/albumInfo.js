@@ -98,14 +98,13 @@ export default class AlbumInfo extends Component {
       return (
         <div>
           <Link
+            className="editAlbum"
             to={{
               pathname: "/editalbum",
               state: { id: this.state.id }
             }}
           >
-          <Button>
-            Edit
-          </Button>
+            แก้ไขกระทู้
           </Link>
         </div>
       );
@@ -149,9 +148,10 @@ export default class AlbumInfo extends Component {
     return (
       <div className="container fluid">
         <LoadingScreen open={this.state.open} />
-        {this.renderEditButton()}
+        {/* {this.renderEditButton()} */}
         <AlbumInfoComponent
-        albumDes={this.state.albumDes}
+          renderEditButton={this.renderEditButton}
+           albumDes={this.state.albumDes}
           renderImages={this.renderImages}
           renderComment={this.renderComment}
         />
