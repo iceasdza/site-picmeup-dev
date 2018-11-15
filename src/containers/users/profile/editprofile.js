@@ -2,7 +2,9 @@ import React, { Component } from "react";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
 import { Form } from "formsy-semantic-ui-react";
-import { Button, Label, Image } from "semantic-ui-react";
+import { Button, Label, Image ,Icon} from "semantic-ui-react";
+import '../../../static/profile.css'
+import { Redirect } from "react-router-dom";
 const user = Cookies.get("user");
 class EditProfile extends Component {
   constructor(props) {
@@ -14,7 +16,8 @@ class EditProfile extends Component {
       email: "",
       tel: "",
       avatar: "",
-      tempAvatar:""
+      tempAvatar:"",
+      isRedirect:false
     };
   }
   getData = async () => {
@@ -37,13 +40,6 @@ class EditProfile extends Component {
     this.setState({ [field]: e });
   };
 
-  handleOver = () => {
-    this.setState({ active: "uploadButton-active" });
-  };
-
-  handleOut = () => {
-    this.setState({ active: "uploadButton" });
-  };
 
   handleSelectImage = event => {
     const files = event.target.files;
@@ -59,14 +55,15 @@ class EditProfile extends Component {
 
   rederUpload = () => {
     return (
-      <div>
+      <div className="editAvatar">
         <Image
           src={this.state.avatar}
           circular
           className="avatar-uploaded imageSize"
         />
+        <div className="avatarBtn">
         <label className="uploadAvatar">
-          <p className="Color">เลือกรูปภาพ</p>
+          <p className="uploadcontent">เลือกรูปภาพ<Icon disabled name='camera' /></p>
           <input
             name="img"
             id="img"
@@ -75,7 +72,8 @@ class EditProfile extends Component {
             onChange={e => this.handleSelectImage(e)}
           />
         </label>
-        <Button danger onClick={this.handleCancle}>cancle</Button>
+        <span className="cancleAvatar" onClick={this.handleCancle}>ยกเลิก</span>
+        </div>
       </div>
     );
   };
@@ -94,7 +92,7 @@ class EditProfile extends Component {
         var data = new FormData();
         const dataFile = document.getElementById("img").files[0];
         data.append("img", dataFile);
-        const resp = await axios.post("/api/upLoadAvatar", data);   
+        const resp = await axios.post("/api/upLoadAvatar", data);
         await axios.put("/api/updateProfile/" + user, {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -102,8 +100,10 @@ class EditProfile extends Component {
             tel: this.state.tel,
             avatar: resp.data,
           });
-          Cookies.set('userAvatar',this.state.avatar)
+          Cookies.set('userAvatar',resp.data)
       }
+      this.setState({isRedirect:true})
+      
   };
 
   handleOnChange = key => e => {
@@ -111,12 +111,18 @@ class EditProfile extends Component {
   };
 
   render() {
+    if(this.state.isRedirect){
+      return <Redirect to={{ pathname: "/profile" }} />
+    }
     return (
-      <div className="container fluid">
-        {this.rederUpload()}
-
-        <Form onSubmit={this.handleSubmit}>
-          <Form.Input
+      <div className="container fluid formEdit">
+      <center>
+      {this.rederUpload()}
+      </center>
+        <Form onSubmit={this.handleSubmit} className="formEditProfile">
+        <Form.Group>
+        <Form.Input
+            className="editProfile"
             label="ชื่อ"
             name="first_name"
             placeholder={this.state.firstName}
@@ -127,11 +133,11 @@ class EditProfile extends Component {
             validationErrors={{
               isDefaultRequiredValue: "ต้องใส่ชื่อ"
             }}
-            // onChange={e=>this.handleOnChange('firstName',e.target.value)}
             onChange={this.handleOnChange("firstName")}
           />
 
           <Form.Input
+            className="editProfile"
             label="นามสกุล"
             name="last_name"
             placeholder={this.state.lastName}
@@ -144,7 +150,10 @@ class EditProfile extends Component {
             }}
             onChange={this.handleOnChange("lastName")}
           />
-          <Form.Input
+        </Form.Group>
+        <Form.Group>
+        <Form.Input
+          className="editProfile"
             label="email"
             name="email"
             placeholder={this.state.email}
@@ -158,6 +167,7 @@ class EditProfile extends Component {
             onChange={this.handleOnChange("email")}
           />
           <Form.Input
+          className="editProfile"
             label="เบอร์โทรศัพท์"
             name="tel"
             placeholder={this.state.tel}
@@ -170,7 +180,11 @@ class EditProfile extends Component {
             }}
             onChange={this.handleOnChange("tel")}
           />
-          <Button>Submit</Button>
+        </Form.Group>
+          
+          <center>
+          <Button className="submitBtn">แก้ไข &nbsp; <Icon name='edit' /></Button>
+          </center>
         </Form>
       </div>
     );

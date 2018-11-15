@@ -66,28 +66,12 @@ class Activity extends Component {
   render() {
     return (
       <div className="container fluid">
-        <Form onSubmit={this.getPlaceFromActivity}>
-          <br />
-          <h1>คุณกำลังหา : {this.state.value}</h1>
+      <center>
+      <Form onSubmit={this.getPlaceFromActivity}>
+      <p className="searchHead">ค้นหากิจกรรม</p>
           {this.renderAutoComplete()}
-          {/* <Dropdown
-            selection
-            options={this.state.activitiesData}
-            placeholder="แท็ก"
-            require="true"
-            name="place_open"
-            errorLabel={<Label color="red" pointing />}
-            value={this.state.activityName}
-            validations={{
-              customValidation: (values, value) => !(!value || value.length < 1)
-            }}
-            validationErrors={{ customValidation: "เลือกแท็ก" }}
-            onChange={(e, { value }) => this.TagSelected("newTag", value)}
-          /> */}
-          <br/>
-          <br/>
-          <Form.Button content="Submit" />
         </Form>
+      </center>
 
         <div>
           <Divider horizontal>
@@ -100,7 +84,6 @@ class Activity extends Component {
           </Divider>
           <Card.Group itemsPerRow={4} centered className="showframe">
             {this.state.recomendPlace.map((data, index) => (
-              // console.log(data)
               <Card key={index} className="showhotcard">
           <Link
             to={{
@@ -110,12 +93,14 @@ class Activity extends Component {
           >
             <Image src={data.images[0]} className="showhotimage" />
             <div class="text-block">
+            <div className="activity">
               <h3 className="showhotname">{data.placeName}</h3>
               <p className="description">{data.placeDes}</p>
               <p className="extraDetail">
                 เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
                 {data.comments.length}
               </p>
+              </div>
             </div>
           </Link>
         </Card>

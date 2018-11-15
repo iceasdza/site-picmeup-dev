@@ -5,6 +5,7 @@ import { Label, Button, Icon } from "semantic-ui-react";
 import axios from "../../../lib/axios";
 import { Redirect } from "react-router-dom";
 import UpLoadingScreen from '../../screen/uploading'
+import '../../../static/image.css'
 
 class EditAlbum extends Component {
   constructor(props) {
@@ -93,9 +94,9 @@ class EditAlbum extends Component {
 
   renderForm = () => {
     return (
-      <div>
+      <div className="editAlbum">
         <Form.Input
-          label="ชิ่ออัลบัม"
+          label="ชิ่ออัลบั้ม"
           name="albumName"
           placeholder="ชื่ออัลบั้ม.."
           width={8}
@@ -161,7 +162,8 @@ class EditAlbum extends Component {
       return <Redirect to={{ pathname: "/gallery" }} />;
     }
     return (
-      <Form onSubmit={this.handleSunmit} className="container fluid">
+      <div>
+        <Form  className="container fluid">
         <UpLoadingScreen
         loading={this.state.loading}
         />
@@ -174,13 +176,16 @@ class EditAlbum extends Component {
         />
         <br />
         <br />
-        <Button animated>
-          <Button.Content visible>upload</Button.Content>
+      </Form>
+                <center>
+        <Button animated onClick={this.handleSunmit} className="editAlbumBtn">
+          <Button.Content visible>แก้ไข</Button.Content>
           <Button.Content hidden>
             <Icon name="file" />
           </Button.Content>
         </Button>
-      </Form>
+        </center>
+      </div>
     );
   }
 }

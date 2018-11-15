@@ -60,6 +60,7 @@ p.extraDetail{
     font-size: 0.9em!important;
     color: #777;
     font-family: 'Kanit'!important;
+    margin-bottom: 0px;
 }
 .banner{
     /* background-image: url("https://s.yimg.com/ap/build/images/sohp/womens-month-mar-2018/lauramcgregor_towerbridge.jpg"); */
@@ -149,4 +150,10 @@ p.extraDetail{
 }
 .content{
     padding: 0px!important;
+}
+.homeBtn{
+    border-radius: 0px!important;
+}
+.manageBtn{
+    padding-bottom: 1em;
 }

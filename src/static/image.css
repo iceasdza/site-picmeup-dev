@@ -28,3 +28,19 @@
 .editAlbum:hover{
     text-decoration: underline
 }
+.delImage{
+    border-radius: 0px!important;
+    margin:0px!important;
+    padding-left: 0px!important;
+    padding-right: 0px!important;
+    width: 100%;
+}
+.text-block{
+    padding:0px;
+}
+.editAlbumBtn{
+    border-radius: 0px!important;
+}
+.editAlbum{
+    padding-top: 2em;
+}
