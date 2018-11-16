@@ -252,7 +252,7 @@ class AddPlace extends Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <Map
+        {/* <Map
           className="map"
           //   style={style}
           google={this.props.google}
@@ -264,7 +264,7 @@ class AddPlace extends Component {
           }}
         >
           <Marker position={{ lat: this.state.lat, lng: this.state.lng }} />
-        </Map>
+        </Map> */}
       </div>
     );
   };

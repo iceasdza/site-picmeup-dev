@@ -16,13 +16,12 @@ const imageControl = props => {
             className="imageUploadSize"
           />
            <div class="text-block">
-           <Button
-            color="red"
+           <span
             onClick={() => props.DeletePhotoUploaded("files", index)}
-            className="delImage"
+            className="delImageNew"
           >
             ลบรูป <Icon name="trash" />
-          </Button>
+          </span>
           </div>
           </div>
         </Card>

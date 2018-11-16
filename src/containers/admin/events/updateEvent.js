@@ -4,7 +4,7 @@ import { Form } from "formsy-semantic-ui-react";
 import EventEditForm from "../../../components/admin/events/eventEditForm";
 import axios from "../../../lib/axios";
 import { Redirect } from "react-router-dom";
-import {  Dimmer, Loader } from "semantic-ui-react";
+import { Dimmer, Loader, Button } from "semantic-ui-react";
 import swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 class UpdateEvent extends Component {
@@ -15,7 +15,7 @@ class UpdateEvent extends Component {
     openTime: "",
     closeTime: "",
     fee: "no",
-    feePrice:null,
+    feePrice: null,
     days: [],
     tags: [],
     map: {
@@ -31,14 +31,14 @@ class UpdateEvent extends Component {
     files: [],
     redirect: false,
     open: false,
-    imageState:true,
-    tagsData:[]
+    imageState: true,
+    tagsData: []
   };
   setField = (field, value) => {
     this.setState({ [field]: value });
   };
   handleImageLoaded = () => {
-    this.setState({imageState:false})
+    this.setState({ imageState: false });
   };
   getData = async () => {
     let _id = this.props.location.state.id;
@@ -73,20 +73,21 @@ class UpdateEvent extends Component {
     arr.splice(index, 1);
     this.setState({ files: arr });
   };
-  handleSelectImage = async() => {
+  handleSelectImage = async () => {
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
-    const temp = this.state.images;
+      const temp = this.state.images;
       const dataFile = document.getElementById("img").files[0];
-      const arr = []
+      const arr = [];
       data.append("img", dataFile);
       const resp = await axios.post("/api/uploadSingleEvent", data);
-      arr.push(resp.data)
+      arr.push(resp.data);
       temp.push(resp.data);
-      this.setState({ 
+      this.setState({
         // files: arr,
-        images: temp });
+        images: temp
+      });
     } else {
       // this.setState({ open: true });
       const dataFile = document.getElementById("img").files;
@@ -100,9 +101,10 @@ class UpdateEvent extends Component {
         data.push(resp.data[x].location);
         temp.push(resp.data[x].location);
       }
-      this.setState({ 
+      this.setState({
         // files: data,
-        images: temp });
+        images: temp
+      });
     }
   };
 
@@ -131,15 +133,14 @@ class UpdateEvent extends Component {
     this.setState({ [field]: value });
   };
 
-  getTagDetail = async () =>{
-    const arr = []
+  getTagDetail = async () => {
+    const arr = [];
     const resp = await axios.get("/api/getAllTags");
-    resp.data.map((data,index)=>(
-      arr.push({ key: index+1, text: data.tagName, value: data.tagName })
-    ))
-    this.setState({tagsData:arr})
-
-  }
+    resp.data.map((data, index) =>
+      arr.push({ key: index + 1, text: data.tagName, value: data.tagName })
+    );
+    this.setState({ tagsData: arr });
+  };
 
   componentDidMount = async () => {
     this.getData();
@@ -149,14 +150,14 @@ class UpdateEvent extends Component {
 
   UpdateEvent = async formData => {
     if (
-      formData.place_name === "" ||
-      formData.place_desc === "" ||
-      formData.place_content === "" ||
-      formData.place_open === "" ||
-      formData.place_close === "" ||
-      formData.day_tag === undefined ||
-      formData.place_tag === undefined ||
-      formData.place_select === undefined
+      this.state.eventName === "" ||
+      this.state.eventDes === "" ||
+      this.state.content === "" ||
+      this.state.openTime === "" ||
+      this.state.closeTime === "" ||
+      this.state.tags === undefined ||
+      this.state.tagsData === undefined ||
+      this.state.placesData === undefined
     ) {
       return;
     }
@@ -164,36 +165,38 @@ class UpdateEvent extends Component {
     const lengthOfFile = document.getElementById("img").files.length;
     //--------no image updated-----------//
     if (lengthOfFile === 0) {
-      this.setState({ open: true });
       return swal({
         title: "คุณแน่ใจหรือ ?",
-        text: "คุณต้องการแก้ไขอีเว้นท์" + this.state.eventName + "ระบบหรือไม่ ?",
+        text:
+          "คุณต้องการแก้ไขอีเว้นท์" + this.state.eventName + "ระบบหรือไม่ ?",
         type: "question",
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes"
       }).then(result => {
-        if (result.value) {
-        axios.put("/api/UpdateEventFromId/" + this.state.id, {
-        eventName: this.state.eventName,
-        eventDes: this.state.eventDes,
-        content: this.state.content,
-        openTime: this.state.openTime,
-        closeTime: this.state.closeTime,
-        fee: this.state.fee,
-        feePrice: this.state.feePrice,
-        tags: this.state.tags,
-        days: this.state.days,
-        images: this.state.images,
-        PlaceId: this.state.PlaceId
-      }).then(value=>{
-            if(value.status===200){
-              this.setState({ redirect: true });
-            }
-          })
+        if (result.value!==undefined) {
+          this.setState({ open: true });
+          axios.put("/api/UpdateEventFromId/" + this.state.id, {
+              eventName: this.state.eventName,
+              eventDes: this.state.eventDes,
+              content: this.state.content,
+              openTime: this.state.openTime,
+              closeTime: this.state.closeTime,
+              fee: this.state.fee,
+              feePrice: this.state.feePrice,
+              tags: this.state.tags,
+              days: this.state.days,
+              images: this.state.images,
+              PlaceId: this.state.PlaceId
+            })
+            .then(value => {
+              if (value.status === 200) {
+                this.setState({ redirect: true });
+              }
+            });
         }
-      })
+      });
     }
     return swal({
       title: "คุณแน่ใจหรือ ?",
@@ -205,43 +208,43 @@ class UpdateEvent extends Component {
       confirmButtonText: "Yes"
     }).then(result => {
       if (result.value) {
-      axios.put("/api/UpdateEventFromId/" + this.state.id, {
-      eventName: this.state.eventName,
-      eventDes: this.state.eventDes,
-      content: this.state.content,
-      openTime: this.state.openTime,
-      closeTime: this.state.closeTime,
-      fee: this.state.fee,
-      feePrice: this.state.feePrice,
-      tags: this.state.tags,
-      days: this.state.days,
-      FileList: this.state.FileList,
-      PlaceId: this.state.PlaceId,
-      FileName: this.state.FileName,
-      images: this.state.images
-    }).then(value=>{
-          if(value.status===200){
-            this.setState({ redirect: true });
-          }
-        })
+        axios
+          .put("/api/UpdateEventFromId/" + this.state.id, {
+            eventName: this.state.eventName,
+            eventDes: this.state.eventDes,
+            content: this.state.content,
+            openTime: this.state.openTime,
+            closeTime: this.state.closeTime,
+            fee: this.state.fee,
+            feePrice: this.state.feePrice,
+            tags: this.state.tags,
+            days: this.state.days,
+            FileList: this.state.FileList,
+            PlaceId: this.state.PlaceId,
+            FileName: this.state.FileName,
+            images: this.state.images
+          })
+          .then(value => {
+            if (value.status === 200) {
+              this.setState({ redirect: true });
+            }
+          });
       }
-    })
+    });
   };
 
   render() {
-    const { redirect,open } = this.state
-    if(redirect){
-    return  (
-      <Redirect
-      to={{ pathname: "/main" }}
-    />
-    )
+    const { redirect, open } = this.state;
+    if (redirect) {
+      return <Redirect to={{ pathname: "/main" }} />;
     }
     return (
       <div>
-        <Form onSubmit={this.UpdateEvent}>
-        <Dimmer active={open} page>
-          <Loader size='massive'><p>รอแปปนึงกำลังอัพโหลดรูป</p></Loader>
+        <Form>
+          <Dimmer active={open} page>
+            <Loader size="massive">
+              <p>รอแปปนึงกำลังอัพโหลดรูป</p>
+            </Loader>
           </Dimmer>
           <EventEditForm
             eventName={this.state.eventName}
@@ -268,10 +271,13 @@ class UpdateEvent extends Component {
             PlaceSelected={this.PlaceSelected}
             handleSelectImage={this.handleSelectImage}
             DeleteImage={this.DeleteImage}
-            imageState={this.state.imageState} 
+            imageState={this.state.imageState}
             handleImageLoaded={this.handleImageLoaded}
             tagsData={this.state.tagsData}
           />
+          <center>
+            <Button onClick={this.UpdateEvent}>บันทึก</Button>
+          </center>
         </Form>
       </div>
     );

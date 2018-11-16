@@ -35,7 +35,7 @@ class Profile extends Component {
       commentedTopics: [],
       open: true,
       avatar: "",
-      unreadMsg:0
+      unreadMsg:0,
     };
   }
 

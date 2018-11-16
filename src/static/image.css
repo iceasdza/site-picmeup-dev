@@ -44,3 +44,8 @@
 .editAlbum{
     padding-top: 2em;
 }
+.delImageNew{
+    font-family: 'Kanit'!important;
+    padding: 1em;
+    cursor: pointer;
+}
