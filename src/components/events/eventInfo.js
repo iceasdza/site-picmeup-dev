@@ -89,7 +89,7 @@ const EventInfo = props => (
         <Message.Header className="topoicData">ประเภทของอีเว้นท์</Message.Header>
         {props.tags.map((tag, index) => (
           <Label key={index} as='a' image>
-          <Link to={{ pathname: "/searchpage" }}>             
+          <Link to={{ pathname: "/searchpage", state: { passtag: tag }}}>             
           <Icon disabled name='tag' />          
         {tag}
         </Link>
