@@ -19,8 +19,9 @@ class TopicInfo extends Component {
       placeId:"",
       placeName:'',
       placeImage:'',
-      _id:''
-
+      _id:'',
+      date:null,
+      time:null
     };
   }
 
@@ -35,7 +36,9 @@ class TopicInfo extends Component {
       create_at: data.create_date,
       comments: data.comments,
       creator: data.creator,
-      placeId:data.placeId
+      placeId:data.placeId,
+      date:data.date.substring(0, 10),
+      time:data.time.substring(11, 16)
     });
 
     const place = await axios.get("/api/getPlaceInfoFromId/"+this.state.placeId)
@@ -159,6 +162,8 @@ class TopicInfo extends Component {
           handleSubmitComment={this.handleSubmitComment}
           renderPlace={this.renderPlace}
           renderComment={this.renderComment}
+          date={this.state.date}
+          time={this.state.time}
         />
       </div>
     );

@@ -21,12 +21,22 @@ class CreateTopic extends Component {
       placesName: [],
       placeId:'',
       redirect:false,
-      topicPlace:''
+      topicPlace:'',
+      date:null,
+      time:null
     };
   }
 
   handleChange = value => {
     this.setState({ text: value });
+  };
+
+  handleDate = value => {
+    this.setState({ date: value });
+  };
+
+  handleTime = value => {
+    this.setState({ time: value });
   };
 
   handleName = value => {
@@ -77,7 +87,9 @@ class CreateTopic extends Component {
         content: this.state.text,
         creator: Cookies.get("user"),
         placeId:this.state.placeId,
-        topicPlace:this.state.topicPlace
+        topicPlace:this.state.topicPlace,
+        date:this.state.date,
+        time:this.state.time
         // placeName
       });
       this.setState({redirect:true})
@@ -103,6 +115,10 @@ class CreateTopic extends Component {
             handleChange={this.handleChange}
             handleSubmit={this.handleSubmit}
             handleName={this.handleName}
+            handleDate={this.handleDate}
+            handleTime={this.handleTime}
+            date={this.state.date}
+            time={this.state.time}
           />
         </Form>
       </div>

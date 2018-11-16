@@ -9,7 +9,10 @@ const TopicComponent = props => {
       {props.editTopic()}
       <Divider />
       <div dangerouslySetInnerHTML={{ __html: props.content }} />
+      <p>สถานที่</p>
       {props.renderPlace()}
+      <p>วัน{props.date}</p>
+  <p>เวลา{props.time}</p>      
       {props.renderComment()}
     </div>
   );

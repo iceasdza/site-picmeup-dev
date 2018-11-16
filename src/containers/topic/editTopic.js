@@ -23,12 +23,22 @@ class CreateTopic extends Component {
       placeName:'',
       placeImage:'',
       _id:'',
-      topicPlace:[]
+      topicPlace:[],
+      date:null,
+      time:null
     };
   }
 
   handleChange = value => {
     this.setState({ content: value });
+  };
+
+  handleTime = value => {
+    this.setState({ time: value });
+  };
+
+  handleDate = value => {
+    this.setState({ date: value });
   };
 
   handleName = value => {
@@ -51,7 +61,9 @@ class CreateTopic extends Component {
       create_at: data.create_date,
       comments: data.comments,
       creator: data.creator,
-      placeId: data.placeId
+      placeId: data.placeId,
+      date:data.date,
+      time:data.time
     });
 
     const placesName = [];
@@ -102,7 +114,9 @@ class CreateTopic extends Component {
         topicName: this.state.topicName,
         content: this.state.content,
         placeId: this.state.placeId,
-        topicPlace:this.state.topicPlace
+        topicPlace:this.state.topicPlace,
+        date:this.state.date,
+        time:this.state.time
       }).then(value=>{
         if(value.status === 200){
           this.setState({ redirect: true }) 
@@ -136,6 +150,10 @@ class CreateTopic extends Component {
             handleName={this.handleName}
             topicName={this.state.topicName}
             content={this.state.content}
+            date={this.state.date}
+            time={this.state.time}
+            handleTime={this.state.handleTime}
+            handleDate={this.state.handleDate}
           />
         </Form>
       </div>
