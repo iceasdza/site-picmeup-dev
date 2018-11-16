@@ -15,9 +15,12 @@ import { Link } from "react-router-dom";
 const EventInfo = props => (
   <div>
     <Message.Header className="topHeader">
-      <p>
+    <center>
+    <p>
         {props.eventName}
       </p>
+    </center>
+
     </Message.Header>
     <Message.Header className="topHeader">
       <p>สถานที่จัด :

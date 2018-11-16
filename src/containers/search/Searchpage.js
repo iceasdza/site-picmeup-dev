@@ -53,7 +53,6 @@ class Searchpage extends Component {
         this.setState({ [key]: e.target.value })
     }
     render() {
-        console.log(this.state)
         return (
             <div >
                 <Form className="inputScarch" onSubmit={this.getDataForSearch}>
@@ -72,6 +71,7 @@ class Searchpage extends Component {
                             >
                               <Image src={data.images[0]} className="showhotimage" />
                               <div class="text-block">
+                              <div className="dataWrap">
                               <br/>
                               {user === "admin" ? (
                                   <div>
@@ -106,6 +106,7 @@ class Searchpage extends Component {
                                   เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
                                   {data.comments.length}
                                 </p>
+                                </div>
                               </div>
                             </Link>
                           </Card>
