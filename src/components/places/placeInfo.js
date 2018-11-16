@@ -1,5 +1,6 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
+import { Link } from "react-router-dom";
 import "../../static/home.css";
 import { Message, Card, Image, Grid,Label,Icon } from "semantic-ui-react";
 
@@ -67,10 +68,12 @@ const PlaceInfo = props => (
         <Message.Header className="topoicData">ประเภทของสถานที่</Message.Header>
         {props.tags.map((tag, index) => (
           <Label key={index} as='a' image>
-          <Icon disabled name='tag' />
+          <Link to={{ pathname: "/searchpage", state: { passtag: tag }}}  >             
+          <Icon disabled name='tag' />          
         {tag}
+        </Link>
       </Label>
-          
+      
         ))}        
       </Grid.Column>
     </Grid>
