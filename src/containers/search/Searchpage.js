@@ -1,14 +1,49 @@
 import React, { Component } from "react";
-import { Input, Form, Card, Image, Button } from 'semantic-ui-react'
+import { Input, Form, Card, Image, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
-import '../../static/Scarch.css'
+import Slider from "react-slick";
+import "../../static/Scarch.css";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
 import LoadingScreen from "../../containers/screen/loading";
+import swal from "sweetalert2";
+import "sweetalert2/src/sweetalert2.scss";
 const user = Cookies.get("user");
-
+let settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
+};
 class Searchpage extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -22,29 +57,70 @@ class Searchpage extends Component {
       value: ""
     };
   }
-
+  removeData = async (field, id, name) => {
+    if (field === "event") {
+      return swal({
+        title: "คุณแน่ใจหรือ ?",
+        text: "คุณต้องการจะลบ " + name + " หรือไม่ ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then(result => {
+        if (result.value) {
+          axios.post("/api/deleteEventDataFromId/" + id);
+          swal("ลบเรียบร้อย!");
+          this.getDataForSearch();
+        }
+      });
+    }
+    if (field === "place") {
+      return swal({
+        title: "คุณแน่ใจหรือ ?",
+        text: "คุณต้องการจะลบ " + name + " หรือไม่ ?",
+        type: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes"
+      }).then(result => {
+        if (result.value) {
+          axios.post("/api/deletePlaceDataFromId/" + id);
+          swal("ลบเรียบร้อย!");
+          this.getDataForSearch();
+        }
+      });
+    }
+  };
   componentDidMount() {
     if (this.props.location.state) {
       let _tag = this.props.location.state.passtag;
-      this.setState({
-        value: _tag
-      }, () => {
-        this.getDataForSearch()
-      })
-
+      this.setState(
+        {
+          value: _tag
+        },
+        () => {
+          this.getDataForSearch();
+        }
+      );
     }
-
   }
 
   inputScarch = () => {
     return (
-      <Input action='Search' placeholder='Search...' value={this.state.value} onChange={this.handleOnChange('value')} />
-    )
-  }
+      <Input
+        action="Search"
+        placeholder="Search..."
+        value={this.state.value}
+        onChange={this.handleOnChange("value")}
+      />
+    );
+  };
   getDataForSearch = async () => {
     this.setState({
       open: true
-    })
+    });
     const respPlaces = await axios.get(
       "/api/getDataForSearchPlace/" + this.state.value
     );
@@ -63,25 +139,25 @@ class Searchpage extends Component {
     const respDescriptionEvents = await axios.get(
       "/api/getDescriptionForSearchEvent/" + this.state.value
     );
-    this.setState({ isLoading: true })
+    this.setState({ isLoading: true });
     if (respPlaces.status === 200 && respDescriptionPlaces.status === 200) {
       this.setState({
-        // resultPlaces: respPlaces.data,   
+        // resultPlaces: respPlaces.data,
         // resultDescriptionPlaces: respDescriptionPlaces.data,
         resultPlaces: [...respPlaces.data, ...respDescriptionPlaces.data]
       });
     }
     if (respEvents.status === 200 && respDescriptionEvents.status === 200) {
       this.setState({
-        // resultEvents: respEvents.data, 
-        // resultDescriptionEvents: respDescriptionEvents.data, 
+        // resultEvents: respEvents.data,
+        // resultDescriptionEvents: respDescriptionEvents.data,
         resultEvents: [...respEvents.data, ...respDescriptionEvents.data]
       });
     }
     if (respTagPlaces.status === 200) {
       this.setState({
-        // isLoading: false,             
-        resultTagPlaces: respTagPlaces.data,
+        // isLoading: false,
+        resultTagPlaces: respTagPlaces.data
       });
     }
     if (respTagEvents.status === 200) {
@@ -96,75 +172,57 @@ class Searchpage extends Component {
         value: ""
       });
     }
-    // if (respDescriptionPlaces.status === 200) {
-    //   this.setState({
-    //       // isLoading: false,             
-    //       resultDescriptionPlaces: respDescriptionPlaces.data,
-    //       resultPlaces:[...this.state.resultPlaces,...this.state.resultDescriptionPlaces]            
-    //   });
-    // }      
-    // if (respDescriptionEvents.status === 200) {
-    //   this.setState({              
-    //       resultDescriptionEvents: respDescriptionEvents.data, 
-    //       resultEvents:[...this.state.resultEvents,...this.state.resultDescriptionEvents],
-    //       open: false 
-    //   });
-    // }        
   };
 
-
-
   handleOnChange = key => e => {
-    this.setState({ [key]: e.target.value })
-  }
+    this.setState({ [key]: e.target.value });
+  };
   render() {
     return (
-      <div >
+      <div className="searchPageWarp">
         <LoadingScreen open={this.state.open} />
         <Form className="inputScarch" onSubmit={this.getDataForSearch}>
           {this.inputScarch()}
         </Form>
-        <p className="inputScarch">สถานที่</p>
-        <div>
-          <Card.Group itemsPerRow={4} centered >
+        <div className="slickWraper">
+          {this.state.resultPlaces.length===0 ? <span></span>:(<p className="inputScarch">สถานที่</p>)}
+          <Slider {...settings}>
             {this.state.resultPlaces.map((data, index) => (
               <Card key={index} className="showhotcard">
-                <Link
+                  <Image src={data.images[0]} className="showhotimage" />
+                  <Link
                   to={{
                     pathname: "/placeInfo/",
                     search: data._id
                   }}
                 >
-                  <Image src={data.images[0]} className="showhotimage" />
                   <div class="text-block">
-                    <br />
                     {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
-                          to={{
-                            pathname: "/updatePlace",
-                            state: { id: data._id }
-                          }}
-                        >
-                          <Button primary content="Edit" />
-                        </Link>
-                        <Button
-                          color="red"
-                          content="DELETE"
-                          value={index}
-                          onClick={e =>
-                            this.removeData(
-                              "event",
-                              data._id,
-                              data.placeName
-                            )
-                          }
-                        />
+                        to={{
+                          pathname: "/updatePlace",
+                          state: { id: data._id }
+                        }}
+                      >
+                        <Button primary content="แก้ไข" icon='edit' className="homeBtn" size='mini'/>
+                      </Link>
+                      <Button
+                        icon='trash'
+                        size='mini'
+                        className="homeBtn"
+                        color="red"
+                        content="ลบ"
+                        value={index}
+                        onClick={e =>
+                          this.removeData("place", data._id, data.placeName)
+                        }
+                      />
                       </div>
                     ) : (
-                        <span></span>
-                      )}
+                      <span />
+                    )}
                     <h3 className="showhotname">{data.placeName}</h3>
                     <p className="description">{data.placeDes}</p>
                     <p className="extraDetail">
@@ -175,50 +233,53 @@ class Searchpage extends Component {
                 </Link>
               </Card>
             ))}
-          </Card.Group>
+          </Slider>
         </div>
-        <p className="inputScarch">อีเว้นท์</p>
 
-        <div>
-          <Card.Group itemsPerRow={4} centered >
+
+        <div className="slickWraper">
+        {this.state.resultEvents.length===0 ? <span></span>:(<p className="inputScarch">อีเว้นท์</p>)}
+          <Slider {...settings}>
             {this.state.resultEvents.map((data, index) => (
               <Card key={index} className="showhotcard">
-                <Link
+                  <Image src={data.images[0]} className="showhotimage" />
+                  <Link
                   to={{
                     pathname: "/eventInfo/",
                     search: data._id
                   }}
                 >
-                  <Image src={data.images[0]} className="showhotimage" />
                   <div class="text-block">
-                    <br />
                     {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
-                          to={{
-                            pathname: "/updateEvent",
-                            state: { id: data._id }
-                          }}
-                        >
-                          <Button primary content="Edit" />
-                        </Link>
-                        <Button
-                          color="red"
-                          content="DELETE"
-                          value={index}
-                          onClick={e =>
-                            this.removeData(
-                              "event",
-                              data._id,
-                              data.eventName
-                            )
-                          }
-                        />
+                              to={{
+                                pathname: "/updateEvent",
+                                state: { id: data._id }
+                              }}
+                            >
+                              <Button primary  content="แก้ไข" icon='edit' className="homeBtn" size='mini' />
+                            </Link>
+                            <Button
+                              color="red"
+                              content="ลบ"
+                              icon='trash'
+                              size='mini'
+                              className="homeBtn"
+                              value={index}
+                              onClick={e =>
+                                this.removeData(
+                                  "event",
+                                  data._id,
+                                  data.eventName
+                                )
+                              }
+                            />
                       </div>
                     ) : (
-                        <span></span>
-                      )}
+                      <span />
+                    )}
                     <h3 className="showhotname">{data.eventName}</h3>
                     <p className="description">{data.eventDes}</p>
                     <p className="extraDetail">
@@ -229,102 +290,105 @@ class Searchpage extends Component {
                 </Link>
               </Card>
             ))}
-          </Card.Group>
+          </Slider>
         </div>
-        <p className="inputScarch">แท็กสถานที่</p>
-        <div>
-          <Card.Group itemsPerRow={4} centered >
-            {this.state.resultTagPlaces.map((data, index) => (
-              <Card key={index} className="showhotcard">
+
+        
+        <div className="slickWraper">
+        {this.state.resultTagPlaces.length===0 ? <span></span>:(<p className="inputScarch">แท็กสถานที่</p>)}
+        <Slider {...settings}>
+          {this.state.resultTagPlaces.map((data, index) => (
+            <Card key={index} className="showhotcard">
+                <Image src={data.images[0]} className="showhotimage" />
                 <Link
-                  to={{
-                    pathname: "/placeInfo/",
-                    search: data._id
-                  }}
-                >
-                  <Image src={data.images[0]} className="showhotimage" />
-                  <div class="text-block">
-                    <br />
-                    {user === "admin" ? (
-                      <div>
-                        {" "}
-                        <Link
-                          to={{
-                            pathname: "/updatePlace",
-                            state: { id: data._id }
-                          }}
-                        >
-                          <Button primary content="Edit" />
-                        </Link>
-                        <Button
-                          color="red"
-                          content="DELETE"
-                          value={index}
-                          onClick={e =>
-                            this.removeData(
-                              "event",
-                              data._id,
-                              data.placeName
-                            )
-                          }
-                        />
-                      </div>
-                    ) : (
-                        <span></span>
-                      )}
-                    <h3 className="showhotname">{data.placeName}</h3>
-                    <p className="description">{data.placeDes}</p>
-                    <p className="extraDetail">
-                      เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                      {data.comments.length}
-                    </p>
-                  </div>
-                </Link>
-              </Card>
-            ))}
-          </Card.Group>
+                to={{
+                  pathname: "/placeInfo/",
+                  search: data._id
+                }}
+              >
+                <div class="text-block">
+                  {user === "admin" ? (
+                    <div>
+                      {" "}
+                      <Link
+                        to={{
+                          pathname: "/updatePlace",
+                          state: { id: data._id }
+                        }}
+                      >
+                        <Button primary content="แก้ไข" icon='edit' className="homeBtn" size='mini'/>
+                      </Link>
+                      <Button
+                        icon='trash'
+                        size='mini'
+                        className="homeBtn"
+                        color="red"
+                        content="ลบ"
+                        value={index}
+                        onClick={e =>
+                          this.removeData("place", data._id, data.placeName)
+                        }
+                      />
+                    </div>
+                  ) : (
+                    <span />
+                  )}
+                  <h3 className="showhotname">{data.placeName}</h3>
+                  <p className="description">{data.placeDes}</p>
+                  <p className="extraDetail">
+                    เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                    {data.comments.length}
+                  </p>
+                </div>
+              </Link>
+            </Card>
+          ))}
+        </Slider>
         </div>
-        <p className="inputScarch">แท็กอีเว้นท์</p>
-        <div>
-          <Card.Group itemsPerRow={4} centered >
+        <div className="slickWraper">
+        {/* <p className="inputScarch">แท็กอีเว้นท์</p> */}
+        {this.state.resultTagEvents.length===0 ? <span></span>:(<p className="inputScarch">แท็กอีเว้นท์</p>)}
+          <Slider {...settings}>
             {this.state.resultTagEvents.map((data, index) => (
               <Card key={index} className="showhotcard">
-                <Link
+                  <Image src={data.images[0]} className="showhotimage" />
+                  <Link
                   to={{
                     pathname: "/eventInfo/",
                     search: data._id
                   }}
                 >
-                  <Image src={data.images[0]} className="showhotimage" />
                   <div class="text-block">
-                    <br />
                     {user === "admin" ? (
                       <div>
                         {" "}
                         <Link
-                          to={{
-                            pathname: "/updateEvent",
-                            state: { id: data._id }
-                          }}
-                        >
-                          <Button primary content="Edit" />
-                        </Link>
-                        <Button
-                          color="red"
-                          content="DELETE"
-                          value={index}
-                          onClick={e =>
-                            this.removeData(
-                              "event",
-                              data._id,
-                              data.eventName
-                            )
-                          }
-                        />
+                              to={{
+                                pathname: "/updateEvent",
+                                state: { id: data._id }
+                              }}
+                            >
+                              <Button primary  content="แก้ไข" icon='edit' className="homeBtn" size='mini' />
+                            </Link>
+                            <Button
+                              color="red"
+                              content="ลบ"
+                              icon='trash'
+                              size='mini'
+                              className="homeBtn"
+                              value={index}
+                              onClick={e =>
+                                this.removeData(
+                                  "event",
+                                  data._id,
+                                  data.eventName
+                                )
+                              }
+                            />
                       </div>
                     ) : (
-                        <span></span>
-                      )}
+                      <span />
+                    )}
                     <h3 className="showhotname">{data.eventName}</h3>
                     <p className="description">{data.eventDes}</p>
                     <p className="extraDetail">
@@ -335,10 +399,10 @@ class Searchpage extends Component {
                 </Link>
               </Card>
             ))}
-          </Card.Group>
+          </Slider>
         </div>
       </div>
-    )
+    );
   }
 }
-export default Searchpage
+export default Searchpage;

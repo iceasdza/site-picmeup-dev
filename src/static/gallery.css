@@ -16,8 +16,9 @@
     color: white;
     font-family: 'Kanit'!important;
     font-size:3em!important;
-    padding-top: 4em!important;
-    text-decoration: underline
+    /* padding-top: 4em!important; */
+    text-decoration: underline;
+    /* padding-top: 0px; */
 }
 .createAlbumContent:hover{
     color: white;
@@ -29,4 +30,7 @@
 }
 .galleryCard{
     padding: 1em;
+}
+.dataWrap{
+    padding: 0.5em;
 }

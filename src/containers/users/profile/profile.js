@@ -9,7 +9,8 @@ import {
   Card,
   Icon,
   Button,
-  Feed
+  Feed,
+  Label
 } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import LoadingScreen from "../../screen/loading";
@@ -33,7 +34,8 @@ class Profile extends Component {
       topics: [],
       commentedTopics: [],
       open: true,
-      avatar: ""
+      avatar: "",
+      unreadMsg:0,
     };
   }
 
@@ -77,6 +79,10 @@ class Profile extends Component {
     if (status) {
       axios.put("/api/changeMessageState/" + id);
     }
+    if(this.state.unreadMsg===0){
+    }else{
+      this.setState({unreadMsg:this.state.unreadMsg-1})
+    }
     this.getData();
     return swal({
       title: reciver + " กล่าวว่า : <br/>" + message,
@@ -110,7 +116,7 @@ class Profile extends Component {
         </Table.Header>
         <Table.Body>
           {this.state.messages.map((data, index) => (
-            <Table.Row key={index}>
+            <Table.Row key={index} >
               <Table.Cell>
                 <Header as="h4" image>
                   <Image src={data.avatar} rounded size="mini" className="avatarProfile" />
@@ -177,10 +183,17 @@ class Profile extends Component {
     const album = await axios.get("/api/getAlbumFromName/" + user);
     const topic = await axios.get("api/getTopicFromName/" + user);
     const topicInteract = await axios.get("api/getInteractTopic/" + user);
-    console.log(data)
+    
+    let unreadMsg = 0;
+    message.data.forEach(element => {
+      if(element.status===true){
+        unreadMsg++
+      }
+    });
     if (topicInteract.status === 200) {
       const messageData = message.data;
       this.setState({
+        unreadMsg:unreadMsg,
         firstName: data.firstName,
         lastName: data.lastName,
         gender: data.gender,
@@ -288,9 +301,11 @@ class Profile extends Component {
             >
               <Image src={data.images[0]} className="showhotimage" />
               <div class="text-block">
-                <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
+              <div className="dataWrap">
+              <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
                 <h3 className="showhotname">อัลบั้ม : {data.albumName}</h3>
                 <p className="description">{data.albumDes}</p>
+              </div>
               </div>
             </Link>
           </Card>
@@ -357,7 +372,8 @@ class Profile extends Component {
             name="ข้อความ"
             active={activeItem === "ข้อความ"}
             onClick={this.handleItemClick}
-          />
+          >ข้อความ{this.state.unreadMsg!==0? (<Label color='red'>{this.state.unreadMsg}</Label>):(<span/>)}
+          </Menu.Item>
           <Menu.Item
             className="menuName"
             name="มีตติ้ง"

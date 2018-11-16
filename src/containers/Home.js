@@ -15,6 +15,7 @@ import Autocomplete from "react-autocomplete";
 import "../static/autocomplete.css";
 import swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
+import { Redirect } from "react-router-dom";
 const user = Cookies.get("user");
 class Home extends Component {
   state = {
@@ -34,7 +35,8 @@ class Home extends Component {
     activeContent:'',
     activityText:'',
     hotEvents:[],
-    hotPlaces:[]
+    hotPlaces:[],
+    isRedirect:false
   };
 
   handleClick = (e, titleProps) => {
@@ -356,6 +358,10 @@ class Home extends Component {
   };
 
   render() {
+
+    if(this.state.isRedirect){
+      return <Redirect to={{ pathname: "/main" }} />
+    }
     return (
       <div>
         <LoadingScreen open={this.state.open} />

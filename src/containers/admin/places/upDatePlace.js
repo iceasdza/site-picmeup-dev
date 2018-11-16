@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PlaceEdit from "../../../components/admin/places/placeEditForm";
 import { Form } from "formsy-semantic-ui-react";
 import axios from "../../../lib/axios";
-import {  Dimmer, Loader } from "semantic-ui-react";
+import {  Dimmer, Loader,Button } from "semantic-ui-react";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import PlacesAutocomplete, {
   geocodeByAddress,
@@ -165,7 +165,7 @@ class Home extends Component {
             </div>
           )}
         </PlacesAutocomplete>
-        <Map
+        {/* <Map
         className="map"
         //   style={style}
           google={this.props.google}
@@ -177,7 +177,7 @@ class Home extends Component {
           }}
         >
           <Marker position={{ lat: this.state.lat, lng: this.state.lng }} />
-        </Map>
+        </Map> */}
         </div>
     );
   };
@@ -238,17 +238,15 @@ class Home extends Component {
 
   UpdatePlace = async formData => {
     let _id = this.props.location.state.id;
-    if(formData.place_name === "" || formData.place_desc === "" || formData.place_contact === ""
-    || formData.place_open === "" || formData.place_close === ""|| formData.day_tag === undefined
-    || formData.place_tag === undefined){
+    if(this.state.placeName=== "" || this.state.placeDes === "" || this.state.contact === ""
+    || this.state.openTime === "" || this.state.closeTime=== ""|| this.state.tags === undefined
+){
         return
     }
-    this.setState({ open: true });
     const lengthOfFile = document.getElementById("img").files.length;
     //--------no image updated-----------//
     
     if (lengthOfFile === 0) {
-      this.setState({ open: true });
       return swal({
         title: "คุณแน่ใจหรือ ?",
         text: "คุณต้องการแก้ไขสถานที่" + this.state.placeName + "ระบบหรือไม่ ?",
@@ -258,7 +256,8 @@ class Home extends Component {
         cancelButtonColor: "#d33",
         confirmButtonText: "Yes"
       }).then(result => {
-        if (result.value) {
+        if (result.value!==undefined) {
+          this.setState({ open: true });
         axios.put("/api/UpdatePlaceFromId/" + _id, {
             placeName: this.state.placeName,
             placeDes: this.state.placeDes,
@@ -337,7 +336,7 @@ class Home extends Component {
     }
     return (
       <div>
-        <Form onSubmit={this.UpdatePlace}>
+        <Form >
         <Dimmer active={open} page>
           <Loader size='massive'><p>รอแปปนึงกำลังอัพโหลดรูป</p></Loader>
           </Dimmer>
@@ -372,6 +371,9 @@ class Home extends Component {
             activities={this.state.activities}
             activitiesData={this.state.activitiesData}
           />
+                    <center>
+            <Button onClick={this.UpdatePlace}>บันทึก</Button>
+          </center>
         </Form>
       </div>
     );

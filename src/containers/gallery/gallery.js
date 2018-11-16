@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import GalleryComponent from "../../components/gallery/galleryComponent";
-import { Card, Image,Button } from "semantic-ui-react";
+import { Card, Image } from "semantic-ui-react";
 import { Link,NavLink } from "react-router-dom";
 import axios from "../../lib/axios";
 import Cookie from "js-cookie";
@@ -37,9 +37,11 @@ export default class Gallery extends Component {
           >
             <Image src={data.images[0]} className="showhotimage" />
             <div class="text-block">
+            <div className="dataWrap">
             <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
                 <h3 className="showhotname">อัลบั้ม : {data.albumName}</h3>
                 <p className="description">{data.albumDes}</p>
+            </div>
             </div>
           </Link>
         </Card>

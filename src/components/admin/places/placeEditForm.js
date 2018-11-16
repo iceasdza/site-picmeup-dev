@@ -289,11 +289,6 @@ const PlaceEditForm = props => {
       </div>
       <p>แผนที่</p>
       {props.renderGoogleMap()}
-      <div>
-        <Form.Button floated="right" size="big">
-          แก้ไขสถานที่
-        </Form.Button>
-      </div>
     </div>
   );
 };
