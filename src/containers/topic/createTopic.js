@@ -19,11 +19,11 @@ class CreateTopic extends Component {
       text: "",
       topicName: "",
       placesName: [],
-      placeId:'',
-      redirect:false,
-      topicPlace:'',
-      date:null,
-      time:null
+      placeId: '',
+      redirect: false,
+      topicPlace: '',
+      date: null,
+      time: null
     };
   }
 
@@ -44,14 +44,14 @@ class CreateTopic extends Component {
   };
 
   PlaceSelected = (field, value) => {
-    this.setState({ placeId: value.id,topicPlace:value.name });
+    this.setState({ placeId: value.id, topicPlace: value.name });
   };
 
   getData = async () => {
     const placesName = [];
     const resp = await axios.get("/api/getPlaceInfo");
     resp.data.map((data, index) =>
-      placesName.push({ key: index + 1, text: data.placeName, value: {id:data._id,name:data.placeName} })
+      placesName.push({ key: index + 1, text: data.placeName, value: { id: data._id, name: data.placeName } })
     );
     this.setState({ placesName: placesName });
   };
@@ -64,7 +64,7 @@ class CreateTopic extends Component {
         placeholder="สถานที่จัดงาน"
         require="true"
         name="place_select"
-        onChange={(e, { value},) => this.PlaceSelected("PlaceId", value)}
+        onChange={(e, { value }, ) => this.PlaceSelected("PlaceId", value)}
         errorLabel={<Label color="red" pointing />}
         validations={{
           customValidation: (values, value) => !(!value || value.length < 1)
@@ -79,32 +79,31 @@ class CreateTopic extends Component {
   };
 
   handleSubmit = async () => {
-    if(this.state.placeId ===  ''){
+    if (this.state.placeId === '') {
       return
-    }else{
+    } else {
       await axios.post("/api/createTopic", {
         topicName: this.state.topicName,
         content: this.state.text,
         creator: Cookies.get("user"),
-        placeId:this.state.placeId,
-        topicPlace:this.state.topicPlace,
-        date:this.state.date,
-        time:this.state.time
-        // placeName
+        placeId: this.state.placeId,
+        topicPlace: this.state.topicPlace,
+        date: this.state.date,
+        time: this.state.time
       });
-      this.setState({redirect:true})
+      this.setState({ redirect: true })
     }
 
   };
 
   render() {
     const { redirect } = this.state
-    if(redirect){
-    return  (
-      <Redirect
-      to={{ pathname: "/meeting" }}
-    />
-    )
+    if (redirect) {
+      return (
+        <Redirect
+          to={{ pathname: "/meeting" }}
+        />
+      )
     }
     return (
       <div>

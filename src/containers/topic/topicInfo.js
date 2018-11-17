@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import TopicComponent from "../../components/topic/topicComponent";
 import axios from "../../lib/axios";
 import Cookies from "js-cookie";
-import { Button,Card,Image,Form,Divider,Comment } from "semantic-ui-react";
+import { Button, Card, Image, Form, Divider, Comment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 let user = Cookies.get("user");
 
@@ -16,12 +16,12 @@ class TopicInfo extends Component {
       creator: "",
       comments: [],
       text: "",
-      placeId:"",
-      placeName:'',
-      placeImage:'',
-      _id:'',
-      date:null,
-      time:null
+      placeId: "",
+      placeName: '',
+      placeImage: '',
+      _id: '',
+      date: null,
+      time: null
     };
   }
 
@@ -30,41 +30,43 @@ class TopicInfo extends Component {
     const resp = await axios.get("/api/getTopicFromId/" + id);
     const data = resp.data[0];
     this.setState({
-      _id:data._id,
+      _id: data._id,
       content: data.content,
       topicName: data.topicName,
       create_at: data.create_date,
       comments: data.comments,
       creator: data.creator,
-      placeId:data.placeId,
-      date:data.date.substring(0, 10),
-      time:data.time.substring(11, 16)
+      placeId: data.placeId,
+      date: data.date.substring(0, 10),
+      time: data.time.substring(11, 16)
+      // date:data.date,
+      // time:data.time
     });
 
-    const place = await axios.get("/api/getPlaceInfoFromId/"+this.state.placeId)
+    const place = await axios.get("/api/getPlaceInfoFromId/" + this.state.placeId)
     const placeData = place.data[0]
     this.setState({
-        placeName:placeData.placeName,
-        placeImage:placeData.images[0]
+      placeName: placeData.placeName,
+      placeImage: placeData.images[0]
     })
   };
-  renderPlace = () =>{
+  renderPlace = () => {
     return (
       <Card>
-        
-      <Image src={this.state.placeImage} />
-      {this.state.placeName}
-      <Card.Content>
-        <Link
-          to={{
-            pathname: "/placeInfo",
-            search: this.state.placeId
-          }}
-        >
-          <Button primary content="View" />
-        </Link>
-      </Card.Content>
-    </Card>
+
+        <Image src={this.state.placeImage} />
+        {this.state.placeName}
+        <Card.Content>
+          <Link
+            to={{
+              pathname: "/placeInfo",
+              search: this.state.placeId
+            }}
+          >
+            <Button primary content="View" />
+          </Link>
+        </Card.Content>
+      </Card>
     )
   }
   handleOnchage = e => {
@@ -81,7 +83,7 @@ class TopicInfo extends Component {
             state: { id: this.state._id }
           }}
         >
-          <Button  content="edit" />
+          <Button content="edit" />
         </Link>
       );
     } else {
@@ -99,7 +101,7 @@ class TopicInfo extends Component {
       comments.push({
         comment: this.state.text,
         commentator: Cookies.get("user"),
-        avatar:Cookies.get("userAvatar")
+        avatar: Cookies.get("userAvatar")
       });
     }
     this.setState({ comments: comments, text: "" });
@@ -109,40 +111,40 @@ class TopicInfo extends Component {
     this.getData();
   };
 
-  renderComment = () =>{
+  renderComment = () => {
     return (
-        <div className="container fluid">
-      <Divider horizontal>Comments</Divider>
-      <Form onSubmit={this.handleSubmitComment}>
-        <Form.TextArea
-          label="เขียนควาคิดเห็น"
-          placeholder="แสดงความคิดเห็น"
-          value={this.state.text}
-          onChange={e => this.handleOnchage(e.target.value)}
-          required
-        />
-        <Form.Button>ตกลง</Form.Button>
-      </Form>
-      <Divider />
-      <Comment.Group>
-        {this.state.comments.map((data, index) => (
-          <Comment key={index}>
-            <Comment.Avatar
-              as="avatar"
-              src={data.avatar}
-            />
-            <Comment.Content>
-              <Comment.Author>
-                แสดงความคิดเห็นโดยคุณ {data.commentator}
-              </Comment.Author>
-              <Comment.Text>{data.comment}</Comment.Text>
-            </Comment.Content>
-          </Comment>
-        ))}
-      </Comment.Group>
+      <div className="container fluid">
+        <Divider horizontal>Comments</Divider>
+        <Form onSubmit={this.handleSubmitComment}>
+          <Form.TextArea
+            label="เขียนควาคิดเห็น"
+            placeholder="แสดงความคิดเห็น"
+            value={this.state.text}
+            onChange={e => this.handleOnchage(e.target.value)}
+            required
+          />
+          <Form.Button>ตกลง</Form.Button>
+        </Form>
+        <Divider />
+        <Comment.Group>
+          {this.state.comments.map((data, index) => (
+            <Comment key={index}>
+              <Comment.Avatar
+                as="avatar"
+                src={data.avatar}
+              />
+              <Comment.Content>
+                <Comment.Author>
+                  แสดงความคิดเห็นโดยคุณ {data.commentator}
+                </Comment.Author>
+                <Comment.Text>{data.comment}</Comment.Text>
+              </Comment.Content>
+            </Comment>
+          ))}
+        </Comment.Group>
       </div>
     )
-}
+  }
 
   componentDidMount() {
     this.getData();

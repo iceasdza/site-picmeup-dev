@@ -61,9 +61,7 @@ class CreateTopic extends Component {
       create_at: data.create_date,
       comments: data.comments,
       creator: data.creator,
-      placeId: data.placeId,
-      date:data.date,
-      time:data.time
+      placeId: data.placeId
     });
 
     const placesName = [];
@@ -78,7 +76,6 @@ class CreateTopic extends Component {
     return (
       <Dropdown
         selection
-        options={this.state.placesName}
         placeholder="สถานที่จัดงาน"
         require="true"
         name="place_select"
@@ -150,10 +147,10 @@ class CreateTopic extends Component {
             handleName={this.handleName}
             topicName={this.state.topicName}
             content={this.state.content}
+            handleDate={this.handleDate}
+            handleTime={this.handleTime}
             date={this.state.date}
             time={this.state.time}
-            handleTime={this.state.handleTime}
-            handleDate={this.state.handleDate}
           />
         </Form>
       </div>

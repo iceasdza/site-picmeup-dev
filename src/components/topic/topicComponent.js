@@ -12,7 +12,7 @@ const TopicComponent = props => {
       <p>สถานที่</p>
       {props.renderPlace()}
       <p>วัน{props.date}</p>
-  <p>เวลา{props.time}</p>      
+      <p>เวลา{props.time}</p>
       {props.renderComment()}
     </div>
   );
