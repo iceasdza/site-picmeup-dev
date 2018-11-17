@@ -1,8 +1,9 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
 import PlaceDetail from "../../components/places/placeInfo";
-import { Divider, Form, Comment } from "semantic-ui-react";
+import { Divider, Form, Comment,Button } from "semantic-ui-react";
 import Cookies from "js-cookie";
+import { Link } from "react-router-dom";
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import "../../static/map.css";
 import axios from "../../lib/axios";
@@ -48,7 +49,6 @@ class PlaceInfo extends Component {
         imageUrl: src,
         width:'100%',
         imageWidth:100,
-        // animation: true
       })
     )
   }
@@ -151,7 +151,7 @@ class PlaceInfo extends Component {
           onChange={e => this.handleOnchage(e.target.value)}
           required
         />
-        <Form.Button>ตกลง</Form.Button>
+         <Button className="commentBtn">ตกลง</Button>
       </Form>
       <Divider />
       <Comment.Group>
@@ -162,9 +162,18 @@ class PlaceInfo extends Component {
               src={data.avatar}
             />
             <Comment.Content>
-              <Comment.Author>
-                แสดงความคิดเห็นโดยคุณ {data.commentator}
-              </Comment.Author>
+            <Comment.Author>
+                  แสดงความคิดเห็นโดยคุณ {" "}
+                  <Link
+                    to={{
+                      pathname: "/user/",
+                      search: data.commentator
+                    }}
+                  >
+                    <span className="creator">{data.commentator}</span>
+                  </Link>
+                  {/* {data.commentator} */}
+                </Comment.Author>
               <Comment.Text>{data.comment}</Comment.Text>
             </Comment.Content>
           </Comment>

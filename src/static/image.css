@@ -58,3 +58,6 @@ p.header{
     color:white!important;
     margin-bottom: 1em;
 }
+img.ui.image.showImage{
+    width: 100%
+}

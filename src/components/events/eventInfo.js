@@ -1,13 +1,6 @@
 import React from "react";
 import "semantic-ui-css/semantic.min.css";
-import {
-  Message,
-  Card,
-  Image,
-  Grid,
-  Label,
-  Icon
-} from "semantic-ui-react";
+import { Message, Card, Image, Grid, Label, Icon } from "semantic-ui-react";
 import "../../static/home.css";
 // import Modal from "react-responsive-modal";
 import { Link } from "react-router-dom";
@@ -15,26 +8,26 @@ import { Link } from "react-router-dom";
 const EventInfo = props => (
   <div>
     <Message.Header className="topHeader">
-    <center>
-    <p>
-        {props.eventName}
-      </p>
-    </center>
-
+      <center>
+        <p>{props.eventName}</p>
+      </center>
     </Message.Header>
     <Message.Header className="topHeader">
-      <p>สถานที่จัด :
-                    <Link
+      <p>
+        สถานที่จัด :
+        <Link
           to={{
             pathname: "/placeInfo",
             search: props.placeId
           }}
-        >{props.placeName}</Link>
+        >
+          {props.placeName}
+        </Link>
       </p>
     </Message.Header>
 
     <div>
-      <Card.Group itemsPerRow={4}>
+      <Card.Group itemsPerRow={4} className="imageInfoCard">
         {props.images.map((src, index) => (
           <Card key={index} className="showCard">
             <Image
@@ -62,44 +55,62 @@ const EventInfo = props => (
     </div>
     <Grid>
       <Grid.Column width={8}>
-        <div>
-          {props.renderComment()}
-        </div>
+        <div>{props.renderComment()}</div>
       </Grid.Column>
       <Grid.Column width={8}>
         <Message>
           <Grid>
             <Grid.Column width={8}>
               <div>
-                <Message.Header className="topoicHeader">ช่วงเวลาจัดงาน</Message.Header>
+                <Message.Header className="topoicHeader">
+                  ช่วงเวลาจัดงาน
+                </Message.Header>
                 <p className="topoicData">{props.days}</p>
-                <Message.Header className="topoicHeader">เวลาจัดงาน</Message.Header>
-                <p className="topoicData"> {props.openTime} - {props.closeTime}</p>
-                
+                <Message.Header className="topoicHeader">
+                  เวลาจัดงาน
+                </Message.Header>
+                <p className="topoicData">
+                  {" "}
+                  {props.openTime} - {props.closeTime}
+                </p>
+
                 <Message.List items={props.tags} />
               </div>
             </Grid.Column>
             <Grid.Column width={8}>
               <div>
-                <Message.Header className="topoicHeader">รายละเอียด</Message.Header>
-                <p className="topoicData"> ค่าบัตรเข้าร่วมงาน : {props.fee === '-' ? '-' : props.feePrice}</p>
-                <Message.Header className="topoicHeader">การติดต่อ</Message.Header>
-                <p className="topoicData"> ช่องทางการติดต่อ : {props.content}</p>
+                <Message.Header className="topoicHeader">
+                  รายละเอียด
+                </Message.Header>
+                <p className="topoicData">
+                  {" "}
+                  ค่าบัตรเข้าร่วมงาน :{" "}
+                  {props.fee === "-" ? "-" : props.feePrice}
+                </p>
+                <Message.Header className="topoicHeader">
+                  การติดต่อ
+                </Message.Header>
+                <p className="topoicData">
+                  {" "}
+                  ช่องทางการติดต่อ : {props.content}
+                </p>
               </div>
             </Grid.Column>
           </Grid>
         </Message>
-        <Message.Header className="topoicData">ประเภทของอีเว้นท์</Message.Header>
+        <Message.Header className="topoicData">
+          ประเภทของอีเว้นท์
+        </Message.Header>
         {props.tags.map((tag, index) => (
-          <Label key={index} as='a' image>
-          <Link to={{ pathname: "/searchpage", state: { passtag: tag }}}>             
-          <Icon disabled name='tag' />          
-        {tag}
-        </Link>
-      </Label>         
-        ))}          
+          <Label key={index} as="a" image>
+            <Link to={{ pathname: "/searchpage", state: { passtag: tag } }}>
+              <Icon disabled name="tag" />
+              {tag}
+            </Link>
+          </Label>
+        ))}
       </Grid.Column>
-    </Grid>    
+    </Grid>
   </div>
 );
 export default EventInfo;

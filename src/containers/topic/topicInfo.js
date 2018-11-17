@@ -125,7 +125,7 @@ class TopicInfo extends Component {
             onChange={e => this.handleOnchage(e.target.value)}
             required
           />
-          <Form.Button>ตกลง</Form.Button>
+          <Button className="commentBtn">ตกลง</Button>
         </Form>
         <Divider />
         <Comment.Group>
@@ -134,7 +134,16 @@ class TopicInfo extends Component {
               <Comment.Avatar as="avatar" src={data.avatar} />
               <Comment.Content>
                 <Comment.Author>
-                  แสดงความคิดเห็นโดยคุณ {data.commentator}
+                  แสดงความคิดเห็นโดยคุณ {" "}
+                  <Link
+                    to={{
+                      pathname: "/user/",
+                      search: data.commentator
+                    }}
+                  >
+                    <span className="creator">{data.commentator}</span>
+                  </Link>
+                  {/* {data.commentator} */}
                 </Comment.Author>
                 <Comment.Text>{data.comment}</Comment.Text>
               </Comment.Content>

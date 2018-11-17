@@ -1,11 +1,12 @@
 import React, { Component } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { Divider, Form, Comment } from "semantic-ui-react";
+import { Divider, Form, Comment,Button } from "semantic-ui-react";
 import Cookies from "js-cookie";
 import EventDetail from "../../components/events/eventInfo";
 import axios from "../../lib/axios";
 import swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
+import { Link } from "react-router-dom";
 import '../../static/image.css'
 import LoadingScreen from '../screen/loading'
 class EventInfo extends Component {
@@ -135,7 +136,7 @@ class EventInfo extends Component {
             onChange={e => this.handleOnchage(e.target.value)}
             required
           />
-          <Form.Button>ตกลง</Form.Button>
+           <Button className="commentBtn">ตกลง</Button>
         </Form>
         <Divider />
         <Comment.Group>
@@ -146,8 +147,17 @@ class EventInfo extends Component {
                 src={data.avatar}
               />
               <Comment.Content>
-                <Comment.Author>
-                  แสดงความคิดเห็นโดยคุณ {data.commentator}
+              <Comment.Author>
+                  แสดงความคิดเห็นโดยคุณ {" "}
+                  <Link
+                    to={{
+                      pathname: "/user/",
+                      search: data.commentator
+                    }}
+                  >
+                    <span className="creator">{data.commentator}</span>
+                  </Link>
+                  {/* {data.commentator} */}
                 </Comment.Author>
                 <Comment.Text>{data.comment}</Comment.Text>
               </Comment.Content>

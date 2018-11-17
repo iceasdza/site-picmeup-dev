@@ -104,7 +104,7 @@ export default class AlbumInfo extends Component {
               state: { id: this.state.id }
             }}
           >
-            แก้ไขกระทู้
+            แก้ไขอัลบั้ม
           </Link>
         </div>
       );
@@ -125,7 +125,7 @@ export default class AlbumInfo extends Component {
             onChange={e => this.handleOnchage(e.target.value)}
             required
           />
-          <Form.Button>ตกลง</Form.Button>
+          <Button className="commentBtn">ตกลง</Button>
         </Form>
         <Divider />
         <Comment.Group>
@@ -150,6 +150,7 @@ export default class AlbumInfo extends Component {
         <LoadingScreen open={this.state.open} />
         {/* {this.renderEditButton()} */}
         <AlbumInfoComponent
+        albumName={this.state.albumName}
           renderEditButton={this.renderEditButton}
            albumDes={this.state.albumDes}
           renderImages={this.renderImages}

@@ -107,7 +107,7 @@ class Profile extends Component {
 
   renderMessage = () => {
     return (
-      <Table basic="very" celled>
+      <Table basic="very" unstackable>
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell className="tableMessage">ผู้ส่ง</Table.HeaderCell>
