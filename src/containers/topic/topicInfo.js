@@ -17,9 +17,9 @@ class TopicInfo extends Component {
       comments: [],
       text: "",
       placeId: "",
-      placeName: '',
-      placeImage: '',
-      _id: '',
+      placeName: "",
+      placeImage: "",
+      _id: "",
       date: null,
       time: null
     };
@@ -43,32 +43,34 @@ class TopicInfo extends Component {
       // time:data.time
     });
 
-    const place = await axios.get("/api/getPlaceInfoFromId/" + this.state.placeId)
-    const placeData = place.data[0]
+    const place = await axios.get(
+      "/api/getPlaceInfoFromId/" + this.state.placeId
+    );
+    const placeData = place.data[0];
     this.setState({
       placeName: placeData.placeName,
       placeImage: placeData.images[0]
-    })
+    });
   };
   renderPlace = () => {
     return (
       <Card>
-
-        <Image src={this.state.placeImage} />
-        {this.state.placeName}
-        <Card.Content>
-          <Link
-            to={{
-              pathname: "/placeInfo",
-              search: this.state.placeId
-            }}
-          >
-            <Button primary content="View" />
-          </Link>
-        </Card.Content>
+        <Link
+          to={{
+            pathname: "/placeInfo/",
+            search: this.state.placeId
+          }}
+        >
+          <Image src={this.state.placeImage} className="ShowImageOnMeeting" />
+          <div class="text-block">
+            <div className="activity">
+              <h3 className="showhotname"> {this.state.placeName}</h3>
+            </div>
+          </div>
+        </Link>
       </Card>
-    )
-  }
+    );
+  };
   handleOnchage = e => {
     this.setState({ text: e });
   };
@@ -83,13 +85,13 @@ class TopicInfo extends Component {
             state: { id: this.state._id }
           }}
         >
-          <Button content="edit" />
+          <Button className="editBtn" content="แก้ไขมีตติ้ง" />
         </Link>
       );
     } else {
-      tag = ''
+      tag = "";
     }
-    return tag
+    return tag;
   };
 
   handleSubmitComment = async () => {
@@ -129,10 +131,7 @@ class TopicInfo extends Component {
         <Comment.Group>
           {this.state.comments.map((data, index) => (
             <Comment key={index}>
-              <Comment.Avatar
-                as="avatar"
-                src={data.avatar}
-              />
+              <Comment.Avatar as="avatar" src={data.avatar} />
               <Comment.Content>
                 <Comment.Author>
                   แสดงความคิดเห็นโดยคุณ {data.commentator}
@@ -143,8 +142,8 @@ class TopicInfo extends Component {
           ))}
         </Comment.Group>
       </div>
-    )
-  }
+    );
+  };
 
   componentDidMount() {
     this.getData();

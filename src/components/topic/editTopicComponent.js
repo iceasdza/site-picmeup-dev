@@ -7,17 +7,22 @@ import { Button, Divider, Input } from "semantic-ui-react";
 const editTopicComponent = props => {
   return (
     <div className="container fluid">
+    <center className="topicHeader">
+      <h1>
+    แก้ไขมีตติ้ง {props.topicName}
+      </h1>
+    </center>
       <div>
-        <p>นัดหมาย</p>
+        <p className="labelTopic">นัดหมาย</p>
         <Input fluid size="massive" placeholder="หัวข้อกระทู้..." value={props.topicName} onChange={e => props.handleName(e.target.value)} />
-        <p>สถานที่นัดหมาย</p>
+        <p className="labelTopic">สถานที่นัดหมาย</p>
         {props.renderPlaceList()}
-        <p>ระบุข้อความ</p>
+        <p className="labelTopic">ระบุข้อความ</p>
         <ReactQuill
           value={props.content}
           onChange={props.handleChange}
         />
-        <p>วันที่นัดหมาย</p>
+        <p className="labelTopic">วันที่นัดหมาย</p>
         <DatePicker
           utcOffset={"+7"}
           selected={props.date}
@@ -25,7 +30,7 @@ const editTopicComponent = props => {
           onChange={props.handleDate}
         />
         <br />
-        <p>เวลานัดหมาย</p>
+        <p className="labelTopic">เวลานัดหมาย</p>
         <DatePicker
           selected={props.time}
           onChange={props.handleTime}

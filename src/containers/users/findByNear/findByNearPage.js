@@ -12,7 +12,9 @@ import {
   Icon,
   Image,
   Form,
-  Grid
+  Grid,
+  Segment,
+  Responsive
 } from "semantic-ui-react";
 import { Redirect } from "react-router-dom";
 import swal from "sweetalert2";
@@ -161,51 +163,54 @@ class Demo extends React.Component {
     const isCheckIn = this.state.value;
     if (isCheckIn) {
       return (
-        <div className="container fluid tableData">
-        <Table>
-          <Table.Header>
-            <Table.Row>
-              <Table.HeaderCell>#</Table.HeaderCell>
-              <Table.HeaderCell>User</Table.HeaderCell>
-              <Table.HeaderCell>Distance</Table.HeaderCell>
-              <Table.HeaderCell>status</Table.HeaderCell>
-              <Table.HeaderCell>last check in</Table.HeaderCell>
-            </Table.Row>
-          </Table.Header>
+<div className="container fluid tableData">
+              <Table unstackable>
+                <Table.Header>
+                  <Table.Row>
+                    <Table.HeaderCell>#</Table.HeaderCell>
+                    <Table.HeaderCell>ชื่อผู้ใช้</Table.HeaderCell>
+                    <Table.HeaderCell>ระยะทาง (กิโลเมตร)</Table.HeaderCell>
+                    <Table.HeaderCell>ส่งข้อความ</Table.HeaderCell>
+                    <Table.HeaderCell>เช็คอินล่าสุด</Table.HeaderCell>
+                  </Table.Row>
+                </Table.Header>
 
-          <Table.Body>
-            {this.state.calculatedDistance.map((data, index) => (
-              <Table.Row key={index}>
-                <Table.Cell>{index + 1}</Table.Cell>
-                <Table.Cell>
-                  <Image src={data.avatar} avatar /> &nbsp; {data.userName}
-                </Table.Cell>
-                <Table.Cell>{data.distance}</Table.Cell>
-                <Table.Cell>
-                  {data.status ? (
-                    <Icon
-                      color="black"
-                      name="mail"
-                      onClick={e => this.modalInbox(data.userName, data.avatar)}
-                    />
-                  ) : (
-                    <Label circular color="red" empty />
-                  )}
-                </Table.Cell>
-                <Table.Cell>
-                  {data.lastCheckIn.replace(
-                    /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,
-                    "เช็คอินล่าสุดวันที่ | $3/$2/$1 เวลา $4:$5 น."
-                  )}
-                </Table.Cell>
-              </Table.Row>
-            ))}
-          </Table.Body>
-        </Table>
-        </div>
+                <Table.Body>
+                  {this.state.calculatedDistance.map((data, index) => (
+                    <Table.Row key={index}>
+                      <Table.Cell>{index + 1}</Table.Cell>
+                      <Table.Cell>
+                        <Image src={data.avatar} avatar /> &nbsp;{" "}
+                        {data.userName}
+                      </Table.Cell>
+                      <Table.Cell>{data.distance}</Table.Cell>
+                      <Table.Cell>
+                        {data.status ? (
+                          <Icon
+                            color="black"
+                            name="mail"
+                            onClick={e =>
+                              this.modalInbox(data.userName, data.avatar)
+                            }
+                          />
+                        ) : (
+                          <Label circular color="red" empty />
+                        )}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {data.lastCheckIn.replace(
+                          /(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2}):(\d{2})(\D07:00)/,
+                          "เช็คอินล่าสุดวันที่ | $3/$2/$1 เวลา $4:$5 น."
+                        )}
+                      </Table.Cell>
+                    </Table.Row>
+                  ))}
+                </Table.Body>
+              </Table>
+            </div>
       );
     } else {
-      return ;
+      return;
     }
   };
 
@@ -223,8 +228,7 @@ class Demo extends React.Component {
           longitude: resp.data.longitude
         }
       });
-      window.location.reload()
-
+      window.location.reload();
     } else {
       await axios.put("/api/updateGeolocation", {
         latitude: null,
@@ -258,56 +262,114 @@ class Demo extends React.Component {
 
   renderSelect = () => {
     return (
-      <div className="formSelect">
-        <Header as="h2" className="headerSelect">
-          เช็คอิน
-        </Header>
-        <Radio
-          toggle
-          value={this.state.value}
-          checked={this.state.value}
-          onChange={this.handleChange}
-        />
-        {this.state.value? 
-          (
-            <Form>
-              <center>
-          <h1 className="headerSelect">ค้นหาในระยะ</h1>
-        </center>
-        <Form.Radio
-          className="radioSelect"
-          label="1 km."
-          value="1"
-          checked={this.state.distance === "1"}
-          onChange={this.handleChangeDistance}
-        />{" "}
-        <Form.Radio
-          className="radioSelect"
-          label="2 km."
-          value="2"
-          checked={this.state.distance === "2"}
-          onChange={this.handleChangeDistance}
-        />{" "}
-        <Form.Radio
-          className="radioSelect"
-          label="5 km."
-          value="5"
-          checked={this.state.distance === "5"}
-          onChange={this.handleChangeDistance}
-        />{" "}
-        <Form.Radio
-          className="radioSelect"
-          label="10 km."
-          value="10"
-          checked={this.state.distance === "10"}
-          onChange={this.handleChangeDistance}
-        />
-            </Form>
-          ):(
-            <p>กรุณาเช็คอินเพื่อค้นหาเพื่อนถ่ายรูปใกล้เคียง</p>
-          )}
-        
-      </div>
+      <Segment.Group>
+        <Responsive
+          as={Segment}
+          minWidth={0}
+          maxWidth={767}
+          className="mobileSelect"
+        >
+          <div>
+            <Header as="h2" className="headerSelectMobile">
+              เช็คอิน
+            </Header>
+            <Radio
+              toggle
+              value={this.state.value}
+              checked={this.state.value}
+              onChange={this.handleChange}
+            />
+            {this.state.value ? (
+              <Form>
+                <center>
+                  <h1 className="headerSelectMobile">ค้นหาในระยะ</h1>
+                </center>
+                <Form.Radio
+                  className="radioSelectMobile"
+                  label="1 km."
+                  value="1"
+                  checked={this.state.distance === "1"}
+                  onChange={this.handleChangeDistance}
+                />{" "}
+                <Form.Radio
+                  className="radioSelectMobile"
+                  label="2 km."
+                  value="2"
+                  checked={this.state.distance === "2"}
+                  onChange={this.handleChangeDistance}
+                />{" "}
+                <Form.Radio
+                  className="radioSelectMobile"
+                  label="5 km."
+                  value="5"
+                  checked={this.state.distance === "5"}
+                  onChange={this.handleChangeDistance}
+                />{" "}
+                <Form.Radio
+                  className="radioSelectMobile"
+                  label="10 km."
+                  value="10"
+                  checked={this.state.distance === "10"}
+                  onChange={this.handleChangeDistance}
+                />
+              </Form>
+            ) : (
+              <p>กรุณาเช็คอินเพื่อค้นหาเพื่อนถ่ายรูปใกล้เคียง</p>
+            )}
+          </div>
+        </Responsive>
+
+        <Responsive as={Segment} minWidth={767} className="formSelect">
+          <div>
+            <Header as="h2" className="headerSelect">
+              เช็คอิน
+            </Header>
+            <Radio
+              toggle
+              value={this.state.value}
+              checked={this.state.value}
+              onChange={this.handleChange}
+            />
+            {this.state.value ? (
+              <Form>
+                <center>
+                  <h1 className="headerSelect">ค้นหาในระยะ</h1>
+                </center>
+                <Form.Radio
+                  className="radioSelect"
+                  label="1 km."
+                  value="1"
+                  checked={this.state.distance === "1"}
+                  onChange={this.handleChangeDistance}
+                />{" "}
+                <Form.Radio
+                  className="radioSelect"
+                  label="2 km."
+                  value="2"
+                  checked={this.state.distance === "2"}
+                  onChange={this.handleChangeDistance}
+                />{" "}
+                <Form.Radio
+                  className="radioSelect"
+                  label="5 km."
+                  value="5"
+                  checked={this.state.distance === "5"}
+                  onChange={this.handleChangeDistance}
+                />{" "}
+                <Form.Radio
+                  className="radioSelect"
+                  label="10 km."
+                  value="10"
+                  checked={this.state.distance === "10"}
+                  onChange={this.handleChangeDistance}
+                />
+              </Form>
+            ) : (
+              <p>กรุณาเช็คอินเพื่อค้นหาเพื่อนถ่ายรูปใกล้เคียง</p>
+            )}
+          </div>
+        </Responsive>
+      </Segment.Group>
     );
   };
 

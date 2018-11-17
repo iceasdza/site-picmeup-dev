@@ -78,6 +78,7 @@ class CreateTopic extends Component {
         selection
         placeholder="สถานที่จัดงาน"
         require="true"
+        options={this.state.placesName}
         name="place_select"
         onChange={(e, { value }) => this.PlaceSelected("PlaceId", value)}
         errorLabel={<Label color="red" pointing />}
@@ -121,12 +122,6 @@ class CreateTopic extends Component {
       })
         }
       });
-      // await axios.put("/api/updateTopic/"+this.state._id, {
-      //   topicName: this.state.topicName,
-      //   content: this.state.content,
-      //   placeId: this.state.placeId
-      // });
-      // this.setState({ redirect: true });
     }
   };
 
@@ -138,7 +133,6 @@ class CreateTopic extends Component {
     return (
       <div>
         <Form>
-            {console.log(this.state.content)}
           <EditTopicComponent
             renderPlaceList={this.renderPlaceList}
             text={this.state.text}

@@ -12,6 +12,16 @@
 }
 p{
   font-size: 1.5em !important;
+  font-family: 'Kanit'!important;
+}
+h2{
+  font-family: 'Kanit'!important;
+}
+h1{
+  font-family: 'Kanit'!important;
+}
+h3{
+  font-family: 'Kanit'!important;
 }
 img{
   object-fit: cover !important;
@@ -25,6 +35,9 @@ img{
   color:black;
   font-size: 1.5em;
   padding: 0.7em
+}
+.ql-editor{
+  border: 1px solid rgba(34,36,38,.15)!important;
 }
 
 .ui.dropdown .menu .selected.item, .ui.dropdown.selected{
@@ -56,8 +69,68 @@ blockquote{
   padding-top: 1em;
   padding-bottom: 1em;
 }
-.ql-toolbar.ql-snow{
-  visibility: hidden!important;
-  width: 0px;
-  height: 0px;;
+.meta{
+  margin-left: 1em!important;
+}
+.description{
+  margin-left: 1em!important;
+  padding-bottom: 0.5em!important;
+}
+.createTopicBtn{
+  margin-top: 1em!important;
+  background-color: #333!important;
+  border-radius: 0px!important;
+  color:white!important;
+  font-family: 'Kanit'!important;
+  float: right;
+  margin-right: 0px!important;
+  margin-bottom: 1em!important;
+  display: inline-block;
+}
+.createTopicBtn:hover{
+  margin-top: 1em!important;
+  background-color: #222!important;
+  border-radius: 0px!important;
+  color:white!important;
+  font-family: 'Kanit'!important;
+}
+.createTopicHeader{
+  margin-top: 1.5em;
+  font-family: 'Kanit'!important;
+  display: inline-block;
+  font-size: 1.5em!important;
+}
+.labelTopic{
+  margin-bottom: 0px!important;
+  margin-top: 1em!important;
+}
+.topicHeader{
+  margin-top: 1em
+}
+.meetingDate{
+  margin-bottom: 0px!important;
+  margin-top: 1em!important;
+  font-size: 1em!important;
+}
+.placeMeeting{
+  margin-bottom: 0px!important;
+  margin-top: 1em!important;
+  font-size: 1em!important;
+  font-weight: bold
+}
+.ShowImageOnMeeting{
+  height: 10em;;
+}
+.editBtn{
+  margin-top: 1em!important;
+  background-color: #333!important;
+  border-radius: 0px!important;
+  color:white!important;
+  font-family: 'Kanit'!important;
+  margin-right: 0px!important;
+  margin-bottom: 1em!important;
+  display: inline-block;
+}
+.creator{
+  font-family: 'Kanit'!important;
 }

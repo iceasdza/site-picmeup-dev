@@ -26,7 +26,9 @@
     padding: 1em;
     margin-top: 1em;
     font-family: 'Kanit'!important;
-    opacity: 0.8;
+    opacity: 0.8!important;
+    margin: 2em;
+    border-radius: 0px!important
 }
 .radioSelect{
     display: inline;
@@ -38,4 +40,31 @@
 }
 .tableData{
     padding-top: 2em;
+}
+.mobileSelect{
+    padding-top: 1em!important;
+    border-radius: 0px!important;
+    opacity: 0.8!important;
+    font-size: 0.5em;
+    margin-left: -5em!important;
+    margin-right: -5em!important;
+    padding-left: 1em!important;
+    padding-right: 1em!important;
+}
+.headerSelectMobile{
+    font-family: 'Kanit'!important;
+}
+.radioSelectMobile{
+    font-family: 'Kanit'!important;
+    display: inline-block;
+}
+.headerSelectMobile{
+    font-size: 1.2em;
+    font-family: 'Kanit'!important;
+}
+.table.ui.unstackable.table{
+    border-radius: 0px;
+}
+th{
+    font-family: 'Kanit'!important;
 }

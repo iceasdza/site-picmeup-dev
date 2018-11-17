@@ -39,3 +39,13 @@
 .text-block{
     padding: 0.5em;
 }
+.searchBtn{
+    font-family: 'Kanit'!important;
+    border-radius: 0px!important;
+    margin-top: 1em!important;
+    background-color: #333!important;
+    color:white!important;
+}
+input{
+    border-radius: 0px!important;
+}

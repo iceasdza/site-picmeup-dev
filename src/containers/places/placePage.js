@@ -8,7 +8,7 @@ import {
   Segment,
   Responsive
 } from "semantic-ui-react";
-import '../../static/image.css'
+import "../../static/image.css";
 import { Link } from "react-router-dom";
 class PlacePage extends Component {
   state = {
@@ -55,34 +55,34 @@ class PlacePage extends Component {
           <Segment.Group>
             {/* mobile */}
             <Responsive as={Segment} minWidth={0} maxWidth={767}>
-            <p className="header"> สถานที่ </p>
-            <center>
-              {data.map((data, index) => (
-                <Card key={index} className="showhotcardMobile">
-                  <Link
-                    to={{
-                      pathname: "/placeInfo/",
-                      search: data._id
-                    }}
-                  >
-                    <Image src={data.images[0]} className="showhotimage" />
-                    <div class="text-block">
-                      <div className="activity">
-                        <h3 className="showhotname">{data.placeName}</h3>
-                        <p className="description">{data.placeDes}</p>
-                        <p className="extraDetail">
-                          เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
-                          {data.comments.length}
-                        </p>
+              <p className="header"> สถานที่ </p>
+              <center>
+                {data.map((data, index) => (
+                  <Card key={index} className="showhotcardMobile">
+                    <Link
+                      to={{
+                        pathname: "/placeInfo/",
+                        search: data._id
+                      }}
+                    >
+                      <Image src={data.images[0]} className="showhotimage" />
+                      <div class="text-block">
+                        <div className="activity">
+                          <h3 className="showhotname">{data.placeName}</h3>
+                          <p className="description">{data.placeDes}</p>
+                          <p className="extraDetail">
+                            เข้าชม {data.viewCount} แสดงความคิดเห็น{" "}
+                            {data.comments.length}
+                          </p>
+                        </div>
                       </div>
-                    </div>
-                  </Link>
-                </Card>
-              ))}
+                    </Link>
+                  </Card>
+                ))}
               </center>
             </Responsive>
             <Responsive as={Segment} minWidth={767}>
-            <p className="header"> สถานที่ </p>
+              <p className="header"> สถานที่ </p>
               <Card.Group itemsPerRow={3} centered className="showhotframe">
                 {data.map((data, index) => (
                   <Card key={index} className="showhotcard">
