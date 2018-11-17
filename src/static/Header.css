@@ -91,3 +91,16 @@ a.active.item.menuName,a.item.menuName{
   .imageInfoCard{
       padding: 2em;
   }
+  .sendMsg{
+    font-family: 'Kanit'!important;
+    
+  }
+.userAlbums{
+    width: 100%;
+}
+.albumCard{
+    object-fit: cover;
+}
+.userAlbumWraper{
+    margin-top: 2em;
+}

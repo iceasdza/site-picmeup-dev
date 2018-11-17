@@ -163,8 +163,8 @@ class CreateAlbum extends Component {
         />
         <br />
         <br />
-        <Button animated>
-          <Button.Content visible>upload</Button.Content>
+        <Button animated className="commentBtn">
+          <Button.Content visible>สร้างอัลบั้ม</Button.Content>
           <Button.Content hidden>
             <Icon name="file" />
           </Button.Content>

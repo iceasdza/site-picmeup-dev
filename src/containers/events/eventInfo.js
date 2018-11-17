@@ -157,7 +157,6 @@ class EventInfo extends Component {
                   >
                     <span className="creator">{data.commentator}</span>
                   </Link>
-                  {/* {data.commentator} */}
                 </Comment.Author>
                 <Comment.Text>{data.comment}</Comment.Text>
               </Comment.Content>

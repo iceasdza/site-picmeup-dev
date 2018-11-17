@@ -10,7 +10,8 @@ import {
   Icon,
   Button,
   Feed,
-  Label
+  Label,
+  Segment, Responsive
 } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import LoadingScreen from "../../screen/loading";
@@ -35,7 +36,7 @@ class Profile extends Component {
       commentedTopics: [],
       open: true,
       avatar: "",
-      unreadMsg:0,
+      unreadMsg: 0
     };
   }
 
@@ -79,9 +80,9 @@ class Profile extends Component {
     if (status) {
       axios.put("/api/changeMessageState/" + id);
     }
-    if(this.state.unreadMsg===0){
-    }else{
-      this.setState({unreadMsg:this.state.unreadMsg-1})
+    if (this.state.unreadMsg === 0) {
+    } else {
+      this.setState({ unreadMsg: this.state.unreadMsg - 1 });
     }
     this.getData();
     return swal({
@@ -111,15 +112,22 @@ class Profile extends Component {
         <Table.Header>
           <Table.Row>
             <Table.HeaderCell className="tableMessage">ผู้ส่ง</Table.HeaderCell>
-            <Table.HeaderCell className="tableMessage">ตอบกลับ</Table.HeaderCell>
+            <Table.HeaderCell className="tableMessage">
+              ตอบกลับ
+            </Table.HeaderCell>
           </Table.Row>
         </Table.Header>
         <Table.Body>
           {this.state.messages.map((data, index) => (
-            <Table.Row key={index} >
+            <Table.Row key={index}>
               <Table.Cell>
                 <Header as="h4" image>
-                  <Image src={data.avatar} rounded size="mini" className="avatarProfile" />
+                  <Image
+                    src={data.avatar}
+                    rounded
+                    size="mini"
+                    className="avatarProfile"
+                  />
                   <Header.Content className="messageOwner">
                     {data.sender}
                     <Header.Subheader>
@@ -183,17 +191,17 @@ class Profile extends Component {
     const album = await axios.get("/api/getAlbumFromName/" + user);
     const topic = await axios.get("api/getTopicFromName/" + user);
     const topicInteract = await axios.get("api/getInteractTopic/" + user);
-    
+
     let unreadMsg = 0;
     message.data.forEach(element => {
-      if(element.status===true){
-        unreadMsg++
+      if (element.status === true) {
+        unreadMsg++;
       }
     });
     if (topicInteract.status === 200) {
       const messageData = message.data;
       this.setState({
-        unreadMsg:unreadMsg,
+        unreadMsg: unreadMsg,
         firstName: data.firstName,
         lastName: data.lastName,
         gender: data.gender,
@@ -231,8 +239,14 @@ class Profile extends Component {
           <Card.Content header={data.topicName} />
         </Link>
         <Card.Content>
-          <span className="topicPlace">สถานที่ {data.topicPlace}
-          <span className="topicDelete" onClick={e => this.modalRemoveTopic(data._id, data.topicName)}>ลบมีตติ้งนี้ &nbsp; <Icon name="trash"/></span>
+          <span className="topicPlace">
+            สถานที่ {data.topicPlace}
+            <span
+              className="topicDelete"
+              onClick={e => this.modalRemoveTopic(data._id, data.topicName)}
+            >
+              ลบมีตติ้งนี้ &nbsp; <Icon name="trash" />
+            </span>
           </span>
         </Card.Content>
       </Card>
@@ -250,19 +264,17 @@ class Profile extends Component {
           }}
         >
           <Card.Content>
-          <Feed>
-          <Feed.Event>
-          <Feed.Content>
-            {/* <Feed.Date content={'กระทู้ของคุณ : '+data.creator} /> */}
-            <Feed.Summary>
-              กระทู้ : {data.name}
-            </Feed.Summary>
-            <Feed.Summary>
-             <span className="comment">"{data.comment}"</span>
-            </Feed.Summary>
-          </Feed.Content>
-        </Feed.Event>
-          </Feed>
+            <Feed>
+              <Feed.Event>
+                <Feed.Content>
+                  {/* <Feed.Date content={'กระทู้ของคุณ : '+data.creator} /> */}
+                  <Feed.Summary>กระทู้ : {data.name}</Feed.Summary>
+                  <Feed.Summary>
+                    <span className="comment">"{data.comment}"</span>
+                  </Feed.Summary>
+                </Feed.Content>
+              </Feed.Event>
+            </Feed>
           </Card.Content>
           {/* <Card.Content header={"แสดงความคิดเห็นว่า : " + data.comment} /> */}
         </Link>
@@ -270,7 +282,7 @@ class Profile extends Component {
           <Link
             to={{
               pathname: "/user/",
-              search:data.creator
+              search: data.creator
             }}
           >
             โดยคุณ : {data.creator}
@@ -282,7 +294,9 @@ class Profile extends Component {
 
   renderGalleryList = () => {
     return (
-      <Card.Group itemsPerRow={4}>
+      <Segment.Group>
+      <Responsive as={Segment} minWidth={0} maxWidth={767}>
+      <center>
         {this.state.albums.map((data, index) => (
           <Card key={index} className="showhotcard">
             <Button
@@ -290,8 +304,7 @@ class Profile extends Component {
               onClick={e => this.modalRemoveAlbum(data._id, data.albumName)}
               className="delAulbumBtn"
             >
-              ลบอัลบั้มนี้{" "}
-              <Icon name="trash"/>
+              ลบอัลบั้มนี้ <Icon name="trash" />
             </Button>
             <Link
               to={{
@@ -301,16 +314,48 @@ class Profile extends Component {
             >
               <Image src={data.images[0]} className="showhotimage" />
               <div class="text-block">
-              <div className="dataWrap">
-              <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
-                <h3 className="showhotname">อัลบั้ม : {data.albumName}</h3>
-                <p className="description">{data.albumDes}</p>
+                <div className="dataWrap">
+                  <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
+                  <h3 className="showhotname">อัลบั้ม : {data.albumName}</h3>
+                  <p className="description">{data.albumDes}</p>
+                </div>
               </div>
+            </Link>
+          </Card>
+        ))}
+        </center>
+      </Responsive>
+      <Responsive as={Segment} minWidth={767}>
+      <Card.Group itemsPerRow={4}>
+        {this.state.albums.map((data, index) => (
+          <Card key={index} className="showhotcard">
+            <Button
+              color="red"
+              onClick={e => this.modalRemoveAlbum(data._id, data.albumName)}
+              className="delAulbumBtn"
+            >
+              ลบอัลบั้มนี้ <Icon name="trash" />
+            </Button>
+            <Link
+              to={{
+                pathname: "/gallery/albumInfo/",
+                search: data._id
+              }}
+            >
+              <Image src={data.images[0]} className="showhotimage" />
+              <div class="text-block">
+                <div className="dataWrap">
+                  <h3 className="showhotname">โดยคุณ : {data.albumOwner}</h3>
+                  <h3 className="showhotname">อัลบั้ม : {data.albumName}</h3>
+                  <p className="description">{data.albumDes}</p>
+                </div>
               </div>
             </Link>
           </Card>
         ))}
       </Card.Group>
+      </Responsive>
+      </Segment.Group>
     );
   };
 
@@ -357,9 +402,7 @@ class Profile extends Component {
     return (
       <div className="container fluid">
         <LoadingScreen open={this.state.open} />
-        <div className="profileName">
-        {this.renderProfile()}
-        </div>
+        <div className="profileName">{this.renderProfile()}</div>
         <Menu tabular>
           <Menu.Item
             className="menuName"
@@ -372,7 +415,13 @@ class Profile extends Component {
             name="ข้อความ"
             active={activeItem === "ข้อความ"}
             onClick={this.handleItemClick}
-          >ข้อความ{this.state.unreadMsg!==0? (<Label color='red'>{this.state.unreadMsg}</Label>):(<span/>)}
+          >
+            ข้อความ
+            {this.state.unreadMsg !== 0 ? (
+              <Label color="red">{this.state.unreadMsg}</Label>
+            ) : (
+              <span />
+            )}
           </Menu.Item>
           <Menu.Item
             className="menuName"

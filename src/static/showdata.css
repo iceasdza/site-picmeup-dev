@@ -73,6 +73,7 @@ img.ui.image.showhotimage{
     font-size: 1em!important;
     color: whitesmoke;
     margin-bottom: 0px;
+    margin-left: 0px!important;
 }
 
 @media only screen and (min-width:1919px){

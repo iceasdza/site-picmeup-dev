@@ -180,7 +180,7 @@ class EditAlbum extends Component {
         <br />
       </Form>
                 <center>
-        <Button animated onClick={this.handleSunmit} className="editAlbumBtn">
+        <Button animated onClick={this.handleSunmit} className="commentBtn">
           <Button.Content visible>แก้ไข</Button.Content>
           <Button.Content hidden>
             <Icon name="file" />

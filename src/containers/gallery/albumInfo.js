@@ -8,7 +8,42 @@ import swal from "sweetalert2";
 import { Link } from "react-router-dom";
 import "sweetalert2/src/sweetalert2.scss";
 import "../../static/image.css";
+import Slider from "react-slick";
 const user = Cookies.get("user");
+let settings = {
+  dots: true,
+  infinite: false,
+  speed: 500,
+  slidesToShow: 3,
+  slidesToScroll: 3,
+  initialSlide: 0,
+  responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        infinite: true,
+        dots: true
+      }
+    },
+    {
+      breakpoint: 600,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 2,
+        initialSlide: 2
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1
+      }
+    }
+  ]
+};
 export default class AlbumInfo extends Component {
   constructor(props) {
     super(props);
@@ -80,7 +115,7 @@ export default class AlbumInfo extends Component {
 
   renderImages = () => {
     return (
-      <Card.Group itemsPerRow={3} className="imageWrap">
+      <Slider {...settings}>
         {this.state.images.map((data, index) => (
           <Card
             raised
@@ -89,7 +124,7 @@ export default class AlbumInfo extends Component {
             onClick={() => this.modalImage(data)}
           />
         ))}
-      </Card.Group>
+      </Slider>
     );
   };
 
@@ -133,8 +168,16 @@ export default class AlbumInfo extends Component {
             <Comment key={index}>
               <Comment.Avatar as="avatar" src={data.avatar} className="avatarProfile"/>
               <Comment.Content>
-                <Comment.Author>
-                  แสดงความคิดเห็นโดยคุณ {data.commentator}
+              <Comment.Author>
+                  แสดงความคิดเห็นโดยคุณ {" "}
+                  <Link
+                    to={{
+                      pathname: "/user/",
+                      search: data.commentator
+                    }}
+                  >
+                    <span className="creator">{data.commentator}</span>
+                  </Link>
                 </Comment.Author>
                 <Comment.Text>{data.comment}</Comment.Text>
               </Comment.Content>
@@ -151,6 +194,7 @@ export default class AlbumInfo extends Component {
         {/* {this.renderEditButton()} */}
         <AlbumInfoComponent
         albumName={this.state.albumName}
+        albumOwner={this.state.albumOwner}
           renderEditButton={this.renderEditButton}
            albumDes={this.state.albumDes}
           renderImages={this.renderImages}

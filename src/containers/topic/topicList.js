@@ -70,7 +70,7 @@ class TopicList extends Component {
               </Link>
             </Card.Meta>
             <Card.Description>
-             สถานที่  : {data.topicPlace} วันที่ : {data.date.substring(0, 10)}
+             <span className="descriptionTopic">สถานที่  : {data.topicPlace} วันที่ : {data.date.substring(0, 10)}</span>
             </Card.Description>
           </Card.Content>
         </Card>

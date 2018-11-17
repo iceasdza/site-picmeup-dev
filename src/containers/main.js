@@ -231,12 +231,13 @@ class Main extends Component {
                 <p className="sideMenuMobile">หาคนใกล้เคียง</p>
               </Menu.Item>
             </NavLink>
-
+            <NavLink to="/profile">
           <Menu.Item as="a">
             <p className="sideMenuMobile">
               ยินดีต้อนรับคุณ {Cookies.get("user")}
             </p>
           </Menu.Item>
+          </NavLink>
 
           <Menu.Item as="a" onClick={this.logout}>
             <p className="sideMenuMobile">ลงชื่อออก</p>
@@ -313,7 +314,7 @@ class Main extends Component {
           </Menu>
         </Responsive>
       {/* HD screen */}
-        <Responsive as={Segment} minWidth={1025} maxWidth={1569}>
+        <Responsive as={Segment} minWidth={1025} maxWidth={1900}>
           <Menu inverted secondary>
           <NavLink to="/main">
             <Menu.Item header className="logoText">
