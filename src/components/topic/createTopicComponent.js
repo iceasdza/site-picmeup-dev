@@ -8,27 +8,35 @@ const createTopicComponent = props => {
   return (
     <div className="container fluid">
       <div>
-        <Input fluid size="massive" placeholder="หัวข้อกระทู้..." onChange={e=>props.handleName(e.target.value)}/>
+        <p>นัดหมาย</p>
+        <Input fluid size="massive" placeholder="หัวข้อกระทู้..." onChange={e => props.handleName(e.target.value)} />
+        <p>สถานที่นัดหมาย</p>
         {props.renderPlaceList()}
+        <p>ระบุข้อความ</p>
         <ReactQuill
           value={props.text}
           onChange={props.handleChange}
         />
+        <p>วันที่นัดหมาย</p>
         <DatePicker
-    selected={props.date}
-    onChange={props.handleDate}    
-/>
-
-<DatePicker
-    selected={props.time}
-    onChange={props.handleTime}
-    showTimeSelect
-    showTimeSelectOnly
-    timeIntervals={15}
-    dateFormat="LT"
-    timeCaption="Time"
-/>
-        <Divider horizontal>        
+          utcOffset={"+7"}
+          selected={props.date}
+          dateFormat="DD/MM/YYYY"
+          onChange={props.handleDate}
+        />
+        <br />
+        <p>เวลานัดหมาย</p>
+        <DatePicker
+          selected={props.time}
+          utcOffset={"+7"}
+          onChange={props.handleTime}
+          showTimeSelect
+          showTimeSelectOnly
+          timeIntervals={15}
+          dateFormat="LT"
+          timeCaption="Time"
+        />
+        <Divider horizontal>
           <Button positive onClick={props.handleSubmit}>
             บันทึก
           </Button>
