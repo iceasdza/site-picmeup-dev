@@ -21,7 +21,7 @@
 }
 
 .showhotimage{    
-    width: 15cm!important;
+    width: 100%!important;
     height: 6cm!important;
     
 }
@@ -73,9 +73,12 @@ img.ui.image.showhotimage{
     font-size: 1em!important;
     color: whitesmoke;
     margin-bottom: 0px;
-    /* display: -webkit-box;
--webkit-line-clamp: 3;
--webkit-box-orient: vertical;
-overflow: hidden;
-text-overflow: ellipsis; */
+}
+
+@media only screen and (min-width:1919px){
+.showhotimage{    
+    width: 100%!important;
+    height: 8cm!important;
+    
+}
 }

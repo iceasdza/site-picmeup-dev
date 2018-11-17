@@ -49,3 +49,12 @@
     padding: 1em;
     cursor: pointer;
 }
+p.header{
+    font-family: 'Kanit'!important;
+    margin-bottom: 0em;
+}
+.ui.pagination.pagination.menu{
+    border-radius: 0px!important;
+    color:white!important;
+    margin-bottom: 1em;
+}

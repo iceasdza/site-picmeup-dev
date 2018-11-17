@@ -301,7 +301,7 @@ class Main extends Component {
     }
     return (
       <Segment.Group>
-        <Responsive as={Segment} minWidth={1570}>
+        <Responsive as={Segment} minWidth={1919}>
           <Menu inverted secondary>
             <NavLink to="/main">
             <Menu.Item header className="logoText">
@@ -324,16 +324,6 @@ class Main extends Component {
             {this.loginTab()}
           </Menu>
         </Responsive>
-
-        {/* iPad */}
-        {/* <Responsive as={Segment} minWidth={768} maxWidth={1024}>
-        <Menu secondary>
-            {this.hamburgerMenu()}
-            
-          </Menu>
-          {this.sidebarMenu()}
-        </Responsive> */}
-
         <Responsive as={Segment} minWidth={0} maxWidth={1024}>
           <Menu secondary>
             {this.hamburgerMenu()}            

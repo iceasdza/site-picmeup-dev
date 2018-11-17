@@ -1,159 +1,186 @@
+.imageHomeSize {
+  object-fit: cover;
+  width: 100%;
+  height: 200px;
+}
+.showImage {
+  object-fit: cover;
+  cursor: pointer;
+}
 
- .imageHomeSize{
-    object-fit: cover;
-    width: 100%;
-    height: 200px;
- }
- .showImage{
-    object-fit: cover; 
-    cursor: pointer;
- }
+.showCard {
+  cursor: pointer;
+}
 
- .showCard{   
-    cursor: pointer;
- }
+.showPlace {
+  text-align: center !important;
+}
 
- .showPlace{
-     text-align: center!important;    
- }
+.topoicMainHeader {
+  font-family: "Kanit" !important;
+  font-size: 25px !important;
+  text-align: center !important;
+}
 
- .topoicMainHeader{
-    font-family: 'Kanit'!important;
-    font-size: 25px!important;
-    text-align: center!important;  
- }
+.topoicHeader {
+  font-family: "Kanit" !important;
+  font-size: 25px !important;
+  padding-top: 5px !important;
+  padding-bottom: 5px !important;
+}
 
- .topoicHeader{
-    font-family: 'Kanit'!important;
-    font-size: 25px!important;
-    padding-top: 5px!important;
-    padding-bottom:5px!important;
- }
+.topHeader {
+  font-family: "Kanit" !important;
+  font-size: 25px !important;
+  padding-bottom: 5px !important;
+  padding-top: 5px !important;
+}
 
- .topHeader{
-    font-family: 'Kanit'!important;
-    font-size: 25px!important;
-    padding-bottom:5px!important;
-    padding-top: 5px!important;
- } 
+.topoicData {
+  font-family: "Kanit" !important;
+  font-size: 18px !important;
+  padding-top: 1px !important;
+  padding-bottom: 6px !important;
+}
 
- .topoicData{
-    font-family: 'Kanit'!important;
-    font-size: 18px!important;
-    padding-top: 1px!important;
-    padding-bottom:6px!important;
- }
-
-.showData{
-    font-family: 'Kanit'!important;
-    font-size: 25px!important;
-    width: 50px!important;
-    height: 50px!important;
-    
+.showData {
+  font-family: "Kanit" !important;
+  font-size: 25px !important;
+  width: 50px !important;
+  height: 50px !important;
 }
-.desc{
-    font-family: 'Kanit'!important;
-    font-size: 18px!important;
-    padding:1em;
+.desc {
+  font-family: "Kanit" !important;
+  font-size: 18px !important;
+  padding: 1em;
 }
-p.extraDetail{
-    font-size: 0.9em!important;
-    color: #777;
-    font-family: 'Kanit'!important;
-    margin-bottom: 0px;
+p.extraDetail {
+  font-size: 0.9em !important;
+  color: #777;
+  font-family: "Kanit" !important;
+  margin-bottom: 0px;
 }
-.banner{
-    /* background-image: url("https://s.yimg.com/ap/build/images/sohp/womens-month-mar-2018/lauramcgregor_towerbridge.jpg"); */
-    background:    linear-gradient(
-        rgba(99, 93, 93, 0.45), 
-        rgba(99, 93, 93, 0.45)
-      ),
-      /* bottom, image */
-      url("../static/banner.jpg");
-    /* background-color: #222; */
-    background-repeat: no-repeat;
-    background-size: 100% 100%;
-    text-align: center;
-    height: 400px;
-    padding-top: 2em;
+.banner {
+  /* background-image: url("https://s.yimg.com/ap/build/images/sohp/womens-month-mar-2018/lauramcgregor_towerbridge.jpg"); */
+  background: linear-gradient(rgba(99, 93, 93, 0.45), rgba(99, 93, 93, 0.45)),
+    /* bottom, image */ url("../static/banner.jpg");
+  /* background-color: #222; */
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  height: 400px;
+  padding-top: 2em;
 }
-.bannerHeader{
-    color: #333;
-    font-size: 3em;
-    font-family: 'Kanit'!important;
-    background-color: white;
-    opacity: 0.8;
-    width: 70%;
-    padding: 0.2em;
+.bannerHeader {
+  color: #333;
+  font-size: 3em;
+  font-family: "Kanit" !important;
+  background-color: white;
+  opacity: 0.8;
+  width: 70%;
+  padding: 0.2em;
 }
-.bannerContent{
-    color: white;
-    font-size: 2em;
-    font-family: 'Kanit'!important;
-    padding-right: 40%;
+.bannerContent {
+  color: white;
+  font-size: 2em;
+  font-family: "Kanit" !important;
+  padding-right: 40%;
 }
-.headersActivity{
-    display: inline-block;
-    color: white;
-    font-size: 4em!important;
-    font-family: 'Kanit'!important;
-    width: 50%;
-    padding-bottom:1em;
+.headersActivity {
+  display: inline-block;
+  color: white;
+  font-size: 4em !important;
+  font-family: "Kanit" !important;
+  width: 50%;
+  padding-bottom: 1em;
 }
-.ui.centered.four.cards.showframe.activityItems{
-    padding-top: 0px!important;
+.ui.centered.four.cards.showframe.activityItems {
+  padding-top: 0px !important;
 }
-.bannerRegister{
-    font-size: 20px;
-    color: #333;
+.bannerRegister {
+  font-size: 20px;
+  color: #333;
 }
-.bannerRegister:hover{
-    color: #777!important;
-    text-decoration: none;
-    opacity: 1;
+.bannerRegister:hover {
+  color: #777 !important;
+  text-decoration: none;
+  opacity: 1;
 }
-.component{
-    /* background-color:white;
+.component {
+  /* background-color:white;
     box-shadow: 0 1px 1px 0 rgba(170, 170, 170, 0.2), 0 2px 4px 0 rgba(170, 170, 170, 0.2); */
-    margin-top: 2em;
-    margin-bottom: 2em;
-    padding-right: 4em;
-    padding-left: 4em;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding-right: 4em;
+  padding-left: 4em;
 }
-.showframe{
-    padding-top: 0px!important;
+.showframe {
+  padding-top: 0px !important;
 }
-.backgroundContent{
-    /* bac */
-    margin-top: 2em;
-    padding-top: 0.5em;
-    background-color: #faf9fc;
-    
+.backgroundContent {
+  /* bac */
+  margin-top: 2em;
+  padding-top: 0.5em;
+  background-color: #faf9fc;
 }
-.card{
-    border-radius: 0px!important;
+.card {
+  border-radius: 0px !important;
 }
-.ui.card>:first-child, .ui.cards>.card>:first-child{
-    border-radius: 0px!important;
+.ui.card > :first-child,
+.ui.cards > .card > :first-child {
+  border-radius: 0px !important;
 }
 .text-block {
-    position: absolute;
-    bottom: 20px;
-    left: 0px;
+  position: absolute;
+  bottom: 20px;
+  left: 0px;
+  color: white;
+  padding-left: 10px;
+  padding-right: 20px;
+  background-color: black;
+  opacity: 0.7;
+  width: 100%;
+  bottom: 0px;
+}
+.content {
+  padding: 0px !important;
+}
+.homeBtn {
+  border-radius: 0px !important;
+}
+.manageBtn {
+  padding-bottom: 1em;
+}
+.showcardMobile {
+  width: 100%;
+}
+/* Ipad up */
+@media only screen and (min-width: 767) {
+  .showhotimage {
+    width: 100% !important;
+    height: 8cm !important;
+  }
+}
+.bannerMobile{
+    background: linear-gradient(rgba(99, 93, 93, 0.45), rgba(99, 93, 93, 0.45)),
+    /* bottom, image */ url("../static/banner.jpg");
+  /* background-color: #222; */
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  text-align: center;
+  height: 200px;
+  padding-top: 5em;
+}
+.headersActivityMobile{
+    display: inline-block;
     color: white;
-    padding-left: 10px;
-    padding-right: 20px;
-    background-color: black;
-    opacity: 0.7;
-    width: 100%;
-    bottom: 0px;
-}
-.content{
-    padding: 0px!important;
-}
-.homeBtn{
-    border-radius: 0px!important;
-}
-.manageBtn{
+    font-size: 1.5em !important;
+    font-family: "Kanit" !important;
     padding-bottom: 1em;
+}
+.showhotcardMobile{
+    width: 90%!important
+}
+.contentMobile{
+    padding-top: 1em;
 }

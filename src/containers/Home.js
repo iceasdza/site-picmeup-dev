@@ -48,10 +48,11 @@ class Home extends Component {
   };
 
   getData = async () => {
-    const places = await axios.get("/api/getPlaceInfo");
-    const events = await axios.get("/api/GetEventInfo");
+    const places = await axios.get("/api/getnewplace");
+    const events = await axios.get("/api/getnewevent");
     const hotEvents = await axios.get('/api/getHotEvent');
     const hotPlaces = await axios.get('/api/getHotPlace')
+    console.log(hotPlaces)
     if (places.status === 200 && events.status === 200) {
       this.setState({
         placesData: places.data,
