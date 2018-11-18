@@ -16,9 +16,10 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import LoadingScreen from "../../screen/loading";
 import swal from "sweetalert2";
-import { Redirect } from "react-router-dom";
 import "sweetalert2/src/sweetalert2.scss";
 import "../../../static/profile.css";
+import { Redirect } from "react-router-dom";
+
 const user = Cookies.get("user");
 class Profile extends Component {
   constructor(props) {
@@ -108,7 +109,7 @@ class Profile extends Component {
     });
   };
 
-  renderMessage = () => {
+  renderMessage = () => {    
     return (
       <Table basic="very" unstackable>
         <Table.Header>
@@ -183,14 +184,11 @@ class Profile extends Component {
           ))}
         </Table.Body>
       </Table>
-    );
+    ); 
   };
 
   getData = async () => {
-    if(user===undefined){
-      this.setState({isRedirect:true})
-      return
-    }
+    try{
     const resp = await axios.get("/api/profile/" + user);
     const data = resp.data;
     const message = await axios.get("/api/getMessageFromName/" + user);
@@ -223,6 +221,9 @@ class Profile extends Component {
         open: false
       });
     }
+  }catch(err){
+    this.setState({isRedirect:true})
+  }
   };
   componentDidMount() {
     this.getData();
@@ -366,7 +367,8 @@ class Profile extends Component {
   };
 
   renderProfile = () => {
-    return (
+    try{
+    return (      
       <div>
         <center>
           <Image
@@ -386,6 +388,9 @@ class Profile extends Component {
         </center>
       </div>
     );
+  }catch(err){
+    this.setState({isRedirect:true})
+  }
   };
 
   handleChangeContent = () => {
@@ -404,10 +409,11 @@ class Profile extends Component {
     }
   };
   render() {
-    const { activeItem,isRedirect } = this.state;
-    if(isRedirect){
-      return <Redirect to={{ pathname: "/login" }} />
+    if(this.state.isRedirect){
+      this.setState({open:false})
+      return <Redirect to={{ pathname: "/*" }} />;
     }
+    const { activeItem } = this.state;
     return (
       <div className="container fluid">
         <LoadingScreen open={this.state.open} />

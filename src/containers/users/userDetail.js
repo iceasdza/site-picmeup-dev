@@ -1,16 +1,19 @@
 import React, { Component } from "react";
 import axios from "../../lib/axios";
 import { Link } from "react-router-dom";
-import {
-  Image,
-  Card,
+import {  
+  Image, 
+  Card, 
   Icon,
 } from "semantic-ui-react";
 import Cookies from "js-cookie";
 import swal from "sweetalert2";
+import LoadingScreen from '../screen/loading';
 import Slider from "react-slick";
+import { Redirect } from "react-router-dom";
 const user = Cookies.get("user");
 const avatar = Cookies.get('userAvatar')
+
 let settings = {
   dots: true,
   infinite: false,
@@ -52,11 +55,13 @@ class UserDetail extends Component {
       albums: [],
       topics: [],
       user: [],
-      open: true
+      open: true,
+      isRedirect:false
     };
   }
-
+  
   getData = async () => {
+    try{
     const user = this.props.location.search.replace("?", "");
     const data = await axios.get("/api/profile/" + user);
     const album = await axios.get("/api/getAlbumFromName/" + user);
@@ -65,9 +70,14 @@ class UserDetail extends Component {
       this.setState({
         user: data.data,
         albums: album.data,
-        topics: topic.data
+        topics: topic.data,
+        open:false
       });
     }
+  }  
+  catch(err){
+    this.setState({isRedirect:true})
+  }
   };
 
   modalInbox = async (reciver, avatar) => {
@@ -90,6 +100,7 @@ class UserDetail extends Component {
   };
 
   renderTopicList = () => {
+    try{
     const data = this.state.topics;
     return data.map((data, index) => (
       <Card fluid key={index}>
@@ -105,9 +116,13 @@ class UserDetail extends Component {
       </Card>
     )
     );
+  }catch(err){
+    return <Redirect to={{ pathname: "/*" }} />;
+  }
   };
 
   renderGalleryList = () => {
+    try{
     return (
       <div className="userAlbumWraper">
       <h1>อัลบั้มของคุณ {this.state.user.userName}</h1>
@@ -130,10 +145,16 @@ class UserDetail extends Component {
         ))}
       </Slider>
     </div>
-    );
+    );}catch(err){
+      return <Redirect to={{ pathname: "/*" }} />;
+    }
   };
 
   renderProfile = () => {
+    try{
+    if(user === undefined&&avatar === undefined){   
+      return <Redirect to={{ pathname: "/*" }} />;}
+      else{
     return (
       <div>
         <center>
@@ -159,23 +180,40 @@ class UserDetail extends Component {
         </center>
       </div>
     );
+                        }}catch(err){
+                          return <Redirect to={{ pathname: "/*" }} />;
+                        }
   };
 
-  componentDidMount() {
-    this.getData();
-  }
+  componentDidMount() {   
+    this.getData();    
+  } 
+  
+  
+  
 
-  render() {
+  render() {       
+    console.log("saaaaa"+this.state.isRedirect) 
+    if(this.state.isRedirect){
+      return <Redirect to={{ pathname: "/*" }} />;
+     }
     return (
+      
       <div className="container fluid">
+      <LoadingScreen
+      open={this.state.open}
+      />
       <br/>
         {this.renderProfile()}
-        {this.renderGalleryList()}
-        <h1>มีตติ้งของคุณ {this.state.user.userName}</h1>
+    {this.renderGalleryList()} 
+  {/* {this.state.user.userName===undefined?<h1>มีตติ้งของคุณ {this.state.user.userName}</h1>:<Redirect to={{ pathname: "/*" }} /> } */}   
+     <h1>มีตติ้ง</h1>
         {this.renderTopicList()}
         <br/>
       </div>
     );
+    }
   }
-}
+  
+
 export default UserDetail;

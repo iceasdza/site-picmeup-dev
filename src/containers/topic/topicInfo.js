@@ -4,6 +4,8 @@ import axios from "../../lib/axios";
 import Cookies from "js-cookie";
 import { Button, Card, Image, Form, Divider, Comment } from "semantic-ui-react";
 import { Link } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import LoadingScreen from '../screen/loading'
 let user = Cookies.get("user");
 
 class TopicInfo extends Component {
@@ -21,37 +23,44 @@ class TopicInfo extends Component {
       placeImage: "",
       _id: "",
       date: null,
-      time: null
+      time: null,
+      open: true,
+      isRedirect: false
     };
   }
 
   getData = async () => {
-    const id = this.props.location.search.replace("?", "");
-    const resp = await axios.get("/api/getTopicFromId/" + id);
-    const data = resp.data[0];
-    this.setState({
-      _id: data._id,
-      content: data.content,
-      topicName: data.topicName,
-      create_at: data.create_date,
-      comments: data.comments,
-      creator: data.creator,
-      placeId: data.placeId,
-      date: data.date.substring(0, 10),
-      time: data.time.substring(11, 16)
-      // date:data.date,
-      // time:data.time
-    });
+    try {
+      const id = this.props.location.search.replace("?", "");
+      const resp = await axios.get("/api/getTopicFromId/" + id);
+      const data = resp.data[0];
+      this.setState({
+        _id: data._id,
+        content: data.content,
+        topicName: data.topicName,
+        create_at: data.create_date,
+        comments: data.comments,
+        creator: data.creator,
+        placeId: data.placeId,
+        date: data.date.substring(0, 10),
+        time: data.time.substring(11, 16),
+        open: false
+      });
 
-    const place = await axios.get(
-      "/api/getPlaceInfoFromId/" + this.state.placeId
-    );
-    const placeData = place.data[0];
-    this.setState({
-      placeName: placeData.placeName,
-      placeImage: placeData.images[0]
-    });
+      const place = await axios.get(
+        "/api/getPlaceInfoFromId/" + this.state.placeId
+      );
+      const placeData = place.data[0];
+      this.setState({
+        placeName: placeData.placeName,
+        placeImage: placeData.images[0]
+      });
+    } catch (err) {
+      this.setState({ isRedirect: true })
+    }
+
   };
+
   renderPlace = () => {
     return (
       <Card>
@@ -165,8 +174,15 @@ class TopicInfo extends Component {
   }
 
   render() {
+    if (this.state.isRedirect) {
+      this.setState({ open: false })
+      return <Redirect to={{ pathname: "/*" }} />;
+    }
     return (
       <div>
+        <LoadingScreen
+          open={this.state.open}
+        />
         <TopicComponent
           topicName={this.state.topicName}
           content={this.state.content}

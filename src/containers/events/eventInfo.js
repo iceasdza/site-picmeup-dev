@@ -9,6 +9,8 @@ import 'sweetalert2/src/sweetalert2.scss'
 import { Link } from "react-router-dom";
 import '../../static/image.css'
 import LoadingScreen from '../screen/loading'
+import { Redirect } from "react-router-dom";
+
 class EventInfo extends Component {
   state = {
     eventName: "",
@@ -33,7 +35,8 @@ class EventInfo extends Component {
     open: true,
     index: null,
     comments: [],
-    text:''
+    text:'',
+    isRedirect:false
   };
 
   modalImage = (src) =>{
@@ -48,6 +51,7 @@ class EventInfo extends Component {
   }
 
   getData = async () => {
+    try{
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getEventInfoFromId/" + _id);
     if(resp.status ===200){
@@ -80,8 +84,11 @@ class EventInfo extends Component {
         });
     
       }
-
     }
+    }catch(err){
+      this.setState({isRedirect:true})
+    }
+
 
 
   };
@@ -175,6 +182,10 @@ class EventInfo extends Component {
   }
 
   render = () => {
+    if(this.state.isRedirect){
+      this.setState({open:false})
+      return <Redirect to={{ pathname: "/*" }} />;
+    }
     return (
       <div>
         <EventDetail
