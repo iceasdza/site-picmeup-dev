@@ -149,6 +149,7 @@ class Home extends Component {
   handleChageActivetyValue = e => {
     this.setState({ activityName: e });
   };
+
   handleAddActivity = async () => {
     const activity = this.state.activityName;
     return swal({
@@ -228,10 +229,15 @@ class Home extends Component {
           oldTag: this.state.activeActivity,
           newTag: this.state.newActivity,
           content:this.state.activeContent
+        }).then(result=>{
+          console.log(result.status===200)
+          if(result.status===200){
+            this.setState({ activeActivity: newActivity, newActivity: " " ,activeContent:""});
+            window.location.reload()
+          }
+          // this.setState({ activeActivity: newActivity, newActivity: " " ,activeContent:""});
+          // window.location.reload()
         });
-        // this.getActivityDetail();
-        this.setState({ activeActivity: newActivity, newActivity: " " ,activeContent:""});
-        window.location.reload()
       }
     });
   };
