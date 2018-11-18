@@ -9,6 +9,7 @@ import { Link } from "react-router-dom";
 import "sweetalert2/src/sweetalert2.scss";
 import "../../static/image.css";
 import Slider from "react-slick";
+import { Redirect } from "react-router-dom";
 const user = Cookies.get("user");
 let settings = {
   dots: true,
@@ -56,7 +57,8 @@ export default class AlbumInfo extends Component {
       images: [],
       text: "",
       open: true,
-      id:''
+      id:'',
+      isRedirect:false
     };
   }
 
@@ -74,6 +76,7 @@ export default class AlbumInfo extends Component {
   };
 
   getData = async () => {
+    try{
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getAlbumFromId/" + _id);
     if (resp.status === 200) {
@@ -88,6 +91,9 @@ export default class AlbumInfo extends Component {
         open: false
       });
     }
+  }catch(err){
+    this.setState({isRedirect:true})
+  }
   };
 
   componentDidMount() {
@@ -189,10 +195,13 @@ export default class AlbumInfo extends Component {
     );
   };
   render() {
+    if(this.state.isRedirect){
+      this.setState({open:false})
+      return <Redirect to={{ pathname: "/*" }} />;
+    }
     return (
       <div className="container fluid">
         <LoadingScreen open={this.state.open} />
-        {/* {this.renderEditButton()} */}
         <AlbumInfoComponent
         albumName={this.state.albumName}
         albumOwner={this.state.albumOwner}

@@ -18,6 +18,8 @@ import LoadingScreen from "../../screen/loading";
 import swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import "../../../static/profile.css";
+import { Redirect } from "react-router-dom";
+
 const user = Cookies.get("user");
 class Profile extends Component {
   constructor(props) {
@@ -36,7 +38,8 @@ class Profile extends Component {
       commentedTopics: [],
       open: true,
       avatar: "",
-      unreadMsg: 0
+      unreadMsg: 0,
+      isRedirect:false
     };
   }
 
@@ -106,7 +109,7 @@ class Profile extends Component {
     });
   };
 
-  renderMessage = () => {
+  renderMessage = () => {    
     return (
       <Table basic="very" unstackable>
         <Table.Header>
@@ -181,10 +184,11 @@ class Profile extends Component {
           ))}
         </Table.Body>
       </Table>
-    );
+    ); 
   };
 
   getData = async () => {
+    try{
     const resp = await axios.get("/api/profile/" + user);
     const data = resp.data;
     const message = await axios.get("/api/getMessageFromName/" + user);
@@ -217,6 +221,9 @@ class Profile extends Component {
         open: false
       });
     }
+  }catch(err){
+    this.setState({isRedirect:true})
+  }
   };
   componentDidMount() {
     this.getData();
@@ -360,7 +367,8 @@ class Profile extends Component {
   };
 
   renderProfile = () => {
-    return (
+    try{
+    return (      
       <div>
         <center>
           <Image
@@ -380,6 +388,9 @@ class Profile extends Component {
         </center>
       </div>
     );
+  }catch(err){
+    this.setState({isRedirect:true})
+  }
   };
 
   handleChangeContent = () => {
@@ -398,6 +409,10 @@ class Profile extends Component {
     }
   };
   render() {
+    if(this.state.isRedirect){
+      this.setState({open:false})
+      return <Redirect to={{ pathname: "/*" }} />;
+    }
     const { activeItem } = this.state;
     return (
       <div className="container fluid">
