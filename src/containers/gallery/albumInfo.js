@@ -119,6 +119,7 @@ export default class AlbumInfo extends Component {
         {this.state.images.map((data, index) => (
           <Card
             raised
+            className="albumsImage"
             image={data}
             key={index}
             onClick={() => this.modalImage(data)}

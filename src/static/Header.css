@@ -104,3 +104,16 @@ a.active.item.menuName,a.item.menuName{
 .userAlbumWraper{
     margin-top: 2em;
 }
+.notFound{
+    font-family: 'Kanit'!important;
+    text-align: left;
+    font-size: 5em!important;
+    margin: 0 auto;
+    text-align: center
+}
+.notFoundWrapper{
+    margin-top: 15%;
+}
+.albumsImage{
+    width: 350px!important
+}

@@ -65,9 +65,11 @@ class EditProfile extends Component {
         <label className="uploadAvatar">
           <p className="uploadcontent">เลือกรูปภาพ<Icon disabled name='camera' /></p>
           <input
+          accept="image/*" 
             name="img"
             id="img"
             type="file"
+
             style={{ display: "none" }}
             onChange={e => this.handleSelectImage(e)}
           />

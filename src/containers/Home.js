@@ -51,8 +51,7 @@ class Home extends Component {
     const places = await axios.get("/api/getnewplace");
     const events = await axios.get("/api/getnewevent");
     const hotEvents = await axios.get('/api/getHotEvent');
-    const hotPlaces = await axios.get('/api/getHotPlace')
-    console.log(hotPlaces)
+    const hotPlaces = await axios.get('/api/getHotPlace');
     if (places.status === 200 && events.status === 200) {
       this.setState({
         placesData: places.data,
@@ -107,6 +106,7 @@ class Home extends Component {
   };
 
   removeData = async (field, id, name) => {
+    console.log(field)
     if (field === "event") {
       return swal({
         title: "คุณแน่ใจหรือ ?",
@@ -135,7 +135,9 @@ class Home extends Component {
         confirmButtonText: "Yes"
       }).then(result => {
         if (result.value) {
-          axios.post("/api/deletePlaceDataFromId/" + id);
+          axios.post("/api/deletePlaceDataFromId/" + id).then(result=>{
+            console.log(result)
+          });
           swal("ลบเรียบร้อย!");
           this.getData();
         }

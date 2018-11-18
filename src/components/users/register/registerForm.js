@@ -62,7 +62,7 @@ const RegisterForm = props => {
           }}
           onChange={e => props.handleOnChange("email", e.target.value)}
         />
-        <Button onClick={props.checkEmail}>ตรวจสอบอีเมล</Button>
+        <Button onClick={props.checkEmail} className="submitBtn">ตรวจสอบอีเมล</Button>
       <br />
       <br />
       <label
@@ -95,7 +95,7 @@ const RegisterForm = props => {
           }}
           onChange={e => props.handleOnChange("userName", e.target.value)}
         />
-        <Button onClick={props.checkUsername}>ตรวจสอบชื่อผู้ใช้</Button>
+        <Button onClick={props.checkUsername} className="submitBtn">ตรวจสอบชื่อผู้ใช้</Button>
 
         <Form.Input
           fluid
@@ -137,7 +137,7 @@ const RegisterForm = props => {
           onChange={e => props.handleOnChange("tel", e.target.value)}
         />      
       <br />
-      <Button>สมัครสมาชิก</Button> 
+      <Button className="submitBtn">สมัครสมาชิก</Button> 
     </div>
   );
 };

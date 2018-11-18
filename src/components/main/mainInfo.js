@@ -228,7 +228,7 @@ const mainInfo = props => {
                                     value={index}
                                     onClick={e =>
                                       props.removeData(
-                                        "event",
+                                        "place",
                                         data._id,
                                         data.placeName
                                       )
@@ -580,7 +580,7 @@ const mainInfo = props => {
                                     value={index}
                                     onClick={e =>
                                       props.removeData(
-                                        "event",
+                                        "place",
                                         data._id,
                                         data.placeName
                                       )
@@ -726,7 +726,7 @@ const mainInfo = props => {
                                     value={index}
                                     onClick={e =>
                                       props.removeData(
-                                        "event",
+                                        "place",
                                         data._id,
                                         data.placeName
                                       )

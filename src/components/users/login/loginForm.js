@@ -29,7 +29,7 @@ const RegisterForm = props => {
         }}
         onChange={e => props.handleOnChange("password", e.target.value)}
       />
-      <Button>เข้าสู่ระบบ</Button>
+      <Button className="submitBtn">เข้าสู่ระบบ</Button>
     </div>
   );
 };

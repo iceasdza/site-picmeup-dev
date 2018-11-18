@@ -25,6 +25,7 @@ import EventInfo from '../events/eventInfo'
 
 import Profile from '../users/profile/profile'
 import EditProfile from '../users/profile/editprofile'
+import NotFoundPage from '../../components/notFoundPage'
 
 import FindByNear from '../users/findByNear/findByNearPage'
 import EditAlbum from '../users/album/editAlbum'
@@ -69,5 +70,7 @@ export default () => (
     <Route exact path="/places" component={Places}/>
 
     <Route exact path="/searchpage" component={Searchpage} />
+    <Route exact path="/*" component={NotFoundPage} />
+    <Route exact path="/badSearch" component={NotFoundPage} />
   </Switch>
 );

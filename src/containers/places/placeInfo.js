@@ -11,6 +11,7 @@ import LoadingScreen from '../screen/loading'
 import swal from 'sweetalert2'
 import 'sweetalert2/src/sweetalert2.scss'
 import '../../static/image.css'
+import { Redirect } from "react-router-dom";
 
 class PlaceInfo extends Component {
   constructor(props) {
@@ -39,7 +40,8 @@ class PlaceInfo extends Component {
       text: "",
       lat:'',
       lng:'',
-      open:true
+      open:true,
+      isRedirect:false
     };
   }
 
@@ -54,7 +56,8 @@ class PlaceInfo extends Component {
   }
 
 
-  getData = async () => {
+  getData = async () => {   
+    try{ 
     let _id = this.props.location.search.slice(1);
     const resp = await axios.get("/api/getPlaceInfoFromId/" + _id);
     if(resp.status ===200){
@@ -78,8 +81,10 @@ class PlaceInfo extends Component {
         lng:data.lng,
         open:false
       });
-  
     }
+  }catch(err){
+    this.setState({isRedirect:true})
+  }
   };
 
   renderMap =()=>{
@@ -199,8 +204,11 @@ class PlaceInfo extends Component {
         return setDay = dayOne +' - '+lastDay
   }
   }
-
   render = () => {
+    if(this.state.isRedirect){
+      this.setState({open:false})
+      return <Redirect to={{ pathname: "/*" }} />;
+    }
     return (
       <div>
         <LoadingScreen
@@ -229,8 +237,7 @@ class PlaceInfo extends Component {
           renderMap = {this.renderMap}
         />
       </div>
-    );
-  };
+    );}
 }
 
 

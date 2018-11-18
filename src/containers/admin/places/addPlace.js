@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import PlaceForm from "../../../components/admin/places/addPlaceForm";
 import { Form } from "formsy-semantic-ui-react";
 import { Dimmer, Loader, Card, Icon, Image } from "semantic-ui-react";
-import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import {GoogleApiWrapper } from "google-maps-react";
 import { Redirect } from "react-router-dom";
 import PlacesAutocomplete, {
   geocodeByAddress,
