@@ -228,7 +228,15 @@ class Demo extends React.Component {
           longitude: resp.data.longitude
         }
       });
-      window.location.reload();
+      if(resp.status ===200){
+        setTimeout(
+          function() {
+            window.location.reload()
+        }
+        .bind(this),
+        300
+        )
+      }
     } else {
       await axios.put("/api/updateGeolocation", {
         latitude: null,
