@@ -41,7 +41,7 @@ class UpdateEvent extends Component {
     this.setState({ imageState: false });
   };
   getData = async () => {
-    if(this.props.location===undefined){
+    if(this.props.location.state===undefined){
       this.setState({redirect:true})
     }
     let _id = this.props.location.state.id;
