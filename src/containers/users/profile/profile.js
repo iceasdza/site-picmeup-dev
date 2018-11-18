@@ -16,6 +16,7 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import LoadingScreen from "../../screen/loading";
 import swal from "sweetalert2";
+import { Redirect } from "react-router-dom";
 import "sweetalert2/src/sweetalert2.scss";
 import "../../../static/profile.css";
 const user = Cookies.get("user");
@@ -36,7 +37,8 @@ class Profile extends Component {
       commentedTopics: [],
       open: true,
       avatar: "",
-      unreadMsg: 0
+      unreadMsg: 0,
+      isRedirect:false
     };
   }
 
@@ -185,6 +187,10 @@ class Profile extends Component {
   };
 
   getData = async () => {
+    if(user===undefined){
+      this.setState({isRedirect:true})
+      return
+    }
     const resp = await axios.get("/api/profile/" + user);
     const data = resp.data;
     const message = await axios.get("/api/getMessageFromName/" + user);
@@ -398,7 +404,10 @@ class Profile extends Component {
     }
   };
   render() {
-    const { activeItem } = this.state;
+    const { activeItem,isRedirect } = this.state;
+    if(isRedirect){
+      return <Redirect to={{ pathname: "/login" }} />
+    }
     return (
       <div className="container fluid">
         <LoadingScreen open={this.state.open} />

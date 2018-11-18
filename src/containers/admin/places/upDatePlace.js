@@ -3,7 +3,7 @@ import PlaceEdit from "../../../components/admin/places/placeEditForm";
 import { Form } from "formsy-semantic-ui-react";
 import axios from "../../../lib/axios";
 import {  Dimmer, Loader,Button } from "semantic-ui-react";
-import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import {GoogleApiWrapper } from "google-maps-react";
 import PlacesAutocomplete, {
   geocodeByAddress,
   getLatLng
@@ -84,6 +84,10 @@ class Home extends Component {
   };
 
   getData = async () => {
+    if(this.props.location.state===undefined){
+      this.setState({redirect:true})
+      return
+    }
     let _id = this.props.location.state.id;
     const resp = await axios.get("/api/getPlaceInfoFromId/" + _id);
     const data = resp.data[0];
@@ -198,6 +202,7 @@ class Home extends Component {
     this.setState({ files: arr });
   };
   handleSelectImage = async() => {
+    this.setState({ message: "" });
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
@@ -237,6 +242,10 @@ class Home extends Component {
   };
 
   UpdatePlace = async formData => {
+    if(this.state.images.length===0 && this.state.files.length === 0){
+      this.setState({ message: "กรุณาเลือกรูปภาพ" });
+      return;
+    }
     let _id = this.props.location.state.id;
     if(this.state.placeName=== "" || this.state.placeDes === "" || this.state.contact === ""
     || this.state.openTime === "" || this.state.closeTime=== ""|| this.state.tags === undefined
@@ -244,7 +253,6 @@ class Home extends Component {
         return
     }
     const lengthOfFile = document.getElementById("img").files.length;
-    //--------no image updated-----------//
     
     if (lengthOfFile === 0) {
       return swal({
@@ -316,7 +324,6 @@ class Home extends Component {
               lat:this.state.lat,
               lng:this.state.lng
             }).then(value=>{
-              console.log(value)
           if(value.status===200){
             this.setState({ redirect: true });
           }
@@ -371,8 +378,8 @@ class Home extends Component {
             activities={this.state.activities}
             activitiesData={this.state.activitiesData}
           />
-                    <center>
-            <Button onClick={this.UpdatePlace}>บันทึก</Button>
+          <center>
+            <Button className="commentBtn" onClick={this.UpdatePlace}>บันทึก</Button>
           </center>
         </Form>
       </div>

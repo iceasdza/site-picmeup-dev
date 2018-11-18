@@ -21,7 +21,7 @@ class PlacePage extends Component {
     const places = await axios.get("/api/getPlaceInfo");
     if (places.status === 200) {
       const data = this.split(places.data, 9);
-      console.log(data);
+  
       this.setState({
         placesData: data,
         open: false

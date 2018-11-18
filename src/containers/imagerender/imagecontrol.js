@@ -1,5 +1,5 @@
 import React from "react";
-import { Dimmer, Loader, Card, Icon, Image, Button } from "semantic-ui-react";
+import { Dimmer, Loader, Card, Icon, Image } from "semantic-ui-react";
 import '../../static/image.css'
 const imageControl = props => {
   return (

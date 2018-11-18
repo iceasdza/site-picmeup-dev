@@ -42,6 +42,7 @@ class AddEvent extends Component {
   };
 
   handleSelectImage = async() => {
+    this.setState({ message: "" });
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
@@ -64,7 +65,6 @@ class AddEvent extends Component {
       for (let x = 0; x < resp.data.length; x++) {
         data.push(resp.data[x].location);
       }
-      console.log(data)
       this.setState({ images: data });
     }
   };
@@ -118,7 +118,12 @@ class AddEvent extends Component {
   onValidSubmit = formData => alert(JSON.stringify(formData));
 
   CreateEvent = async formData => {
+    
     const lengthOfFile = document.getElementById("img").files.length;
+    if (lengthOfFile === 0) {
+      this.setState({ message: "กรุณาเลือกรูปภาพ" });
+      return;
+    }
     if (
       formData.place_name === "" ||
       formData.place_desc === "" ||

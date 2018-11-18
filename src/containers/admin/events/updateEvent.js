@@ -41,9 +41,11 @@ class UpdateEvent extends Component {
     this.setState({ imageState: false });
   };
   getData = async () => {
+    if(this.props.location===undefined){
+      this.setState({redirect:true})
+    }
     let _id = this.props.location.state.id;
     const resp = await axios.get("/api/getEventInfoFromId/" + _id);
-
     const data = resp.data[0];
     this.setState({
       eventName: data.eventName,
@@ -74,6 +76,7 @@ class UpdateEvent extends Component {
     this.setState({ files: arr });
   };
   handleSelectImage = async () => {
+    this.setState({ message: "  " });
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
@@ -149,6 +152,10 @@ class UpdateEvent extends Component {
   };
 
   UpdateEvent = async formData => {
+    if(this.state.images.length===0 && this.state.files.length === 0){
+      this.setState({ message: "กรุณาเลือกรูปภาพ" });
+      return;
+    }
     if (
       this.state.eventName === "" ||
       this.state.eventDes === "" ||
@@ -276,7 +283,7 @@ class UpdateEvent extends Component {
             tagsData={this.state.tagsData}
           />
           <center>
-            <Button onClick={this.UpdateEvent}>บันทึก</Button>
+            <Button className="commentBtn" onClick={this.UpdateEvent}>บันทึก</Button>
           </center>
         </Form>
       </div>

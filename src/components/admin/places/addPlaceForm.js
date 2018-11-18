@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Divider,Icon } from "semantic-ui-react";
+import { Label, Divider,Button } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imagecontrol";
@@ -76,8 +76,8 @@ const Place_Form = props => {
         <label>
           อัพโหลดรูปภาพสถานที่ <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
-        <label> 
-        <Icon className='Pic' size='massive' name='camera'  />
+        <label  className="uploadBtnAdmin"> 
+        <p className="Color">เลือกรูปภาพ</p>
           <input          
             type="file"
             accept="image/*"
@@ -316,9 +316,11 @@ const Place_Form = props => {
       <p>แผนที่</p>
       {props.renderGoogleMap()}
       <div>
-        <Form.Button floated="right" size="big" style={{ zIndex: "4" }}>
-          สร้างสถานที่
-        </Form.Button>
+        <br/>
+        <center>
+        <Button className="submitBtn">สร้างสถานที่</Button> 
+        </center>
+        <br/>
       </div>
     </div>
   );

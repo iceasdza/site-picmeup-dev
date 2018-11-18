@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label,Divider,Icon} from "semantic-ui-react";
+import { Label,Divider,Button} from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imagecontrol"
@@ -70,12 +70,11 @@ const EventForm = props => {
         validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
       />
       <Form.Field>
-        <label>
-          อัพโหลดรูปภาพอีเวนท์
-          <h3 style={{ color: "red" }}>{props.message}</h3>
-        </label>         
-         <label> 
-        <Icon className='Pic' size='massive' name='camera'  />
+      <label>
+          อัพโหลดรูปภาพอีเว้น <h3 style={{ color: "red" }}>{props.message}</h3>
+        </label>
+        <label  className="uploadBtnAdmin"> 
+        <p className="Color">เลือกรูปภาพ</p>
           <input          
             type="file"
             accept="image/*"
@@ -222,9 +221,11 @@ const EventForm = props => {
       </div>
 
       <div>      
-        <Form.Button floated="right" size="big">
-          สร้างอีเวนท์
-        </Form.Button>
+      <br/>
+        <center>
+        <Button className="submitBtn">สร้างสถานที่</Button> 
+        </center>
+        <br/>
       </div>
     </div>
   );

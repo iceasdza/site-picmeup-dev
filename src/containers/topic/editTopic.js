@@ -7,6 +7,8 @@ import { Redirect } from "react-router-dom";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label } from "semantic-ui-react";
 import "../../static/topic.css";
+import Cookies from "js-cookie";
+const user = Cookies.get("user");
 class CreateTopic extends Component {
   constructor(props) {
     super(props);
@@ -33,7 +35,7 @@ class CreateTopic extends Component {
   }
 
   handleChange = value => {
-    value.length==0?this.setState({content:''}):
+    value.length===0?this.setState({content:''}):
     this.setState({ content: value , contentCheck:'' });    
   };
 
@@ -54,6 +56,10 @@ class CreateTopic extends Component {
   };
 
   getData = async () => {
+    if(this.props.location.state===undefined || user === undefined){
+      this.setState({redirect:true})
+      return 
+    }
     let id = this.props.location.state.id;
     const resp = await axios.get("/api/getTopicFromId/" + id);
     const data = resp.data[0];

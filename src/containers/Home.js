@@ -79,7 +79,6 @@ class Home extends Component {
     const resp = await axios.get(
       "/api/getPlaceFromActivity/" + this.state.activeActivity
     );
-    console.log(resp.data);
     if (resp.status === 200) {
       this.setState({
         recomendPlace: resp.data,
@@ -106,7 +105,6 @@ class Home extends Component {
   };
 
   removeData = async (field, id, name) => {
-    console.log(field)
     if (field === "event") {
       return swal({
         title: "คุณแน่ใจหรือ ?",
@@ -136,7 +134,7 @@ class Home extends Component {
       }).then(result => {
         if (result.value) {
           axios.post("/api/deletePlaceDataFromId/" + id).then(result=>{
-            console.log(result)
+   
           });
           swal("ลบเรียบร้อย!");
           this.getData();
@@ -174,6 +172,13 @@ class Home extends Component {
   };
 
   handleAddTag = async () => {
+    if(this.state.tagName.replace(/ /g,'') === ''){
+      return swal({
+        type: 'error',
+        title: 'ผิดพลาด !',
+        text: 'กรุณาใส่ข้อมูล tag'
+      })
+    }
     return swal({
       title: "คุณแน่ใจหรือ ?",
       text: "คุณต้องการเพิ่มแท็ก" + this.state.tagName + "ในระบบหรือไม่ ?",
@@ -197,6 +202,13 @@ class Home extends Component {
   handleChageTagActive = async () => {
     const newActivity = this.state.newActivity;
     const activeActivity = this.state.activeActivity;
+    if(this.state.activeContent.replace(/ /g,'') === ''){
+      return swal({
+        type: 'error',
+        title: 'ผิดพลาด !',
+        text: 'กรุณาใส่ข้อมูล activity'
+      })
+    }
     return swal({
       title: "คุณแน่ใจหรือ ?",
       text:
@@ -219,7 +231,7 @@ class Home extends Component {
         });
         // this.getActivityDetail();
         this.setState({ activeActivity: newActivity, newActivity: " " ,activeContent:""});
-        this.getData();
+        window.location.reload()
       }
     });
   };
@@ -248,13 +260,13 @@ class Home extends Component {
             </Accordion.Title>
             <Accordion.Content active={this.state.activeIndex === 0}>
               <Link to={{ pathname: "/addplace" }}>
-                <Button primary content="Add place" />
-              </Link>
+                <Button className="commentBtn" primary content="Add place" />
+              </Link>{" "}
               <Link to={{ pathname: "/addevent" }}>
-                <Button primary content="Add event" />
-              </Link>
+                <Button className="commentBtn" primary content="Add event" />
+              </Link>{" "}
               <Link to={{ pathname: "/createalbum" }}>
-                <Button primary content="Create album" />
+                <Button className="commentBtn" primary content="Create album" />
               </Link>
             </Accordion.Content>
 
@@ -278,8 +290,8 @@ class Home extends Component {
                       onChange={e => this.handleChage(e.target.value)}
                     />
                     <br />
-                    <br />
-                    <Form.Button content="Submit" />
+                    {/* <Form.Button className="commentBtn" content="Submit" /> */}
+                    <Button className="commentBtn"> submit</Button>
                   </Form.Field>
                 </Form>
               </p>
@@ -308,7 +320,7 @@ class Home extends Component {
                       }
                     />
                     <br />
-                    <Form.Button content="Submit" />
+                    <Button className="commentBtn">submit</Button>
                   </Form.Field>
                 </Form>
 
@@ -324,6 +336,7 @@ class Home extends Component {
                         this.handleChageActivityContent(e.target.value)
                       }
                     />
+                    <br/>
                   <Autocomplete
                     items={this.state.activitiesData}
                     shouldItemRender={(item, value) =>
@@ -350,7 +363,7 @@ class Home extends Component {
                  
                   <br />
                 
-                  <Form.Button content="Submit" />
+                  <Button className="commentBtn"> submit</Button>
                 </Form>
               </div>
             </Accordion.Content>

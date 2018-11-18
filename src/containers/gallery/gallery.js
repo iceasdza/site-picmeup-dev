@@ -3,10 +3,8 @@ import GalleryComponent from "../../components/gallery/galleryComponent";
 import { Card, Image, Segment, Responsive } from "semantic-ui-react";
 import { Link, NavLink } from "react-router-dom";
 import axios from "../../lib/axios";
-import Cookie from "js-cookie";
 import LoadingScreen from "../screen/loading";
 import "../../static/gallery.css";
-const user = Cookie.get("user");
 
 export default class Gallery extends Component {
   constructor(props) {

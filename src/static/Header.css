@@ -117,3 +117,31 @@ a.active.item.menuName,a.item.menuName{
 .albumsImage{
     width: 350px!important
 }
+.loginForm{
+    margin-top: 2em;
+}
+.registerForm{
+    margin-top: 2em;
+}
+.uploadBtn{
+    background-color: #333!important;
+    margin:0px!important;
+    margin-bottom: 2em!important;
+
+}
+p.Color{
+    margin: 0px!important;
+    font-size: 1.3em!important;
+    padding: 0.7em!important;
+    cursor: pointer;
+}
+.uploadBtn:hover{
+    background-color: #555!important;
+}
+.btnWrapper{
+    margin-bottom: 1em!important;
+}
+.uploadBtnAdmin{
+    background-color: #555!important;
+    width: 10%;
+}

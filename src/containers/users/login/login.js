@@ -59,11 +59,16 @@ class Login extends Component {
           </Portal>
         </Grid.Column>
       </Grid>
+      <div className="loginForm">
+      <center>
+      <p>เข้าสู่ระบบ</p>
+      </center>
         <Form onSubmit={this.handleSubmit}>
           <LoginForm 
           handleOnChange = {this.handleOnChange}
           />
         </Form>
+        </div>
       </div>
     );
   }

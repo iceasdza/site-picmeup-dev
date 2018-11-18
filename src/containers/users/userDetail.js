@@ -2,14 +2,9 @@ import React, { Component } from "react";
 import axios from "../../lib/axios";
 import { Link } from "react-router-dom";
 import {
-  Header,
   Image,
-  Table,
-  Menu,
   Card,
-  Label,
   Icon,
-  Button
 } from "semantic-ui-react";
 import Cookies from "js-cookie";
 import swal from "sweetalert2";
@@ -88,7 +83,7 @@ class UserDetail extends Component {
           reciver: this.state.user.userName,
           avatar: avatar
         }).then(result=>{
-          console.log(result)
+    
         });
       }
     });

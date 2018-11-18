@@ -7,7 +7,10 @@ const options = [
 ];
 const RegisterForm = props => {
   return (
-    <div className="container fluid">
+    <div className="container fluid registerForm">
+    <center>
+    <p>สมัครสมาชิก</p>
+    </center>
     <Form.Group widths="equal">
       <Form.Input
         fluid
@@ -66,9 +69,7 @@ const RegisterForm = props => {
       <br />
       <br />
       <label
-        className={props.isActive}
-        onMouseEnter={props.handleOver}
-        onMouseLeave={props.handleOut}
+        className="uploadBtn"
       >
         <p className="Color">เลือกรูปภาพ</p>
         <input
@@ -95,7 +96,9 @@ const RegisterForm = props => {
           }}
           onChange={e => props.handleOnChange("userName", e.target.value)}
         />
-        <Button onClick={props.checkUsername} className="submitBtn">ตรวจสอบชื่อผู้ใช้</Button>
+        <div className="btnWrapper">
+                  <Button onClick={props.checkUsername} className="submitBtn">ตรวจสอบชื่อผู้ใช้</Button>
+        </div>
 
         <Form.Input
           fluid
@@ -136,8 +139,11 @@ const RegisterForm = props => {
           }}
           onChange={e => props.handleOnChange("tel", e.target.value)}
         />      
-      <br />
+        <center>
+          
       <Button className="submitBtn">สมัครสมาชิก</Button> 
+        </center>
+        <br/>
     </div>
   );
 };

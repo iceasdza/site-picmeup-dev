@@ -3,7 +3,7 @@ import { Button, Label } from "semantic-ui-react";
 import { Form } from "formsy-semantic-ui-react";
 const RegisterForm = props => {
   return (
-    <div className="container fluid">
+    <div className="container fluid ">
       <Form.Input
         fluid
         name="userName"
@@ -29,7 +29,9 @@ const RegisterForm = props => {
         }}
         onChange={e => props.handleOnChange("password", e.target.value)}
       />
+      <center>
       <Button className="submitBtn">เข้าสู่ระบบ</Button>
+      </center>
     </div>
   );
 };

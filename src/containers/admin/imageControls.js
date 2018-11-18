@@ -17,7 +17,6 @@ return(
           />
         </div>
         <Image
-        onLoad={console.log('loading')}
         src={data} className="imageUploadSize" />
       </Card>
     ))}

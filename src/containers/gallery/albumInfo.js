@@ -98,7 +98,7 @@ export default class AlbumInfo extends Component {
     const id = this.props.location.search.replace("?", "");
     const comments = this.state.comments;
     if (Cookies.get("user") === undefined) {
-      comments.push({ comment: this.state.text, commentator: "Guest" });
+      comments.push({ comment: this.state.text, commentator: "Guest",avatar:'https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg' });
     } else {
       comments.push({
         comment: this.state.text,
@@ -169,17 +169,24 @@ export default class AlbumInfo extends Component {
             <Comment key={index}>
               <Comment.Avatar as="avatar" src={data.avatar} className="avatarProfile"/>
               <Comment.Content>
-              <Comment.Author>
-                  แสดงความคิดเห็นโดยคุณ {" "}
-                  <Link
-                    to={{
-                      pathname: "/user/",
-                      search: data.commentator
-                    }}
-                  >
-                    <span className="creator">{data.commentator}</span>
-                  </Link>
-                </Comment.Author>
+              {data.commentator !== 'Guest' ? (
+                <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {" "}
+                <Link
+                  to={{
+                    pathname: "/user/",
+                    search: data.commentator
+                  }}
+                >
+                  <span className="creator">{data.commentator}</span>
+                </Link>
+              </Comment.Author>
+              ):(
+                <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {" "}
+                  <span className="creator">{data.commentator}</span>
+              </Comment.Author>
+              )}
                 <Comment.Text>{data.comment}</Comment.Text>
               </Comment.Content>
             </Comment>

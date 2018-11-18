@@ -126,7 +126,7 @@ class PlaceInfo extends Component {
     const id = this.props.location.search.replace("?", "");
     const comments = this.state.comments;
     if (Cookies.get("user") === undefined) {
-      comments.push({ comment: this.state.text, commentator: "Guest" });
+      comments.push({ comment: this.state.text, commentator: "Guest",avatar:'https://image.freepik.com/free-icon/male-user-shadow_318-34042.jpg' });
     } else {
       comments.push({
         comment: this.state.text,
@@ -167,18 +167,24 @@ class PlaceInfo extends Component {
               src={data.avatar}
             />
             <Comment.Content>
-            <Comment.Author>
-                  แสดงความคิดเห็นโดยคุณ {" "}
-                  <Link
-                    to={{
-                      pathname: "/user/",
-                      search: data.commentator
-                    }}
-                  >
-                    <span className="creator">{data.commentator}</span>
-                  </Link>
-                  {/* {data.commentator} */}
-                </Comment.Author>
+            {data.commentator !== 'Guest' ? (
+                <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {" "}
+                <Link
+                  to={{
+                    pathname: "/user/",
+                    search: data.commentator
+                  }}
+                >
+                  <span className="creator">{data.commentator}</span>
+                </Link>
+              </Comment.Author>
+              ):(
+                <Comment.Author>
+                แสดงความคิดเห็นโดยคุณ {" "}
+                  <span className="creator">{data.commentator}</span>
+              </Comment.Author>
+              )}
               <Comment.Text>{data.comment}</Comment.Text>
             </Comment.Content>
           </Comment>

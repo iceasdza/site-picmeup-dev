@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label,Divider,Icon } from "semantic-ui-react";
+import { Label } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imageEditControl"
@@ -42,12 +42,12 @@ const EventForm = props => {
     optionPlace.push({ key: index + 1, text: data.placeName, value: data._id })
   );
   return (
-    <div className="Body">
+    <div className="">
       <div className="Head">
         <h1>แก้ไขอีเวนท์</h1>
         <hr className="Hr" />
       </div>
-      <div className="Form">
+      <div className="container fluid">
       <Form.Input
         label="ชื่ออีเวนท์"
         name="place_name"
@@ -73,25 +73,22 @@ const EventForm = props => {
         validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
       />
        <Form.Field>
-        <label>
-          อัพโหลดรูปภาพอีเวนท์
-          <h3 style={{ color: "red" }}>{props.message}</h3>
-        </label>         
-         <label> 
-        <Icon className='Pic' size='massive' name='camera'  />
+       <label>
+          อัพโหลดรูปภาพอีเว้นท์ <h3 style={{ color: "red" }}>{props.message}</h3>
+        </label>
+        <label  className="uploadBtnAdmin"> 
+        <p className="Color">เลือกรูปภาพ</p>
           <input          
             type="file"
             accept="image/*"
-            name="images"
+            name="img"
             id="img"
             multiple
             im
             onChange={e => props.handleSelectImage(e)}
             require="true"
           />
-           </label>         
-       
-      
+           </label>  
           <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded}/>
          </Form.Field>
       <div className="Gap">

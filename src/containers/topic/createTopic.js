@@ -6,12 +6,7 @@ import Cookies from "js-cookie";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
 import { Label } from "semantic-ui-react";
 import '../../static/topic.css'
-// const renderLabel = label => ({
-//   color: "blue",
-//   content: `${label.text}`,
-//   icon: "check"
-// });
-
+const user = Cookies.get("user");
 class CreateTopic extends Component {
   constructor(props) {
     super(props);
@@ -107,7 +102,7 @@ class CreateTopic extends Component {
 
   render() {
     const { redirect } = this.state
-    if (redirect) {
+    if (redirect||user===undefined) {
       return (
         <Redirect
           to={{ pathname: "/meeting" }}

@@ -49,7 +49,7 @@ class TopicList extends Component {
     if (data) {
       return data.map((data, index) => (
         <Card fluid key={index}>
-        {console.log(data)}
+    
           <Card.Content className="contentTopicInfo">
             <Link
               to={{

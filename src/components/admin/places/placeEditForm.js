@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Dropdown } from "formsy-semantic-ui-react";
-import { Label, Divider, Icon } from "semantic-ui-react";
+import { Label, Divider } from "semantic-ui-react";
 import "../../../static/Form.css";
 
 import Imagecontrol from "../../../containers/imagerender/imageEditControl"
@@ -72,7 +72,7 @@ const PlaceEditForm = props => {
         validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
       />
       <Form.Field>
-        <label>
+        {/* <label>
           อัพโหลดรูปภาพสถานที่
           <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
@@ -88,7 +88,23 @@ const PlaceEditForm = props => {
             onChange={e => props.handleSelectImage(e)}
             require="true"
           />
+        </label> */}
+        <label>
+          อัพโหลดรูปภาพสถานที่ <h3 style={{ color: "red" }}>{props.message}</h3>
         </label>
+        <label  className="uploadBtnAdmin"> 
+        <p className="Color">เลือกรูปภาพ</p>
+          <input          
+            type="file"
+            accept="image/*"
+            name="img"
+            id="img"
+            multiple
+            im
+            onChange={e => props.handleSelectImage(e)}
+            require="true"
+          />
+           </label>   
         <Imagecontrol images={props.images} DeleteImage={props.DeleteImage} files={props.files} DeletePhotoUploaded={props.DeletePhotoUploaded} imageState={props.imageState} handleImageLoaded={props.handleImageLoaded} />
       </Form.Field>
       <div className="Gap">

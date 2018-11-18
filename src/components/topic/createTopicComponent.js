@@ -3,7 +3,7 @@ import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import "../../static/topic.css";
 import DatePicker from "react-datepicker"
-import { Button, Divider, Label, TextArea} from "semantic-ui-react";
+import { Button, Divider, Label} from "semantic-ui-react";
 import { Form } from "formsy-semantic-ui-react";
 const createTopicComponent = props => {
   return (
@@ -26,7 +26,7 @@ const createTopicComponent = props => {
         <ReactQuill
           value={props.text}
           onChange={props.handleChange}         
-        />{props.textCheck!=''?<Label color="red" pointing>{props.textCheck}</Label>:<br/>}        
+        />{props.textCheck!==''?<Label color="red" pointing>{props.textCheck}</Label>:<br/>}        
         <br/>
         <p>วันที่นัดหมาย</p>
         <DatePicker
@@ -34,7 +34,7 @@ const createTopicComponent = props => {
           selected={props.date}
           dateFormat="DD/MM/YYYY"
           onChange={props.handleDate}
-        />{props.dateCheck!=''?<Label color="red" pointing='left'>{props.dateCheck}</Label>:<br/>}
+        />{props.dateCheck!==''?<Label color="red" pointing='left'>{props.dateCheck}</Label>:<br/>}
         <br />
         <p>เวลานัดหมาย</p>
         <DatePicker
@@ -46,7 +46,7 @@ const createTopicComponent = props => {
           timeIntervals={15}
           dateFormat="LT"
           timeCaption="Time"
-        />{props.timeCheck!=''?<Label color="red" pointing='left'>{props.timeCheck}</Label>:<br/>}
+        />{props.timeCheck!==''?<Label color="red" pointing='left'>{props.timeCheck}</Label>:<br/>}
         <Divider horizontal>
           <Button positive onClick={props.handleSubmit}>
             สร้างการนัดหมาย

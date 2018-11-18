@@ -2,7 +2,6 @@ import React from "react";
 import { geolocated } from "react-geolocated";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
-import { Link } from "react-router-dom";
 import {
   Table,
   Dimmer,

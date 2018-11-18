@@ -21,6 +21,11 @@ class EditProfile extends Component {
     };
   }
   getData = async () => {
+    if(user===undefined){
+      // return 
+      this.setState({isRedirect:true})
+      return
+    }
     const resp = await axios.get("/api/profile/" + user);
     const data = resp.data;
     this.setState({
@@ -116,6 +121,7 @@ class EditProfile extends Component {
     if(this.state.isRedirect){
       return <Redirect to={{ pathname: "/profile" }} />
     }
+    
     return (
       <div className="container fluid formEdit">
       <center>

@@ -19,7 +19,8 @@ class EditAlbum extends Component {
       redirect: false,
       albumDes:'',
       newImage:[],
-      id:''
+      id:'',
+      avatarLabel:'hidden'
     };
   }
   setField = (field, value) => {
@@ -31,6 +32,10 @@ class EditAlbum extends Component {
   }
 
   getData=async()=>{
+    if(this.props.location.state===undefined){
+      this.setState({redirect:true})
+      return
+    }
     const _id = this.props.location.state.id
     const resp = await axios.get('/api/getAlbumFromId/'+_id)
     if(resp.status ===200){
@@ -45,7 +50,7 @@ class EditAlbum extends Component {
   }
 
   handleSelectImage = async() => {
-    this.setState({ imageState: true,loading:true });
+    this.setState({ imageState: true,loading:true,avatarLabel:"hidden" });
     const lengthOfFile = document.getElementById("img").files.length;
     let data = new FormData();
     if (lengthOfFile === 1) {
@@ -121,30 +126,27 @@ class EditAlbum extends Component {
         validationErrors={{ isDefaultRequiredValue: "จำเป็นต้องใส่คำอธิบาย" }}
       />
 
-       <label>
-          อัพโหลดรูปภาพสถานที่
-          <h3 style={{ color: "red" }}>{this.state.message}</h3>
-        </label>
-        <br/>
-        <label>
-          <Icon className='Pic' size='massive' name='camera' />
+        <label className="uploadBtn">
+          <p className="Color">เลือกรูปภาพ</p>
           <input
-            type="file"
-            accept="image/*"
             name="img"
             id="img"
+            type="file"
             multiple
+            style={{ display: "none" }}
             onChange={e => this.handleSelectImage(e)}
-            require="true"
           />
         </label>
+        <Label  pointing='left' color="red" className={this.state.avatarLabel} >กรุณาเลือกรูปภาพ</Label>
+      
       </div>
     );
   };
 
 
   handleSunmit = async () => {
-    if(this.state.images.length === 0){
+    if(this.state.images.length === 0 && this.state.files.length === 0){
+      this.setState({ avatarLabel: "" });
       return ;
     }
     this.setState({ loading: true });
