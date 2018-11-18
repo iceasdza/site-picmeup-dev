@@ -16,27 +16,30 @@ class CreateTopic extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
-      topicName: "",
+      text: "",      
+      topicName: '',
       placesName: [],
       placeId: '',
       redirect: false,
       topicPlace: '',
-      date: null,
-      time: null
+      date: '',
+      time: '',
+      dateCheck: '',
+      timeCheck: '',
+      textCheck: ''
     };
   }
 
   handleChange = value => {
-    this.setState({ text: value });
+    this.setState({ text: value , textCheck:'' });    
   };
 
   handleDate = value => {
-    this.setState({ date: value });
+    this.setState({ date: value , dateCheck:'' });
   };
 
   handleTime = value => {
-    this.setState({ time: value });
+    this.setState({ time: value , timeCheck:'' });
   };
 
   handleName = value => {
@@ -79,7 +82,13 @@ class CreateTopic extends Component {
   };
 
   handleSubmit = async () => {
-    if (this.state.placeId === '') {
+    if (this.state.placeId === '' || this.state.topicName === '' || this.state.text === '' || this.state.date === '' || this.state.time === ''){
+      if(this.state.text === ""){
+      this.setState({textCheck:'โปรดใส่รายละเอียดการนัดหมาย'})}else{this.setState({textCheck:''})}
+      if(!this.state.time){ 
+      this.setState({timeCheck:'โปรดใส่รายเวลาที่นัดหมาย'})}else{this.setState({timeCheck:''})}
+      if(!this.state.date){
+      this.setState({dateCheck:'โปรดใส่รายวันที่นัดหมาย'})}else{this.setState({dateCheck:''})} 
       return
     } else {
       await axios.post("/api/createTopic", {
@@ -118,6 +127,9 @@ class CreateTopic extends Component {
             handleTime={this.handleTime}
             date={this.state.date}
             time={this.state.time}
+            dateCheck={this.state.dateCheck}
+            timeCheck={this.state.timeCheck}
+            textCheck={this.state.textCheck}
           />
         </Form>
       </div>

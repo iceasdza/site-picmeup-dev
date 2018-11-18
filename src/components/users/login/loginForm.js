@@ -8,7 +8,7 @@ const RegisterForm = props => {
         fluid
         name="userName"
         label={"ชื่อผู้ใช้"}
-        placeholder="username"
+        placeholder="ชื่อผู้ใช้"
         required
         errorLabel={<Label color="red" pointing />}
         validationErrors={{
@@ -20,7 +20,7 @@ const RegisterForm = props => {
         fluid
         name="password"
         label="รหัสผ่าน"
-        placeholder="Password"
+        placeholder="รหัสผ่าน"
         type="password"
         required
         errorLabel={<Label color="red" pointing />}
@@ -29,7 +29,7 @@ const RegisterForm = props => {
         }}
         onChange={e => props.handleOnChange("password", e.target.value)}
       />
-      <Button>Submit</Button>
+      <Button>เข้าสู่ระบบ</Button>
     </div>
   );
 };

@@ -16,7 +16,7 @@ class CreateTopic extends Component {
       placeId: "",
       redirect: false,
       content: null,
-      topicName: "",
+      topicName: '',
       create_at: null,
       creator: "",
       comments: [],
@@ -24,21 +24,25 @@ class CreateTopic extends Component {
       placeImage:'',
       _id:'',
       topicPlace:[],
-      date:null,
-      time:null
+      date:'',
+      time:'',
+      dateCheck: '',
+      timeCheck: '',
+      contentCheck: ''
     };
   }
 
   handleChange = value => {
-    this.setState({ content: value });
-  };
-
-  handleTime = value => {
-    this.setState({ time: value });
+    value.length==0?this.setState({content:''}):
+    this.setState({ content: value , contentCheck:'' });    
   };
 
   handleDate = value => {
-    this.setState({ date: value });
+    this.setState({ date: value , dateCheck:'' });
+  };
+
+  handleTime = value => {
+    this.setState({ time: value , timeCheck:'' });
   };
 
   handleName = value => {
@@ -46,7 +50,6 @@ class CreateTopic extends Component {
   };
 
   PlaceSelected = (field, value) => {
-    console.log(value)
     this.setState({ placeId: value.id,topicPlace:value.name });
   };
 
@@ -62,7 +65,7 @@ class CreateTopic extends Component {
       comments: data.comments,
       creator: data.creator,
       placeId: data.placeId
-    });
+    });    
 
     const placesName = [];
     const resp2 = await axios.get("/api/getPlaceInfo");
@@ -72,11 +75,12 @@ class CreateTopic extends Component {
     this.setState({ placesName: placesName });
   };
 
-  renderPlaceList = () => {
+  renderPlaceList = () => {    
     return (
       <Dropdown
         selection
         placeholder="สถานที่จัดงาน"
+        value={this.state.PlaceId}      
         require="true"
         options={this.state.placesName}
         name="place_select"
@@ -95,8 +99,14 @@ class CreateTopic extends Component {
   };
 
   handleSubmit = async () => {
-    if (this.state.placeId === "") {
-      return;
+    if (this.state.placeId === '' || this.state.topicName === '' || this.state.content === '' || this.state.date === '' || this.state.time === ''  ){
+      if(this.state.content === '<p><br></p>'){          
+      this.setState({contentCheck:'โปรดใส่รายละเอียดการนัดหมาย',content:''})}else{this.setState({contentCheck:''})}
+      if(!this.state.time){ 
+      this.setState({timeCheck:'โปรดใส่รายเวลาที่นัดหมาย'})}else{this.setState({timeCheck:''})}
+      if(!this.state.date){
+      this.setState({dateCheck:'โปรดใส่รายวันที่นัดหมาย'})}else{this.setState({dateCheck:''})} 
+      return
     } else {
       return swal({
         title: "คุณแน่ใจหรือ ?",
@@ -145,6 +155,9 @@ class CreateTopic extends Component {
             handleTime={this.handleTime}
             date={this.state.date}
             time={this.state.time}
+            dateCheck={this.state.dateCheck}
+            timeCheck={this.state.timeCheck}
+            contentCheck={this.state.contentCheck}
           />
         </Form>
       </div>

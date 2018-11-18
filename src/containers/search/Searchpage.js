@@ -122,9 +122,13 @@ class Searchpage extends Component {
     );
   };
   getDataForSearch = async () => {
+    if(this.state.value.length===0){
+      return
+    }
     this.setState({
       open: true
     });
+    try{
     const respPlaces = await axios.get(
       "/api/getDataForSearchPlace/" + this.state.value
     );
@@ -146,21 +150,16 @@ class Searchpage extends Component {
     this.setState({ isLoading: true });
     if (respPlaces.status === 200 && respDescriptionPlaces.status === 200) {
       this.setState({
-        // resultPlaces: respPlaces.data,
-        // resultDescriptionPlaces: respDescriptionPlaces.data,
         resultPlaces: [...respPlaces.data, ...respDescriptionPlaces.data]
       });
     }
     if (respEvents.status === 200 && respDescriptionEvents.status === 200) {
       this.setState({
-        // resultEvents: respEvents.data,
-        // resultDescriptionEvents: respDescriptionEvents.data,
         resultEvents: [...respEvents.data, ...respDescriptionEvents.data]
       });
     }
     if (respTagPlaces.status === 200) {
       this.setState({
-        // isLoading: false,
         resultTagPlaces: respTagPlaces.data
       });
     }
@@ -170,7 +169,15 @@ class Searchpage extends Component {
         open: false,
         value: ""
       });
-    } else {
+    } 
+  }catch(err){
+    swal({
+      title: "อุ๊ปซ์ เหมือนเราไม่มีสิ่งที่คุณค้นหานะ ?",
+      text: "ลองหาอย่างอื่นนอกจาก " + this.state.value + " ดูดีไหม ?",
+      type: "question",
+      confirmButtonColor: "#333",
+      confirmButtonText:"ฉันเข้าใจเเล้ว"
+    })
       this.setState({
         open: false,
         value: ""

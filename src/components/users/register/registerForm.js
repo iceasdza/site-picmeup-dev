@@ -2,8 +2,8 @@ import React from "react";
 import { Image, Button ,Label} from "semantic-ui-react";
 import { Form } from "formsy-semantic-ui-react";
 const options = [
-  { key: "m", text: "Male", value: "male" },
-  { key: "f", text: "Female", value: "female" }
+  { key: "m", text: "ชาย", value: "male" },
+  { key: "f", text: "หญิง", value: "female" }
 ];
 const RegisterForm = props => {
   return (
@@ -13,7 +13,7 @@ const RegisterForm = props => {
         fluid
         name="fistName"
         label="ชื่อ"
-        placeholder="First name"
+        placeholder="ชื่อ"
         required
         errorLabel={<Label color="red" pointing />}
         validationErrors={{
@@ -25,7 +25,7 @@ const RegisterForm = props => {
           fluid
           name="lastName"
           label="นามสกุล"
-          placeholder="Last name"
+          placeholder="นามสกุล"
           required
           errorLabel={<Label color="red" pointing />}
           validationErrors={{
@@ -39,7 +39,7 @@ const RegisterForm = props => {
           name="fistGender"
           label="เพศ"
           options={options}
-          placeholder="Gender"
+          placeholder="เพศ"
           required
           errorLabel={<Label color="red" pointing />}
           validationErrors={{
@@ -54,7 +54,7 @@ const RegisterForm = props => {
           fluid
           name="email"
           label="อีเมล"
-          placeholder="email"
+          placeholder="อีเมล"
           required
           errorLabel={<Label color="red" pointing />}
           validationErrors={{
@@ -87,7 +87,7 @@ const RegisterForm = props => {
           fluid
           name="userName"
           label={"ชื่อผู้ใช้"}
-          placeholder="username"
+          placeholder="ชื่อผู้ใช้"
           required
           errorLabel={<Label color="red" pointing />}
           validationErrors={{
@@ -101,7 +101,7 @@ const RegisterForm = props => {
           fluid
           name="password"
           label="พาสเวิร์ด"
-          placeholder="Password"
+          placeholder="พาสเวิร์ด"
           type="password"
           required
           errorLabel={<Label color="red" pointing />}
@@ -115,7 +115,7 @@ const RegisterForm = props => {
           fluid
           name="rePassword"
           label="ยืนยันพาสเวิร์ด(ใส่พาสเวิร์ดเหมือนกับครั้งแรก)"
-          placeholder="Re-Password"
+          placeholder="ยืนยันพาสเวิร์ด"
           type="password"
           required
           errorLabel={<Label color="red" pointing />}
@@ -128,19 +128,16 @@ const RegisterForm = props => {
           fluid
           name="tel"
           label="เบอร์โทร"
-          placeholder="tel"
+          placeholder="เบอร์โทร"
           required
           errorLabel={<Label color="red" pointing />}
           validationErrors={{
             isDefaultRequiredValue: "กรุณาใส่เบอร์โทร"
           }}
           onChange={e => props.handleOnChange("tel", e.target.value)}
-        />
-      
+        />      
       <br />
-      <br />
-      <br />
-      <Button>Submit</Button>
+      <Button>สมัครสมาชิก</Button> 
     </div>
   );
 };

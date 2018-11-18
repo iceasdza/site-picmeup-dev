@@ -151,7 +151,7 @@ export default class AlbumInfo extends Component {
   renderComment = () => {
     return (
       <div className="container fluid">
-        <Divider horizontal>Comments</Divider>
+        <Divider horizontal>ควาคิดเห็น</Divider>
         <Form onSubmit={this.handleSubmitComment}>
           <Form.TextArea
             label="เขียนควาคิดเห็น"
