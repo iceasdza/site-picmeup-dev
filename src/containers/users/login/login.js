@@ -33,6 +33,7 @@ class Login extends Component {
       const data = await axios.get('api/findUserName/'+this.state.userName)
       Cookies.set('userAvatar',data.data.avatar)
       Cookies.set('user',this.state.userName)
+      Cookies.set('role',data.data.role)
       this.setState({redirect:true})
     }else{
       this.setState({ open: true })

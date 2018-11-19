@@ -6,7 +6,7 @@ import axios from "../../../lib/axios";
 import { Redirect } from "react-router-dom";
 import { Dimmer, Loader } from "semantic-ui-react";
 import Cookies from "js-cookie";
-const user = Cookies.get("user");
+const role = Cookies.get("role");
 class AddEvent extends Component {
   state = {
     eventName: "",
@@ -167,7 +167,7 @@ class AddEvent extends Component {
     if (redirect) {
       return <Redirect to={{ pathname: "/main" }} />;
     }
-    if (user!=='admin') {
+    if (role!=='mod') {
       return <Redirect to={{ pathname: "/main" }} />;
     }
     return (

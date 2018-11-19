@@ -16,7 +16,7 @@ import "../static/autocomplete.css";
 import swal from "sweetalert2";
 import "sweetalert2/src/sweetalert2.scss";
 import { Redirect } from "react-router-dom";
-const user = Cookies.get("user");
+const role = Cookies.get("role");
 class Home extends Component {
   state = {
     placesData: [],
@@ -247,7 +247,7 @@ class Home extends Component {
   };
 
   superUltimateConsolePlanel = () => {
-    if (user === undefined || user !== "admin") {
+    if (role === undefined || role !== "mod") {
       return;
     } else {
       return (

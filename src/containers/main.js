@@ -292,6 +292,8 @@ class Main extends Component {
 
   logout = () => {
     Cookies.remove("user");
+    Cookies.remove('role');
+    Cookies.remove('avatar')
     this.setState({ redirect: true });
   };
 

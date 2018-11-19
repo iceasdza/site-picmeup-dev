@@ -11,7 +11,7 @@ import PlacesAutocomplete, {
 import "../../../static/map.css";
 import axios from "../../../lib/axios";
 import Cookies from "js-cookie";
-const user = Cookies.get("user");
+const role = Cookies.get("role");
 class AddPlace extends Component {
   state = {
     placeName: "",
@@ -273,7 +273,7 @@ class AddPlace extends Component {
     if (redirect) {
       return <Redirect to={{ pathname: "/main" }} />;
     }
-    if (user!=='admin') {
+    if (role!=='mod') {
       return <Redirect to={{ pathname: "/main" }} />;
     }
     return (
