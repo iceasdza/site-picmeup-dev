@@ -14,6 +14,8 @@ User และ password ที่ใช้ในการ login
 User : admin
 Password : picmeupsiteapi
 
+**ถ้าหากมีการปิดใช้ บริการ SPACE ของ Digital Ocean อาจทให้รูปภาพไม่ขึ้น
+
 รายชื่อสมาชิก
 1. นาย ปฏิพัทธ์ เรืองสวัสดิ์ 
 58130500048 
